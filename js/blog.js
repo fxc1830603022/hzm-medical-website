@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: p.title,
                     category: getCategoryName(p.category),
                     date: p.date,
-                    image: p.image || 'images/gallery-case-01.PNG',
+                    image: p.image || 'images/gallery-case-01.jpg',
                     content: p.content || '<p>' + (p.excerpt || '') + '</p>'
                 };
             });
@@ -156,3 +156,4 @@ function loadMorePosts() {
     btn.disabled = true;
     btn.style.opacity = '0.5';
 }
+

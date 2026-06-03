@@ -375,10 +375,10 @@ function deletePost(id) {
 // ============================================
 function renderGalleryPage(container) {
     var images = [
-        'gallery-case-01.PNG', 'gallery-case-02.PNG', 'gallery-case-03.PNG',
-        'gallery-case-04.PNG', 'gallery-case-05.PNG', 'gallery-case-06.PNG',
-        'gallery-case-07.PNG', 'gallery-case-08.PNG', 'gallery-case-09.PNG',
-        'gallery-case-10.PNG', 'gallery-case-11.PNG', 'gallery-case-12.PNG',
+        'gallery-case-01.jpg', 'gallery-case-02.jpg', 'gallery-case-03.jpg',
+        'gallery-case-04.jpg', 'gallery-case-05.jpg', 'gallery-case-06.jpg',
+        'gallery-case-07.jpg', 'gallery-case-08.jpg', 'gallery-case-09.jpg',
+        'gallery-case-10.jpg', 'gallery-case-11.jpg', 'gallery-case-12.jpg',
         'gallery-ai-01.jpeg', 'gallery-ai-02.jpeg', 'gallery-ai-03.jpeg',
         'gallery-ai-04.jpeg', 'gallery-ai-05.jpeg', 'gallery-ai-06.jpeg',
         'gallery-ai-07.jpeg', 'gallery-ai-08.jpeg'
@@ -400,7 +400,7 @@ function renderGalleryPage(container) {
     html += '<h4 style=\"margin-bottom:12px;color:var(--primary);\">Add New Image Reference</h4>';
     html += '<p style=\"font-size:0.85rem;color:var(--text-light);margin-bottom:12px;\">Copy the image file into the website/images/ directory first, then add it here.</p>';
     html += '<div style=\"display:flex;gap:12px;flex-wrap:wrap;\">';
-    html += '<input type=\"text\" id=\"newImageName\" placeholder=\"Filename, e.g. gallery-new-01.PNG\" style=\"flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;\">';
+    html += '<input type=\"text\" id=\"newImageName\" placeholder=\"Filename, e.g. gallery-new-01.jpg\" style=\"flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;\">';
     html += '<button class=\"btn btn-primary btn-sm\" onclick=\"addGalleryImage()\">Add</button>';
     html += '</div></div></div>';
 
@@ -511,3 +511,4 @@ function escAttr(str) {
 }
 
 // Init - moved into DOMContentLoaded above
+
