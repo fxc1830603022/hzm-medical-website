@@ -1,0 +1,10 @@
+﻿User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /blog.html
+Allow: /images/
+
+Disallow: /admin.html
+Disallow: /js/admin.js
+
+Sitemap: https://你的域名/sitemap.xml

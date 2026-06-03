@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客文章 | Dr. Xiao Zhongye - 9D Lifting System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="index.html#hero" class="nav-logo">
+                <span class="logo-zh">肖忠业医生</span>
+                <span class="logo-en">Dr. Xiao Zhongye</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#about">关于9D提升</a>
+                <a href="index.html#procedures">术式方案</a>
+                <a href="index.html#3n">3N黄金法则</a>
+                <a href="index.html#gallery">案例鉴赏</a>
+                <a href="index.html#why-xiao">为什么选择肖医生</a>
+                <a href="blog.html" class="active">博客文章</a>
+                <a href="index.html#contact" class="nav-cta">预约面诊</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="blog-hero">
+        <div class="blog-hero-content">
+            <p class="blog-hero-label">BLOG & ARTICLES</p>
+            <h1 class="blog-hero-title">专业抗衰知识分享</h1>
+            <p class="blog-hero-desc">来自肖忠业医生的专业见解、技术解读与抗衰科普</p>
+        </div>
+    </section>
+
+    <section class="blog-categories">
+        <div class="container">
+            <div class="category-filters" id="categoryFilters">
+                <button class="category-btn active" data-category="all">全部文章</button>
+                <button class="category-btn" data-category="technique">技术解读</button>
+                <button class="category-btn" data-category="knowledge">抗衰科普</button>
+                <button class="category-btn" data-category="case">案例分享</button>
+                <button class="category-btn" data-category="faq">常见问题</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-posts-section">
+        <div class="container">
+            <div class="blog-grid" id="blogGrid">
+                <article class="blog-card" data-category="technique">
+                    <div class="blog-card-image">
+                        <img src="images/b54df5be51a02c27874d9654dcf7cd3b.jpg" alt="9D Deep Plane Facelift" loading="lazy">
+                        <span class="blog-card-category">技术解读</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <time datetime="2024-12-15">2024年12月15日</time>
+                            <span class="blog-read-time">阅读时间 8分钟</span>
+                        </div>
+                        <h3 class="blog-card-title">什么是 Deep Plane 深平面拉皮？与传统拉皮的区别在哪里？</h3>
+                        <p class="blog-card-excerpt">Deep Plane（深平面）技术是目前面部年轻化手术中最先进的方法之一。与传统SMAS拉皮不同，深平面技术直接在更深层的组织平面进行操作，能够实现更加自然持久的提升效果...</p>
+                        <a href="#" class="blog-card-link" onclick="openBlogModal(0); return false;">阅读全文 →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="knowledge">
+                    <div class="blog-card-image">
+                        <img src="images/be355d7cd70301a66fcdf6effc5a781f.jpg" alt="面部衰老" loading="lazy">
+                        <span class="blog-card-category">抗衰科普</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <time datetime="2024-12-10">2024年12月10日</time>
+                            <span class="blog-read-time">阅读时间 6分钟</span>
+                        </div>
+                        <h3 class="blog-card-title">面部衰老的真相：从骨骼到皮肤，你到底在老什么？</h3>
+                        <p class="blog-card-excerpt">面部衰老并不仅仅是皮肤松弛那么简单。从骨骼吸收、脂肪垫移位、筋膜层松弛到表皮变薄，衰老是一个多层次、多维度的复杂过程。了解这些，才能选择正确的抗衰方式...</p>
+                        <a href="#" class="blog-card-link" onclick="openBlogModal(1); return false;">阅读全文 →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="technique">
+                    <div class="blog-card-image">
+                        <img src="images/896412cd7db178d8aff7975c761cf596.jpg" alt="9D Lifting" loading="lazy">
+                        <span class="blog-card-category">技术解读</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <time datetime="2024-12-05">2024年12月5日</time>
+                            <span class="blog-read-time">阅读时间 10分钟</span>
+                        </div>
+                        <h3 class="blog-card-title">9D Lifting 的核心理念：为什么我们坚持"魅力留存"？</h3>
+                        <p class="blog-card-excerpt">在医美行业，"换脸"式的过度手术越来越被有品位的求美者所排斥。9D Lifting 的核心理念是"魅力留存"——保留你原本的五官特色和气质，只是在正确的层次上做精准的年轻化调整...</p>
+                        <a href="#" class="blog-card-link" onclick="openBlogModal(2); return false;">阅读全文 →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="faq">
+                    <div class="blog-card-image">
+                        <img src="images/f12e811b39a2ca6114abc09612047f30.jpg" alt="手术恢复" loading="lazy">
+                        <span class="blog-card-category">常见问题</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <time datetime="2024-11-28">2024年11月28日</time>
+                            <span class="blog-read-time">阅读时间 5分钟</span>
+                        </div>
+                        <h3 class="blog-card-title">面部提升手术后恢复期全攻略：从术后第1天到第90天</h3>
+                        <p class="blog-card-excerpt">手术只是第一步，术后恢复同样重要。本文详细梳理了从术后即刻到完全恢复的每个阶段，包括肿胀消退时间表、护理要点、注意事项以及何时可以恢复正常社交...</p>
+                        <a href="#" class="blog-card-link" onclick="openBlogModal(3); return false;">阅读全文 →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="case">
+                    <div class="blog-card-image">
+                        <img src="images/2683b7b84cb3111a72f78c2f1cb83942.jpg" alt="案例分享" loading="lazy">
+                        <span class="blog-card-category">案例分享</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <time datetime="2024-11-20">2024年11月20日</time>
+                            <span class="blog-read-time">阅读时间 7分钟</span>
+                        </div>
+                        <h3 class="blog-card-title">50岁欧洲女性的 9D Deep Plane 蜕变之旅</h3>
+                        <p class="blog-card-excerpt">来自英国的Sarah女士，在经历了传统线雕失败的困扰后，找到了肖医生进行9D Deep Plane Facelift。从面诊到术后6个月的完整记录，让我们一起见证她的自然蜕变...</p>
+                        <a href="#" class="blog-card-link" onclick="openBlogModal(4); return false;">阅读全文 →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="knowledge">
+                    <div class="blog-card-image">
+                        <img src="images/b8cb485707aa2b6872cc479109c0605e.jpg" alt="线雕真相" loading="lazy">
+                        <span class="blog-card-category">抗衰科普</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <time datetime="2024-11-15">2024年11月15日</time>
+                            <span class="blog-read-time">阅读时间 6分钟</span>
+                        </div>
+                        <h3 class="blog-card-title">线雕 vs 手术拉皮：别再被概念偷换了！</h3>
+                        <p class="blog-card-excerpt">市面上很多机构把线雕包装成"9D提升""无痕拉皮"等概念，但实际上线雕和外科深层结构重塑是完全不同的两个级别。本文将从原理、效果持久度、适用人群等方面全面对比...</p>
+                        <a href="#" class="blog-card-link" onclick="openBlogModal(5); return false;">阅读全文 →</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="blog-load-more">
+                <button class="btn btn-outline-dark" id="loadMoreBtn" onclick="loadMorePosts()">加载更多文章</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h3>订阅肖医生的抗衰资讯</h3>
+                <p>获取最新的技术分享、案例分析和专属优惠</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="请输入您的邮箱地址" required>
+                    <button type="submit" class="btn btn-primary">订阅</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="blog-modal" id="blogModal">
+        <div class="blog-modal-overlay" onclick="closeBlogModal()"></div>
+        <div class="blog-modal-content">
+            <button class="blog-modal-close" onclick="closeBlogModal()">&times;</button>
+            <div class="blog-modal-body" id="blogModalBody"></div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/8613800138000?text=您好，我对9D提升很感兴趣，想了解更多信息。" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="WhatsApp Chat">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.004 0C7.165 0 0 7.163 0 15.998c0 2.817.737 5.563 2.138 7.984L.073 32l8.206-2.156a16.023 16.023 0 0 0 7.723 1.96h.003C24.84 31.804 32 24.641 32 15.998 32 7.163 24.84 0 16.004 0zm0 29.31a13.51 13.51 0 0 1-6.898-1.894l-.495-.294-5.136 1.35 1.37-5.003-.323-.514A13.435 13.435 0 0 1 2.49 15.998c0-7.458 6.06-13.526 13.522-13.526 7.458 0 13.52 6.068 13.52 13.526 0 7.458-6.062 13.512-13.528 13.312zm7.403-10.128c-.407-.204-2.398-1.183-2.769-1.319-.372-.136-.643-.204-.913.204-.272.407-1.048 1.319-1.286 1.592-.238.272-.476.306-.881.102-.408-.204-1.717-.633-3.27-2.019-1.208-1.078-2.024-2.407-2.262-2.815-.237-.408-.025-.629.178-.833.184-.184.408-.476.612-.715.204-.238.272-.408.408-.68.136-.272.068-.51-.034-.714-.102-.204-.913-2.207-1.252-3.022-.33-.791-.666-.684-.913-.696-.238-.012-.51-.014-.782-.014-.272 0-.714.102-1.086.51-.373.408-1.425 1.393-1.425 3.398 0 2.006 1.46 3.938 1.663 4.21.204.272 2.872 4.384 6.962 6.145.974.42 1.733.67 2.325.858.976.311 1.864.267 2.565.163.782-.117 2.398-.98 2.736-1.926.339-.946.339-1.757.238-1.927-.102-.169-.373-.272-.78-.476z"/>
+        </svg>
+        <span class="whatsapp-label">WhatsApp 咨询</span>
+    </a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo-zh">肖忠业医生</span>
+                    <span class="footer-logo-en">Dr. Xiao Zhongye &middot; 9D Lifting System</span>
+                </div>
+                <p class="footer-text">魅力留存 Charm Preservation | Only One 9D | Only By Dr. Xiao</p>
+                <p class="footer-disclaimer">本网站所有内容仅供参考，具体手术方案需经面诊后确定。个体效果可能因人而异。</p>
+                <p class="footer-copyright">&copy; 2024 Dr. Xiao Zhongye. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>
