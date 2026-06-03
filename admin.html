@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS 管理后台 | Dr. Xiao Zhongye</title>
+    <title>CMS Admin | Dr. Xiao Zhongye</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/admin.css">
@@ -12,21 +12,21 @@
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <h1>CMS 管理后台</h1>
+            <h1>CMS Admin</h1>
             <p>Dr. Xiao Zhongye Website</p>
             <form id="loginForm">
                 <div class="form-group">
-                    <label>用户名</label>
-                    <input type="text" id="loginUser" placeholder="请输入用户名" autocomplete="off">
+                    <label>Username</label>
+                    <input type="text" id="loginUser" placeholder="Enter username" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label>密码</label>
-                    <input type="password" id="loginPass" placeholder="请输入密码">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter password">
                 </div>
-                <button type="submit" class="login-btn">登 录</button>
-                <p class="login-error" id="loginError">用户名或密码错误</p>
+                <button type="submit" class="login-btn">Log In</button>
+                <p class="login-error" id="loginError">Incorrect username or password</p>
             </form>
-            <p style="margin-top:20px;font-size:0.75rem;color:#999;text-align:center;">默认: admin / admin123</p>
+            <p style="margin-top:20px;font-size:0.75rem;color:#999;text-align:center;">Default: admin / admin123</p>
         </div>
     </div>
 
@@ -34,29 +34,29 @@
     <div class="admin-layout" id="adminLayout">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <h2>肖忠业医生</h2>
+                <h2>Dr. Xiao Zhongye</h2>
                 <span>CMS Admin</span>
             </div>
             <nav class="sidebar-nav">
                 <div class="nav-item active" data-page="dashboard">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-                    <span>控制台</span>
+                    <span>Dashboard</span>
                 </div>
                 <div class="nav-item" data-page="posts">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    <span>博客文章</span>
+                    <span>Articles</span>
                 </div>
                 <div class="nav-item" data-page="gallery">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>案例图库</span>
+                    <span>Gallery</span>
                 </div>
                 <div class="nav-item" data-page="settings">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26 0 .51.1.7.3H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    <span>网站设置</span>
+                    <span>Settings</span>
                 </div>
             </nav>
             <div class="sidebar-footer">
-                <button class="logout-btn" id="logoutBtn">退出登录</button>
+                <button class="logout-btn" id="logoutBtn">Log Out</button>
             </div>
         </aside>
 
@@ -66,10 +66,10 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">
                         <span></span><span></span><span></span>
                     </button>
-                    <h1 id="pageTitle">控制台</h1>
+                    <h1 id="pageTitle">Dashboard</h1>
                 </div>
                 <div class="topbar-actions">
-                    <a href="index.html" target="_blank" class="btn btn-outline btn-sm">查看网站</a>
+                    <a href="index.html" target="_blank" class="btn btn-outline btn-sm">View Website</a>
                 </div>
             </div>
             <div class="content-area" id="contentArea"></div>
@@ -80,7 +80,7 @@
     <div class="modal-overlay" id="postModal">
         <div class="modal">
             <div class="modal-header">
-                <h2 id="postModalTitle">新建文章</h2>
+                <h2 id="postModalTitle">New Article</h2>
                 <button class="modal-close" onclick="closePostModal()">&times;</button>
             </div>
             <div class="modal-body">
@@ -88,49 +88,49 @@
                     <input type="hidden" id="postId">
                     <div class="form-row">
                         <div class="form-group">
-                            <label>文章标题</label>
+                            <label>Article Title</label>
                             <input type="text" id="postTitle" required>
                         </div>
                         <div class="form-group">
-                            <label>分类</label>
+                            <label>Category</label>
                             <select id="postCategory">
-                                <option value="technique">技术解读</option>
-                                <option value="knowledge">抗衰科普</option>
-                                <option value="case">案例分享</option>
-                                <option value="faq">常见问题</option>
+                                <option value="technique">Technique</option>
+                                <option value="knowledge">Education</option>
+                                <option value="case">Cases</option>
+                                <option value="faq">FAQ</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>封面图片路径</label>
+                        <label>Cover Image Path</label>
                         <input type="text" id="postImage" placeholder="images/gallery-case-01.PNG">
                     </div>
                     <div class="form-group">
-                        <label>文章摘要</label>
+                        <label>Article Excerpt</label>
                         <input type="text" id="postExcerpt">
                     </div>
                     <div class="form-group">
-                        <label>文章内容 (支持HTML)</label>
+                        <label>Article Content (HTML supported)</label>
                         <textarea id="postContent" rows="12"></textarea>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>状态</label>
+                            <label>Status</label>
                             <select id="postStatus">
-                                <option value="published">已发布</option>
-                                <option value="draft">草稿</option>
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>发布日期</label>
+                            <label>Publish Date</label>
                             <input type="date" id="postDate">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closePostModal()">取消</button>
-                <button class="btn btn-primary" onclick="savePost()">保存</button>
+                <button class="btn btn-outline" onclick="closePostModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="savePost()">Save</button>
             </div>
         </div>
     </div>

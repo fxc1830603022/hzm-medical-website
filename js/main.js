@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ---- Smooth Scroll for Anchor Links ----
     document.querySelectorAll('a[href^=\"#\"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
+            if (this.getAttribute('href') === '#') return;
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
@@ -160,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show success message (in production, this would send to a server)
             const submitBtn = this.querySelector('button[type=\"submit\"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = '提交成功！我们会尽快联系您';
+            submitBtn.textContent = 'Submitted! We will contact you soon.';
             submitBtn.disabled = true;
             submitBtn.style.background = '#4CAF50';
             

@@ -11,81 +11,81 @@ console.log('[CMS] admin.js loaded successfully');
 const defaultPosts = [
     {
         id: 1,
-        title: '什么是 Deep Plane 深平面拉皮？与传统拉皮的区别在哪里？',
+        title: 'What Is a Deep Plane Facelift, and How Is It Different?',
         category: 'technique',
         image: 'images/b54df5be51a02c27874d9654dcf7cd3b.jpg',
-        excerpt: 'Deep Plane（深平面）技术是目前面部年轻化手术中最先进的方法之一。与传统SMAS拉皮不同，深平面技术直接在更深层的组织平面进行操作，能够实现更加自然持久的提升效果...',
-        content: '<p>Deep Plane（深平面）面部提升技术是目前国际公认的最先进的面部年轻化手术方法之一。</p><p>与传统SMAS拉皮不同，深平面技术直接在更深层的组织平面进行操作，能够实现更加自然持久的提升效果。肖医生的9D Deep Plane技术在传统基础上进行了多项创新，确保了最佳的自然效果和安全性。</p><h4>深平面技术的核心优势</h4><p>1. 效果更加自然：深层组织复位，皮肤表面不需要过度拉伸</p><p>2. 效果更加持久：通常可以维持10年以上</p><p>3. 恢复更加安全：在正确的解剖平面操作，保护面神经和血管</p>',
+        excerpt: 'Deep plane technique works beneath the superficial layers to reposition deeper structures, helping create a more natural and longer-lasting rejuvenation...',
+        content: '<p>Deep Plane facelift technique is one of the most advanced approaches in modern facial rejuvenation.</p><p>Unlike traditional skin-tension or superficial SMAS lifting, deep plane surgery works in a deeper anatomical layer to release and reposition facial support structures.</p><h4>Core advantages</h4><p>1. More natural results: deeper tissues are repositioned instead of simply pulling skin.</p><p>2. Better longevity: structural aging is addressed directly.</p><p>3. Greater safety demand: precise anatomical dissection protects important nerves and vessels.</p>',
         status: 'published',
         date: '2024-12-15',
-        readTime: '8分钟'
+        readTime: '8 min'
     },
     {
         id: 2,
-        title: '面部衰老的真相：从骨骼到皮肤，你到底在老什么？',
+        title: 'The Truth About Facial Aging: From Bone to Skin',
         category: 'knowledge',
         image: 'images/be355d7cd70301a66fcdf6effc5a781f.jpg',
-        excerpt: '面部衰老并不仅仅是皮肤松弛那么简单。从骨骼吸收、脂肪垫移位、筋膜层松弛到表皮变薄，衰老是一个多层次、多维度的复杂过程...',
-        content: '<p>面部衰老是一个涉及多个层次的复杂过程：骨骼吸收、脂肪垫移位、筋膜层松弛、皮肤老化。</p><p>了解这些层次，才能选择正确的抗衰方式。9D Lifting System 正是基于对多层次衰老的深入理解而设计的。</p>',
+        excerpt: 'Facial aging is more than loose skin. Bone resorption, fat-pad descent, fascial laxity, and skin thinning all work together...',
+        content: '<p>Facial aging is a multilayer process involving bone resorption, fat-pad descent, fascial laxity, and skin quality changes.</p><p>9D Lifting System is designed from a layered understanding of facial anatomy so the treatment plan can match the patient.</p>',
         status: 'published',
         date: '2024-12-10',
-        readTime: '6分钟'
+        readTime: '6 min'
     },
     {
         id: 3,
-        title: '9D Lifting 的核心理念：为什么我们坚持魅力留存？',
+        title: 'The Philosophy of 9D Lifting: Why Charm Preservation Matters',
         category: 'technique',
         image: 'images/896412cd7db178d8aff7975c761cf596.jpg',
-        excerpt: '在医美行业，换脸式的过度手术越来越被有品位的求美者所排斥。9D Lifting 的核心理念是魅力留存...',
-        content: '<p>魅力留存（Charm Preservation）意味着保留你独有的五官比例和气质特征，在正确的层次上做精准的年轻化调整。</p><p>我们不换脸，我们做的是时光倒流让年轻时的你重新出现。</p>',
+        excerpt: '9D Lifting preserves your original features and character while rejuvenating the correct anatomical layers...',
+        content: '<p>Charm Preservation means protecting your unique facial proportions, expression, and personal character while performing precise rejuvenation in the correct anatomical layers.</p><p>The goal is a younger version of you, not a different face.</p>',
         status: 'published',
         date: '2024-12-05',
-        readTime: '10分钟'
+        readTime: '10 min'
     },
     {
         id: 4,
-        title: '面部提升手术后恢复期全攻略',
+        title: 'Facelift Recovery Guide: Day 1 to Day 90',
         category: 'faq',
         image: 'images/f12e811b39a2ca6114abc09612047f30.jpg',
-        excerpt: '手术只是第一步，术后恢复同样重要。本文详细梳理了从术后即刻到完全恢复的每个阶段...',
-        content: '<p>从术后肿胀高峰期到效果稳定期，每个阶段都有特定的护理要点和注意事项。</p><p>了解完整的恢复时间线，帮助您从容应对术后恢复，获得最佳手术效果。</p>',
+        excerpt: 'Surgery is only the first step. Recovery matters just as much, from early swelling to stable final contours...',
+        content: '<p>Recovery has several stages, from swelling and bruising to contour refinement and final stabilization.</p><p>A personalized recovery plan helps each patient understand what to expect after surgery.</p>',
         status: 'published',
         date: '2024-11-28',
-        readTime: '5分钟'
+        readTime: '5 min'
     },
     {
         id: 5,
-        title: '50岁欧洲女性的 9D Deep Plane 蜕变之旅',
+        title: 'A 50-Year-Old European Patient\'s 9D Deep Plane Journey',
         category: 'case',
         image: 'images/2683b7b84cb3111a72f78c2f1cb83942.jpg',
-        excerpt: '来自英国的Sarah女士，在经历了传统线雕失败后，选择了9D Deep Plane Facelift...',
-        content: '<p>Sarah的蜕变之旅从面诊开始，到术后6个月的完美效果。这是一个真实的故事。</p>',
+        excerpt: 'After disappointing thread-lift results, Sarah from the UK chose Dr. Xiao for a 9D Deep Plane Facelift...',
+        content: '<p>Sarah\'s journey began with consultation and continued through a six-month follow-up focused on natural, identity-preserving rejuvenation.</p>',
         status: 'published',
         date: '2024-11-20',
-        readTime: '7分钟'
+        readTime: '7 min'
     },
     {
         id: 6,
-        title: '线雕 vs 手术拉皮：别再被概念偷换了！',
+        title: 'Thread Lift vs. Surgical Facelift: Do Not Confuse the Concepts',
         category: 'knowledge',
         image: 'images/b8cb485707aa2b6872cc479109c0605e.jpg',
-        excerpt: '市面上很多机构把线雕包装成9D提升，但实际上线雕和外科深层结构重塑是完全不同的...',
-        content: '<p>线雕和手术拉皮是完全不同级别的抗衰方式。线雕效果短暂，而深层结构重塑才是解决严重松弛的根本方法。</p>',
+        excerpt: 'Some clinics market thread lifts as 9D lifting, but thread lifting and surgical deep-structure remodeling are very different...',
+        content: '<p>Thread lifting and surgical deep-structure remodeling are not the same level of treatment. True 9D Lifting is a surgical system, not a marketing label for thread placement.</p>',
         status: 'published',
         date: '2024-11-15',
-        readTime: '6分钟'
+        readTime: '6 min'
     }
 ];
 
 const defaultSettings = {
     whatsappNumber: '8613800138000',
-    whatsappMessage: '您好，我对9D提升很感兴趣，想了解更多信息。',
+    whatsappMessage: 'Hello, I am interested in 9D Lifting and would like to learn more.',
     email: 'contact@drxiao-9d.com',
-    address: '中国 · 上海',
+    address: 'Shanghai, China',
     siteTitle: 'Dr. Xiao Zhongye | 9D Lifting System',
-    heroTitle: '拒绝流水线',
+    heroTitle: 'Reject the Assembly Line',
     heroSubtitle: 'Only One 9D · Only By Dr. Xiao',
-    heroDesc: '真正的抗衰，是保留你原本的魅力，让你依然是你自己，只是年轻了十岁。'
+    heroDesc: 'True anti-aging preserves your original charm. You still look like yourself, only ten years younger.'
 };
 
 // Data helpers
@@ -166,12 +166,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     var errEl = document.getElementById('loginError');
                     if (errEl) {
                         errEl.style.display = 'block';
-                        errEl.textContent = '用户名或密码错误';
+                        errEl.textContent = 'Incorrect username or password';
                     }
                 }
             } catch(err) {
                 console.error('[CMS] Login handler error:', err);
-                alert('登录出错: ' + err.message);
+                alert('Login error: ' + err.message);
             }
         });
         console.log('[CMS] Submit listener attached');
@@ -209,10 +209,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // --- Global functions (needed for inline onclick and navigation) ---
 var pageTitles = {
-    dashboard: '控制台',
-    posts: '博客文章管理',
-    gallery: '案例图库管理',
-    settings: '网站设置'
+    dashboard: 'Dashboard',
+    posts: 'Article Management',
+    gallery: 'Gallery Management',
+    settings: 'Website Settings'
 };
 
 function navigateTo(page) {
@@ -245,22 +245,22 @@ function renderDashboard(container) {
     var posts = getPosts();
     var pub = posts.filter(function(p) { return p.status === 'published'; }).length;
     var drafts = posts.filter(function(p) { return p.status === 'draft'; }).length;
-    var catNames = { technique: '技术解读', knowledge: '抗衰科普', case: '案例分享', faq: '常见问题' };
+    var catNames = { technique: 'Technique', knowledge: 'Education', case: 'Cases', faq: 'FAQ' };
 
     var html = '<div class=\"stats-grid\">';
-    html += '<div class=\"stat-card\"><h3>总文章数</h3><div class=\"stat-value\">' + posts.length + '</div></div>';
-    html += '<div class=\"stat-card\"><h3>已发布</h3><div class=\"stat-value\">' + pub + '</div></div>';
-    html += '<div class=\"stat-card\"><h3>草稿</h3><div class=\"stat-value\">' + drafts + '</div></div>';
-    html += '<div class=\"stat-card\"><h3>图库图片</h3><div class=\"stat-value\">20</div></div>';
+    html += '<div class=\"stat-card\"><h3>Total Articles</h3><div class=\"stat-value\">' + posts.length + '</div></div>';
+    html += '<div class=\"stat-card\"><h3>Published</h3><div class=\"stat-value\">' + pub + '</div></div>';
+    html += '<div class=\"stat-card\"><h3>Drafts</h3><div class=\"stat-value\">' + drafts + '</div></div>';
+    html += '<div class=\"stat-card\"><h3>Gallery Images</h3><div class=\"stat-value\">20</div></div>';
     html += '</div>';
 
-    html += '<div class=\"table-container\"><div class=\"table-header\"><h3>最近文章</h3></div>';
-    html += '<table><thead><tr><th>标题</th><th>分类</th><th>状态</th><th>日期</th></tr></thead><tbody>';
+    html += '<div class=\"table-container\"><div class=\"table-header\"><h3>Recent Articles</h3></div>';
+    html += '<table><thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Date</th></tr></thead><tbody>';
 
     posts.slice(0, 5).forEach(function(p) {
         html += '<tr><td>' + escHtml(p.title).substring(0, 40) + '</td>';
         html += '<td>' + (catNames[p.category] || p.category) + '</td>';
-        html += '<td><span class=\"status-badge status-' + p.status + '\">' + (p.status === 'published' ? '已发布' : '草稿') + '</span></td>';
+        html += '<td><span class=\"status-badge status-' + p.status + '\">' + (p.status === 'published' ? 'Published' : 'Draft') + '</span></td>';
         html += '<td>' + p.date + '</td></tr>';
     });
 
@@ -273,25 +273,25 @@ function renderDashboard(container) {
 // ============================================
 function renderPostsPage(container) {
     var posts = getPosts();
-    var catNames = { technique: '技术解读', knowledge: '抗衰科普', case: '案例分享', faq: '常见问题' };
+    var catNames = { technique: 'Technique', knowledge: 'Education', case: 'Cases', faq: 'FAQ' };
 
     var html = '<div class=\"table-container\">';
-    html += '<div class=\"table-header\"><h3>所有文章 (' + posts.length + ')</h3>';
-    html += '<button class=\"btn btn-primary\" onclick=\"openPostModal()\">+ 新建文章</button></div>';
+    html += '<div class=\"table-header\"><h3>All Articles (' + posts.length + ')</h3>';
+    html += '<button class=\"btn btn-primary\" onclick=\"openPostModal()\">+ New Article</button></div>';
 
     if (posts.length === 0) {
-        html += '<div class=\"empty-state\"><p>还没有文章，点击新建文章开始创作</p></div>';
+        html += '<div class=\"empty-state\"><p>No articles yet. Click New Article to start.</p></div>';
     } else {
-        html += '<table><thead><tr><th style=\"width:40%\">标题</th><th>分类</th><th>状态</th><th>日期</th><th>操作</th></tr></thead><tbody>';
+        html += '<table><thead><tr><th style=\"width:40%\">Title</th><th>Category</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
         posts.forEach(function(p) {
             html += '<tr>';
             html += '<td><strong>' + escHtml(p.title).substring(0, 50) + (p.title.length > 50 ? '...' : '') + '</strong></td>';
             html += '<td>' + (catNames[p.category] || p.category) + '</td>';
-            html += '<td><span class=\"status-badge status-' + p.status + '\">' + (p.status === 'published' ? '已发布' : '草稿') + '</span></td>';
+            html += '<td><span class=\"status-badge status-' + p.status + '\">' + (p.status === 'published' ? 'Published' : 'Draft') + '</span></td>';
             html += '<td>' + p.date + '</td>';
             html += '<td><div class=\"action-btns\">';
-            html += '<button class=\"btn btn-outline btn-sm\" onclick=\"editPost(' + p.id + ')\">编辑</button>';
-            html += '<button class=\"btn btn-danger btn-sm\" onclick=\"deletePost(' + p.id + ')\">删除</button>';
+            html += '<button class=\"btn btn-outline btn-sm\" onclick=\"editPost(' + p.id + ')\">Edit</button>';
+            html += '<button class=\"btn btn-danger btn-sm\" onclick=\"deletePost(' + p.id + ')\">Delete</button>';
             html += '</div></td></tr>';
         });
         html += '</tbody></table>';
@@ -306,7 +306,7 @@ function openPostModal(postId) {
         var posts = getPosts();
         var post = posts.find(function(p) { return p.id === postId; });
         if (post) {
-            document.getElementById('postModalTitle').textContent = '编辑文章';
+            document.getElementById('postModalTitle').textContent = 'Edit Article';
             document.getElementById('postId').value = post.id;
             document.getElementById('postTitle').value = post.title;
             document.getElementById('postCategory').value = post.category;
@@ -317,7 +317,7 @@ function openPostModal(postId) {
             document.getElementById('postDate').value = post.date;
         }
     } else {
-        document.getElementById('postModalTitle').textContent = '新建文章';
+        document.getElementById('postModalTitle').textContent = 'New Article';
         document.getElementById('postForm').reset();
         document.getElementById('postId').value = '';
         document.getElementById('postDate').value = new Date().toISOString().split('T')[0];
@@ -333,7 +333,7 @@ function editPost(id) { openPostModal(id); }
 function savePost() {
     var id = document.getElementById('postId').value;
     var title = document.getElementById('postTitle').value.trim();
-    if (!title) { showToast('请填写文章标题', 'error'); return; }
+    if (!title) { showToast('Please enter an article title', 'error'); return; }
 
     var posts = getPosts();
     var data = {
@@ -349,12 +349,12 @@ function savePost() {
     if (id) {
         var idx = posts.findIndex(function(p) { return p.id === parseInt(id); });
         if (idx !== -1) posts[idx] = Object.assign(posts[idx], data);
-        showToast('文章已更新', 'success');
+        showToast('Article updated', 'success');
     } else {
         data.id = Date.now();
-        data.readTime = '5分钟';
+        data.readTime = '5 min';
         posts.unshift(data);
-        showToast('文章已创建', 'success');
+        showToast('Article created', 'success');
     }
 
     savePosts(posts);
@@ -363,11 +363,11 @@ function savePost() {
 }
 
 function deletePost(id) {
-    if (!confirm('确定要删除这篇文章吗？')) return;
+    if (!confirm('Delete this article?')) return;
     var posts = getPosts().filter(function(p) { return p.id !== id; });
     savePosts(posts);
     renderPostsPage(document.getElementById('contentArea'));
-    showToast('文章已删除', 'success');
+    showToast('Article deleted', 'success');
 }
 
 // ============================================
@@ -385,8 +385,8 @@ function renderGalleryPage(container) {
     ];
 
     var html = '<div class=\"table-container\">';
-    html += '<div class=\"table-header\"><h3>案例图库 (' + images.length + ' 张)</h3>';
-    html += '<p style=\"color:var(--text-light);font-size:0.85rem;\">图片存放于 website/images/ 目录</p></div>';
+    html += '<div class=\"table-header\"><h3>Case Gallery (' + images.length + ' images)</h3>';
+    html += '<p style=\"color:var(--text-light);font-size:0.85rem;\">Images are stored in the website/images/ directory.</p></div>';
     html += '<div class=\"gallery-admin-grid\">';
 
     images.forEach(function(img) {
@@ -397,11 +397,11 @@ function renderGalleryPage(container) {
 
     html += '</div>';
     html += '<div style=\"padding:20px 24px;border-top:1px solid var(--border);\">';
-    html += '<h4 style=\"margin-bottom:12px;color:var(--primary);\">添加新图片引用</h4>';
-    html += '<p style=\"font-size:0.85rem;color:var(--text-light);margin-bottom:12px;\">请先将图片文件复制到 website/images/ 目录，然后在此添加。</p>';
+    html += '<h4 style=\"margin-bottom:12px;color:var(--primary);\">Add New Image Reference</h4>';
+    html += '<p style=\"font-size:0.85rem;color:var(--text-light);margin-bottom:12px;\">Copy the image file into the website/images/ directory first, then add it here.</p>';
     html += '<div style=\"display:flex;gap:12px;flex-wrap:wrap;\">';
-    html += '<input type=\"text\" id=\"newImageName\" placeholder=\"文件名 如 gallery-new-01.PNG\" style=\"flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;\">';
-    html += '<button class=\"btn btn-primary btn-sm\" onclick=\"addGalleryImage()\">添加</button>';
+    html += '<input type=\"text\" id=\"newImageName\" placeholder=\"Filename, e.g. gallery-new-01.PNG\" style=\"flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;\">';
+    html += '<button class=\"btn btn-primary btn-sm\" onclick=\"addGalleryImage()\">Add</button>';
     html += '</div></div></div>';
 
     container.innerHTML = html;
@@ -409,8 +409,8 @@ function renderGalleryPage(container) {
 
 function addGalleryImage() {
     var name = document.getElementById('newImageName').value.trim();
-    if (!name) { showToast('请输入文件名', 'error'); return; }
-    showToast('图片已添加 请确保文件已放入 images 目录', 'success');
+    if (!name) { showToast('Please enter a filename', 'error'); return; }
+    showToast('Image reference added. Make sure the file is in the images directory.', 'success');
     document.getElementById('newImageName').value = '';
     renderGalleryPage(document.getElementById('contentArea'));
 }
@@ -422,39 +422,39 @@ function renderSettingsPage(container) {
     var s = getSettings();
     var html = '<form onsubmit=\"saveSettingsForm(event)\">';
 
-    html += '<div class=\"settings-section\"><h3>WhatsApp 设置</h3><div class=\"settings-body\">';
+    html += '<div class=\"settings-section\"><h3>WhatsApp Settings</h3><div class=\"settings-body\">';
     html += '<div class=\"form-row\">';
-    html += '<div class=\"form-group\"><label>WhatsApp 号码 含国家码</label>';
+    html += '<div class=\"form-group\"><label>WhatsApp Number With Country Code</label>';
     html += '<input type=\"text\" id=\"setWhatsapp\" value=\"' + escAttr(s.whatsappNumber) + '\" placeholder=\"8613800138000\"></div>';
-    html += '<div class=\"form-group\"><label>预设消息</label>';
+    html += '<div class=\"form-group\"><label>Preset Message</label>';
     html += '<input type=\"text\" id=\"setWaMsg\" value=\"' + escAttr(s.whatsappMessage) + '\"></div>';
     html += '</div></div></div>';
 
-    html += '<div class=\"settings-section\"><h3>联系信息</h3><div class=\"settings-body\">';
+    html += '<div class=\"settings-section\"><h3>Contact Information</h3><div class=\"settings-body\">';
     html += '<div class=\"form-row\">';
     html += '<div class=\"form-group\"><label>Email</label>';
     html += '<input type=\"email\" id=\"setEmail\" value=\"' + escAttr(s.email) + '\"></div>';
-    html += '<div class=\"form-group\"><label>地址</label>';
+    html += '<div class=\"form-group\"><label>Address</label>';
     html += '<input type=\"text\" id=\"setAddress\" value=\"' + escAttr(s.address) + '\"></div>';
     html += '</div></div></div>';
 
-    html += '<div class=\"settings-section\"><h3>首页 Hero 区域</h3><div class=\"settings-body\">';
-    html += '<div class=\"form-group\"><label>网站标题</label>';
+    html += '<div class=\"settings-section\"><h3>Homepage Hero</h3><div class=\"settings-body\">';
+    html += '<div class=\"form-group\"><label>Site Title</label>';
     html += '<input type=\"text\" id=\"setSiteTitle\" value=\"' + escAttr(s.siteTitle) + '\"></div>';
     html += '<div class=\"form-row\">';
-    html += '<div class=\"form-group\"><label>Hero 主标题</label>';
+    html += '<div class=\"form-group\"><label>Hero Main Title</label>';
     html += '<input type=\"text\" id=\"setHeroTitle\" value=\"' + escAttr(s.heroTitle) + '\"></div>';
-    html += '<div class=\"form-group\"><label>Hero 副标题 英文</label>';
+    html += '<div class=\"form-group\"><label>Hero Subtitle</label>';
     html += '<input type=\"text\" id=\"setHeroSub\" value=\"' + escAttr(s.heroSubtitle) + '\"></div>';
     html += '</div>';
-    html += '<div class=\"form-group\"><label>Hero 描述</label>';
+    html += '<div class=\"form-group\"><label>Hero Description</label>';
     html += '<textarea id=\"setHeroDesc\" rows=\"3\">' + escHtml(s.heroDesc) + '</textarea></div>';
     html += '</div></div>';
 
     html += '<div style=\"display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px;\">';
-    html += '<button type=\"button\" class=\"btn btn-outline\" onclick=\"resetSettings()\">恢复默认</button>';
-    html += '<button type=\"button\" class=\"btn btn-outline\" onclick=\"exportData()\">导出数据</button>';
-    html += '<button type=\"submit\" class=\"btn btn-primary\">保存设置</button>';
+    html += '<button type=\"button\" class=\"btn btn-outline\" onclick=\"resetSettings()\">Reset Defaults</button>';
+    html += '<button type=\"button\" class=\"btn btn-outline\" onclick=\"exportData()\">Export Data</button>';
+    html += '<button type=\"submit\" class=\"btn btn-primary\">Save Settings</button>';
     html += '</div></form>';
 
     container.innerHTML = html;
@@ -473,14 +473,14 @@ function saveSettingsForm(e) {
         heroDesc: document.getElementById('setHeroDesc').value.trim()
     };
     saveSettings(settings);
-    showToast('设置已保存', 'success');
+    showToast('Settings saved', 'success');
 }
 
 function resetSettings() {
-    if (!confirm('确定要恢复默认设置吗？')) return;
+    if (!confirm('Reset settings to defaults?')) return;
     localStorage.removeItem('cms_settings');
     renderSettingsPage(document.getElementById('contentArea'));
-    showToast('已恢复默认设置', 'success');
+    showToast('Default settings restored', 'success');
 }
 
 function exportData() {
@@ -496,7 +496,7 @@ function exportData() {
     a.download = 'cms-backup-' + new Date().toISOString().split('T')[0] + '.json';
     a.click();
     URL.revokeObjectURL(url);
-    showToast('数据已导出', 'success');
+    showToast('Data exported', 'success');
 }
 
 // Utility
