@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #fbfaf7;
+  color: #151514;
+  font-family: Montserrat, "Noto Sans SC", Arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: #c9a96e;
+  color: #151514;
+}
+
+@layer components {
+  .section-label {
+    @apply text-sm font-bold uppercase text-bronze;
+    letter-spacing: 0.18em;
+  }
+
+  .section-title {
+    @apply mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl;
+  }
+
+  .section-title span {
+    @apply text-bronze;
+  }
+
+  .article-content {
+    @apply text-base leading-8 text-graphite/80;
+  }
+
+  .article-content p {
+    @apply my-5;
+  }
+
+  .article-content h4 {
+    @apply mb-3 mt-8 font-display text-2xl font-semibold text-ink;
+  }
+
+  .article-content a {
+    @apply font-semibold text-bronze underline underline-offset-4;
+  }
+}

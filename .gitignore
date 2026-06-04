@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js / build output
+.next/
+out/
+dist/
+
+# Vercel local metadata
+.vercel/
+
+# local environment files - never upload secrets
+.env
+.env.local
+.env*.local
+!.env.example
+
+# local caches
+.npm-cache/
+*.tsbuildinfo
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local screenshots and OS files
+screenshots/
+.DS_Store
+Thumbs.db

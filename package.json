@@ -1,0 +1,41 @@
+{
+  "name": "dr-xiao-next",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "studio": "sanity dev",
+    "sanity:import": "sanity dataset import sanity-seed.ndjson production --replace",
+    "sanity:deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.29.1",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.92.0",
+    "@supabase/supabase-js": "^2.49.8",
+    "framer-motion": "^12.12.1",
+    "lucide-react": "^0.511.0",
+    "next": "^15.3.3",
+    "next-sanity": "^9.12.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sanity": "^3.92.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.27.0",
+    "eslint-config-next": "^15.3.3",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
+  }
+}
