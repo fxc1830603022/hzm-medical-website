@@ -34,6 +34,7 @@ export function Gallery({ items }: GalleryProps) {
                 src={item.image}
                 alt={item.alt}
                 fill
+                unoptimized
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
@@ -79,7 +80,7 @@ export function Gallery({ items }: GalleryProps) {
           </button>
           <div className="flex h-full items-center justify-center" onClick={(event) => event.stopPropagation()}>
             <div className="relative h-[86vh] w-full max-w-5xl">
-              <Image src={activeItem.image} alt={activeItem.alt} fill sizes="100vw" className="object-contain" />
+              <Image src={activeItem.image} alt={activeItem.alt} fill unoptimized sizes="100vw" className="object-contain" />
             </div>
           </div>
         </div>

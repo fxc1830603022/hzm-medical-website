@@ -65,7 +65,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <section className="px-5 py-12 sm:px-8 lg:py-16">
             <div className="mx-auto max-w-4xl overflow-hidden rounded-md bg-white shadow-soft">
               <div className="relative aspect-[16/9] bg-mist">
-                <Image src={post.image} alt={post.title} fill sizes="100vw" className="object-cover" priority />
+                <Image src={post.image} alt={post.title} fill unoptimized sizes="100vw" className="object-cover" priority />
               </div>
               <div className="p-6 sm:p-10">
                 <div className="article-content" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
