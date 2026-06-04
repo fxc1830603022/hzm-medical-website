@@ -11,6 +11,8 @@ export const metadata = {
   description: "Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye."
 };
 
+export const revalidate = 60;
+
 export default async function BlogPage() {
   const [posts, settings] = await Promise.all([getPosts(), getSiteSettings()]);
 

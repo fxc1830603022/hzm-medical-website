@@ -105,6 +105,20 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   }
 }
 
+export async function getPostSlugs(): Promise<string[]> {
+  if (!sanityConfigured) return defaultPosts.map((post) => post.slug);
+
+  try {
+    const slugs = await sanityClient.fetch<string[]>(
+      `*[_type == "post" && status == "published" && defined(slug.current)].slug.current`
+    );
+
+    return slugs.length ? slugs : defaultPosts.map((post) => post.slug);
+  } catch {
+    return defaultPosts.map((post) => post.slug);
+  }
+}
+
 export async function getGalleryItems(): Promise<GalleryItem[]> {
   if (!sanityConfigured) return defaultGalleryItems;
 
