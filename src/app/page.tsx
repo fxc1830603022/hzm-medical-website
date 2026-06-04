@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getGalleryItems, getSiteSettings } from "@/lib/sanity";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const [settings, galleryItems] = await Promise.all([getSiteSettings(), getGalleryItems()]);

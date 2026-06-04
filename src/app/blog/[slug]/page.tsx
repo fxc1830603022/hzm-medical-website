@@ -7,19 +7,14 @@ import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { getPostBySlug, getPostSlugs, getSiteSettings } from "@/lib/sanity";
+import { getPostBySlug, getSiteSettings } from "@/lib/sanity";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
