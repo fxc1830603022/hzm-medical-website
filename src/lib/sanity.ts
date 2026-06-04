@@ -13,6 +13,7 @@ import type { BlogPost, CategoryKey, GalleryItem, SiteSettings } from "./site-ty
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-02-19";
+const token = process.env.SANITY_API_TOKEN;
 
 export const sanityConfigured = Boolean(projectId && dataset);
 
@@ -20,7 +21,8 @@ export const sanityClient = createClient({
   projectId: projectId || "placeholder",
   dataset,
   apiVersion,
-  useCdn: true,
+  token,
+  useCdn: !token,
   stega: false
 });
 
@@ -99,7 +101,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       { slug }
     );
 
-    return post ? normalizePost(post) : null;
+    return post ? normalizePost(post) : defaultPosts.find((item) => item.slug === slug) || null;
   } catch {
     return defaultPosts.find((item) => item.slug === slug) || null;
   }
@@ -163,7 +165,6 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 }
 
 export function makeServerSanityClient() {
-  const token = process.env.SANITY_API_TOKEN;
   if (!projectId || !dataset || !token) return null;
 
   return createClient({
