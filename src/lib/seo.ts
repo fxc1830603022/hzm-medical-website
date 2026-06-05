@@ -1,6 +1,9 @@
 import type { BlogPost } from "./site-types";
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.drxiao9d.com").replace(/\/$/, "");
+const productionSiteUrl = "https://www.drxiao9d.com";
+const configuredSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL || productionSiteUrl).replace(/\/$/, "");
+
+export const siteUrl = configuredSiteUrl.includes(".vercel.app") ? productionSiteUrl : configuredSiteUrl;
 
 export const seoDefaults = {
   siteName: "Dr. Xiao Zhongye 9D Lifting System",
