@@ -38,7 +38,7 @@ export const defaultSettings: SiteSettings = {
   heroTitleTop: "Reject the Assembly Line",
   heroTitleBottom: "Charm Preservation",
   heroDescription: "True anti-aging preserves your original charm.\nYou still look like yourself, only ten years younger.",
-  whatsappNumber: "8613800138000",
+  whatsappNumber: "+1 304-356-8136",
   whatsappMessage: "Hello, I am interested in 9D Lifting and would like to learn more.",
   email: "contact@drxiao-9d.com",
   location: "Shanghai, China"
@@ -271,7 +271,14 @@ export const defaultPosts: BlogPost[] = [
 
 export function getWhatsAppUrl(settings: SiteSettings = defaultSettings) {
   const message = encodeURIComponent(settings.whatsappMessage || defaultSettings.whatsappMessage);
-  return `https://wa.me/${settings.whatsappNumber || defaultSettings.whatsappNumber}?text=${message}`;
+  const number = normalizeWhatsAppNumber(settings.whatsappNumber || defaultSettings.whatsappNumber);
+  return `https://wa.me/${number}?text=${message}`;
+}
+
+export function normalizeWhatsAppNumber(value: string) {
+  const digits = value.replace(/\D/g, "");
+  if (digits.length === 10) return `1${digits}`;
+  return digits || defaultSettings.whatsappNumber.replace(/\D/g, "");
 }
 
 export function formatDisplayDate(value: string) {
