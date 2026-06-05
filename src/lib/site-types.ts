@@ -32,9 +32,8 @@ export type SiteSettings = {
   whatsappNumber: string;
   whatsappMessage: string;
   instagramUrl: string;
-  wechatUrl: string;
-  redUrl: string;
   youtubeUrl: string;
+  facebookUrl: string;
   email: string;
   location: string;
 };

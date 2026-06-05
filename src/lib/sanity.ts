@@ -152,9 +152,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       whatsappNumber,
       whatsappMessage,
       instagramUrl,
-      wechatUrl,
-      redUrl,
       youtubeUrl,
+      facebookUrl,
       email,
       location
     }`);

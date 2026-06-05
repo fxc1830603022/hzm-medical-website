@@ -2,15 +2,13 @@ import {
   BriefcaseMedical,
   Check,
   Globe2,
-  Instagram,
   Mail,
   MapPin,
   MessageCircle,
   ShieldCheck,
   Sparkles,
   Star,
-  UserRoundCheck,
-  Youtube
+  UserRoundCheck
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,37 +31,31 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
     label: string;
     href: string;
     icon: ReactNode;
-    accentClass: string;
   }> = [
     {
       label: "WhatsApp",
       href: getWhatsAppUrl(safeSettings),
-      icon: <WhatsAppBrandIcon />,
-      accentClass: "border-[#25D366]/25 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366]/10"
+      icon: <WhatsAppBrandIcon />
+    },
+    {
+      label: "Email",
+      href: `mailto:${safeSettings.email}`,
+      icon: <EnvelopeBrandIcon />
     },
     {
       label: "Instagram",
       href: safeSettings.instagramUrl,
-      icon: <Instagram size={21} />,
-      accentClass: "border-[#E4405F]/25 text-[#E4405F] hover:border-[#E4405F] hover:bg-[#E4405F]/10"
-    },
-    {
-      label: "WeChat",
-      href: safeSettings.wechatUrl,
-      icon: <WeChatBrandIcon />,
-      accentClass: "border-[#07C160]/25 text-[#07C160] hover:border-[#07C160] hover:bg-[#07C160]/10"
-    },
-    {
-      label: "Xiaohongshu / RED",
-      href: safeSettings.redUrl,
-      icon: <RedBookIcon />,
-      accentClass: "border-[#ff2442]/25 text-[#ff2442] hover:border-[#ff2442] hover:bg-[#ff2442]/10"
+      icon: <InstagramBrandIcon />
     },
     {
       label: "YouTube",
       href: safeSettings.youtubeUrl,
-      icon: <Youtube size={23} />,
-      accentClass: "border-[#FF0000]/25 text-[#FF0000] hover:border-[#FF0000] hover:bg-[#FF0000]/10"
+      icon: <YouTubeBrandIcon />
+    },
+    {
+      label: "Facebook",
+      href: safeSettings.facebookUrl,
+      icon: <FacebookBrandIcon />
     }
   ];
 
@@ -374,25 +366,28 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                 {safeSettings.location}
               </ContactItem>
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {socialLinks.map((item) => {
-                const href = item.href || "#contact";
-                const isExternal = /^https?:\/\//.test(href);
+            <div className="mt-8 rounded-md bg-[#005b34] px-5 pb-5 pt-6 shadow-lift">
+              <div className="flex items-center justify-between gap-3">
+                {socialLinks.map((item) => {
+                  const href = item.href || "#contact";
+                  const isExternal = /^https?:\/\//.test(href);
 
-                return (
-                  <a
-                    key={item.label}
-                    href={href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noreferrer" : undefined}
-                    aria-label={item.label}
-                    title={item.label}
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-md border border-ink/15 bg-white text-graphite shadow-soft transition hover:-translate-y-0.5 ${item.accentClass}`}
-                  >
-                    {item.icon}
-                  </a>
-                );
-              })}
+                  return (
+                    <a
+                      key={item.label}
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noreferrer" : undefined}
+                      aria-label={item.label}
+                      title={item.label}
+                      className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-porcelain text-[#005b34] shadow-soft transition hover:-translate-y-0.5 hover:bg-white hover:shadow-lift"
+                    >
+                      {item.icon}
+                    </a>
+                  );
+                })}
+              </div>
+              <div className="mt-5 h-px w-full bg-[#d8c8a9]/45" />
             </div>
           </Reveal>
 
@@ -447,32 +442,44 @@ function WhatsAppBrandIcon() {
   );
 }
 
-function WeChatBrandIcon() {
+function EnvelopeBrandIcon() {
   return (
     <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M10.4 6.1c-3.42 0-6.2 2.2-6.2 4.92 0 1.55.9 2.93 2.3 3.83l-.5 1.66 1.96-.95c.72.23 1.55.36 2.44.36 3.42 0 6.2-2.2 6.2-4.9S13.82 6.1 10.4 6.1Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14.9 12.06c2.78.32 4.9 2.15 4.9 4.36 0 1.26-.7 2.4-1.8 3.16l.42 1.32-1.6-.8c-.6.18-1.27.28-1.98.28-2.68 0-4.95-1.45-5.64-3.44"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path d="M8.3 10.32h.02M12.25 10.32h.02M14.02 15.95h.02M17.35 15.95h.02" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <rect x="4" y="6.5" width="16" height="11" rx="1.6" stroke="currentColor" strokeWidth="1.8" />
+      <path d="m5.2 8 6.8 5.1L18.8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-function RedBookIcon() {
+function InstagramBrandIcon() {
   return (
     <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-      <rect x="4.25" y="3.7" width="15.5" height="16.6" rx="3.2" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M8 8.2h8M8 11.8h6.2M8 15.4h7.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M16.6 5.6v3.2l1.15-.78 1.15.78V5.6" fill="currentColor" />
+      <rect x="5.2" y="5.2" width="13.6" height="13.6" rx="3.2" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="12" cy="12" r="3.35" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="15.95" cy="8.15" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function YouTubeBrandIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M20.25 8.38a2.4 2.4 0 0 0-1.68-1.7C17.08 6.3 12 6.3 12 6.3s-5.08 0-6.57.4a2.4 2.4 0 0 0-1.68 1.69A25.1 25.1 0 0 0 3.35 12c0 1.22.12 2.43.4 3.62a2.4 2.4 0 0 0 1.68 1.7c1.49.39 6.57.39 6.57.39s5.08 0 6.57-.4a2.4 2.4 0 0 0 1.68-1.69c.28-1.19.4-2.4.4-3.62 0-1.22-.12-2.43-.4-3.62Z"
+        fill="currentColor"
+      />
+      <path d="m10.45 14.65 4.05-2.34-4.05-2.35v4.69Z" fill="#fbfaf7" />
+    </svg>
+  );
+}
+
+function FacebookBrandIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M13.55 20v-7.05h2.33l.36-2.75h-2.69V8.47c0-.8.22-1.34 1.36-1.34h1.45V4.66A19.35 19.35 0 0 0 14.24 4c-2.1 0-3.53 1.28-3.53 3.62v2.58H8.34v2.75h2.37V20h2.84Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }

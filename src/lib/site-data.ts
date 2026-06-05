@@ -41,9 +41,8 @@ export const defaultSettings: SiteSettings = {
   whatsappNumber: "+1 304-356-8136",
   whatsappMessage: "Hello, I am interested in 9D Lifting and would like to learn more.",
   instagramUrl: "#contact",
-  wechatUrl: "#contact",
-  redUrl: "#contact",
   youtubeUrl: "#contact",
+  facebookUrl: "#contact",
   email: "contact@drxiao-9d.com",
   location: "Shanghai, China"
 };

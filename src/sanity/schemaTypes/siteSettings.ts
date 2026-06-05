@@ -29,22 +29,16 @@ export const siteSettings = defineType({
       description: "Paste the Instagram profile URL. Leave empty until the official account is ready."
     }),
     defineField({
-      name: "wechatUrl",
-      title: "WeChat Link",
-      type: "string",
-      description: "Paste a WeChat QR code page URL, mini-program link, or keep it empty and use WhatsApp first."
-    }),
-    defineField({
-      name: "redUrl",
-      title: "Xiaohongshu / RED URL",
-      type: "url",
-      description: "Paste the Xiaohongshu / RED profile URL."
-    }),
-    defineField({
       name: "youtubeUrl",
       title: "YouTube URL",
       type: "url",
       description: "Paste the YouTube channel URL."
+    }),
+    defineField({
+      name: "facebookUrl",
+      title: "Facebook URL",
+      type: "url",
+      description: "Paste the Facebook page URL."
     }),
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({ name: "location", title: "Location", type: "string" })
