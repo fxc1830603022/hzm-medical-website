@@ -33,7 +33,7 @@ export function LandingPageView({ page, settings, galleryItems = [] }: LandingPa
 
   return (
     <>
-      <section className="relative flex min-h-[88vh] items-end overflow-hidden bg-ink px-5 pb-14 pt-32 text-white sm:px-8 lg:pb-20">
+      <section className="relative flex min-h-[88vh] items-end overflow-hidden bg-ink px-5 pb-24 pt-32 text-white sm:px-8 sm:pb-14 lg:pb-20">
         {usesPhotoHero ? (
           <>
             <Image
@@ -66,7 +66,7 @@ export function LandingPageView({ page, settings, galleryItems = [] }: LandingPa
               <span className="text-champagne">{page.breadcrumb}</span>
             </nav>
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-champagne">{page.eyebrow}</p>
-            <h1 className="mt-7 max-w-5xl font-display text-5xl font-semibold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
+            <h1 className="mt-7 max-w-5xl font-display text-4xl font-semibold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
               {page.title}
               <span className="mt-2 block text-champagne">{page.accent}</span>
             </h1>

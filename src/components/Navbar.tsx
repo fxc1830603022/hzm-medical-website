@@ -19,7 +19,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-porcelain/95 shadow-soft backdrop-blur" : "bg-ink/35 backdrop-blur-sm"
+        scrolled ? "bg-porcelain/95 shadow-soft backdrop-blur" : "bg-ink/95 backdrop-blur-sm"
       }`}
     >
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
