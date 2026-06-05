@@ -58,7 +58,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
-                href="#contact"
+                href="/consultation"
                 className="inline-flex h-12 items-center justify-center rounded-md bg-champagne px-6 text-sm font-bold text-ink transition hover:bg-white"
               >
                 Book a 1-on-1 Online Consultation
@@ -133,7 +133,13 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
             description="Because every face, aging pattern, and budget is different, no 9D surgical plan is ever one-size-fits-all."
           />
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {procedures.map((item, index) => (
+            {procedures.map((item, index) => {
+              const procedureHref =
+                item.name === "9D Deep Plane Facelift"
+                  ? "/procedures/9d-deep-plane-facelift"
+                  : "/procedures/9d-facelift";
+
+              return (
               <Reveal key={item.name} delay={index * 0.08}>
                 <div
                   className={`relative h-full rounded-md border p-7 shadow-soft ${
@@ -171,9 +177,20 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                   >
                     {item.tag}
                   </div>
+                  <Link
+                    href={procedureHref}
+                    className={`mt-5 inline-flex h-11 items-center rounded-md px-5 text-sm font-bold transition ${
+                      item.featured
+                        ? "bg-champagne text-ink hover:bg-white"
+                        : "bg-ink text-white hover:bg-champagne hover:text-ink"
+                    }`}
+                  >
+                    Learn more
+                  </Link>
                 </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -286,7 +303,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
             Only One 9D | Only By Dr. Xiao
           </p>
           <Link
-            href="#contact"
+            href="/consultation"
             className="mt-9 inline-flex h-12 items-center justify-center rounded-md bg-ink px-6 text-sm font-bold text-white transition hover:bg-champagne hover:text-ink"
           >
             Book Your 1-on-1 Online Consultation

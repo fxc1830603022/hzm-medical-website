@@ -6,8 +6,10 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { Navbar } from "@/components/Navbar";
+import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getPostBySlug, getSiteSettings } from "@/lib/sanity";
+import { absoluteUrl, articleJsonLd, breadcrumbJsonLd, imageUrl } from "@/lib/seo";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -27,8 +29,25 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: `${post.title} | Dr. Xiao Zhongye`,
-    description: post.excerpt
+    title: post.title,
+    description: post.excerpt,
+    alternates: {
+      canonical: absoluteUrl(`/blog/${post.slug}`)
+    },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url: absoluteUrl(`/blog/${post.slug}`),
+      images: [imageUrl(post.image)],
+      publishedTime: post.date
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [imageUrl(post.image)]
+    }
   };
 }
 
@@ -40,6 +59,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
+      <StructuredData
+        data={[
+          articleJsonLd(post),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Articles", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` }
+          ])
+        ]}
+      />
       <Navbar />
       <main className="bg-porcelain pt-20">
         <article>
@@ -74,7 +103,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     Want to learn more? Contact us for a personalized consultation plan.
                   </p>
                   <Link
-                    href="/#contact"
+                    href="/consultation"
                     className="mt-5 inline-flex h-11 items-center rounded-md bg-ink px-5 text-sm font-semibold text-white transition hover:bg-champagne hover:text-ink"
                   >
                     Book a 1-on-1 Online Consultation

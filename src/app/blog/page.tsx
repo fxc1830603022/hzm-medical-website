@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { BlogIndex } from "@/components/BlogIndex";
@@ -5,10 +6,20 @@ import { Navbar } from "@/components/Navbar";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getPosts, getSiteSettings } from "@/lib/sanity";
+import { absoluteUrl, imageUrl } from "@/lib/seo";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Articles | Dr. Xiao Zhongye - 9D Lifting System",
-  description: "Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye."
+  description: "Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye.",
+  alternates: {
+    canonical: absoluteUrl("/blog")
+  },
+  openGraph: {
+    title: "Articles | Dr. Xiao Zhongye - 9D Lifting System",
+    description: "Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye.",
+    url: absoluteUrl("/blog"),
+    images: [imageUrl()]
+  }
 };
 
 export const dynamic = "force-dynamic";

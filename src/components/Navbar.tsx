@@ -32,12 +32,12 @@ export function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-7 lg:flex">
+        <div className="hidden items-center gap-5 xl:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-medium transition-colors hover:text-champagne ${
+              className={`text-[13px] font-medium transition-colors hover:text-champagne ${
                 scrolled ? "text-graphite" : "text-white"
               }`}
             >
@@ -45,7 +45,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="/#contact"
+            href="/consultation"
             className="inline-flex h-11 items-center rounded-md bg-champagne px-5 text-sm font-semibold text-ink transition hover:bg-bronze hover:text-white"
           >
             Consultation
@@ -54,7 +54,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className={`inline-flex h-11 w-11 items-center justify-center rounded-md border lg:hidden ${
+          className={`inline-flex h-11 w-11 items-center justify-center rounded-md border xl:hidden ${
             scrolled ? "border-ink/15 text-ink" : "border-white/25 text-white"
           }`}
           aria-label="Toggle navigation"
@@ -65,7 +65,7 @@ export function Navbar() {
       </nav>
 
       {open ? (
-        <div className="border-t border-ink/10 bg-porcelain px-5 py-5 shadow-soft lg:hidden">
+        <div className="border-t border-ink/10 bg-porcelain px-5 py-5 shadow-soft xl:hidden">
           <div className="mx-auto grid max-w-7xl gap-3">
             {navItems.map((item) => (
               <Link
@@ -78,7 +78,7 @@ export function Navbar() {
               </Link>
             ))}
             <Link
-              href="/#contact"
+              href="/consultation"
               className="mt-2 rounded-md bg-ink px-4 py-3 text-center text-sm font-semibold text-white"
               onClick={() => setOpen(false)}
             >

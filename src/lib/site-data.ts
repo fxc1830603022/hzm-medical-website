@@ -24,11 +24,11 @@ export const categoryFilters: Array<{ key: "all" | CategoryKey; label: string }>
 ];
 
 export const navItems = [
-  { href: "/#about", label: "About 9D" },
-  { href: "/#procedures", label: "Procedures" },
-  { href: "/#3n", label: "3N Rules" },
-  { href: "/#gallery", label: "Gallery" },
-  { href: "/#why-xiao", label: "Why Dr. Xiao" },
+  { href: "/doctor", label: "Doctor" },
+  { href: "/procedures/9d-facelift", label: "9D Facelift" },
+  { href: "/procedures/9d-deep-plane-facelift", label: "Deep Plane" },
+  { href: "/before-after", label: "Before & After" },
+  { href: "/international-patients", label: "International Patients" },
   { href: "/blog", label: "Articles" }
 ];
 
