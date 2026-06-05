@@ -366,7 +366,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                 {safeSettings.location}
               </ContactItem>
             </div>
-            <div className="mt-8 rounded-md bg-[#005b34] px-5 pb-5 pt-6 shadow-lift">
+            <div className="mt-8 rounded-md border border-ink/10 bg-white px-5 pb-5 pt-6 shadow-soft">
               <div className="flex items-center justify-between gap-3">
                 {socialLinks.map((item) => {
                   const href = item.href || "#contact";
@@ -380,14 +380,14 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                       rel={isExternal ? "noreferrer" : undefined}
                       aria-label={item.label}
                       title={item.label}
-                      className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-porcelain text-[#005b34] shadow-soft transition hover:-translate-y-0.5 hover:bg-white hover:shadow-lift"
+                      className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-ink/10 bg-porcelain text-[#005b34] shadow-soft transition hover:-translate-y-0.5 hover:border-champagne hover:bg-white hover:shadow-lift"
                     >
                       {item.icon}
                     </a>
                   );
                 })}
               </div>
-              <div className="mt-5 h-px w-full bg-[#d8c8a9]/45" />
+              <div className="mt-5 h-px w-full bg-ink/10" />
             </div>
           </Reveal>
 
