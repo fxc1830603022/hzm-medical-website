@@ -151,6 +151,10 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       heroDescription,
       whatsappNumber,
       whatsappMessage,
+      instagramUrl,
+      wechatUrl,
+      redUrl,
+      youtubeUrl,
       email,
       location
     }`);

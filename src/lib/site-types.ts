@@ -31,6 +31,10 @@ export type SiteSettings = {
   heroDescription: string;
   whatsappNumber: string;
   whatsappMessage: string;
+  instagramUrl: string;
+  wechatUrl: string;
+  redUrl: string;
+  youtubeUrl: string;
   email: string;
   location: string;
 };

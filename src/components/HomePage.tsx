@@ -2,13 +2,15 @@ import {
   BriefcaseMedical,
   Check,
   Globe2,
+  Instagram,
   Mail,
   MapPin,
   MessageCircle,
   ShieldCheck,
   Sparkles,
   Star,
-  UserRoundCheck
+  UserRoundCheck,
+  Youtube
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,6 +29,43 @@ type HomePageProps = {
 export function HomePage({ settings, galleryItems }: HomePageProps) {
   const safeSettings = { ...defaultSettings, ...settings };
   const heroLines = safeSettings.heroDescription.split("\n");
+  const socialLinks: Array<{
+    label: string;
+    href: string;
+    icon: ReactNode;
+    accentClass: string;
+  }> = [
+    {
+      label: "WhatsApp",
+      href: getWhatsAppUrl(safeSettings),
+      icon: <WhatsAppBrandIcon />,
+      accentClass: "border-[#25D366]/25 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366]/10"
+    },
+    {
+      label: "Instagram",
+      href: safeSettings.instagramUrl,
+      icon: <Instagram size={21} />,
+      accentClass: "border-[#E4405F]/25 text-[#E4405F] hover:border-[#E4405F] hover:bg-[#E4405F]/10"
+    },
+    {
+      label: "WeChat",
+      href: safeSettings.wechatUrl,
+      icon: <WeChatBrandIcon />,
+      accentClass: "border-[#07C160]/25 text-[#07C160] hover:border-[#07C160] hover:bg-[#07C160]/10"
+    },
+    {
+      label: "Xiaohongshu / RED",
+      href: safeSettings.redUrl,
+      icon: <RedBookIcon />,
+      accentClass: "border-[#ff2442]/25 text-[#ff2442] hover:border-[#ff2442] hover:bg-[#ff2442]/10"
+    },
+    {
+      label: "YouTube",
+      href: safeSettings.youtubeUrl,
+      icon: <Youtube size={23} />,
+      accentClass: "border-[#FF0000]/25 text-[#FF0000] hover:border-[#FF0000] hover:bg-[#FF0000]/10"
+    }
+  ];
 
   return (
     <>
@@ -336,23 +375,24 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
               </ContactItem>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              {[
-                ["WA", getWhatsAppUrl(safeSettings)],
-                ["IG", "#"],
-                ["WX", "#"],
-                ["RED", "#"],
-                ["YT", "#"]
-              ].map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href === "#" ? undefined : "_blank"}
-                  rel={href === "#" ? undefined : "noreferrer"}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-ink/15 text-xs font-bold text-graphite transition hover:border-champagne hover:text-bronze"
-                >
-                  {label}
-                </a>
-              ))}
+              {socialLinks.map((item) => {
+                const href = item.href || "#contact";
+                const isExternal = /^https?:\/\//.test(href);
+
+                return (
+                  <a
+                    key={item.label}
+                    href={href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer" : undefined}
+                    aria-label={item.label}
+                    title={item.label}
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-md border border-ink/15 bg-white text-graphite shadow-soft transition hover:-translate-y-0.5 ${item.accentClass}`}
+                  >
+                    {item.icon}
+                  </a>
+                );
+              })}
             </div>
           </Reveal>
 
@@ -386,6 +426,54 @@ function SectionHeader({
       </h2>
       {description ? <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-graphite/70">{description}</p> : null}
     </Reveal>
+  );
+}
+
+function WhatsAppBrandIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M4.55 19.48 5.6 15.7a7.4 7.4 0 1 1 2.76 2.72l-3.81 1.06Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.15 8.5c.2-.45.4-.46.7-.46h.5c.16 0 .38.05.57.44l.78 1.87c.09.22.08.4-.04.58l-.38.5c-.14.17-.12.34.03.55.38.52 1.02 1.28 1.78 1.67.25.13.43.12.58-.06l.68-.78c.17-.2.37-.24.6-.13l1.82.86c.28.13.42.3.38.62-.06.55-.5 1.32-1.1 1.6-.46.22-2.1.3-4.45-1.75-2.4-2.08-3.08-4.08-2.82-4.82.2-.56.55-1.05.77-1.19Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function WeChatBrandIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M10.4 6.1c-3.42 0-6.2 2.2-6.2 4.92 0 1.55.9 2.93 2.3 3.83l-.5 1.66 1.96-.95c.72.23 1.55.36 2.44.36 3.42 0 6.2-2.2 6.2-4.9S13.82 6.1 10.4 6.1Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.9 12.06c2.78.32 4.9 2.15 4.9 4.36 0 1.26-.7 2.4-1.8 3.16l.42 1.32-1.6-.8c-.6.18-1.27.28-1.98.28-2.68 0-4.95-1.45-5.64-3.44"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path d="M8.3 10.32h.02M12.25 10.32h.02M14.02 15.95h.02M17.35 15.95h.02" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function RedBookIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+      <rect x="4.25" y="3.7" width="15.5" height="16.6" rx="3.2" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M8 8.2h8M8 11.8h6.2M8 15.4h7.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M16.6 5.6v3.2l1.15-.78 1.15.78V5.6" fill="currentColor" />
+    </svg>
   );
 }
 
