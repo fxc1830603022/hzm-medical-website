@@ -1,9 +1,41 @@
+import { createElement } from "react";
 import { defineField, defineType } from "sanity";
+
+function ConsultationPreviewIcon() {
+  return createElement(
+    "svg",
+    {
+      width: 28,
+      height: 28,
+      viewBox: "0 0 28 28",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg",
+      "aria-hidden": true
+    },
+    createElement("rect", { x: 2, y: 2, width: 24, height: 24, rx: 7, fill: "#111111" }),
+    createElement("rect", { x: 7, y: 8, width: 14, height: 12, rx: 3, fill: "#F6F0E5" }),
+    createElement("path", {
+      d: "M9 11.2L14 14.5L19 11.2",
+      stroke: "#111111",
+      strokeWidth: 1.5,
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }),
+    createElement("circle", { cx: 20.5, cy: 7.5, r: 3.2, fill: "#C9A76A" }),
+    createElement("path", {
+      d: "M20.5 6.35V6.4M20.5 8.45V9.2",
+      stroke: "#111111",
+      strokeWidth: 1.25,
+      strokeLinecap: "round"
+    })
+  );
+}
 
 export const consultationSubmission = defineType({
   name: "consultationSubmission",
   title: "Consultation Submission",
   type: "document",
+  icon: ConsultationPreviewIcon,
   fields: [
     defineField({ name: "name", title: "Name", type: "string" }),
     defineField({
@@ -86,7 +118,16 @@ export const consultationSubmission = defineType({
   preview: {
     select: {
       title: "name",
-      subtitle: "email"
+      email: "email",
+      whatsapp: "whatsapp",
+      phone: "phone"
+    },
+    prepare({ title, email, whatsapp, phone }) {
+      return {
+        title: title || "New consultation",
+        subtitle: email || whatsapp || phone || "No contact details",
+        media: ConsultationPreviewIcon
+      };
     }
   }
 });
