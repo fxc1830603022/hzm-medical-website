@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { syncLeadToFeishu } from "@/lib/feishu";
+import { syncLeadToGoogleSheets } from "@/lib/google-sheets";
 import { createConsultationSubmission } from "@/lib/sanity-write";
 import { makeSupabaseAdminClient } from "@/lib/supabase";
 
@@ -89,11 +90,18 @@ export async function POST(request: Request) {
     };
   }
 
-  if (primaryStorage || feishu.synced) {
+  const googleSheets = await syncLeadToGoogleSheets(payload, sanityRecordId);
+  if (googleSheets.configured && !googleSheets.synced) {
+    console.error("Google Sheets lead sync failed", googleSheets.error);
+    errors.push("Google Sheets sync failed.");
+  }
+
+  if (primaryStorage || feishu.synced || googleSheets.synced) {
     return NextResponse.json({
       ok: true,
-      storage: primaryStorage || "feishu",
+      storage: primaryStorage || (feishu.synced ? "feishu" : "googleSheets"),
       feishu,
+      googleSheets,
       warnings: errors
     });
   }
