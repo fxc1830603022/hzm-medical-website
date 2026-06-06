@@ -113,7 +113,9 @@ export const consultationSubmission = defineType({
       }
     }),
     defineField({ name: "source", title: "Source", type: "string", initialValue: "website" }),
-    defineField({ name: "createdAt", title: "Created At", type: "datetime" })
+    defineField({ name: "createdAt", title: "Created At", type: "datetime" }),
+    defineField({ name: "country", title: "Legacy Country / Region", type: "string", hidden: true, readOnly: true }),
+    defineField({ name: "concern", title: "Legacy Concern", type: "string", hidden: true, readOnly: true })
   ],
   preview: {
     select: {

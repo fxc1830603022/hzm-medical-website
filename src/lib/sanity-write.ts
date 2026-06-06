@@ -98,20 +98,21 @@ async function createWithWindowsPowerShell(payload: ConsultationSubmission) {
 }
 
 export async function createConsultationSubmission(payload: ConsultationSubmission) {
+  const { country: _legacyCountry, concern: _legacyConcern, ...sanityPayload } = payload;
   const sanity = makeServerSanityClient();
 
   if (sanity) {
     try {
       return await sanity.create({
         _type: "consultationSubmission",
-        ...payload
+        ...sanityPayload
       });
     } catch (error) {
-      const fallback = await createWithWindowsPowerShell(payload);
+      const fallback = await createWithWindowsPowerShell(sanityPayload);
       if (fallback) return fallback;
       throw error;
     }
   }
 
-  return createWithWindowsPowerShell(payload);
+  return createWithWindowsPowerShell(sanityPayload);
 }
