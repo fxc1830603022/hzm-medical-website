@@ -29,7 +29,9 @@ function doPost(e) {
 
     ensureHeaders(sheet);
 
-    sheet.appendRow([
+    const nextRow = sheet.getLastRow() + 1;
+    sheet.getRange(nextRow, 4).setNumberFormat("@");
+    sheet.getRange(nextRow, 1, 1, 10).setValues([[
       data.submittedAt || new Date().toISOString(),
       data.name || "",
       data.email || "",
@@ -40,7 +42,7 @@ function doPost(e) {
       data.source || "website",
       data.status || "new",
       data.sanityRecordId || ""
-    ]);
+    ]]);
 
     return jsonOutput({
       ok: true

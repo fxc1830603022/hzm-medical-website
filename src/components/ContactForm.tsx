@@ -72,6 +72,34 @@ export function ContactForm() {
           />
         </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">
+          Country / Region
+          <input
+            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            type="text"
+            name="country"
+            list="country-region-options"
+            autoComplete="country-name"
+            placeholder="e.g. United States"
+            required
+          />
+        </label>
+        <datalist id="country-region-options">
+          <option value="United States" />
+          <option value="Canada" />
+          <option value="United Kingdom" />
+          <option value="Australia" />
+          <option value="Singapore" />
+          <option value="Malaysia" />
+          <option value="Thailand" />
+          <option value="Japan" />
+          <option value="South Korea" />
+          <option value="Hong Kong SAR" />
+          <option value="Taiwan" />
+          <option value="Mainland China" />
+          <option value="Europe" />
+          <option value="Middle East" />
+        </datalist>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
           Your Concern
           <select
             className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"

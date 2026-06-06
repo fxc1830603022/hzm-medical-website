@@ -23,6 +23,26 @@ function getGoogleSheetsWebhookSecret() {
   return process.env.GOOGLE_SHEETS_WEBHOOK_SECRET?.trim() || "";
 }
 
+function formatSubmittedAt(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).format(date);
+}
+
+function formatSheetText(value?: string) {
+  const text = value?.trim() || "";
+  return text ? `'${text}` : "";
+}
+
 async function readResponse(response: Response) {
   const text = await response.text();
 
@@ -62,10 +82,10 @@ export async function syncLeadToGoogleSheets(payload: LeadPayload, sanityRecordI
       signal: controller.signal,
       body: JSON.stringify({
         secret: getGoogleSheetsWebhookSecret(),
-        submittedAt: payload.createdAt,
+        submittedAt: formatSubmittedAt(payload.createdAt),
         name: payload.name,
         email: payload.email,
-        phone: payload.phone || "",
+        phone: formatSheetText(payload.phone),
         country: payload.country || "",
         concern: payload.concern || "",
         message: payload.message || "",

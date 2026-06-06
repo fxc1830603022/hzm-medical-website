@@ -18,13 +18,51 @@ function clean(value: unknown) {
   return typeof value === "string" ? value.trim().slice(0, 3000) : "";
 }
 
+function decodeLocationHeader(value: string | null) {
+  if (!value) return "";
+
+  try {
+    return decodeURIComponent(value).trim();
+  } catch {
+    return value.trim();
+  }
+}
+
+function getCountryName(code: string) {
+  const names: Record<string, string> = {
+    US: "United States",
+    CA: "Canada",
+    GB: "United Kingdom",
+    AU: "Australia",
+    SG: "Singapore",
+    MY: "Malaysia",
+    TH: "Thailand",
+    JP: "Japan",
+    KR: "South Korea",
+    HK: "Hong Kong SAR",
+    TW: "Taiwan",
+    CN: "Mainland China"
+  };
+
+  return names[code.toUpperCase()] || code.toUpperCase();
+}
+
+function inferCountryRegion(request: Request) {
+  const countryCode = decodeLocationHeader(request.headers.get("x-vercel-ip-country"));
+  const region = decodeLocationHeader(request.headers.get("x-vercel-ip-country-region"));
+  const city = decodeLocationHeader(request.headers.get("x-vercel-ip-city"));
+  const country = countryCode ? getCountryName(countryCode) : "";
+
+  return [country, region, city].filter(Boolean).join(" / ");
+}
+
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as ContactPayload;
   const payload = {
     name: clean(body.name),
     email: clean(body.email),
     phone: clean(body.phone),
-    country: clean(body.country),
+    country: clean(body.country) || inferCountryRegion(request),
     concern: clean(body.concern),
     message: clean(body.message),
     status: "new",
