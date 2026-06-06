@@ -1,6 +1,13 @@
 type LeadPayload = {
   name: string;
+  gender?: string;
+  ageGroup?: string;
+  nationality?: string;
+  facialConcerns?: string;
+  budget?: string;
+  whatsapp?: string;
   email: string;
+  wechat?: string;
   phone?: string;
   country?: string;
   concern?: string;
@@ -84,7 +91,14 @@ export async function syncLeadToGoogleSheets(payload: LeadPayload, sanityRecordI
         secret: getGoogleSheetsWebhookSecret(),
         submittedAt: formatSubmittedAt(payload.createdAt),
         name: payload.name,
+        gender: payload.gender || "",
+        ageGroup: payload.ageGroup || "",
+        nationality: payload.nationality || "",
+        facialConcerns: payload.facialConcerns || "",
+        budget: payload.budget || "",
+        whatsapp: formatSheetText(payload.whatsapp),
         email: payload.email,
+        wechat: payload.wechat || "",
         phone: formatSheetText(payload.phone),
         country: payload.country || "",
         concern: payload.concern || "",

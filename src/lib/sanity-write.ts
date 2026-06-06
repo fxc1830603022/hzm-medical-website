@@ -4,7 +4,14 @@ import { makeServerSanityClient } from "./sanity";
 
 type ConsultationSubmission = {
   name: string;
+  gender?: string;
+  ageGroup?: string;
+  nationality?: string;
+  facialConcerns?: string;
+  budget?: string;
+  whatsapp?: string;
   email: string;
+  wechat?: string;
   phone?: string;
   country?: string;
   concern?: string;

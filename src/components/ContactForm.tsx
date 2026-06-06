@@ -6,6 +6,25 @@ import { useState } from "react";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
+const ageGroupOptions = ["Under 25", "25-35", "36-45", "46-55", "55+"];
+
+const facialConcernOptions = [
+  "Sagging midface",
+  "Jowls / lower face laxity",
+  "Loose neck skin",
+  "Deep nasolabial folds",
+  "Facial volume loss",
+  "Eye area aging",
+  "Overall anti-aging assessment",
+  "Not sure"
+];
+
+const budgetOptions = [
+  "$5,000 - $10,000",
+  "$10,000 - $20,000",
+  "Over $20,000"
+];
+
 export function ContactForm() {
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
@@ -53,6 +72,40 @@ export function ContactForm() {
           />
         </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">
+          Gender
+          <select
+            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            name="gender"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select gender
+            </option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
+          Age Group
+          <select
+            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            name="ageGroup"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select age group
+            </option>
+            {ageGroupOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
           Email
           <input
             className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
@@ -69,6 +122,38 @@ export function ContactForm() {
             type="tel"
             name="phone"
             placeholder="Enter your phone number"
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
+          WhatsApp
+          <input
+            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            type="tel"
+            name="whatsapp"
+            placeholder="Enter your WhatsApp contact"
+            required
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
+          WeChat
+          <input
+            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            type="text"
+            name="wechat"
+            placeholder="Enter your WeChat ID"
+            required
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
+          Nationality
+          <input
+            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            type="text"
+            name="nationality"
+            list="country-region-options"
+            autoComplete="country-name"
+            placeholder="e.g. Canada, United Kingdom..."
+            required
           />
         </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">
@@ -110,6 +195,42 @@ export function ContactForm() {
             <option value="9d-facelift">9D Facelift (mild to moderate aging)</option>
             <option value="9d-deep-plane">9D Deep Plane Facelift (severe laxity)</option>
             <option value="consultation">Not sure, I need an assessment</option>
+          </select>
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
+          Facial Concerns
+          <select
+            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            name="facialConcerns"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select your main facial concern
+            </option>
+            {facialConcernOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-graphite">
+          Budget
+          <select
+            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            name="budget"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select budget
+            </option>
+            {budgetOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
         </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">

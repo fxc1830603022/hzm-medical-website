@@ -6,7 +6,14 @@ import { makeSupabaseAdminClient } from "@/lib/supabase";
 
 type ContactPayload = {
   name?: string;
+  gender?: string;
+  ageGroup?: string;
+  nationality?: string;
+  facialConcerns?: string;
+  budget?: string;
+  whatsapp?: string;
   email?: string;
+  wechat?: string;
   phone?: string;
   country?: string;
   concern?: string;
@@ -60,7 +67,14 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as ContactPayload;
   const payload = {
     name: clean(body.name),
+    gender: clean(body.gender),
+    ageGroup: clean(body.ageGroup),
+    nationality: clean(body.nationality) || clean(body.country) || inferCountryRegion(request),
+    facialConcerns: clean(body.facialConcerns),
+    budget: clean(body.budget),
+    whatsapp: clean(body.whatsapp),
     email: clean(body.email),
+    wechat: clean(body.wechat),
     phone: clean(body.phone),
     country: clean(body.country) || inferCountryRegion(request),
     concern: clean(body.concern),
@@ -70,8 +84,18 @@ export async function POST(request: Request) {
     createdAt: new Date().toISOString()
   };
 
-  if (!payload.name || !payload.email) {
-    return NextResponse.json({ ok: false, error: "Name and email are required." }, { status: 422 });
+  if (
+    !payload.name ||
+    !payload.email ||
+    !payload.gender ||
+    !payload.ageGroup ||
+    !payload.nationality ||
+    !payload.facialConcerns ||
+    !payload.budget ||
+    !payload.whatsapp ||
+    !payload.wechat
+  ) {
+    return NextResponse.json({ ok: false, error: "Please complete all required fields." }, { status: 422 });
   }
 
   const preferredStorage = process.env.FORM_STORAGE || "sanity";
@@ -84,7 +108,14 @@ export async function POST(request: Request) {
     if (supabase) {
       const { error } = await supabase.from("consultation_submissions").insert({
         name: payload.name,
+        gender: payload.gender,
+        age_group: payload.ageGroup,
+        nationality: payload.nationality,
+        facial_concerns: payload.facialConcerns,
+        budget: payload.budget,
+        whatsapp: payload.whatsapp,
         email: payload.email,
+        wechat: payload.wechat,
         phone: payload.phone,
         country: payload.country,
         concern: payload.concern,
