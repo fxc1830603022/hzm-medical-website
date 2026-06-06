@@ -20,21 +20,31 @@ https://docs.google.com/spreadsheets/d/1jUpyRU57I97AiiACZyKbStT2Gq9Awr2uoD6m1BNT
 
 The script writes these columns:
 
-1. Submitted At
-2. Name
-3. Gender
-4. Age Group
-5. Country / Region
-6. Facial Concerns
-7. Budget
-8. WhatsApp
-9. Email
-10. WeChat
-11. Phone
-12. Additional Info
+1. Name
+2. Gender
+3. Age Group
+4. Email
+5. Phone
+6. WhatsApp
+7. WeChat
+8. Country / Region
+9. Facial Concerns
+10. Budget
+11. Additional Info
+12. Submitted At
 13. Source Page
 14. Follow-up Status
 15. Sanity Record ID
+
+## Reorder existing rows
+
+After replacing and saving the Apps Script, run this function once from the Apps Script toolbar:
+
+```txt
+reorderExistingSheetColumns
+```
+
+This reorders the existing sheet columns to match the website form order. Future submissions will use the same order automatically.
 
 ## Vercel environment variable
 

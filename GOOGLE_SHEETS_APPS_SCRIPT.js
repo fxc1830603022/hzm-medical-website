@@ -1,18 +1,18 @@
 const WEBHOOK_SECRET = "";
 
 const HEADERS = [
-  "Submitted At",
   "Name",
   "Gender",
   "Age Group",
+  "Email",
+  "Phone",
+  "WhatsApp",
+  "WeChat",
   "Country / Region",
   "Facial Concerns",
   "Budget",
-  "WhatsApp",
-  "Email",
-  "WeChat",
-  "Phone",
   "Additional Info",
+  "Submitted At",
   "Source Page",
   "Follow-up Status",
   "Sanity Record ID"
@@ -33,22 +33,20 @@ function doPost(e) {
     ensureHeaders(sheet);
 
     const nextRow = sheet.getLastRow() + 1;
-    sheet.getRange(nextRow, 8).setNumberFormat("@");
-    sheet.getRange(nextRow, 10).setNumberFormat("@");
-    sheet.getRange(nextRow, 11).setNumberFormat("@");
+    formatTextColumns(sheet, nextRow, 1);
     sheet.getRange(nextRow, 1, 1, HEADERS.length).setValues([[
-      data.submittedAt || new Date().toISOString(),
       data.name || "",
       data.gender || "",
       data.ageGroup || "",
+      data.email || "",
+      data.phone || "",
+      data.whatsapp || "",
+      data.wechat || "",
       data.country || data.nationality || "",
       data.facialConcerns || "",
       data.budget || "",
-      data.whatsapp || "",
-      data.email || "",
-      data.wechat || "",
-      data.phone || "",
       data.message || "",
+      data.submittedAt || new Date().toISOString(),
       data.source || "website",
       data.status || "new",
       data.sanityRecordId || ""
@@ -68,6 +66,41 @@ function doPost(e) {
 function ensureHeaders(sheet) {
   sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   sheet.setFrozenRows(1);
+}
+
+function formatTextColumns(sheet, startRow, rowCount) {
+  sheet.getRange(startRow, 5, rowCount, 1).setNumberFormat("@");
+  sheet.getRange(startRow, 6, rowCount, 1).setNumberFormat("@");
+  sheet.getRange(startRow, 7, rowCount, 1).setNumberFormat("@");
+}
+
+function reorderExistingSheetColumns() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  const values = sheet.getDataRange().getValues();
+
+  if (!values.length) {
+    ensureHeaders(sheet);
+    return;
+  }
+
+  const currentHeaders = values[0].map(function (header) {
+    return String(header || "").trim();
+  });
+
+  const reorderedRows = values.slice(1).map(function (row) {
+    return HEADERS.map(function (header) {
+      const oldIndex = currentHeaders.indexOf(header);
+      return oldIndex === -1 ? "" : row[oldIndex];
+    });
+  });
+
+  sheet.clearContents();
+  sheet.getRange(1, 1, reorderedRows.length + 1, HEADERS.length).setValues([HEADERS].concat(reorderedRows));
+  sheet.setFrozenRows(1);
+
+  if (reorderedRows.length) {
+    formatTextColumns(sheet, 2, reorderedRows.length);
+  }
 }
 
 function jsonOutput(data) {
