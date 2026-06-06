@@ -65,19 +65,21 @@ function inferCountryRegion(request: Request) {
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as ContactPayload;
+  const countryRegion = clean(body.country) || clean(body.nationality) || inferCountryRegion(request);
+  const facialConcerns = clean(body.facialConcerns) || clean(body.concern);
   const payload = {
     name: clean(body.name),
     gender: clean(body.gender),
     ageGroup: clean(body.ageGroup),
-    nationality: clean(body.nationality) || clean(body.country) || inferCountryRegion(request),
-    facialConcerns: clean(body.facialConcerns),
+    nationality: countryRegion,
+    facialConcerns,
     budget: clean(body.budget),
     whatsapp: clean(body.whatsapp),
     email: clean(body.email),
     wechat: clean(body.wechat),
     phone: clean(body.phone),
-    country: clean(body.country) || inferCountryRegion(request),
-    concern: clean(body.concern),
+    country: countryRegion,
+    concern: facialConcerns,
     message: clean(body.message),
     status: "new",
     source: clean(body.source) || "website",
@@ -89,7 +91,7 @@ export async function POST(request: Request) {
     !payload.email ||
     !payload.gender ||
     !payload.ageGroup ||
-    !payload.nationality ||
+    !payload.country ||
     !payload.facialConcerns ||
     !payload.budget ||
     !payload.whatsapp ||

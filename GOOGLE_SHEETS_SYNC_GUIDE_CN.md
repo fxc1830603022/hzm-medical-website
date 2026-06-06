@@ -24,19 +24,17 @@ The script writes these columns:
 2. Name
 3. Gender
 4. Age Group
-5. Nationality
+5. Country / Region
 6. Facial Concerns
 7. Budget
 8. WhatsApp
 9. Email
 10. WeChat
 11. Phone
-12. Country / Region
-13. Procedure Interest
-14. Additional Info
-15. Source Page
-16. Follow-up Status
-17. Sanity Record ID
+12. Additional Info
+13. Source Page
+14. Follow-up Status
+15. Sanity Record ID
 
 ## Vercel environment variable
 

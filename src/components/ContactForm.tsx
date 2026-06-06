@@ -9,6 +9,9 @@ type SubmitState = "idle" | "submitting" | "success" | "error";
 const ageGroupOptions = ["Under 25", "25-35", "36-45", "46-55", "55+"];
 
 const facialConcernOptions = [
+  "9D Facelift (mild to moderate aging)",
+  "9D Deep Plane Facelift (severe laxity)",
+  "Not sure, I need an assessment",
   "Sagging midface",
   "Jowls / lower face laxity",
   "Loose neck skin",
@@ -145,18 +148,6 @@ export function ContactForm() {
           />
         </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">
-          Nationality
-          <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
-            type="text"
-            name="nationality"
-            list="country-region-options"
-            autoComplete="country-name"
-            placeholder="e.g. Canada, United Kingdom..."
-            required
-          />
-        </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
           Country / Region
           <input
             className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
@@ -164,7 +155,7 @@ export function ContactForm() {
             name="country"
             list="country-region-options"
             autoComplete="country-name"
-            placeholder="e.g. United States"
+            placeholder="e.g. Canada, United Kingdom..."
             required
           />
         </label>
@@ -184,19 +175,6 @@ export function ContactForm() {
           <option value="Europe" />
           <option value="Middle East" />
         </datalist>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
-          Your Concern
-          <select
-            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
-            name="concern"
-            defaultValue=""
-          >
-            <option value="">Select the procedure you are interested in</option>
-            <option value="9d-facelift">9D Facelift (mild to moderate aging)</option>
-            <option value="9d-deep-plane">9D Deep Plane Facelift (severe laxity)</option>
-            <option value="consultation">Not sure, I need an assessment</option>
-          </select>
-        </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">
           Facial Concerns
           <select

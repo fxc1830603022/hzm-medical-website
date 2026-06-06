@@ -32,7 +32,7 @@ export const consultationSubmission = defineType({
         ]
       }
     }),
-    defineField({ name: "nationality", title: "Nationality", type: "string" }),
+    defineField({ name: "nationality", title: "Country / Region", type: "string" }),
     defineField({
       name: "facialConcerns",
       title: "Facial Concerns",
@@ -66,8 +66,6 @@ export const consultationSubmission = defineType({
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({ name: "wechat", title: "WeChat", type: "string" }),
     defineField({ name: "phone", title: "Phone", type: "string" }),
-    defineField({ name: "country", title: "Country / Region", type: "string" }),
-    defineField({ name: "concern", title: "Concern", type: "string" }),
     defineField({ name: "message", title: "Message", type: "text", rows: 4 }),
     defineField({
       name: "status",
