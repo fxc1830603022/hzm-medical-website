@@ -151,6 +151,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       heroDescription,
       whatsappNumber,
       whatsappMessage,
+      wechatUrl,
+      wechatDescription,
       instagramUrl,
       youtubeUrl,
       facebookUrl,

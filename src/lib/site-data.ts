@@ -40,6 +40,8 @@ export const defaultSettings: SiteSettings = {
   heroDescription: "True anti-aging preserves your original charm.\nYou still look like yourself, only ten years younger.",
   whatsappNumber: "+1 304-356-8136",
   whatsappMessage: "Hello, I am interested in 9D Lifting and would like to learn more.",
+  wechatUrl: "",
+  wechatDescription: "Add our assistant on WeChat for a personalized consultation plan.",
   instagramUrl: "#contact",
   youtubeUrl: "#contact",
   facebookUrl: "#contact",

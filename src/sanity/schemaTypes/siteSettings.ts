@@ -61,6 +61,19 @@ export const siteSettings = defineType({
     }),
     defineField({ name: "whatsappMessage", title: "WhatsApp Message", type: "text", rows: 3 }),
     defineField({
+      name: "wechatUrl",
+      title: "WeChat URL",
+      type: "url",
+      description: "Paste the page or QR-code URL to open when visitors click the WeChat card."
+    }),
+    defineField({
+      name: "wechatDescription",
+      title: "WeChat Description",
+      type: "text",
+      rows: 2,
+      description: "Text shown on the WeChat contact card."
+    }),
+    defineField({
       name: "instagramUrl",
       title: "Instagram URL",
       type: "url",

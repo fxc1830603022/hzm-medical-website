@@ -356,8 +356,8 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                   Chat directly -&gt;
                 </a>
               </ContactItem>
-              <ContactItem icon={<MessageCircle size={22} />} title="WeChat">
-                Add our assistant on WeChat for a personalized consultation plan.
+              <ContactItem icon={<MessageCircle size={22} />} title="WeChat" href={safeSettings.wechatUrl}>
+                {safeSettings.wechatDescription || defaultSettings.wechatDescription}
               </ContactItem>
               <ContactItem icon={<Mail size={22} />} title="Email">
                 {safeSettings.email}
@@ -487,19 +487,39 @@ function FacebookBrandIcon() {
 function ContactItem({
   icon,
   title,
-  children
+  children,
+  href
 }: {
   icon: ReactNode;
   title: string;
   children: ReactNode;
+  href?: string;
 }) {
-  return (
-    <div className="flex gap-4 rounded-md border border-ink/10 bg-white p-4 shadow-soft">
+  const isExternal = Boolean(href && /^https?:\/\//.test(href));
+  const className = `flex gap-4 rounded-md border border-ink/10 bg-white p-4 shadow-soft ${
+    href ? "transition hover:-translate-y-0.5 hover:border-champagne hover:shadow-lift" : ""
+  }`;
+  const content = (
+    <>
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-mist text-bronze">{icon}</div>
       <div>
         <h3 className="text-sm font-bold text-ink">{title}</h3>
         <div className="mt-1 text-sm leading-6 text-graphite/70">{children}</div>
       </div>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noreferrer" : undefined} className={className}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <div className={className}>
+      {content}
     </div>
   );
 }
