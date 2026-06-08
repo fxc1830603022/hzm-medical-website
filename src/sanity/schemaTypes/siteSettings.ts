@@ -62,9 +62,10 @@ export const siteSettings = defineType({
     defineField({ name: "whatsappMessage", title: "WhatsApp Message", type: "text", rows: 3 }),
     defineField({
       name: "wechatUrl",
-      title: "WeChat URL",
+      title: "Legacy WeChat URL",
       type: "url",
-      description: "Paste the page or QR-code URL to open when visitors click the WeChat card."
+      hidden: true,
+      readOnly: true
     }),
     defineField({
       name: "wechatDescription",
@@ -72,6 +73,32 @@ export const siteSettings = defineType({
       type: "text",
       rows: 2,
       description: "Text shown on the WeChat contact card."
+    }),
+    defineField({
+      name: "wechatQrImage",
+      title: "WeChat QR Image",
+      type: "image",
+      options: { hotspot: false },
+      description: "Upload the WeChat QR code image shown in the popup."
+    }),
+    defineField({
+      name: "wechatQrImageUrl",
+      title: "WeChat QR Image URL",
+      type: "url",
+      description: "Optional external QR image URL. Used if no uploaded image is selected."
+    }),
+    defineField({
+      name: "wechatQrImagePath",
+      title: "Local WeChat QR Image Path",
+      type: "string",
+      initialValue: "/images/wechat-qr.jpg",
+      description: "Fallback local image path, for example: /images/wechat-qr.jpg."
+    }),
+    defineField({
+      name: "wechatId",
+      title: "WeChat ID",
+      type: "string",
+      description: "Shown below the QR code in the popup."
     }),
     defineField({
       name: "instagramUrl",

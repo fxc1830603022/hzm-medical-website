@@ -31,8 +31,9 @@ export type SiteSettings = {
   heroDescription: string;
   whatsappNumber: string;
   whatsappMessage: string;
-  wechatUrl: string;
   wechatDescription: string;
+  wechatQrImage: string;
+  wechatId: string;
   instagramUrl: string;
   youtubeUrl: string;
   facebookUrl: string;

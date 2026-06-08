@@ -18,6 +18,7 @@ import type { GalleryItem, SiteSettings } from "@/lib/site-types";
 import { ContactForm } from "./ContactForm";
 import { Gallery } from "./Gallery";
 import { Reveal } from "./Reveal";
+import { WeChatContactCard } from "./WeChatContactCard";
 
 type HomePageProps = {
   settings: SiteSettings;
@@ -356,9 +357,11 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                   Chat directly -&gt;
                 </a>
               </ContactItem>
-              <ContactItem icon={<MessageCircle size={22} />} title="WeChat" href={safeSettings.wechatUrl}>
-                {safeSettings.wechatDescription || defaultSettings.wechatDescription}
-              </ContactItem>
+              <WeChatContactCard
+                description={safeSettings.wechatDescription || defaultSettings.wechatDescription}
+                qrImage={safeSettings.wechatQrImage || defaultSettings.wechatQrImage}
+                wechatId={safeSettings.wechatId}
+              />
               <ContactItem icon={<Mail size={22} />} title="Email">
                 {safeSettings.email}
               </ContactItem>
