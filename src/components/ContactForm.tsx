@@ -143,8 +143,7 @@ export function ContactForm() {
             className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
             type="text"
             name="wechat"
-            placeholder="Enter your WeChat ID"
-            required
+            placeholder="Enter your WeChat ID (optional)"
           />
         </label>
         <label className="grid gap-2 text-sm font-semibold text-graphite">
