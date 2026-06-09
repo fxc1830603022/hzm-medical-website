@@ -32,31 +32,37 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
     label: string;
     href: string;
     icon: ReactNode;
+    color: string;
   }> = [
     {
       label: "WhatsApp",
       href: getWhatsAppUrl(safeSettings),
-      icon: <WhatsAppBrandIcon />
+      icon: <WhatsAppBrandIcon />,
+      color: "#25D366"
     },
     {
       label: "Email",
       href: `mailto:${safeSettings.email}`,
-      icon: <EnvelopeBrandIcon />
+      icon: <EnvelopeBrandIcon />,
+      color: "#C9A76A"
     },
     {
       label: "Instagram",
       href: safeSettings.instagramUrl,
-      icon: <InstagramBrandIcon />
+      icon: <InstagramBrandIcon />,
+      color: "#E4405F"
     },
     {
       label: "YouTube",
       href: safeSettings.youtubeUrl,
-      icon: <YouTubeBrandIcon />
+      icon: <YouTubeBrandIcon />,
+      color: "#FF0000"
     },
     {
       label: "Facebook",
       href: safeSettings.facebookUrl,
-      icon: <FacebookBrandIcon />
+      icon: <FacebookBrandIcon />,
+      color: "#1877F2"
     }
   ];
 
@@ -383,7 +389,8 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                       rel={isExternal ? "noreferrer" : undefined}
                       aria-label={item.label}
                       title={item.label}
-                      className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-ink/10 bg-porcelain text-[#005b34] shadow-soft transition hover:-translate-y-0.5 hover:border-champagne hover:bg-white hover:shadow-lift"
+                      style={{ color: item.color }}
+                      className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-ink/10 bg-porcelain shadow-soft transition hover:-translate-y-0.5 hover:border-champagne hover:bg-white hover:shadow-lift"
                     >
                       {item.icon}
                     </a>
@@ -429,17 +436,14 @@ function SectionHeader({
 
 function WhatsAppBrandIcon() {
   return (
-    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
       <path
-        d="M4.55 19.48 5.6 15.7a7.4 7.4 0 1 1 2.76 2.72l-3.81 1.06Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M12.03 3.25a8.61 8.61 0 0 0-7.34 13.11L3.75 20l3.75-.98a8.6 8.6 0 1 0 4.53-15.77Z"
+        fill="currentColor"
       />
       <path
-        d="M9.15 8.5c.2-.45.4-.46.7-.46h.5c.16 0 .38.05.57.44l.78 1.87c.09.22.08.4-.04.58l-.38.5c-.14.17-.12.34.03.55.38.52 1.02 1.28 1.78 1.67.25.13.43.12.58-.06l.68-.78c.17-.2.37-.24.6-.13l1.82.86c.28.13.42.3.38.62-.06.55-.5 1.32-1.1 1.6-.46.22-2.1.3-4.45-1.75-2.4-2.08-3.08-4.08-2.82-4.82.2-.56.55-1.05.77-1.19Z"
-        fill="currentColor"
+        d="M9.44 7.72c.18-.4.37-.41.64-.41h.46c.15 0 .35.05.52.4l.71 1.7c.08.2.07.36-.04.53l-.34.46c-.13.15-.11.31.03.5.35.48.93 1.17 1.62 1.53.23.12.39.1.53-.06l.62-.71c.15-.18.33-.22.55-.12l1.65.78c.26.12.39.28.35.57-.06.5-.46 1.2-1 1.46-.42.2-1.91.27-4.05-1.59-2.18-1.9-2.8-3.72-2.56-4.4.18-.51.5-.96.7-1.08Z"
+        fill="#fff"
       />
     </svg>
   );
@@ -447,42 +451,48 @@ function WhatsAppBrandIcon() {
 
 function EnvelopeBrandIcon() {
   return (
-    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-      <rect x="4" y="6.5" width="16" height="11" rx="1.6" stroke="currentColor" strokeWidth="1.8" />
-      <path d="m5.2 8 6.8 5.1L18.8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <rect x="3.5" y="5.75" width="17" height="12.5" rx="2.2" fill="currentColor" />
+      <path d="m5.25 8.05 6.75 5.1 6.75-5.1" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 function InstagramBrandIcon() {
   return (
-    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-      <rect x="5.2" y="5.2" width="13.6" height="13.6" rx="3.2" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="12" cy="12" r="3.35" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="15.95" cy="8.15" r="1" fill="currentColor" />
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <defs>
+        <linearGradient id="instagram-brand-gradient" x1="5" y1="19" x2="19" y2="5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F58529" />
+          <stop offset="0.35" stopColor="#DD2A7B" />
+          <stop offset="0.7" stopColor="#8134AF" />
+          <stop offset="1" stopColor="#515BD4" />
+        </linearGradient>
+      </defs>
+      <rect x="4" y="4" width="16" height="16" rx="4.2" fill="url(#instagram-brand-gradient)" />
+      <circle cx="12" cy="12" r="3.3" stroke="#fff" strokeWidth="1.8" />
+      <circle cx="16.1" cy="7.9" r="1.05" fill="#fff" />
     </svg>
   );
 }
 
 function YouTubeBrandIcon() {
   return (
-    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
       <path
-        d="M20.25 8.38a2.4 2.4 0 0 0-1.68-1.7C17.08 6.3 12 6.3 12 6.3s-5.08 0-6.57.4a2.4 2.4 0 0 0-1.68 1.69A25.1 25.1 0 0 0 3.35 12c0 1.22.12 2.43.4 3.62a2.4 2.4 0 0 0 1.68 1.7c1.49.39 6.57.39 6.57.39s5.08 0 6.57-.4a2.4 2.4 0 0 0 1.68-1.69c.28-1.19.4-2.4.4-3.62 0-1.22-.12-2.43-.4-3.62Z"
+        d="M20.5 8.06a2.54 2.54 0 0 0-1.79-1.8C17.12 5.84 12 5.84 12 5.84s-5.12 0-6.71.42a2.54 2.54 0 0 0-1.79 1.8A26.5 26.5 0 0 0 3.08 12c0 1.33.13 2.64.42 3.94a2.54 2.54 0 0 0 1.79 1.8c1.59.42 6.71.42 6.71.42s5.12 0 6.71-.42a2.54 2.54 0 0 0 1.79-1.8c.29-1.3.42-2.61.42-3.94 0-1.33-.13-2.64-.42-3.94Z"
         fill="currentColor"
       />
-      <path d="m10.45 14.65 4.05-2.34-4.05-2.35v4.69Z" fill="#fbfaf7" />
+      <path d="m10.35 15.1 4.85-2.8-4.85-2.8v5.6Z" fill="#fff" />
     </svg>
   );
 }
 
 function FacebookBrandIcon() {
   return (
-    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M13.55 20v-7.05h2.33l.36-2.75h-2.69V8.47c0-.8.22-1.34 1.36-1.34h1.45V4.66A19.35 19.35 0 0 0 14.24 4c-2.1 0-3.53 1.28-3.53 3.62v2.58H8.34v2.75h2.37V20h2.84Z"
-        fill="currentColor"
-      />
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8.5" fill="currentColor" />
+      <path d="M13.32 20.35v-6.54h2.2l.33-2.55h-2.53V9.63c0-.74.2-1.24 1.27-1.24h1.35V6.1a18.05 18.05 0 0 0-1.97-.1c-1.95 0-3.29 1.2-3.29 3.38v1.88H8.48v2.55h2.2v6.54h2.64Z" fill="#fff" />
     </svg>
   );
 }
