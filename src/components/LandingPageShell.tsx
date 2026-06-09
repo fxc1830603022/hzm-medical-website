@@ -5,8 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import type { LandingPageData } from "@/lib/landing-pages";
-import { getGalleryItems, getSiteSettings } from "@/lib/sanity";
-import { breadcrumbJsonLd, physicianJsonLd, webPageJsonLd } from "@/lib/seo";
+import { getFaqItemsForPage, getGalleryItems, getSiteSettings } from "@/lib/sanity";
+import { breadcrumbJsonLd, faqJsonLd, physicianJsonLd, webPageJsonLd } from "@/lib/seo";
 
 type LandingPageShellProps = {
   page: LandingPageData;
@@ -14,25 +14,34 @@ type LandingPageShellProps = {
 
 export async function LandingPageShell({ page }: LandingPageShellProps) {
   const shouldLoadGallery = page.path === "/before-after";
-  const [settings, galleryItems] = await Promise.all([
+  const [settings, galleryItems, cmsFaqs] = await Promise.all([
     getSiteSettings(),
-    shouldLoadGallery ? getGalleryItems() : Promise.resolve([])
+    shouldLoadGallery ? getGalleryItems() : Promise.resolve([]),
+    getFaqItemsForPage(page.path)
   ]);
+  const pageWithFaqs: LandingPageData = {
+    ...page,
+    faqs: cmsFaqs.length ? cmsFaqs : page.faqs
+  };
 
   const structuredData: unknown[] = [
     webPageJsonLd({
-      name: page.seo.title,
-      description: page.seo.description,
-      path: page.path,
-      image: page.image
+      name: pageWithFaqs.seo.title,
+      description: pageWithFaqs.seo.description,
+      path: pageWithFaqs.path,
+      image: pageWithFaqs.image
     }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
-      { name: page.breadcrumb, path: page.path }
+      { name: pageWithFaqs.breadcrumb, path: pageWithFaqs.path }
     ])
   ];
 
-  if (page.path === "/doctor") {
+  if (pageWithFaqs.faqs.length) {
+    structuredData.push(faqJsonLd(pageWithFaqs.faqs));
+  }
+
+  if (pageWithFaqs.path === "/doctor") {
     structuredData.push(physicianJsonLd());
   }
 
@@ -41,7 +50,7 @@ export async function LandingPageShell({ page }: LandingPageShellProps) {
       <StructuredData data={structuredData} />
       <Navbar />
       <main>
-        <LandingPageView page={page} settings={settings} galleryItems={galleryItems} />
+        <LandingPageView page={pageWithFaqs} settings={settings} galleryItems={galleryItems} />
       </main>
       <Footer />
       <BackToTop />

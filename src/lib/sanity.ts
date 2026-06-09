@@ -1,6 +1,7 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { LandingFAQ } from "./landing-pages";
 import {
   categoryLabels,
   defaultGalleryItems,
@@ -136,6 +137,33 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
     return items.length ? items : defaultGalleryItems;
   } catch {
     return defaultGalleryItems;
+  }
+}
+
+export async function getFaqItemsForPage(pagePath: string): Promise<LandingFAQ[]> {
+  if (!sanityConfigured) return [];
+
+  try {
+    const items = await sanityClient.fetch<LandingFAQ[]>(
+      `*[
+        _type == "faqItem" &&
+        active != false &&
+        defined(question) &&
+        (
+          count(coalesce(displayOnPages, [])) == 0 ||
+          "all" in coalesce(displayOnPages, []) ||
+          $pagePath in coalesce(displayOnPages, [])
+        )
+      ] | order(coalesce(sortOrder, 100) asc, _createdAt asc) {
+        question,
+        answer
+      }`,
+      { pagePath }
+    );
+
+    return items.filter((item) => item.question && item.answer);
+  } catch {
+    return [];
   }
 }
 

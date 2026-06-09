@@ -245,9 +245,16 @@ export function LandingPageView({ page, settings, galleryItems = [] }: LandingPa
           <div className="grid gap-4">
             {page.faqs.map((faq, index) => (
               <Reveal key={faq.question} delay={index * 0.06}>
-                <article className="rounded-md border border-white/12 bg-white/[0.06] p-6 backdrop-blur">
-                  <h3 className="font-display text-2xl font-semibold text-white">{faq.question}</h3>
-                  <p className="mt-3 text-sm leading-7 text-white/72">{faq.answer}</p>
+                <article className="rounded-md border border-white/12 bg-white/[0.055] p-6 backdrop-blur transition hover:border-champagne/55 hover:bg-white/[0.075]">
+                  <div className="flex gap-4">
+                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-champagne/45 font-display text-sm font-semibold text-champagne">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="font-display text-2xl font-semibold leading-snug text-white">{faq.question}</h3>
+                      <p className="mt-3 text-sm leading-7 text-white/72">{faq.answer}</p>
+                    </div>
+                  </div>
                 </article>
               </Reveal>
             ))}
