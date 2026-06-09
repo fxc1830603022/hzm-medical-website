@@ -7,7 +7,8 @@ const faqPageOptions = [
   { title: "9D Deep Plane Facelift page", value: "/procedures/9d-deep-plane-facelift" },
   { title: "Before & After page", value: "/before-after" },
   { title: "International Patients page", value: "/international-patients" },
-  { title: "Consultation page", value: "/consultation" }
+  { title: "Consultation page", value: "/consultation" },
+  { title: "Articles FAQ tab", value: "/blog" }
 ];
 
 export const faqItem = defineType({

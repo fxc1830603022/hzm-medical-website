@@ -5,7 +5,7 @@ import { BlogIndex } from "@/components/BlogIndex";
 import { Navbar } from "@/components/Navbar";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { getPosts, getSiteSettings } from "@/lib/sanity";
+import { getFaqItemsForPage, getPosts, getSiteSettings } from "@/lib/sanity";
 import { absoluteUrl, imageUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function BlogPage() {
-  const [posts, settings] = await Promise.all([getPosts(), getSiteSettings()]);
+  const [posts, settings, faqItems] = await Promise.all([getPosts(), getSiteSettings(), getFaqItemsForPage("/blog")]);
 
   return (
     <>
@@ -42,7 +42,7 @@ export default async function BlogPage() {
             Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye.
           </p>
         </section>
-        <BlogIndex posts={posts} />
+        <BlogIndex posts={posts} faqItems={faqItems} />
         <section className="bg-ink px-5 py-16 text-center text-white sm:px-8">
           <h2 className="font-display text-3xl font-semibold">Subscribe To Dr. Xiao's Anti-Aging Updates</h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/70">
