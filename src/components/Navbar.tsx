@@ -28,7 +28,7 @@ export function Navbar() {
             Dr. Xiao Zhongye
           </span>
           <span className={`mt-1 text-[11px] uppercase tracking-[0.18em] ${scrolled ? "text-bronze" : "text-champagne"}`}>
-            9D Lifting System
+            9D Facelift
           </span>
         </Link>
 

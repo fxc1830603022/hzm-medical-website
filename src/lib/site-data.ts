@@ -33,13 +33,13 @@ export const navItems = [
 ];
 
 export const defaultSettings: SiteSettings = {
-  siteTitle: "Dr. Xiao Zhongye | 9D Lifting System - Charm Preservation",
+  siteTitle: "Dr. Xiao Zhongye | 9D Facelift - Charm Preservation",
   heroSubtitle: "Only One 9D | Only By Dr. Xiao",
   heroTitleTop: "Reject the Assembly Line",
   heroTitleBottom: "Charm Preservation",
   heroDescription: "True anti-aging preserves your original charm.\nYou still look like yourself, only ten years younger.",
   whatsappNumber: "+1 304-356-8136",
-  whatsappMessage: "Hello, I am interested in 9D Lifting and would like to learn more.",
+  whatsappMessage: "Hello, I am interested in 9D Facelift and would like to learn more.",
   wechatDescription: "Add our assistant on WeChat for a personalized consultation plan.",
   wechatQrImage: "/images/wechat-qr.jpg",
   wechatId: "夏天的风",

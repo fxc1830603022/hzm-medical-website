@@ -45,7 +45,7 @@ function mapConcernToFeishuOption(value?: string) {
   const normalized = (value || "").trim();
 
   const options: Record<string, string> = {
-    "9d-facelift": "9D Lifting",
+    "9d-facelift": "9D Facelift",
     "9d-deep-plane": "Deep Plane Facelift",
     consultation: "Anti-aging Consultation"
   };

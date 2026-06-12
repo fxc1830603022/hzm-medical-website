@@ -9,13 +9,13 @@ import { getFaqItemsForPage, getPosts, getSiteSettings } from "@/lib/sanity";
 import { absoluteUrl, imageUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Articles | Dr. Xiao Zhongye - 9D Lifting System",
+  title: "Articles | Dr. Xiao Zhongye - 9D Facelift",
   description: "Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye.",
   alternates: {
     canonical: absoluteUrl("/blog")
   },
   openGraph: {
-    title: "Articles | Dr. Xiao Zhongye - 9D Lifting System",
+    title: "Articles | Dr. Xiao Zhongye - 9D Facelift",
     description: "Technique notes, patient education, and professional perspectives from Dr. Xiao Zhongye.",
     url: absoluteUrl("/blog"),
     images: [imageUrl()]

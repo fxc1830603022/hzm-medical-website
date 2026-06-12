@@ -7,10 +7,10 @@ const configuredSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL || productionSiteUrl
 export const siteUrl = configuredSiteUrl.includes(".vercel.app") ? productionSiteUrl : configuredSiteUrl;
 
 export const seoDefaults = {
-  siteName: "Dr. Xiao Zhongye 9D Lifting System",
-  title: "Dr. Xiao Zhongye | 9D Lifting System - Charm Preservation",
+  siteName: "Dr. Xiao Zhongye 9D Facelift",
+  title: "Dr. Xiao Zhongye | 9D Facelift - Charm Preservation",
   description:
-    "9D Lifting System by Dr. Xiao Zhongye. Charm Preservation, natural deep plane facelift and global anti-aging consultation.",
+    "9D Facelift by Dr. Xiao Zhongye. Charm Preservation, natural deep plane facelift and global anti-aging consultation.",
   doctorName: "Dr. Xiao Zhongye",
   email: "contact@drxiao-9d.com",
   location: "Shanghai, China",
@@ -99,6 +99,25 @@ export function webPageJsonLd(page: { name: string; description: string; path: s
       "@id": absoluteUrl("/#physician")
     },
     inLanguage: "en"
+  };
+}
+
+export function medicalProcedureJsonLd(page: { name: string; description: string; path: string; image?: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "MedicalProcedure",
+    "@id": absoluteUrl(`${page.path}#procedure`),
+    name: page.name,
+    alternateName: page.name.includes("9D Facelift") ? "9D Lifting System" : undefined,
+    description: page.description,
+    url: absoluteUrl(page.path),
+    image: imageUrl(page.image),
+    procedureType: "Surgical",
+    bodyLocation: "Face and neck",
+    medicalSpecialty: "PlasticSurgery",
+    recognizingAuthority: {
+      "@id": absoluteUrl("/#physician")
+    }
   };
 }
 

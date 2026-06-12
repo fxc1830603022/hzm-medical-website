@@ -70,8 +70,8 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
     <>
       <section id="hero" className="relative flex min-h-[92vh] items-center overflow-hidden bg-ink px-5 py-28 text-white sm:px-8">
         <Image
-          src="/images/896412cd7db178d8aff7975c761cf596.jpg"
-          alt="9D Lifting System"
+          src="/images/dr-xiao-team-hero.webp"
+          alt="Dr. Xiao Zhongye 9D Facelift medical team"
           fill
           priority
           sizes="100vw"
@@ -105,7 +105,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                 href="#about"
                 className="inline-flex h-12 items-center justify-center rounded-md border border-white/35 px-6 text-sm font-bold text-white transition hover:border-champagne hover:text-champagne"
               >
-                Discover 9D Lifting
+                Discover 9D Facelift
               </Link>
             </div>
           </Reveal>
@@ -119,15 +119,15 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
       <section id="about" className="bg-porcelain px-5 py-20 sm:px-8 lg:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
           <Reveal direction="right">
-            <p className="section-label">ABOUT 9D LIFTING</p>
+            <p className="section-label">ABOUT 9D FACELIFT</p>
             <h2 className="section-title">
               What Is
               <br />
-              <span>9D Lifting System</span>
+              <span>9D Facelift</span>
             </h2>
             <p className="mt-7 text-xl leading-9 text-ink">
-              9D Lifting System is the exclusive proprietary technique of Dr. Xiao Zhongye. Its core principle is
-              always <strong>Charm Preservation</strong>.
+              9D Facelift, also known as the 9D Lifting System, is the exclusive proprietary facelift planning
+              approach of Dr. Xiao Zhongye. Its core principle is always <strong>Charm Preservation</strong>.
             </p>
             <p className="mt-5 text-base leading-8 text-graphite/75">
               Many anti-aging procedures make one critical mistake: in the pursuit of youth, patients lose the
@@ -152,7 +152,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-mist shadow-lift">
               <Image
                 src="/images/896412cd7db178d8aff7975c761cf596.jpg"
-                alt="9D Lifting System"
+                alt="9D Facelift by Dr. Xiao Zhongye"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"

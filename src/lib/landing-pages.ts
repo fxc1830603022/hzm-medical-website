@@ -36,6 +36,12 @@ export type LandingPageData = {
   secondaryCta?: string;
   secondaryHref?: string;
   stats: LandingStat[];
+  heroCard?: {
+    eyebrow: string;
+    title: string;
+    items: string[];
+    note: string;
+  };
   lead: {
     eyebrow: string;
     title: string;
@@ -68,8 +74,8 @@ export const landingPages: Record<string, LandingPageData> = {
       "A facial rejuvenation practice built around anatomical planning, natural movement, and the refusal of assembly-line beauty.",
     description:
       "Meet Dr. Xiao Zhongye, founder of the 9D Lifting System, focused on natural facelift results, deep anatomical safety, and international patient care.",
-    image: "/images/896412cd7db178d8aff7975c761cf596.jpg",
-    imageAlt: "Dr. Xiao Zhongye 9D Lifting System",
+    image: "/images/dr-xiao-team-hero.webp",
+    imageAlt: "Dr. Xiao Zhongye 9D Facelift medical team",
     primaryCta: "Book a 1-on-1 Online Consultation",
     primaryHref: "/consultation",
     secondaryCta: "View Natural Case Results",
@@ -167,107 +173,145 @@ export const landingPages: Record<string, LandingPageData> = {
   "9d-facelift": {
     path: "/procedures/9d-facelift",
     breadcrumb: "9D Facelift",
-    eyebrow: "Procedure",
+    eyebrow: "Signature Procedure",
     title: "9D Facelift",
-    accent: "Natural Rejuvenation Without Changing Your Face",
+    accent: "Natural Rejuvenation, No Fake-Look",
     intro:
-      "For mild to moderate aging, this plan focuses on precise tissue support, discreet incision planning, and a refreshed version of your own face.",
+      "9D Facelift, also known as the 9D Lifting System, is Dr. Xiao's proprietary facelift planning approach for suitable mild to moderate facial aging, designed to refresh the face while preserving the patient's own charm, expression, and identity.",
     description:
-      "9D Facelift by Dr. Xiao is designed for mild to moderate facial aging with small hidden incisions, natural movement, and charm preservation.",
+      "9D Facelift by Dr. Xiao focuses on charm preservation, customized incision planning, and natural movement for suitable mild to moderate facial aging.",
     image: "/images/gallery-ai-02.jpeg",
     imageAlt: "Natural 9D facelift result",
-    primaryCta: "Ask If You Are Suitable",
+    primaryCta: "Check If 9D Facelift Fits You",
     primaryHref: "/consultation",
-    secondaryCta: "View Cases",
+    secondaryCta: "View Natural Results",
     secondaryHref: "/before-after",
     stats: [
-      { value: "Mild+", label: "Mild to moderate aging" },
-      { value: "Hidden", label: "Discreet incision planning" },
-      { value: "Natural", label: "Movement preserved" }
+      { value: "Only 9D", label: "Dr. Xiao proprietary planning" },
+      { value: "3N", label: "No nerve, scar, fake-look standard" },
+      { value: "Custom", label: "Incision and depth by anatomy" }
     ],
+    heroCard: {
+      eyebrow: "Online Suitability Check",
+      title: "Not sure if you need 9D Facelift or Deep Plane?",
+      items: [
+        "Early jowls, nasolabial folds, or tired lower-face contour",
+        "Want a smaller, discreet incision when anatomy allows",
+        "Have thread-lift or filler history and need a real assessment"
+      ],
+      note: "Send clear front, side, 45-degree, smile, and neck photos for preliminary direction before making travel plans."
+    },
     lead: {
-      eyebrow: "Who It Helps",
-      title: "A smaller-looking procedure still needs serious planning.",
+      eyebrow: "First Decision",
+      title: "The real question is not 'How small is the incision?' It is 'Which plan fits your anatomy?'",
       paragraphs: [
-        "9D Facelift may be considered when the main concerns are early jowls, mild midface descent, softer nasolabial folds, and a tired lower-face contour.",
-        "It is not a universal mini-lift. Incision placement, lifting direction, and recovery planning must follow the patient's anatomy."
+        "Many patients searching for a facelift want youth without losing their own face. 9D Facelift is built around that decision: refresh the aging structure while avoiding the over-pulled, unfamiliar look.",
+        "For suitable patients with early to moderate laxity, the plan can focus on discreet incision placement, natural lifting direction, and charm preservation. For heavier neck laxity or deeper descent, Dr. Xiao may recommend 9D Deep Plane Facelift instead."
       ],
       highlights: [
-        "Designed for early to moderate laxity.",
-        "Focused on a rested, natural appearance.",
-        "Procedure depth is selected after photo and medical review."
+        "Best considered for mild to moderate facial aging after photo review.",
+        "Different from thread lift: this is surgical structural planning, not temporary thread support.",
+        "The goal is a younger version of the same face, not a standardized beauty template."
       ]
     },
     sections: [
       {
-        eyebrow: "Possible Benefits",
-        title: "The goal is refinement, not facial replacement.",
+        eyebrow: "Core Advantage",
+        title: "Why patients choose 9D Facelift instead of assembly-line anti-aging.",
         items: [
           {
-            title: "Discreet incision strategy",
+            title: "Charm Preservation",
             description:
-              "For suitable patients, incisions can be planned around the hairline and natural contours."
+              "The desired result is recognizable rejuvenation: the face looks rested and younger, but expression, smile, and personal character remain believable."
           },
           {
-            title: "Lower-face support",
+            title: "Customized incision planning",
             description:
-              "The plan targets laxity and contour fatigue without relying on aggressive surface tension."
+              "For suitable 9D Facelift patients, incision strategy can be planned around the hairline and natural contours. The final design depends on anatomy and skin laxity."
           },
           {
-            title: "Travel-aware recovery",
+            title: "Depth matched to the face",
             description:
-              "For overseas patients, recovery planning should consider flight timing, follow-up, and social downtime."
+              "The procedure level is selected after reviewing facial foundation, aging degree, previous treatments, budget, and available recovery time."
           }
         ]
       },
       {
-        eyebrow: "Suitability",
-        title: "Some patients need a deeper solution.",
+        eyebrow: "3N Standard",
+        title: "The operating promise: safer planning, discreet scars, no fake-look.",
         description:
-          "Heavy neck laxity, severe tissue descent, or disappointing thread-lift history may point toward 9D Deep Plane Facelift instead of a smaller approach.",
+          "All surgery has risk, so these standards must be discussed seriously in consultation. The 3N rule is the direction of Dr. Xiao's planning and execution.",
         items: [
           {
-            title: "Send the right photos",
+            title: "No nerve damage mindset",
             description:
-              "Front, side, 45-degree, smiling, and neck photos help the team judge tissue descent and skin quality."
+              "Deep work is planned around safer anatomical zones and careful dissection. Nerve safety must be part of the medical conversation before surgery."
           },
           {
-            title: "Share previous treatments",
+            title: "No visible scar focus",
             description:
-              "Thread lifts, fillers, previous surgery, and scar history can change surgical planning."
+              "Low-tension closure and incision concealment are used to reduce obvious scarring around hairline transitions and natural folds when anatomy allows."
           },
           {
-            title: "Be clear about recovery time",
+            title: "No fake-look result",
             description:
-              "A beautiful plan must also fit your available downtime and follow-up schedule."
+              "The lift direction is designed to avoid the wind-pulled face and preserve natural dynamic expression rather than chasing maximum tightness."
+          }
+        ]
+      },
+      {
+        eyebrow: "Decision Guide",
+        title: "9D Facelift is not a thread lift, and it is not the same plan for every patient.",
+        description:
+          "Google and patients both need clear answers. This page should help visitors understand what 9D Facelift is, who it may suit, and why a formal assessment matters.",
+        items: [
+          {
+            title: "Not temporary thread support",
+            description:
+              "Some clinics use the word 9D loosely. Dr. Xiao's 9D Facelift is positioned as surgical facial rejuvenation planning, not a short-lived thread-lift label."
+          },
+          {
+            title: "Not always the smallest cut",
+            description:
+              "The incision is customized. A smaller-looking plan is only appropriate when it can still address the patient's real aging pattern safely."
+          },
+          {
+            title: "Not a one-price menu item",
+            description:
+              "Facial structure, ethnic anatomy, previous procedures, travel plan, and recovery time all influence the recommendation and quote."
           }
         ]
       }
     ],
     faqs: [
       {
-        question: "Will 9D Facelift look fake?",
+        question: "What is 9D Facelift?",
         answer:
-          "The core principle is no fake look. Deep support and low-tension planning are used to avoid a wind-pulled appearance."
+          "9D Facelift is Dr. Xiao's proprietary facelift planning system for suitable facial aging concerns. It focuses on charm preservation, anatomy-based lifting direction, discreet incision planning, and natural expression."
       },
       {
-        question: "Is the incision always small?",
+        question: "Is 9D Facelift the same as thread lift?",
         answer:
-          "No. Incision design depends on anatomy, skin laxity, hairline, and the amount of correction needed."
+          "No. A thread lift gives temporary support for selected patients. 9D Facelift is positioned as surgical structural planning and should be evaluated through medical consultation."
+      },
+      {
+        question: "Will 9D Facelift leave visible scars?",
+        answer:
+          "Incisions are planned for concealment and low-tension closure when anatomy allows, but scar healing varies by patient. Scar risk and aftercare must be discussed before surgery."
       }
     ],
     finalCta: {
-      eyebrow: "Personalized Planning",
-      title: "The correct facelift depends on your face, not a menu.",
+      eyebrow: "Personalized 9D Assessment",
+      title: "Find out whether 9D Facelift is enough, or whether you need a deeper plan.",
       description:
-        "Send photos, goals, prior treatments, and recovery timing to understand whether this level of 9D planning fits you.",
-      button: "Book a 1-on-1 Online Consultation",
+        "Send photos, goals, prior treatments, budget, country, and recovery timing. The first step is to match the procedure to your face before you commit to travel or surgery.",
+      button: "Submit a 9D Facelift Assessment",
       href: "/consultation"
     },
     seo: {
-      title: "9D Facelift | Natural Facelift for Mild to Moderate Aging",
+      title: "9D Facelift in China | Natural Facelift by Dr. Xiao",
       description:
-        "9D Facelift by Dr. Xiao is designed for mild to moderate facial aging with small hidden incisions, natural movement, and charm preservation."
+        "Explore 9D Facelift by Dr. Xiao: charm preservation, natural movement, customized incision planning, and online assessment for international patients."
     }
   },
   "9d-deep-plane-facelift": {

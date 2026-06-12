@@ -84,13 +84,40 @@ export function LandingPageView({ page, settings, galleryItems = [] }: LandingPa
           </Reveal>
 
           <Reveal direction="left" delay={0.08}>
-            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-              {page.stats.map((stat) => (
-                <div key={stat.label} className="rounded-md border border-white/18 bg-white/[0.06] p-5 backdrop-blur-md">
-                  <div className="font-display text-3xl font-semibold text-champagne">{stat.value}</div>
-                  <div className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/62">{stat.label}</div>
+            <div className="space-y-4">
+              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                {page.stats.map((stat) => (
+                  <div key={stat.label} className="rounded-md border border-white/18 bg-white/[0.06] p-5 backdrop-blur-md">
+                    <div className="font-display text-3xl font-semibold text-champagne">{stat.value}</div>
+                    <div className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/62">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+              {page.heroCard ? (
+                <div className="rounded-md border border-champagne/35 bg-white/[0.075] p-6 shadow-lift backdrop-blur-md">
+                  <div className="flex items-center gap-3 text-champagne">
+                    <ClipboardCheck size={21} />
+                    <span className="text-xs font-bold uppercase tracking-[0.2em]">{page.heroCard.eyebrow}</span>
+                  </div>
+                  <h2 className="mt-4 font-display text-3xl font-semibold leading-tight text-white">
+                    {page.heroCard.title}
+                  </h2>
+                  <div className="mt-5 grid gap-3">
+                    {page.heroCard.items.map((item) => (
+                      <div key={item} className="flex gap-3 text-sm font-medium leading-6 text-white/78">
+                        <Check className="mt-1 shrink-0 text-champagne" size={17} />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-5 border-t border-white/12 pt-5 text-xs leading-6 text-white/58">
+                    {page.heroCard.note}
+                  </p>
+                  <CtaLink href={page.primaryHref} variant="primary" className="mt-6 w-full">
+                    Start Online Assessment
+                  </CtaLink>
                 </div>
-              ))}
+              ) : null}
             </div>
           </Reveal>
         </div>

@@ -6,7 +6,7 @@ import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import type { LandingPageData } from "@/lib/landing-pages";
 import { getFaqItemsForPage, getGalleryItems, getSiteSettings } from "@/lib/sanity";
-import { breadcrumbJsonLd, faqJsonLd, physicianJsonLd, webPageJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, medicalProcedureJsonLd, physicianJsonLd, webPageJsonLd } from "@/lib/seo";
 
 type LandingPageShellProps = {
   page: LandingPageData;
@@ -39,6 +39,17 @@ export async function LandingPageShell({ page }: LandingPageShellProps) {
 
   if (pageWithFaqs.faqs.length) {
     structuredData.push(faqJsonLd(pageWithFaqs.faqs));
+  }
+
+  if (pageWithFaqs.path.startsWith("/procedures/")) {
+    structuredData.push(
+      medicalProcedureJsonLd({
+        name: pageWithFaqs.title,
+        description: pageWithFaqs.seo.description,
+        path: pageWithFaqs.path,
+        image: pageWithFaqs.image
+      })
+    );
   }
 
   if (pageWithFaqs.path === "/doctor") {
