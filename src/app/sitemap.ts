@@ -3,6 +3,8 @@ import { landingPagePaths } from "@/lib/landing-pages";
 import { getPosts } from "@/lib/sanity";
 import { absoluteUrl } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getPosts();
   const now = new Date();
