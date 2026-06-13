@@ -63,4 +63,22 @@ img {
   .article-content a {
     @apply font-semibold text-bronze underline underline-offset-4;
   }
+
+  .article-content img {
+    @apply my-8 h-auto w-full rounded-md object-contain;
+    max-height: 760px;
+  }
+
+  .article-content figure {
+    @apply my-8;
+  }
+
+  .article-content figure img {
+    @apply my-0;
+  }
+
+  .article-content figcaption {
+    @apply mt-3 text-center text-xs uppercase text-graphite/50;
+    letter-spacing: 0.08em;
+  }
 }
