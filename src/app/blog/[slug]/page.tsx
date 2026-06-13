@@ -69,8 +69,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           ])
         ]}
       />
-      <Navbar />
-      <main className="bg-porcelain pt-20">
+      <Navbar settings={settings} />
+      <main className="bg-porcelain pt-28">
         <article>
           <section className="bg-ink px-5 py-12 text-white sm:px-8 lg:py-16">
             <div className="mx-auto max-w-4xl">

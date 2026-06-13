@@ -70,8 +70,8 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
     <>
       <section id="hero" className="relative flex min-h-[92vh] items-center overflow-hidden bg-ink px-5 py-28 text-white sm:px-8">
         <Image
-          src="/images/dr-xiao-team-hero.webp"
-          alt="Dr. Xiao Zhongye 9D Facelift medical team"
+          src="/images/896412cd7db178d8aff7975c761cf596.jpg"
+          alt="Dr. Xiao Zhongye 9D Facelift"
           fill
           priority
           sizes="100vw"

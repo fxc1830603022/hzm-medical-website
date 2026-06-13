@@ -29,8 +29,8 @@ export default async function BlogPage() {
 
   return (
     <>
-      <Navbar />
-      <main className="pt-20">
+      <Navbar settings={settings} />
+      <main className="pt-28">
         <section className="bg-ink px-5 py-20 text-center text-white sm:px-8 lg:py-28">
           <p className="text-sm font-bold uppercase text-champagne" style={{ letterSpacing: "0.18em" }}>
             BLOG & ARTICLES

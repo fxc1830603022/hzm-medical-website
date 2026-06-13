@@ -30,7 +30,7 @@ export default async function Page() {
   return (
     <>
       <StructuredData data={[organizationJsonLd(), physicianJsonLd(), websiteJsonLd()]} />
-      <Navbar />
+      <Navbar settings={settings} />
       <main>
         <HomePage settings={settings} galleryItems={galleryItems} />
       </main>

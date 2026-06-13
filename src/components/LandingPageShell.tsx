@@ -59,7 +59,7 @@ export async function LandingPageShell({ page }: LandingPageShellProps) {
   return (
     <>
       <StructuredData data={structuredData} />
-      <Navbar />
+      <Navbar settings={settings} />
       <main>
         <LandingPageView page={pageWithFaqs} settings={settings} galleryItems={galleryItems} />
       </main>

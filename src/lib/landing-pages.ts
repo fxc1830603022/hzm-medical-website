@@ -74,8 +74,8 @@ export const landingPages: Record<string, LandingPageData> = {
       "A facial rejuvenation practice built around anatomical planning, natural movement, and the refusal of assembly-line beauty.",
     description:
       "Meet Dr. Xiao Zhongye, founder of the 9D Lifting System, focused on natural facelift results, deep anatomical safety, and international patient care.",
-    image: "/images/dr-xiao-team-hero.webp",
-    imageAlt: "Dr. Xiao Zhongye 9D Facelift medical team",
+    image: "/images/896412cd7db178d8aff7975c761cf596.jpg",
+    imageAlt: "Dr. Xiao Zhongye 9D Facelift",
     primaryCta: "Book a 1-on-1 Online Consultation",
     primaryHref: "/consultation",
     secondaryCta: "View Natural Case Results",
