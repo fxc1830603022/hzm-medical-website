@@ -1,8 +1,8 @@
-import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArticleBackButton } from "@/components/ArticleBackButton";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { Navbar } from "@/components/Navbar";
@@ -80,10 +80,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article>
           <section className="bg-ink px-5 py-12 text-white sm:px-8 lg:py-16">
             <div className="mx-auto max-w-4xl">
-              <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-champagne">
-                <ArrowLeft size={16} />
-                Back to Articles
-              </Link>
+              <ArticleBackButton />
               <p className="mt-8 text-sm font-bold uppercase text-champagne" style={{ letterSpacing: "0.18em" }}>
                 {post.categoryLabel}
               </p>
