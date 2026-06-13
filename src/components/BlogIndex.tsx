@@ -37,7 +37,7 @@ export function BlogIndex({ posts, faqItems = [] }: BlogIndexProps) {
           <Reveal className="grid overflow-hidden rounded-md border border-ink/10 bg-white shadow-lift lg:grid-cols-[0.82fr_1fr]">
             <Link href="/procedures/9d-facelift" className="group relative min-h-[330px] overflow-hidden bg-mist lg:min-h-[455px]">
               <Image
-                src="/images/gallery-ai-02.jpeg"
+                src="/images/blog-featured-9d-facelift-guide.jpg"
                 alt="Natural 9D Facelift patient result guide"
                 fill
                 unoptimized
