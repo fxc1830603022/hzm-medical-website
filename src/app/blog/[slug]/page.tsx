@@ -28,24 +28,30 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const metaTitle = post.seoTitle || post.title;
+  const metaDescription = post.metaDescription || post.excerpt;
+  const canonicalUrl = post.canonicalUrl || absoluteUrl(`/blog/${post.slug}`);
+  const keywords = [post.focusKeyword, ...(post.secondaryKeywords || [])].filter(Boolean) as string[];
+
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: metaTitle,
+    description: metaDescription,
+    keywords: keywords.length ? keywords : undefined,
     alternates: {
-      canonical: absoluteUrl(`/blog/${post.slug}`)
+      canonical: canonicalUrl
     },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       url: absoluteUrl(`/blog/${post.slug}`),
       images: [imageUrl(post.image)],
       publishedTime: post.date
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       images: [imageUrl(post.image)]
     }
   };

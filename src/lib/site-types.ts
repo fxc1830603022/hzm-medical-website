@@ -11,6 +11,14 @@ export type BlogPost = {
   readTime: string;
   image: string;
   excerpt: string;
+  seoTitle?: string;
+  metaDescription?: string;
+  focusKeyword?: string;
+  secondaryKeywords?: string[];
+  canonicalUrl?: string;
+  recommendedImageBrief?: string;
+  internalLinkingNotes?: string;
+  medicalReviewNote?: string;
   contentHtml: string;
   status?: "published" | "draft";
 };

@@ -122,11 +122,14 @@ export function medicalProcedureJsonLd(page: { name: string; description: string
 }
 
 export function articleJsonLd(post: BlogPost) {
+  const keywords = [post.focusKeyword, ...(post.secondaryKeywords || [])].filter(Boolean);
+
   return {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: post.title,
-    description: post.excerpt,
+    headline: post.seoTitle || post.title,
+    description: post.metaDescription || post.excerpt,
+    keywords: keywords.length ? keywords : undefined,
     image: imageUrl(post.image),
     datePublished: post.date,
     dateModified: post.date,
