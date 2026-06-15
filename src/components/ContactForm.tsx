@@ -6,6 +6,12 @@ import { useState } from "react";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
+type ContactFormProps = {
+  compact?: boolean;
+  className?: string;
+  title?: string;
+};
+
 const ageGroupOptions = ["Under 25", "25-35", "36-45", "46-55", "55+"];
 
 const facialConcernOptions = [
@@ -28,9 +34,19 @@ const budgetOptions = [
   "Over $20,000"
 ];
 
-export function ContactForm() {
+export function ContactForm({
+  compact = false,
+  className = "",
+  title = "Online Consultation"
+}: ContactFormProps = {}) {
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
+  const fieldClass = "grid gap-2 text-sm font-semibold text-graphite";
+  const inputClass =
+    "h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne";
+  const selectClass =
+    "h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne";
+  const fullSpanClass = compact ? "sm:col-span-2" : "";
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -61,23 +77,26 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-md bg-white p-6 shadow-soft sm:p-8">
-      <h3 className="font-display text-2xl font-semibold text-ink">Online Consultation</h3>
-      <div className="mt-7 grid gap-5">
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+    <form
+      onSubmit={onSubmit}
+      className={`rounded-md bg-white p-6 shadow-soft sm:p-8 ${compact ? "lg:p-7" : ""} ${className}`}
+    >
+      <h3 className="font-display text-2xl font-semibold text-ink">{title}</h3>
+      <div className={`mt-7 grid gap-5 ${compact ? "sm:grid-cols-2 sm:gap-4" : ""}`}>
+        <label className={fieldClass}>
           Name
           <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            className={inputClass}
             type="text"
             name="name"
             placeholder="Enter your full name"
             required
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Gender
           <select
-            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            className={selectClass}
             name="gender"
             defaultValue=""
             required
@@ -90,10 +109,10 @@ export function ContactForm() {
             <option value="Prefer not to say">Prefer not to say</option>
           </select>
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Age Group
           <select
-            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            className={selectClass}
             name="ageGroup"
             defaultValue=""
             required
@@ -108,48 +127,48 @@ export function ContactForm() {
             ))}
           </select>
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Email
           <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            className={inputClass}
             type="email"
             name="email"
             placeholder="Enter your email address"
             required
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Phone
           <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            className={inputClass}
             type="tel"
             name="phone"
             placeholder="Enter your phone number"
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           WhatsApp
           <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            className={inputClass}
             type="tel"
             name="whatsapp"
             placeholder="Enter your WhatsApp contact"
             required
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           WeChat
           <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            className={inputClass}
             type="text"
             name="wechat"
             placeholder="Enter your WeChat ID (optional)"
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Country / Region
           <input
-            className="h-12 rounded-md border border-ink/15 px-4 font-normal outline-none transition focus:border-champagne"
+            className={inputClass}
             type="text"
             name="country"
             list="country-region-options"
@@ -174,10 +193,10 @@ export function ContactForm() {
           <option value="Europe" />
           <option value="Middle East" />
         </datalist>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Facial Concerns
           <select
-            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            className={selectClass}
             name="facialConcerns"
             defaultValue=""
             required
@@ -192,10 +211,10 @@ export function ContactForm() {
             ))}
           </select>
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={fieldClass}>
           Budget
           <select
-            className="h-12 rounded-md border border-ink/15 bg-white px-4 font-normal outline-none transition focus:border-champagne"
+            className={selectClass}
             name="budget"
             defaultValue=""
             required
@@ -210,7 +229,7 @@ export function ContactForm() {
             ))}
           </select>
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-graphite">
+        <label className={`${fieldClass} ${fullSpanClass}`}>
           Additional Info
           <textarea
             className="min-h-32 rounded-md border border-ink/15 px-4 py-3 font-normal outline-none transition focus:border-champagne"
