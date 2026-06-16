@@ -617,14 +617,29 @@ export const landingPages: Record<string, LandingPageData> = {
     ],
     faqs: [
       {
-        question: "Should I book flights before assessment?",
+        question: "How long should I stay in China?",
         answer:
-          "No. Start with photos and medical history first, then plan travel only after preliminary direction."
+          "The recommended stay depends on the procedure plan, swelling, incision care, and follow-up needs. A realistic window should be discussed after your online assessment."
       },
       {
-        question: "What photos are most useful?",
+        question: "Can I travel alone?",
         answer:
-          "Front, left side, right side, left 45-degree, right 45-degree, smiling, jawline, and neck photos are recommended."
+          "Some patients travel independently, while others prefer a companion. Our team can help you understand what support is recommended for your treatment and recovery plan."
+      },
+      {
+        question: "When can I fly home?",
+        answer:
+          "Departure timing should be planned around early recovery, swelling, and surgeon follow-up. Do not book return flights until your recommended recovery window is clear."
+      },
+      {
+        question: "Do you provide English support?",
+        answer:
+          "English consultation and coordination support can be arranged so international patients understand the plan, timing, and follow-up instructions clearly."
+      },
+      {
+        question: "How does follow-up work after I return home?",
+        answer:
+          "Remote follow-up can help review progress photos, swelling, incision care, and recovery milestones. Urgent medical concerns should always be handled locally."
       }
     ],
     finalCta: {
@@ -636,9 +651,9 @@ export const landingPages: Record<string, LandingPageData> = {
       href: "/consultation"
     },
     seo: {
-      title: "Facelift in China for International Patients | 9D Online Consultation",
+      title: "International Patients | Dr. Xiao 9D Facelift Consultation in China",
       description:
-        "International patient guide for 9D Facelift in China: online assessment, photos to send, travel stay, translation, follow-up, cost range, and risks."
+        "Plan a 9D Facelift consultation in China with Dr. Xiao: online video consultation, personalized treatment planning, travel guidance, recovery support, and remote follow-up for international patients."
     }
   },
   consultation: {
