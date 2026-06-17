@@ -529,19 +529,19 @@ export const landingPages: Record<string, LandingPageData> = {
   "international-patients": {
     path: "/international-patients",
     breadcrumb: "International Patients",
-    eyebrow: "Global Patient Guide",
-    title: "Traveling to China for Facelift Surgery",
-    accent: "How 9D Online Assessment Works",
+    eyebrow: "International Patient Program",
+    title: "Planning a Facelift in China? Start With Online Assessment First.",
+    accent: "Online assessment before booking flights",
     intro:
-      "Cross-border surgery needs clarity before travel: photos, medical history, timing, translation, recovery stay, and follow-up.",
+      "Planning a facelift in China should start with medical clarity before travel: photos, health history, recovery timing, and follow-up support.",
     description:
-      "International patient guide for 9D Facelift in China: online assessment, photos to send, travel stay, translation, follow-up, cost range, and risks.",
-    image: "/images/896412cd7db178d8aff7975c761cf596.jpg",
-    imageAlt: "International patient planning for 9D facelift in China",
-    primaryCta: "Start Online Assessment",
+      "International patient guide for planning a 9D Facelift in China: online photo assessment, what photos to send, Shanghai travel timing, recovery stay, and remote follow-up.",
+    image: "/images/dr-xiao-team-hero.webp",
+    imageAlt: "International patient online assessment before traveling to Shanghai for 9D Facelift",
+    primaryCta: "Send Photos for Assessment",
     primaryHref: "/consultation",
-    secondaryCta: "Review Cost Factors",
-    secondaryHref: "/blog",
+    secondaryCta: "See How It Works",
+    secondaryHref: "/international-patients#journey",
     stats: [
       { value: "5 steps", label: "Assessment process" },
       { value: "Remote", label: "Preliminary review" },
@@ -549,15 +549,15 @@ export const landingPages: Record<string, LandingPageData> = {
     ],
     lead: {
       eyebrow: "International Process",
-      title: "The safest overseas journey starts before booking flights.",
+      title: "Plan your overseas facelift journey before booking flights.",
       paragraphs: [
-        "International patients need a structured path: send assessment photos, share medical and treatment history, receive preliminary direction, plan travel and recovery, then follow a clear post-operative schedule.",
-        "The consultation should clarify procedure suitability, recovery expectations, possible risks, communication support, and travel timing."
+        "International patients should begin with clear photos, basic health history, and previous treatment information before arranging travel.",
+        "The assessment helps clarify procedure suitability, recovery expectations, possible risks, communication support, and a realistic travel window."
       ],
       highlights: [
-        "Start with photos before making travel decisions.",
-        "Share medication, allergies, prior procedures, and health conditions.",
-        "Allow enough time for pre-op checks, surgery, early recovery, and follow-up."
+        "Send photos before booking flights.",
+        "Share medications, allergies, prior procedures, and health conditions.",
+        "Leave enough time for consultation, pre-op checks, surgery, early recovery, and follow-up."
       ]
     },
     sections: [
@@ -617,19 +617,34 @@ export const landingPages: Record<string, LandingPageData> = {
     ],
     faqs: [
       {
-        question: "How long should I stay in China?",
+        question: "Should I book flights before online assessment?",
+        answer:
+          "No. Send clear photos and basic health information first. The team can then advise whether an in-person consultation should be considered before you make travel plans."
+      },
+      {
+        question: "What photos should I send first?",
+        answer:
+          "Front, left side, right side, 45-degree, smile or expression, and neck or jawline photos in natural lighting are the most useful starting point."
+      },
+      {
+        question: "Can I receive a cost estimate online?",
+        answer:
+          "A preliminary range may be discussed after photo review, but a final plan and quote require medical assessment and confirmation of procedure suitability."
+      },
+      {
+        question: "How long should I stay in Shanghai?",
         answer:
           "The recommended stay depends on the procedure plan, swelling, incision care, and follow-up needs. A realistic window should be discussed after your online assessment."
       },
       {
-        question: "Can I travel alone?",
+        question: "Is an in-person consultation required before surgery?",
         answer:
-          "Some patients travel independently, while others prefer a companion. Our team can help you understand what support is recommended for your treatment and recovery plan."
+          "Yes. Online review is only a preliminary step. The final surgical plan must be confirmed through in-person medical consultation before treatment."
       },
       {
-        question: "When can I fly home?",
+        question: "Can I still be assessed if I had fillers, threads, or surgery before?",
         answer:
-          "Departure timing should be planned around early recovery, swelling, and surgeon follow-up. Do not book return flights until your recommended recovery window is clear."
+          "Yes. Please disclose prior fillers, thread lifts, surgery, allergies, medications, and medical conditions so the team can assess risk and planning needs."
       },
       {
         question: "Do you provide English support?",
@@ -651,9 +666,9 @@ export const landingPages: Record<string, LandingPageData> = {
       href: "/consultation"
     },
     seo: {
-      title: "International Patients | Dr. Xiao 9D Facelift Consultation in China",
+      title: "Planning a Facelift in China? Online Assessment First | Dr. Xiao 9D Facelift",
       description:
-        "Plan a 9D Facelift consultation in China with Dr. Xiao: online video consultation, personalized treatment planning, travel guidance, recovery support, and remote follow-up for international patients."
+        "Planning a facelift in China? Send clear facial photos before booking flights to Shanghai. Dr. Xiao's team reviews 9D Facelift suitability, travel timing, recovery stay, and remote follow-up for international patients."
     }
   },
   consultation: {

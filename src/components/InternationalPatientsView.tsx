@@ -2,16 +2,16 @@ import {
   ArrowRight,
   Building2,
   CalendarCheck2,
+  Camera,
   CheckCircle2,
+  ClipboardCheck,
   Globe2,
-  HeartHandshake,
-  Languages,
+  Headphones,
+  HeartPulse,
   MessageCircle,
   Plane,
-  ShieldCheck,
-  Sparkles,
   Stethoscope,
-  Video
+  UserRound
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +19,7 @@ import type { ReactNode } from "react";
 import type { LandingFAQ } from "@/lib/landing-pages";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
-import { ContactForm } from "./ContactForm";
+import { InternationalCtaLeadForm } from "./InternationalCtaLeadForm";
 
 type InternationalPatientsViewProps = {
   settings?: SiteSettings;
@@ -35,147 +35,182 @@ function Reveal({ children, className }: RevealProps) {
   return <div className={className}>{children}</div>;
 }
 
+const SHOW_VERIFIED_CASE_COUNT = false;
+
 const fallbackFaqs: LandingFAQ[] = [
   {
-    question: "How long should I stay in China?",
+    question: "Do I need to book flights before the pre-surgery assessment?",
     answer:
-      "The recommended stay depends on the procedure plan, swelling, incision care, and follow-up needs. A realistic window is discussed after your online assessment."
+      "No. We recommend submitting photos first for an online preliminary assessment. After your suitability and travel window are clearer, you can plan flights and appointments."
   },
   {
-    question: "Can I travel alone?",
+    question: "What photos are needed for online assessment?",
     answer:
-      "Some patients travel independently, while others prefer a companion. The team can help you understand what support is recommended for your treatment and recovery plan."
+      "Please send six natural-light photos: front, left side, right side, 45-degree angle, smile or expression, and neck or jawline view. Avoid heavy makeup and keep hair away from the face."
   },
   {
-    question: "When can I fly home?",
+    question: "Can I receive an estimated price online?",
     answer:
-      "Departure timing should be planned around early recovery, swelling, and surgeon follow-up. Do not book return flights until your recommended recovery window is clear."
+      "After you submit complete photos and previous aesthetic treatment history, the team can provide a reference range. Final planning and quotation require in-person medical assessment."
   },
   {
-    question: "Do you provide English support?",
+    question: "How long should I stay in Shanghai after surgery?",
     answer:
-      "English consultation and coordination support can be arranged so international patients understand the plan, timing, and follow-up instructions clearly."
+      "The recommended stay depends on your procedure, recovery condition, and surgeon guidance. After online assessment, the team can advise a more suitable stay window."
   },
   {
-    question: "How does remote follow-up work?",
+    question: "Is an in-person consultation required before surgery?",
     answer:
-      "After returning home, remote follow-up can help review progress photos, swelling, incision care, and recovery milestones. Urgent medical concerns should always be handled locally."
+      "Yes. Online assessment is preliminary. The final surgical plan and treatment decision must be confirmed through an in-person medical consultation."
+  },
+  {
+    question: "Can I have 9D Facelift if I had fillers, threads, or previous surgery?",
+    answer:
+      "Possibly. Please disclose previous fillers, thread lifts, surgeries, allergies, medications, and health conditions so the team can assess tissue condition and safety."
+  },
+  {
+    question: "How does follow-up work after I return home?",
+    answer:
+      "You can send recovery photos through WhatsApp. The team can provide remote recovery guidance while urgent medical concerns should always be handled locally."
+  },
+  {
+    question: "Can surgical results be guaranteed?",
+    answer:
+      "No surgical result can be guaranteed. Results vary by anatomy, aging degree, treatment plan, recovery condition, and personal healing response."
   }
 ];
 
-const trustMetrics = [
+const trustPhrases = [
+  "Private and confidential assessment",
+  "Surgeon-led planning review",
+  "No forced in-clinic sales pressure",
+  "Long-term remote follow-up support"
+];
+
+const advantageCards = [
   {
-    value: "27+",
-    label: "Years Experience",
-    detail: "Long-term facial rejuvenation planning led by surgical experience."
+    icon: Globe2,
+    title: "Online First",
+    text: "Start your assessment remotely. Save time and travel with clarity."
   },
   {
-    value: "9D",
-    label: "Founder of 9D Facelift",
-    detail: "A doctor-led approach focused on anatomy, balance, and natural expression."
+    icon: UserRound,
+    title: "Surgeon-Led Review",
+    text: "Dr. Xiao personally reviews your case to provide professional recommendations."
   },
   {
-    value: "Many",
-    label: "Procedures Performed",
-    detail: "Experience across facial rejuvenation planning and surgical consultation."
+    icon: Plane,
+    title: "Travel Clarity",
+    text: "Know if you are a good candidate and plan your trip with confidence."
   },
   {
-    value: "Global",
-    label: "International Patient Experience",
-    detail: "Built for overseas patients who need clarity before traveling."
+    icon: Headphones,
+    title: "Follow-Up Support",
+    text: "We support you before, during, and after your journey."
   }
 ];
 
-const resultCards = [
+const prepItems = [
+  "Clear face photos as described below",
+  "Medical history and current health condition",
+  "Previous fillers, threads, or facial surgery records if any",
+  "Expected travel window to Shanghai",
+  "Main facial concerns and aesthetic goals"
+];
+
+const photoGuide = [
+  { label: "Front", image: "/images/gallery-ai-01.jpeg" },
+  { label: "Left Side", image: "/images/gallery-ai-02.jpeg" },
+  { label: "Right Side", image: "/images/gallery-ai-03.jpeg" },
+  { label: "45 Degree", image: "/images/6914b0490000000004012cb7_1.jpg" },
+  { label: "Smile / Expression", image: "/images/gallery-ai-05.jpeg" },
+  { label: "Neck & Jawline", image: "/images/gallery-ai-06.jpeg" }
+];
+
+const concernCards = [
   {
-    country: "USA",
-    image: "/images/gallery-case-01.jpg"
+    icon: CalendarCheck2,
+    title: "Can I be assessed before booking flights?",
+    text: "Yes. Please send clear facial photos and medical history first. We will assess online and advise next steps."
   },
   {
-    country: "Russia",
-    image: "/images/gallery-case-04.jpg"
+    icon: Building2,
+    title: "How long should I stay in Shanghai?",
+    text: "The stay window depends on the surgical plan, recovery progress, and surgeon guidance."
   },
   {
-    country: "Thailand",
-    image: "/images/gallery-case-07.jpg"
+    icon: MessageCircle,
+    title: "Will language support be available?",
+    text: "Our international patient support team can coordinate English communication throughout the journey."
   },
   {
-    country: "Singapore",
-    image: "/images/gallery-ai-04.jpeg"
-  },
-  {
-    country: "United Kingdom",
-    image: "/images/gallery-ai-08.jpeg"
+    icon: HeartPulse,
+    title: "How does follow-up work after I return home?",
+    text: "You can send recovery photos online and receive remote recovery guidance from the team."
   }
 ];
 
 const journeySteps = [
   {
-    icon: Video,
-    title: "Online Consultation",
-    text: "Send photos, goals, health history, and previous treatment details."
+    icon: Camera,
+    title: "Send Photos",
+    text: "Submit clear facial photos and basic personal information."
   },
   {
     icon: Stethoscope,
-    title: "Treatment Planning",
-    text: "Receive preliminary direction based on facial anatomy and suitability."
+    title: "Medical Review",
+    text: "The team reviews aging concerns, previous treatments, and health history."
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Travel & Consultation Planning",
+    text: "We advise stay length, surgery window, and in-person consultation schedule."
+  },
+  {
+    icon: HeartPulse,
+    title: "Procedure & Recovery Stay",
+    text: "Arrive in Shanghai for consultation, procedure, and early recovery care."
   },
   {
     icon: Plane,
-    title: "Travel Preparation",
-    text: "Clarify arrival timing, stay window, and consultation schedule."
-  },
-  {
-    icon: Sparkles,
-    title: "Procedure",
-    text: "Your treatment plan is confirmed after in-person medical evaluation."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Recovery",
-    text: "Plan early swelling, incision care, local check-ups, and departure timing."
-  },
-  {
-    icon: MessageCircle,
-    title: "Remote Follow-Up",
-    text: "Continue progress communication after returning home."
+    title: "Follow-Up",
+    text: "Continue online recovery communication after returning home."
   }
 ];
 
-const supportItems = [
-  {
-    icon: Languages,
-    title: "English Consultation",
-    text: "Clear communication before, during, and after your visit."
-  },
+const baseTrustStats = [
   {
     icon: CalendarCheck2,
-    title: "Treatment Coordination",
-    text: "A smoother schedule from online review to in-person planning."
+    value: "27+",
+    label: "Years Experience",
+    text: "Decades of surgical expertise."
   },
   {
-    icon: Plane,
-    title: "Travel Guidance",
-    text: "Understand timing before booking flights or arranging your stay."
-  },
-  {
-    icon: Building2,
-    title: "Accommodation Assistance",
-    text: "Guidance for recovery-friendly stay planning when needed."
-  },
-  {
-    icon: HeartHandshake,
-    title: "Recovery Support",
-    text: "Practical aftercare guidance during the early recovery window."
+    icon: UserRound,
+    value: "9D",
+    label: "Facelift Planning System",
+    text: "Multi-layer anatomical planning."
   },
   {
     icon: Globe2,
-    title: "Follow-Up Care",
-    text: "Remote progress review after you return home."
+    value: "Global",
+    label: "Patient Support",
+    text: "Comprehensive support before, during, and after."
   }
 ];
 
-const heroHighlights = ["Remote Review", "Surgeon-Led Plan", "Travel Clarity"];
+const trustStats = SHOW_VERIFIED_CASE_COUNT
+  ? [
+      baseTrustStats[0],
+      {
+        icon: UserRound,
+        value: "10,000+",
+        label: "Facial Cases",
+        text: "Trusted by thousands of patients worldwide."
+      },
+      ...baseTrustStats.slice(1)
+    ]
+  : baseTrustStats;
 
 export function InternationalPatientsView({
   settings,
@@ -186,167 +221,197 @@ export function InternationalPatientsView({
   const visibleFaqs = faqs.length ? faqs : fallbackFaqs;
 
   return (
-    <div className="overflow-x-hidden bg-porcelain text-ink">
-      <section className="relative isolate flex min-h-screen overflow-hidden bg-ink px-5 pb-12 pt-28 text-white sm:px-8 lg:pt-32">
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:180px_180px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_32%,rgba(209,174,104,0.15),transparent_28%),radial-gradient(circle_at_78%_50%,rgba(255,255,255,0.08),transparent_25%),linear-gradient(115deg,#141311_0%,#151412_45%,#1f1d19_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,19,17,0.98)_0%,rgba(20,19,17,0.82)_42%,rgba(20,19,17,0.66)_100%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/80 to-transparent" />
+    <div className="overflow-x-hidden bg-white text-[#222222]">
+      <section className="relative overflow-hidden bg-[#fbf8f2]">
+        <div className="grid min-h-[760px] lg:grid-cols-[0.47fr_0.53fr]">
+          <div className="flex items-center px-5 pb-12 pt-28 sm:px-8 lg:px-12 xl:px-16">
+            <Reveal className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#b28a3d]">
+                International Patient Program
+              </p>
+              <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-[#222222] sm:text-6xl lg:text-7xl">
+                Planning a Facelift in China? Start With Online Assessment First.
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-[#222222]/72">
+                Send your photos and information before booking flights to Shanghai. Dr. Xiao and
+                the team will review and guide you on the best plan for your journey.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <LuxuryButton href={whatsappUrl} variant="gold" external icon={<MessageCircle size={18} />}>
+                  Send Photos for Assessment
+                </LuxuryButton>
+                <LuxuryButton href="#journey" variant="outline" icon={<ArrowRight size={18} />}>
+                  See How It Works
+                </LuxuryButton>
+              </div>
+              <div className="mt-9 grid gap-3 sm:grid-cols-2">
+                {trustPhrases.map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-sm font-semibold text-[#222222]/70">
+                    <CheckCircle2 className="mt-0.5 shrink-0 text-[#b28a3d]" size={17} />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center">
-          <Reveal className="max-w-4xl">
-            <div className="flex items-center gap-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-champagne" />
-              <p className="text-xs font-bold uppercase tracking-[0.34em] text-champagne">
-                International 9D Facelift Consultation
+          <div className="relative min-h-[520px] overflow-hidden">
+            <Image
+              src="/images/dr-xiao-team-hero.webp"
+              alt="Shanghai 9D facelift online facial assessment for international patients"
+              fill
+              priority
+              sizes="(min-width: 1024px) 53vw, 100vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#fbf8f2] to-transparent" />
+            <div className="absolute bottom-8 right-6 max-w-[280px] rounded-2xl bg-white/94 p-6 shadow-[0_26px_70px_rgba(34,34,34,0.16)] backdrop-blur sm:right-10">
+              <div className="mb-4 grid size-11 place-items-center rounded-full bg-[#18c464] text-white">
+                <MessageCircle size={23} />
+              </div>
+              <p className="text-sm font-bold text-[#222222]">Please send clear photos for assessment:</p>
+              <ul className="mt-3 space-y-1.5 text-xs leading-5 text-[#222222]/76">
+                <li>Front, sides, 45 degree angle</li>
+                <li>Natural lighting</li>
+                <li>No heavy makeup</li>
+              </ul>
+              <p className="mt-4 text-xs font-semibold text-[#222222]/76">
+                We will review and reply within 24 hours.
               </p>
             </div>
-            <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[0.94] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl">
-              Plan your facelift before you fly.
-            </h1>
-            <p className="mt-7 max-w-2xl break-words text-lg leading-8 text-white/76 sm:text-xl sm:leading-9">
-              Remote photo review, travel timing, procedure suitability, and recovery planning for
-              international patients considering 9D Facelift in China.
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <LuxuryButton href="#online-assessment" variant="gold" className="w-full sm:w-auto">
-                Start Online Assessment
-              </LuxuryButton>
-              <LuxuryButton href={whatsappUrl} variant="outlineDark" className="w-full sm:w-auto" external>
-                WhatsApp Consultation
-              </LuxuryButton>
-            </div>
-          </Reveal>
-
-          <div className="mt-16 grid gap-3 sm:grid-cols-3 lg:ml-auto lg:w-[620px]">
-            {heroHighlights.map((item) => (
-              <Reveal key={item} className="border border-white/24 bg-white/[0.03] px-6 py-5 backdrop-blur-sm">
-                <p className="font-display text-3xl font-semibold leading-none text-champagne">
-                  {item.split(" ")[0]}
-                </p>
-                <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.24em] text-white">
-                  {item.replace(item.split(" ")[0], "").trim()}
-                </p>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-white px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.96fr_1.04fr] lg:items-center">
-          <Reveal className="relative min-h-[600px] overflow-hidden bg-mist lg:min-h-[640px]">
+      <section className="bg-white px-5 py-5 sm:px-8">
+        <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {advantageCards.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Reveal key={item.title} className="rounded-lg border border-[#d8c7a8]/55 bg-white p-6 shadow-[0_14px_50px_rgba(34,34,34,0.04)]">
+                <div className="flex items-start gap-5">
+                  <Icon className="mt-1 shrink-0 text-[#b28a3d]" size={38} strokeWidth={1.45} />
+                  <div>
+                    <h2 className="font-display text-xl font-semibold leading-tight text-[#222222]">
+                      {item.title}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-[#222222]/70">{item.text}</p>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-4 sm:px-8">
+        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <Reveal className="relative min-h-[360px] overflow-hidden rounded-lg bg-[#f5f5f3]">
             <Image
               src="/images/dr-xiao-scrubs-portrait.jpg"
-              alt="Dr. Xiao Zhongye for international patient consultation"
+              alt="Dr. Xiao reviewing Shanghai facelift medical assessment before travel"
               fill
-              sizes="(min-width: 1024px) 46vw, 100vw"
-              className="object-cover object-[50%_12%]"
+              sizes="(min-width: 1024px) 54vw, 100vw"
+              className="object-cover object-[50%_18%]"
             />
           </Reveal>
-
-          <Reveal>
-            <p className="section-label">Why Patients Travel To Dr Xiao</p>
-            <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Doctor-first planning before international travel.
+          <Reveal className="rounded-lg border border-[#d8c7a8]/55 bg-[#fbf8f2] p-7 sm:p-9">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#b28a3d]">Before You Book Flights</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight text-[#222222] sm:text-4xl">
+              Before You Book Flights
             </h2>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-graphite/76">
-              The decision to travel for facial rejuvenation should begin with trust. Dr. Xiao's
-              consultation starts with facial structure, treatment history, and realistic planning
-              before travel logistics are discussed.
+            <p className="mt-4 text-base leading-7 text-[#222222]/70">
+              Prepare these details first so the medical team can give more accurate preliminary
+              guidance before you arrange travel.
             </p>
-            <div className="mt-10 grid gap-x-8 gap-y-7 sm:grid-cols-2">
-              {trustMetrics.map((metric) => (
-                <div key={metric.label} className="border-t border-ink/10 pt-6">
-                  <div className="font-display text-4xl font-semibold text-bronze sm:text-5xl">
-                    {metric.value}
-                  </div>
-                  <h3 className="mt-2 text-xs font-bold uppercase tracking-[0.2em] text-ink">
-                    {metric.label}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-graphite/70">{metric.detail}</p>
+            <div className="mt-6 space-y-3">
+              {prepItems.map((item) => (
+                <div key={item} className="flex items-start gap-3 text-sm font-semibold text-[#222222]/76">
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-[#b28a3d]" size={18} />
+                  <span>{item}</span>
                 </div>
               ))}
             </div>
+            <div className="mt-7">
+              <LuxuryButton href="#photos" variant="gold">
+                What Photos Should I Send?
+              </LuxuryButton>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-[#f4f0e9] px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <Reveal className="grid gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
-            <div>
-              <p className="section-label">International Patient Results</p>
-              <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                Country-based patient stories with visual proof.
-              </h2>
-            </div>
-            <p className="max-w-2xl text-lg leading-8 text-graphite/74">
-              Explore selected patient references from different regions before starting your own
-              online consultation.
-            </p>
+      <section id="photos" className="bg-white px-5 py-4 sm:px-8">
+        <div className="mx-auto max-w-7xl rounded-lg border border-[#d8c7a8]/55 bg-white p-5 sm:p-7">
+          <Reveal className="text-center">
+            <h2 className="font-display text-3xl font-semibold leading-tight text-[#222222] sm:text-4xl">
+              What Photos Should You Send?
+            </h2>
           </Reveal>
-
-          <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-            {resultCards.map((card) => (
-              <Reveal key={card.country} className="group relative min-h-[420px] overflow-hidden bg-ink text-white">
-                <Image
-                  src={card.image}
-                  alt={`${card.country} international patient result for 9D Facelift`}
-                  fill
-                  sizes="(min-width: 1280px) 20vw, (min-width: 768px) 50vw, 100vw"
-                  className="object-cover object-center transition duration-700 group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/12 to-black/78" />
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-7">
-                  <h3 className="font-display text-3xl font-semibold leading-none text-champagne">
-                    {card.country}
-                  </h3>
-                  <ArrowRight
-                    className="mb-1 text-champagne transition duration-300 group-hover:translate-x-1"
-                    size={24}
-                    strokeWidth={1.7}
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+            {photoGuide.map((photo, index) => (
+              <Reveal key={photo.label} className="overflow-hidden rounded-md bg-[#f5f5f3]">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={photo.image}
+                    alt={`${photo.label} photo for online 9D facelift assessment`}
+                    fill
+                    sizes="(min-width: 1024px) 16vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-center"
                   />
+                </div>
+                <div className="flex items-center gap-2 px-3 py-3">
+                  <span className="grid size-6 place-items-center rounded-full bg-[#b28a3d] text-xs font-bold text-white">
+                    {index + 1}
+                  </span>
+                  <span className="text-sm font-semibold text-[#222222]">{photo.label}</span>
                 </div>
               </Reveal>
             ))}
           </div>
+          <p className="mt-5 text-center text-sm text-[#222222]/68">
+            Please use natural lighting, avoid heavy makeup, tie your hair back, and keep the face relaxed.
+          </p>
         </div>
       </section>
 
-      <section id="journey" className="bg-white px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <Reveal className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-              <p className="section-label">Your Journey</p>
-              <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                A clear international journey, explained without pressure.
-              </h2>
-            </div>
-            <p className="max-w-2xl text-lg leading-8 text-graphite/72">
-              The goal is not to push travel. The goal is to help you understand medical suitability,
-              timing, recovery, and next actions before you make a serious decision.
-            </p>
-          </Reveal>
+      <section className="bg-white px-5 py-6 sm:px-8">
+        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {concernCards.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Reveal key={item.title} className="rounded-lg border border-[#d8c7a8]/55 bg-white p-6">
+                <Icon className="text-[#b28a3d]" size={32} strokeWidth={1.45} />
+                <h2 className="mt-5 font-display text-xl font-semibold leading-tight text-[#222222]">
+                  {item.title}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-[#222222]/70">{item.text}</p>
+              </Reveal>
+            );
+          })}
+        </div>
+      </section>
 
-          <div className="mt-16 grid border-y border-ink/10 md:grid-cols-2 lg:grid-cols-6">
+      <section id="journey" className="bg-white px-5 py-6 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="text-center">
+            <h2 className="font-display text-3xl font-semibold leading-tight text-[#222222] sm:text-4xl">
+              Your International Journey (5 Steps)
+            </h2>
+          </Reveal>
+          <div className="mt-10 grid gap-8 lg:grid-cols-5 lg:gap-5">
             {journeySteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <Reveal
-                  key={step.title}
-                  className="border-b border-ink/10 py-9 md:px-6 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="font-display text-3xl font-semibold text-bronze">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-                    <Icon className="text-bronze" size={22} />
+                <Reveal key={step.title} className="relative text-center">
+                  <div className="mx-auto grid size-10 place-items-center rounded-full bg-[#b28a3d] text-sm font-bold text-white">
+                    {index + 1}
                   </div>
-                  <h3 className="mt-6 font-display text-2xl font-semibold leading-tight text-ink">
+                  <Icon className="mx-auto mt-6 text-[#222222]" size={34} strokeWidth={1.35} />
+                  <h3 className="mt-4 font-display text-xl font-semibold leading-tight text-[#222222]">
                     {step.title}
                   </h3>
-                  <p className="mt-4 text-sm leading-6 text-graphite/70">{step.text}</p>
+                  <p className="mt-3 text-sm leading-6 text-[#222222]/68">{step.text}</p>
                 </Reveal>
               );
             })}
@@ -354,38 +419,33 @@ export function InternationalPatientsView({
         </div>
       </section>
 
-      <section className="bg-[#f4f0e9] px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.52fr_0.48fr] lg:items-center">
-          <Reveal className="relative min-h-[620px]">
+      <section className="bg-white px-5 py-6 sm:px-8">
+        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-lg border border-[#d8c7a8]/55 bg-[#fbf8f2] lg:grid-cols-[0.42fr_0.58fr]">
+          <Reveal className="relative min-h-[360px] bg-[#f5f5f3]">
             <Image
-              src="/images/international-patient-recovery-visit.jpg"
-              alt="International patient recovery support with Dr. Xiao Zhongye"
+              src="/images/dr-xiao-scrubs-portrait.jpg"
+              alt="Dr. Xiao 9D facelift surgeon for international patients"
               fill
-              sizes="(min-width: 1024px) 52vw, 100vw"
-              className="object-cover object-center"
+              sizes="(min-width: 1024px) 42vw, 100vw"
+              className="object-cover object-[50%_14%]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/34 via-transparent to-transparent" />
           </Reveal>
-
-          <Reveal>
-            <p className="section-label">International Patient Support</p>
-            <h2 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Premium care before, during, and after your visit.
+          <Reveal className="p-7 text-center sm:p-10">
+            <h2 className="font-display text-3xl font-semibold leading-tight text-[#222222] sm:text-4xl">
+              Dr. Xiao's 9D Facelift for International Patients
             </h2>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-graphite/76">
-              International treatment is coordinated with medical seriousness, clear communication,
-              and steady support from the first message through recovery and remote follow-up.
-            </p>
-            <div className="mt-10 grid gap-5 sm:grid-cols-2">
-              {supportItems.map((item) => {
-                const Icon = item.icon;
+            <p className="mt-3 text-lg text-[#222222]/70">Experience. Precision. Natural Results.</p>
+            <div className={`mt-9 grid gap-6 ${trustStats.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+              {trustStats.map((stat) => {
+                const Icon = stat.icon;
                 return (
-                  <div key={item.title} className="border-t border-ink/10 pt-5">
-                    <Icon className="text-bronze" size={22} />
-                    <h3 className="mt-4 font-display text-2xl font-semibold leading-tight text-ink">
-                      {item.title}
+                  <div key={stat.label} className="border-t border-[#d8c7a8]/65 pt-6">
+                    <Icon className="mx-auto text-[#b28a3d]" size={34} strokeWidth={1.45} />
+                    <p className="mt-4 font-display text-3xl font-semibold text-[#222222]">{stat.value}</p>
+                    <h3 className="mt-2 text-xs font-bold uppercase tracking-[0.16em] text-[#222222]">
+                      {stat.label}
                     </h3>
-                    <p className="mt-3 text-sm leading-6 text-graphite/70">{item.text}</p>
+                    <p className="mt-3 text-sm leading-6 text-[#222222]/68">{stat.text}</p>
                   </div>
                 );
               })}
@@ -394,135 +454,59 @@ export function InternationalPatientsView({
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div className="grid lg:min-h-[620px] lg:grid-cols-[0.46fr_0.54fr]">
-          <div className="relative min-h-[430px] overflow-hidden bg-black lg:min-h-[620px]">
-            <Image
-              src="/images/international-patient-recovery-visit.jpg"
-              alt="Doctor and international patient recovery visit"
-              fill
-              sizes="(min-width: 1024px) 46vw, 100vw"
-              className="object-cover object-center opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-ink/62" />
-          </div>
-
-          <div className="relative z-10 grid gap-12 px-5 py-16 sm:px-10 lg:grid-cols-[1fr_220px] lg:px-14 lg:py-24 xl:px-20">
-            <Reveal>
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-champagne">Doctor & Patient Trust</p>
-              <h2 className="mt-5 max-w-lg font-display text-4xl font-semibold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
-                Plan with the surgeon. Recover with a team.
-              </h2>
-              <p className="mt-7 max-w-xl text-base leading-8 text-white/72">
-                For international patients, trust comes from doctor authority, careful planning,
-                realistic limits, and follow-up after returning home.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <LuxuryButton href="#online-assessment" variant="gold">
-                  Submit Assessment
-                </LuxuryButton>
-                <LuxuryButton href={whatsappUrl} variant="outlineDark" external>
-                  WhatsApp Consultation
-                </LuxuryButton>
-              </div>
-            </Reveal>
-            <Reveal className="border-white/20 lg:border-l lg:pl-10">
-              {[
-                ["27+", "Years Experience"],
-                ["9D", "Facelift Planning"],
-                ["Global", "Patient Support"]
-              ].map(([value, label]) => (
-                <div key={value} className="mb-10 last:mb-0">
-                  <div className="font-display text-4xl font-semibold text-champagne sm:text-5xl">
-                    {value}
-                  </div>
-                  <div className="mt-2 text-xs font-bold uppercase tracking-[0.16em] text-white">
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.82fr_1.18fr]">
-          <Reveal>
-            <p className="section-label">FAQ</p>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
-              Clear answers before booking travel.
+      <section className="bg-white px-5 py-6 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="text-center">
+            <h2 className="font-display text-3xl font-semibold leading-tight text-[#222222] sm:text-4xl">
+              Common Questions
             </h2>
-            <p className="mt-6 text-lg leading-8 text-graphite/74">
-              These questions focus on the concerns international patients usually need answered
-              before a serious consultation.
-            </p>
           </Reveal>
-
-          <div className="border-t border-ink/10">
+          <div className="mt-7 grid gap-4 lg:grid-cols-2">
             {visibleFaqs.map((faq) => (
-              <Reveal key={faq.question} className="border-b border-ink/10 py-7">
-                <h3 className="font-display text-2xl font-semibold leading-tight text-ink">
-                  {faq.question}
-                </h3>
-                <p className="mt-4 max-w-3xl text-base leading-8 text-graphite/72">{faq.answer}</p>
-              </Reveal>
+              <details
+                key={faq.question}
+                className="group rounded-md border border-[#d8c7a8]/55 bg-white px-5 py-4"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-[#222222]">
+                  <span>{faq.question}</span>
+                  <span className="text-xl leading-none text-[#b28a3d] transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-4 text-sm leading-6 text-[#222222]/68">{faq.answer}</p>
+              </details>
             ))}
           </div>
         </div>
       </section>
 
-      <section
-        id="online-assessment"
-        className="relative overflow-hidden bg-[#f4f0e9] px-5 py-20 sm:px-8 sm:py-28"
-      >
-        <div className="absolute right-0 top-0 hidden h-full w-[34%] bg-white lg:block" />
-        <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
+      <section id="online-assessment" className="relative overflow-hidden bg-porcelain px-5 py-14 sm:px-8 lg:py-16">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.72fr_1fr]">
           <Reveal>
-            <p className="section-label">Start Online</p>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
-              Book a free video consultation before you fly.
+            <h2 className="font-display text-4xl font-semibold leading-tight text-ink">
+              Have Questions?
+              <span className="block">We&apos;re Here to Help</span>
             </h2>
-            <p className="mt-7 max-w-lg text-lg leading-8 text-graphite/76">
-              Start with clear photos, honest medical history, your main facial concerns, and a
-              realistic travel window. Our team will guide the next step.
+            <p className="mt-4 max-w-md text-sm leading-7 text-graphite/72">
+              Our team will provide a personalized consultation plan based on your goals and facial anatomy.
             </p>
-            <div className="mt-10 max-w-lg border-y border-ink/10 py-7">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/consultation"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-champagne px-5 text-sm font-bold text-ink transition hover:bg-bronze hover:text-white"
+              >
+                Book Online Consultation
+              </Link>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center justify-between gap-6 bg-ink px-6 py-5 text-white transition hover:bg-champagne hover:text-ink"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-ink/12 px-5 text-sm font-bold text-bronze transition hover:border-bronze"
               >
-                <span className="flex items-center gap-4">
-                  <span className="grid size-11 place-items-center border border-white/20 text-champagne transition group-hover:border-ink/20 group-hover:text-ink">
-                    <MessageCircle size={22} />
-                  </span>
-                  <span>
-                    <span className="block text-sm font-bold uppercase tracking-[0.2em]">WhatsApp</span>
-                    <span className="mt-1 block text-sm text-white/70 transition group-hover:text-ink/70">
-                      Send photos and receive faster scheduling guidance.
-                    </span>
-                  </span>
-                </span>
-                <ArrowRight className="shrink-0" size={18} />
+                WhatsApp Consultation <ArrowRight size={15} />
               </a>
-              <div className="mt-6 grid gap-4">
-                {[
-                  "Share photos, travel timing, and your main facial concerns.",
-                  "Receive clear next-step guidance before booking flights.",
-                  "Use WeChat only if it is convenient for you."
-                ].map((item) => (
-                  <div key={item} className="flex gap-3 text-sm font-semibold leading-6 text-graphite">
-                    <CheckCircle2 className="mt-0.5 shrink-0 text-bronze" size={18} />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </Reveal>
-          <Reveal className="lg:pl-4">
-            <ContactForm compact title="Book Free Video Consultation" />
+          <Reveal>
+            <InternationalCtaLeadForm />
           </Reveal>
         </div>
       </section>
@@ -533,44 +517,34 @@ export function InternationalPatientsView({
 type LuxuryButtonProps = {
   href: string;
   children: ReactNode;
-  variant?: "gold" | "dark" | "outline" | "outlineDark";
-  className?: string;
+  variant?: "gold" | "outline";
+  icon?: ReactNode;
   external?: boolean;
 };
 
-function LuxuryButton({
-  href,
-  children,
-  variant = "dark",
-  className = "",
-  external = false
-}: LuxuryButtonProps) {
+function LuxuryButton({ href, children, variant = "gold", icon, external = false }: LuxuryButtonProps) {
   const classes = {
-    gold: "border border-champagne bg-champagne text-ink hover:bg-bronze hover:text-white hover:border-bronze",
-    dark: "border border-ink bg-ink text-white hover:border-champagne hover:bg-champagne hover:text-ink",
-    outline: "border border-ink/20 bg-transparent text-ink hover:border-ink hover:bg-ink hover:text-white",
-    outlineDark: "border border-white/18 bg-transparent text-white hover:border-champagne hover:bg-champagne hover:text-ink"
+    gold: "border border-[#C8B898] bg-[#C8B898] text-[#222222] hover:bg-[#b6a37d] hover:border-[#b6a37d]",
+    outline: "border border-[#C8B898] bg-white/70 text-[#b28a3d] hover:bg-[#C8B898] hover:text-[#222222]"
   };
-
-  const classNameValue = `inline-flex min-h-12 items-center justify-center gap-2 px-5 py-3 text-sm font-bold transition ${classes[variant]} ${className}`;
-
+  const className = `inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-bold transition ${classes[variant]}`;
   const content = (
     <>
+      {icon}
       <span>{children}</span>
-      <ArrowRight size={17} />
     </>
   );
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className={classNameValue}>
+      <a href={href} target="_blank" rel="noreferrer" className={className}>
         {content}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={classNameValue}>
+    <Link href={href} className={className}>
       {content}
     </Link>
   );
