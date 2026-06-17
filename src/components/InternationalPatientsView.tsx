@@ -119,12 +119,13 @@ const prepItems = [
 ];
 
 const photoGuide = [
-  { label: "Front", image: "/images/gallery-ai-01.jpeg" },
-  { label: "Left Side", image: "/images/gallery-ai-02.jpeg" },
-  { label: "Right Side", image: "/images/gallery-ai-03.jpeg" },
-  { label: "45 Degree", image: "/images/6914b0490000000004012cb7_1.jpg" },
-  { label: "Smile / Expression", image: "/images/gallery-ai-05.jpeg" },
-  { label: "Neck & Jawline", image: "/images/gallery-ai-06.jpeg" }
+  { label: "Front", image: "/images/international-photo-guide-01.webp" },
+  { label: "Front Relaxed", image: "/images/international-photo-guide-02.webp" },
+  { label: "Left Side", image: "/images/international-photo-guide-03.webp" },
+  { label: "Right Side", image: "/images/international-photo-guide-04.webp" },
+  { label: "45 Degree", image: "/images/international-photo-guide-05.webp" },
+  { label: "Smile / Expression", image: "/images/international-photo-guide-06.webp" },
+  { label: "Neck & Jawline", image: "/images/international-photo-guide-07.webp" }
 ];
 
 const concernCards = [
@@ -223,8 +224,8 @@ export function InternationalPatientsView({
   return (
     <div className="overflow-x-hidden bg-white text-[#222222]">
       <section className="relative overflow-hidden bg-[#fbf8f2]">
-        <div className="grid min-h-[760px] lg:grid-cols-[0.47fr_0.53fr]">
-          <div className="flex items-center px-5 pb-12 pt-28 sm:px-8 lg:px-12 xl:px-16">
+        <div className="grid min-h-[780px] lg:min-h-screen lg:grid-cols-[0.47fr_0.53fr] xl:min-h-[980px]">
+          <div className="flex items-center px-5 pb-14 pt-32 sm:px-8 lg:px-12 lg:py-32 xl:px-16">
             <Reveal className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#b28a3d]">
                 International Patient Program
@@ -255,9 +256,9 @@ export function InternationalPatientsView({
             </Reveal>
           </div>
 
-          <div className="relative min-h-[520px] overflow-hidden">
+          <div className="relative min-h-[640px] overflow-hidden lg:min-h-full">
             <Image
-              src="/images/dr-xiao-team-hero.webp"
+              src="/images/international-patients-hero-consultation.webp"
               alt="Shanghai 9D facelift online facial assessment for international patients"
               fill
               priority
@@ -265,20 +266,6 @@ export function InternationalPatientsView({
               className="object-cover object-center"
             />
             <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#fbf8f2] to-transparent" />
-            <div className="absolute bottom-8 right-6 max-w-[280px] rounded-2xl bg-white/94 p-6 shadow-[0_26px_70px_rgba(34,34,34,0.16)] backdrop-blur sm:right-10">
-              <div className="mb-4 grid size-11 place-items-center rounded-full bg-[#18c464] text-white">
-                <MessageCircle size={23} />
-              </div>
-              <p className="text-sm font-bold text-[#222222]">Please send clear photos for assessment:</p>
-              <ul className="mt-3 space-y-1.5 text-xs leading-5 text-[#222222]/76">
-                <li>Front, sides, 45 degree angle</li>
-                <li>Natural lighting</li>
-                <li>No heavy makeup</li>
-              </ul>
-              <p className="mt-4 text-xs font-semibold text-[#222222]/76">
-                We will review and reply within 24 hours.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -348,7 +335,7 @@ export function InternationalPatientsView({
               What Photos Should You Send?
             </h2>
           </Reveal>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-7">
             {photoGuide.map((photo, index) => (
               <Reveal key={photo.label} className="overflow-hidden rounded-md bg-[#f5f5f3]">
                 <div className="relative aspect-[4/3] overflow-hidden">
