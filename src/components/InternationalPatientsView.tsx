@@ -35,8 +35,6 @@ function Reveal({ children, className }: RevealProps) {
   return <div className={className}>{children}</div>;
 }
 
-const SHOW_VERIFIED_CASE_COUNT = false;
-
 const fallbackFaqs: LandingFAQ[] = [
   {
     question: "Do I need to book flights before the pre-surgery assessment?",
@@ -74,16 +72,16 @@ const fallbackFaqs: LandingFAQ[] = [
       "You can send recovery photos through WhatsApp. The team can provide remote recovery guidance while urgent medical concerns should always be handled locally."
   },
   {
-    question: "Can surgical results be guaranteed?",
+    question: "Are results guaranteed?",
     answer:
-      "No surgical result can be guaranteed. Results vary by anatomy, aging degree, treatment plan, recovery condition, and personal healing response."
+      "No surgical result can be guaranteed. Online review is only a preliminary step. Individual results vary depending on anatomy, aging pattern, procedure plan and healing. A final plan must be confirmed after in-person consultation."
   }
 ];
 
 const trustPhrases = [
   "Private and confidential assessment",
   "Surgeon-led planning review",
-  "No forced in-clinic sales pressure",
+  "Assessment before travel",
   "Long-term remote follow-up support"
 ];
 
@@ -120,7 +118,6 @@ const prepItems = [
 
 const photoGuide = [
   { label: "Front", image: "/images/international-photo-guide-01.webp" },
-  { label: "Front Relaxed", image: "/images/international-photo-guide-02.webp" },
   { label: "Left Side", image: "/images/international-photo-guide-03.webp" },
   { label: "Right Side", image: "/images/international-photo-guide-04.webp" },
   { label: "45 Degree", image: "/images/international-photo-guide-05.webp" },
@@ -179,7 +176,7 @@ const journeySteps = [
   }
 ];
 
-const baseTrustStats = [
+const trustStats = [
   {
     icon: CalendarCheck2,
     value: "27+",
@@ -194,24 +191,17 @@ const baseTrustStats = [
   },
   {
     icon: Globe2,
-    value: "Global",
+    value: "International",
     label: "Patient Support",
     text: "Comprehensive support before, during, and after."
+  },
+  {
+    icon: ClipboardCheck,
+    value: "Online",
+    label: "Assessment Before Travel",
+    text: "Preliminary review before arranging flights."
   }
 ];
-
-const trustStats = SHOW_VERIFIED_CASE_COUNT
-  ? [
-      baseTrustStats[0],
-      {
-        icon: UserRound,
-        value: "10,000+",
-        label: "Facial Cases",
-        text: "Trusted by thousands of patients worldwide."
-      },
-      ...baseTrustStats.slice(1)
-    ]
-  : baseTrustStats;
 
 export function InternationalPatientsView({
   settings,
@@ -223,19 +213,20 @@ export function InternationalPatientsView({
 
   return (
     <div className="overflow-x-hidden bg-white text-[#222222]">
-      <section className="relative overflow-hidden bg-[#fbf8f2]">
-        <div className="grid min-h-[780px] lg:min-h-screen lg:grid-cols-[0.47fr_0.53fr] xl:min-h-[980px]">
-          <div className="flex items-center px-5 pb-14 pt-32 sm:px-8 lg:px-12 lg:py-32 xl:px-16">
-            <Reveal className="max-w-2xl">
+      <section className="relative overflow-hidden bg-[#fbf8f2] lg:min-h-[100svh]">
+        <div className="grid min-h-[780px] lg:min-h-[100svh] lg:grid-cols-[0.47fr_0.53fr]">
+          <div className="flex w-full min-w-0 items-center px-5 pb-14 pt-32 sm:px-8 lg:px-12 lg:pb-28 lg:pt-36 xl:px-16">
+            <Reveal className="w-full min-w-0 max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#b28a3d]">
                 International Patient Program
               </p>
-              <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-[#222222] sm:text-6xl lg:text-7xl">
-                Planning a Facelift in China? Start With Online Assessment First.
+              <h1 className="mt-5 font-display text-3xl font-semibold leading-[1.08] text-[#222222] sm:text-6xl sm:leading-[1.02] 2xl:text-7xl">
+                Planning a Facelift in China?
+                <span className="block">Start With Online Assessment First.</span>
               </h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-[#222222]/72">
-                Send your photos and information before booking flights to Shanghai. Dr. Xiao and
-                the team will review and guide you on the best plan for your journey.
+              <p className="mt-6 max-w-xl text-base leading-7 text-[#222222]/72 sm:text-lg sm:leading-8">
+                Send your photos and information before booking flights to Shanghai. Dr. Xiao&apos;s
+                team will review your case and suggest a suitable next step for your journey.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <LuxuryButton href={whatsappUrl} variant="gold" external icon={<MessageCircle size={18} />}>
@@ -262,6 +253,7 @@ export function InternationalPatientsView({
               alt="Shanghai 9D facelift online facial assessment for international patients"
               fill
               priority
+              unoptimized
               sizes="(min-width: 1024px) 53vw, 100vw"
               className="object-cover object-center"
             />
@@ -335,7 +327,7 @@ export function InternationalPatientsView({
               What Photos Should You Send?
             </h2>
           </Reveal>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-7">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
             {photoGuide.map((photo, index) => (
               <Reveal key={photo.label} className="overflow-hidden rounded-md bg-[#f5f5f3]">
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -465,35 +457,37 @@ export function InternationalPatientsView({
         </div>
       </section>
 
-      <section id="online-assessment" className="relative overflow-hidden bg-porcelain px-5 py-14 sm:px-8 lg:py-16">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.72fr_1fr]">
-          <Reveal>
-            <h2 className="font-display text-4xl font-semibold leading-tight text-ink">
-              Have Questions?
-              <span className="block">We&apos;re Here to Help</span>
-            </h2>
-            <p className="mt-4 max-w-md text-sm leading-7 text-graphite/72">
-              Our team will provide a personalized consultation plan based on your goals and facial anatomy.
+      <section id="online-assessment" className="relative overflow-hidden bg-[#1f1c17] px-5 py-14 sm:px-8 lg:py-16">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.68fr_1fr]">
+          <Reveal className="text-white">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#C8B898]">
+              Online Assessment
             </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/consultation"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-champagne px-5 text-sm font-bold text-ink transition hover:bg-bronze hover:text-white"
-              >
-                Book Online Consultation
-              </Link>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight sm:text-5xl">
+              Not Sure Whether 9D Facelift Is Suitable for You?
+            </h2>
+            <p className="mt-5 max-w-md text-base leading-7 text-white/72">
+              Start with photos before making travel plans.
+            </p>
+            <div className="mt-8">
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-ink/12 px-5 text-sm font-bold text-bronze transition hover:border-bronze"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-[#C8B898] bg-[#C8B898] px-5 py-3 text-sm font-bold text-[#222222] transition hover:border-[#b6a37d] hover:bg-[#b6a37d] sm:w-auto"
               >
-                WhatsApp Consultation <ArrowRight size={15} />
+                <MessageCircle size={17} />
+                Send Photos on WhatsApp
               </a>
             </div>
           </Reveal>
-          <Reveal>
-            <InternationalCtaLeadForm />
+          <Reveal className="rounded-lg border border-white/10 bg-white/[0.06] p-4 sm:p-5">
+            <h3 className="font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
+              Submit Your Online Assessment Request
+            </h3>
+            <div className="mt-5">
+              <InternationalCtaLeadForm />
+            </div>
           </Reveal>
         </div>
       </section>

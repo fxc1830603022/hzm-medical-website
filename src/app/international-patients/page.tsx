@@ -5,11 +5,27 @@ import { InternationalPatientsView } from "@/components/InternationalPatientsVie
 import { Navbar } from "@/components/Navbar";
 import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { landingPages } from "@/lib/landing-pages";
+import { landingPages, type LandingFAQ } from "@/lib/landing-pages";
 import { getFaqItemsForPage, getSiteSettings } from "@/lib/sanity";
 import { absoluteUrl, breadcrumbJsonLd, faqJsonLd, imageUrl, webPageJsonLd } from "@/lib/seo";
 
 const page = landingPages["international-patients"];
+const resultsGuaranteedFaq: LandingFAQ = {
+  question: "Are results guaranteed?",
+  answer:
+    "No surgical result can be guaranteed. Online review is only a preliminary step. Individual results vary depending on anatomy, aging pattern, procedure plan and healing. A final plan must be confirmed after in-person consultation."
+};
+
+function withResultsGuaranteedFaq(faqs: LandingFAQ[]) {
+  let hasGuaranteeQuestion = false;
+  const normalizedFaqs = faqs.map((faq) => {
+    if (!/guarantee/i.test(faq.question)) return faq;
+    hasGuaranteeQuestion = true;
+    return resultsGuaranteedFaq;
+  });
+
+  return hasGuaranteeQuestion ? normalizedFaqs : [...normalizedFaqs, resultsGuaranteedFaq];
+}
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +60,7 @@ async function InternationalPatientsPageShell() {
     getSiteSettings(),
     getFaqItemsForPage(page.path)
   ]);
-  const faqs = cmsFaqs.length ? cmsFaqs : page.faqs;
+  const faqs = withResultsGuaranteedFaq(cmsFaqs.length ? cmsFaqs : page.faqs);
   const structuredData: unknown[] = [
     webPageJsonLd({
       name: page.seo.title,

@@ -655,6 +655,11 @@ export const landingPages: Record<string, LandingPageData> = {
         question: "How does follow-up work after I return home?",
         answer:
           "Remote follow-up can help review progress photos, swelling, incision care, and recovery milestones. Urgent medical concerns should always be handled locally."
+      },
+      {
+        question: "Are results guaranteed?",
+        answer:
+          "No surgical result can be guaranteed. Online review is only a preliminary step. Individual results vary depending on anatomy, aging pattern, procedure plan and healing. A final plan must be confirmed after in-person consultation."
       }
     ],
     finalCta: {
