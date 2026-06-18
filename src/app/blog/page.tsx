@@ -5,21 +5,28 @@ import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { BlogIndex } from "@/components/BlogIndex";
 import { Navbar } from "@/components/Navbar";
+import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getFaqItemsForPage, getPosts, getSiteSettings } from "@/lib/sanity";
-import { absoluteUrl, imageUrl } from "@/lib/seo";
+import { absoluteUrl, blogItemListJsonLd, collectionPageJsonLd, imageUrl } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const blogPageSeo = {
   title: "9D Facelift Resource Center | Dr. Xiao Zhongye",
   description:
-    "Expert guides on 9D Facelift, deep plane facelift, recovery, natural results, and international patient planning.",
+    "Expert guides on 9D Facelift, deep plane facelift, recovery, natural results, and international patient planning."
+};
+
+export const metadata: Metadata = {
+  title: {
+    absolute: blogPageSeo.title
+  },
+  description: blogPageSeo.description,
   alternates: {
     canonical: absoluteUrl("/blog")
   },
   openGraph: {
-    title: "9D Facelift Resource Center | Dr. Xiao Zhongye",
-    description:
-      "Expert guides on 9D Facelift, deep plane facelift, recovery, natural results, and international patient planning.",
+    title: blogPageSeo.title,
+    description: blogPageSeo.description,
     url: absoluteUrl("/blog"),
     images: [imageUrl()]
   }
@@ -32,6 +39,16 @@ export default async function BlogPage() {
 
   return (
     <>
+      <StructuredData
+        data={[
+          collectionPageJsonLd({
+            name: blogPageSeo.title,
+            description: blogPageSeo.description,
+            path: "/blog"
+          }),
+          blogItemListJsonLd(posts)
+        ]}
+      />
       <Navbar settings={settings} />
       <main className="pt-28">
         <section className="relative isolate flex min-h-[82vh] items-center overflow-hidden bg-ink px-5 py-24 text-white sm:px-8 lg:min-h-[90vh]">

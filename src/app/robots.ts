@@ -5,6 +5,20 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        userAgent: [
+          "GPTBot",
+          "ChatGPT-User",
+          "OAI-SearchBot",
+          "ClaudeBot",
+          "Claude-User",
+          "PerplexityBot",
+          "Google-Extended",
+          "CCBot"
+        ],
+        allow: "/",
+        disallow: ["/studio", "/studio/"]
+      },
+      {
         userAgent: "*",
         allow: "/",
         disallow: ["/studio", "/studio/"]
@@ -14,4 +28,3 @@ export default function robots(): MetadataRoute.Robots {
     host: siteUrl
   };
 }
-

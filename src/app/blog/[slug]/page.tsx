@@ -9,7 +9,7 @@ import { Navbar } from "@/components/Navbar";
 import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getPostBySlug, getSiteSettings } from "@/lib/sanity";
-import { absoluteUrl, articleJsonLd, breadcrumbJsonLd, imageUrl } from "@/lib/seo";
+import { absoluteUrl, articleJsonLd, breadcrumbJsonLd, imageUrl, webPageJsonLd } from "@/lib/seo";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -67,6 +67,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <>
       <StructuredData
         data={[
+          webPageJsonLd({
+            name: post.seoTitle || post.title,
+            description: post.metaDescription || post.excerpt,
+            path: `/blog/${post.slug}`,
+            image: post.image
+          }),
           articleJsonLd(post),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },

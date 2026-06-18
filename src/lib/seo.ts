@@ -143,6 +143,43 @@ export function articleJsonLd(post: BlogPost) {
   };
 }
 
+export function collectionPageJsonLd(page: { name: string; description: string; path: string; image?: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": absoluteUrl(`${page.path}#collection`),
+    name: page.name,
+    description: page.description,
+    url: absoluteUrl(page.path),
+    image: imageUrl(page.image),
+    isPartOf: {
+      "@id": absoluteUrl("/#website")
+    },
+    publisher: {
+      "@id": absoluteUrl("/#organization")
+    },
+    about: {
+      "@id": absoluteUrl("/#physician")
+    },
+    inLanguage: "en"
+  };
+}
+
+export function blogItemListJsonLd(posts: BlogPost[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": absoluteUrl("/blog#itemlist"),
+    name: "9D Facelift Resource Center Articles",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: absoluteUrl(`/blog/${post.slug}`),
+      name: post.seoTitle || post.title
+    }))
+  };
+}
+
 export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
   return {
     "@context": "https://schema.org",
