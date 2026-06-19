@@ -274,12 +274,12 @@ export function BeforeAfterPageView({ page, settings, galleryItems }: BeforeAfte
             <Search size={20} className="text-[#B88A3B]" />
             Popular Searches:
           </div>
-          <div className="flex min-w-0 flex-wrap gap-3">
+          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:flex lg:flex-wrap">
             {searchChips.map((chip) => (
               <a
                 key={chip}
                 href="#case-gallery"
-                className="rounded-md border border-[#E3D6C2] bg-white px-5 py-2 text-sm font-medium text-[#6B6257] shadow-sm transition hover:border-[#B88A3B] hover:text-[#171717]"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#E3D6C2] bg-white px-4 py-2 text-center text-sm font-medium leading-5 text-[#6B6257] shadow-sm transition hover:border-[#B88A3B] hover:text-[#171717] lg:w-auto lg:px-5"
               >
                 {chip}
               </a>
