@@ -158,7 +158,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       sortOrder,
       displayRole,
       age,
-      concern,
+      country,
       procedure,
       beforeLabel,
       afterLabel,

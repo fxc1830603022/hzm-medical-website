@@ -31,7 +31,7 @@ type BeforeAfterPageViewProps = {
 type CaseMeta = {
   title: string;
   age: string;
-  concern: string;
+  country: string;
   procedure: string;
 };
 
@@ -41,73 +41,73 @@ const caseMeta: CaseMeta[] = [
   {
     title: "Deep Plane Facelift Before and After",
     age: "Private",
-    concern: "Lower-face sagging and jawline softness",
+    country: "United States",
     procedure: "9D Deep Plane Facelift"
   },
   {
     title: "Natural Facelift and Jawline Improvement",
     age: "Private",
-    concern: "Jawline loss and nasolabial folds",
+    country: "Singapore",
     procedure: "9D Facelift"
   },
   {
     title: "Lower Face Rejuvenation Results",
     age: "Private",
-    concern: "Tired lower-face contour",
+    country: "Malaysia",
     procedure: "9D Facelift"
   },
   {
     title: "Jawline Lift Before and After",
     age: "Private",
-    concern: "Jowls and jawline definition",
+    country: "Russia",
     procedure: "9D Deep Plane Facelift"
   },
   {
     title: "Profile Refinement Result",
     age: "Private",
-    concern: "Side profile and lower-face support",
+    country: "Australia",
     procedure: "9D Facelift"
   },
   {
     title: "Contour Support Case",
     age: "Private",
-    concern: "Loose facial contour and early laxity",
+    country: "Thailand",
     procedure: "9D Facelift"
   },
   {
     title: "Soft Facial Rejuvenation",
     age: "Private",
-    concern: "Overall facial fatigue and balance",
+    country: "Indonesia",
     procedure: "9D Facelift"
   },
   {
     title: "Eye and Midface Harmony",
     age: "Private",
-    concern: "Facial tiredness and soft tissue descent",
+    country: "Philippines",
     procedure: "9D Facial Rejuvenation"
   },
   {
     title: "Jawline Definition Case",
     age: "Private",
-    concern: "Lower-face heaviness and neck transition",
+    country: "Canada",
     procedure: "9D Deep Plane Assessment"
   },
   {
     title: "Charm Preservation Result",
     age: "Private",
-    concern: "Rejuvenation without an overdone look",
+    country: "United Kingdom",
     procedure: "9D Facelift"
   },
   {
     title: "Full-Face Balance Case",
     age: "Private",
-    concern: "Midface and lower-face proportion",
+    country: "Vietnam",
     procedure: "9D Facelift"
   },
   {
     title: "Pre-Surgery Planning Reference",
     age: "Private",
-    concern: "Facial aging pattern assessment",
+    country: "Hong Kong",
     procedure: "Online Case Review"
   }
 ];
@@ -333,7 +333,7 @@ export function BeforeAfterPageView({ page, settings, galleryItems }: BeforeAfte
             </p>
             <dl className="mt-6 grid gap-3 text-sm">
               <FeaturedField label="Age" value={featuredCase.age} />
-              <FeaturedField label="Concern" value={featuredCase.concern} />
+              <FeaturedField label="Country" value={featuredCase.country} />
               <FeaturedField label="Procedure" value={featuredCase.procedure} />
             </dl>
             <button
@@ -423,7 +423,7 @@ function buildCaseCards(items: GalleryItem[]): CaseCard[] {
         displayRole: item.displayRole || "case",
         title: item.title || meta.title,
         age: item.age || meta.age,
-        concern: item.concern || meta.concern,
+        country: item.country || meta.country,
         procedure: item.procedure || meta.procedure,
         beforeLabel: item.beforeLabel || "",
         afterLabel: item.afterLabel || "",
@@ -493,16 +493,22 @@ function SectionTitle({ index, title }: { index: string; title: string }) {
 function CaseCardView({ item, index, onView }: { item: CaseCard; index: number; onView: () => void }) {
   return (
     <article className="overflow-hidden rounded-lg border border-[#E3D6C2] bg-white shadow-[0_16px_42px_rgba(60,42,22,0.08)]">
-      <button type="button" onClick={onView} className="group relative block aspect-[16/11] w-full overflow-hidden bg-[#EFE6D8] text-left">
-        <Image
-          src={item.image}
-          alt={item.alt}
-          fill
-          unoptimized
-          loading={index < 4 ? "eager" : "lazy"}
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-cover transition duration-500 group-hover:scale-[1.025]"
-        />
+      <button
+        type="button"
+        onClick={onView}
+        className="group relative block aspect-[4/3] w-full overflow-hidden bg-[#F8F4EA] text-left"
+      >
+        <span className="absolute inset-2 overflow-hidden rounded-md bg-[#FFFDF8] shadow-inner">
+          <Image
+            src={item.image}
+            alt={item.alt}
+            fill
+            unoptimized
+            loading={index < 4 ? "eager" : "lazy"}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-contain transition duration-500 group-hover:brightness-[1.03]"
+          />
+        </span>
         <span className="absolute left-1/2 top-1/2 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#171717] shadow-[0_8px_22px_rgba(60,42,22,0.18)] sm:flex">
           <ChevronLeft size={16} />
           <ChevronRight size={16} />
@@ -522,7 +528,7 @@ function CaseCardView({ item, index, onView }: { item: CaseCard; index: number; 
         </div>
         <dl className="mt-4 grid gap-2 border-b border-[#E7DBC8] pb-4 text-sm text-[#3A332C]">
           <CaseLine label="Age" value={item.age} />
-          <CaseLine label="Concern" value={item.concern} />
+          <CaseLine label="Country" value={item.country} />
           <CaseLine label="Procedure" value={item.procedure} />
         </dl>
         <button
@@ -584,7 +590,7 @@ function CaseModal({ item, onClose }: { item: CaseCard; onClose: () => void }) {
           <div className="rounded-lg border border-[#E3D6C2] bg-white p-5">
             <dl className="grid gap-4 text-sm">
               <CaseLine label="Age" value={item.age} />
-              <CaseLine label="Concern" value={item.concern} />
+              <CaseLine label="Country" value={item.country} />
               <CaseLine label="Procedure" value={item.procedure} />
             </dl>
             <p className="mt-6 border-t border-[#E3D6C2] pt-5 text-sm leading-7 text-[#6B6257]">

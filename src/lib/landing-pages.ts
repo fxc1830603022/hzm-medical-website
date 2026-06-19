@@ -429,7 +429,7 @@ export const landingPages: Record<string, LandingPageData> = {
     intro:
       "Case examples should educate the eye: the best result looks refreshed, proportionate, and still emotionally recognizable.",
     description:
-      "View natural-looking 9D Facelift and 9D Deep Plane Facelift case examples with age range, concern, treatment plan, and recovery notes.",
+      "View natural-looking 9D Facelift and 9D Deep Plane Facelift case examples with age range, country or region, treatment plan, and recovery notes.",
     image: "/images/gallery-ai-05.jpeg",
     imageAlt: "Natural 9D before and after case",
     primaryCta: "Send Photos for Online Assessment",
@@ -523,7 +523,7 @@ export const landingPages: Record<string, LandingPageData> = {
     seo: {
       title: "Deep Plane Facelift Before and After | Natural 9D Results",
       description:
-        "View natural-looking 9D Facelift and 9D Deep Plane Facelift case examples with age range, concern, treatment plan, and recovery notes."
+        "View natural-looking 9D Facelift and 9D Deep Plane Facelift case examples with age range, country or region, treatment plan, and recovery notes."
     }
   },
   "international-patients": {

@@ -5,6 +5,7 @@ type GalleryPreviewSelection = {
   title?: string;
   subtitle?: string;
   displayRole?: string;
+  country?: string;
   media?: PreviewValue["media"];
   externalImageUrl?: string;
   localImagePath?: string;
@@ -66,9 +67,9 @@ export const galleryItem = defineType({
       type: "string"
     }),
     defineField({
-      name: "concern",
-      title: "Concern",
-      description: "Example: Lower-face sagging and jawline softness.",
+      name: "country",
+      title: "Country / Region",
+      description: "Example: United States, Singapore, Malaysia, Russia, or Hong Kong.",
       type: "string"
     }),
     defineField({
@@ -115,14 +116,17 @@ export const galleryItem = defineType({
       title: "title",
       subtitle: "localImagePath",
       displayRole: "displayRole",
+      country: "country",
       media: "image",
       externalImageUrl: "externalImageUrl",
       localImagePath: "localImagePath"
     },
-    prepare({ title, subtitle, displayRole, media, externalImageUrl, localImagePath }: GalleryPreviewSelection) {
+    prepare({ title, subtitle, displayRole, country, media, externalImageUrl, localImagePath }: GalleryPreviewSelection) {
       return {
         title,
-        subtitle: [displayRole ? `Role: ${displayRole}` : null, subtitle || externalImageUrl].filter(Boolean).join(" | "),
+        subtitle: [displayRole ? `Role: ${displayRole}` : null, country, subtitle || externalImageUrl]
+          .filter(Boolean)
+          .join(" | "),
         media: media || makePreviewImage(externalImageUrl || localImagePath)
       };
     }
