@@ -155,7 +155,14 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       "image": coalesce(image.asset->url, externalImageUrl, localImagePath),
       title,
       "alt": coalesce(alt, title),
-      sortOrder
+      sortOrder,
+      displayRole,
+      age,
+      concern,
+      procedure,
+      beforeLabel,
+      afterLabel,
+      description
     }`);
 
     return items.length ? items : defaultGalleryItems;

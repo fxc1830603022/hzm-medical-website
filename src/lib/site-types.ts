@@ -29,6 +29,13 @@ export type GalleryItem = {
   title: string;
   alt: string;
   sortOrder: number;
+  displayRole?: "case" | "hero" | "featured";
+  age?: string;
+  concern?: string;
+  procedure?: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  description?: string;
 };
 
 export type SiteSettings = {

@@ -15,8 +15,8 @@ import type { ReactNode } from "react";
 import type { LandingPageData } from "@/lib/landing-pages";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
+import { BeforeAfterPageView } from "./BeforeAfterPageView";
 import { ContactForm } from "./ContactForm";
-import { Gallery } from "./Gallery";
 import { Reveal } from "./Reveal";
 
 type LandingPageViewProps = {
@@ -26,6 +26,10 @@ type LandingPageViewProps = {
 };
 
 export function LandingPageView({ page, settings, galleryItems = [] }: LandingPageViewProps) {
+  if (page.path === "/before-after") {
+    return <BeforeAfterPageView page={page} settings={settings} galleryItems={galleryItems} />;
+  }
+
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
   const secondaryHref = page.secondaryHref === "#whatsapp" ? whatsappUrl : page.secondaryHref;
@@ -199,27 +203,6 @@ export function LandingPageView({ page, settings, galleryItems = [] }: LandingPa
           </div>
         </section>
       ))}
-
-      {page.path === "/before-after" && galleryItems.length ? (
-        <section className="bg-porcelain px-5 py-20 sm:px-8 lg:py-28">
-          <div className="mx-auto max-w-7xl">
-            <Reveal className="mx-auto max-w-3xl text-center">
-              <p className="section-label">Visual Reference</p>
-              <h2 className="section-title">
-                Case Gallery
-                <br />
-                <span>Natural, Not Overdone</span>
-              </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-graphite/70">
-                Use these cases as visual references only. Individual outcomes vary and require medical assessment.
-              </p>
-            </Reveal>
-            <div className="mt-12">
-              <Gallery items={galleryItems} />
-            </div>
-          </div>
-        </section>
-      ) : null}
 
       {page.path === "/consultation" ? (
         <section id="assessment-form" className="bg-porcelain px-5 py-20 sm:px-8 lg:py-28">
