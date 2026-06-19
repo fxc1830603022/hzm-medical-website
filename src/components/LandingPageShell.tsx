@@ -1,5 +1,6 @@
 import { BackToTop } from "@/components/BackToTop";
 import { Footer } from "@/components/Footer";
+import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { LandingPageView } from "@/components/LandingPageView";
 import { Navbar } from "@/components/Navbar";
 import { StructuredData } from "@/components/StructuredData";
@@ -62,6 +63,9 @@ export async function LandingPageShell({ page }: LandingPageShellProps) {
       <Navbar settings={settings} />
       <main>
         <LandingPageView page={pageWithFaqs} settings={settings} galleryItems={galleryItems} />
+        {pageWithFaqs.path === "/before-after" ? (
+          <GlobalBottomCTA settings={settings} source="before-after-global-bottom-cta" />
+        ) : null}
       </main>
       <Footer />
       <BackToTop />
