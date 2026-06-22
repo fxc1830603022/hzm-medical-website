@@ -1,9 +1,11 @@
 const WEBHOOK_SECRET = "";
 const SPREADSHEET_ID = "1jUpyRU57I97AiiACZyKbStT2Gq9Awr2uoD6m1BNTQIs";
 const SHEET_NAME = "";
-const SCRIPT_VERSION = "2026-06-22-cms-schema-v3";
+const SCRIPT_VERSION = "2026-06-22-cms-schema-v4";
+const ACTIVE_SPREADSHEET_PROPERTY = "ACTIVE_SPREADSHEET_ID";
 const ACTIVE_SHEET_PROPERTY = "ACTIVE_SHEET_NAME";
-const FRESH_SHEET_PREFIX = "CMS同步数据";
+const FRESH_SPREADSHEET_PREFIX = "Dr Xiao 9D CMS Form Data";
+const FRESH_SHEET_PREFIX = "CMS Form Data";
 const SANITY_PROJECT_ID = "rawfdegz";
 const SANITY_DATASET = "production";
 const SANITY_API_VERSION = "2025-02-19";
@@ -75,7 +77,10 @@ function doPost(e) {
       ok: true,
       scriptVersion: SCRIPT_VERSION,
       spreadsheetId: sheet.getParent().getId(),
+      spreadsheetUrl: sheet.getParent().getUrl(),
       sheetName: sheet.getName(),
+      activeSpreadsheetId: getActiveSpreadsheetId(),
+      activeSheetName: getActiveSheetName(),
       rowNumber: nextRow,
       headers: getCurrentHeaders(sheet),
       headerMatches: headersMatch(sheet)
@@ -98,6 +103,7 @@ function doGet() {
       spreadsheetId: sheet.getParent().getId(),
       spreadsheetName: sheet.getParent().getName(),
       sheetName: sheet.getName(),
+      activeSpreadsheetId: getActiveSpreadsheetId(),
       activeSheetName: getActiveSheetName(),
       lastRow: sheet.getLastRow(),
       expectedHeaders: HEADERS,
@@ -113,13 +119,18 @@ function doGet() {
   }
 }
 
+function getActiveSpreadsheetId() {
+  return PropertiesService.getScriptProperties().getProperty(ACTIVE_SPREADSHEET_PROPERTY) || SPREADSHEET_ID || "";
+}
+
 function getTargetSpreadsheet() {
-  const spreadsheet = SPREADSHEET_ID
-    ? SpreadsheetApp.openById(SPREADSHEET_ID)
+  const activeSpreadsheetId = getActiveSpreadsheetId();
+  const spreadsheet = activeSpreadsheetId
+    ? SpreadsheetApp.openById(activeSpreadsheetId)
     : SpreadsheetApp.getActiveSpreadsheet();
 
   if (!spreadsheet) {
-    throw new Error("No spreadsheet found. Set SPREADSHEET_ID to your Google Sheet ID.");
+    throw new Error("No spreadsheet found. Set ACTIVE_SPREADSHEET_ID or SPREADSHEET_ID.");
   }
 
   return spreadsheet;
@@ -205,6 +216,54 @@ function createFreshCmsSubmissionSheet() {
   return result;
 }
 
+function createNewGoogleSpreadsheetFromCms() {
+  const spreadsheetName = FRESH_SPREADSHEET_PREFIX + " " + Utilities.formatDate(new Date(), "Asia/Shanghai", "yyyyMMdd-HHmm");
+  const spreadsheet = SpreadsheetApp.create(spreadsheetName);
+  const sheet = spreadsheet.getSheets()[0];
+  const sheetName = FRESH_SHEET_PREFIX;
+  sheet.setName(sheetName);
+
+  PropertiesService.getScriptProperties().setProperty(ACTIVE_SPREADSHEET_PROPERTY, spreadsheet.getId());
+  PropertiesService.getScriptProperties().setProperty(ACTIVE_SHEET_PROPERTY, sheetName);
+
+  const result = syncFromSanityToSheet(sheet, true);
+  result.spreadsheetUrl = spreadsheet.getUrl();
+  Logger.log(JSON.stringify(result));
+  return result;
+}
+
+function useSpreadsheetById(spreadsheetId, sheetName) {
+  if (!spreadsheetId) {
+    throw new Error("Please pass a spreadsheet ID.");
+  }
+
+  const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+  const targetSheetName = sheetName || spreadsheet.getSheets()[0].getName();
+  let sheet = spreadsheet.getSheetByName(targetSheetName);
+
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(targetSheetName);
+  }
+
+  PropertiesService.getScriptProperties().setProperty(ACTIVE_SPREADSHEET_PROPERTY, spreadsheet.getId());
+  PropertiesService.getScriptProperties().setProperty(ACTIVE_SHEET_PROPERTY, targetSheetName);
+  ensureHeaders(sheet);
+
+  const result = {
+    ok: true,
+    scriptVersion: SCRIPT_VERSION,
+    spreadsheetId: spreadsheet.getId(),
+    spreadsheetName: spreadsheet.getName(),
+    spreadsheetUrl: spreadsheet.getUrl(),
+    sheetName: sheet.getName(),
+    activeSpreadsheetId: getActiveSpreadsheetId(),
+    activeSheetName: getActiveSheetName(),
+    headerMatches: headersMatch(sheet)
+  };
+  Logger.log(JSON.stringify(result));
+  return result;
+}
+
 function syncFromSanity() {
   const result = syncFromSanityToSheet(getTargetSheet(), true);
   Logger.log(JSON.stringify(result));
@@ -232,7 +291,9 @@ function syncFromSanityToSheet(sheet, clearSheet) {
     scriptVersion: SCRIPT_VERSION,
     spreadsheetId: sheet.getParent().getId(),
     spreadsheetName: sheet.getParent().getName(),
+    spreadsheetUrl: sheet.getParent().getUrl(),
     sheetName: sheet.getName(),
+    activeSpreadsheetId: getActiveSpreadsheetId(),
     activeSheetName: getActiveSheetName(),
     rowsWritten: rows.length,
     headers: getCurrentHeaders(sheet),
