@@ -200,11 +200,15 @@ function createFreshCmsSubmissionSheet() {
 
   PropertiesService.getScriptProperties().setProperty(ACTIVE_SHEET_PROPERTY, sheetName);
 
-  return syncFromSanityToSheet(sheet, true);
+  const result = syncFromSanityToSheet(sheet, true);
+  Logger.log(JSON.stringify(result));
+  return result;
 }
 
 function syncFromSanity() {
-  return syncFromSanityToSheet(getTargetSheet(), true);
+  const result = syncFromSanityToSheet(getTargetSheet(), true);
+  Logger.log(JSON.stringify(result));
+  return result;
 }
 
 function syncFromSanityToSheet(sheet, clearSheet) {
