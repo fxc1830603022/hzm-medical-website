@@ -34,6 +34,24 @@ const budgetOptions = [
   "Over $20,000"
 ];
 
+const interestedOptions = [
+  "9D Facelift",
+  "9D Deep Plane Facelift",
+  "Online assessment first",
+  "International Patient Plan",
+  "Not sure, I need recommendations"
+];
+
+const hearAboutOptions = [
+  "Instagram",
+  "Facebook",
+  "YouTube",
+  "Google Search",
+  "Friend / Referral",
+  "Doctor / Clinic referral",
+  "Other"
+];
+
 export function ContactForm({
   compact = false,
   className = "",
@@ -212,6 +230,24 @@ export function ContactForm({
           </select>
         </label>
         <label className={fieldClass}>
+          Interested In
+          <select
+            className={selectClass}
+            name="interestedIn"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select interest
+            </option>
+            {interestedOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className={fieldClass}>
           Budget
           <select
             className={selectClass}
@@ -223,6 +259,24 @@ export function ContactForm({
               Select budget
             </option>
             {budgetOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className={fieldClass}>
+          How Did You Hear About Us?
+          <select
+            className={selectClass}
+            name="hearAbout"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select source
+            </option>
+            {hearAboutOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>

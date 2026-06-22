@@ -98,7 +98,9 @@ export async function POST(request: Request) {
     !payload.country ||
     !payload.facialConcerns ||
     !payload.budget ||
-    !payload.whatsapp
+    !payload.whatsapp ||
+    !payload.interestedIn ||
+    !payload.hearAbout
   ) {
     return NextResponse.json({ ok: false, error: "Please complete all required fields." }, { status: 422 });
   }

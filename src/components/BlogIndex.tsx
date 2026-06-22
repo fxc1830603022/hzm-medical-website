@@ -338,6 +338,24 @@ const doctorStats = [
   { value: "Global", label: "Patients from 30+ countries" }
 ];
 
+const blogInterestedOptions = [
+  "9D Facelift",
+  "9D Deep Plane Facelift",
+  "Online assessment first",
+  "International Patient Plan",
+  "Not sure, I need recommendations"
+];
+
+const blogHearAboutOptions = [
+  "Instagram",
+  "Facebook",
+  "YouTube",
+  "Google Search",
+  "Friend / Referral",
+  "Doctor / Clinic referral",
+  "Other"
+];
+
 function BlogLeadForm() {
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
@@ -349,7 +367,10 @@ function BlogLeadForm() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
+    const payload = Object.fromEntries(formData.entries()) as Record<string, FormDataEntryValue>;
+    if (!payload.interestedIn && payload.facialConcerns) {
+      payload.interestedIn = payload.facialConcerns;
+    }
 
     try {
       const response = await fetch("/api/contact", {
@@ -432,20 +453,36 @@ function BlogLeadForm() {
         />
         <select
           className="h-11 rounded-md border border-ink/12 bg-porcelain px-4 text-sm text-graphite outline-none transition focus:border-champagne sm:col-span-2"
-          name="facialConcerns"
+          name="interestedIn"
           defaultValue=""
           required
         >
           <option value="" disabled>
             I&apos;m interested in...
           </option>
-          <option value="9D Facelift (mild to moderate aging)">9D Facelift</option>
-          <option value="9D Deep Plane Facelift (severe laxity)">9D Deep Plane Facelift</option>
-          <option value="Not sure, I need an assessment">Not sure, I need an assessment</option>
+          {blogInterestedOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <select
+          className="h-11 rounded-md border border-ink/12 bg-porcelain px-4 text-sm text-graphite outline-none transition focus:border-champagne sm:col-span-2"
+          name="facialConcerns"
+          defaultValue=""
+          required
+        >
+          <option value="" disabled>
+            Main facial concerns
+          </option>
           <option value="Sagging midface">Sagging midface</option>
           <option value="Jowls / lower face laxity">Jowls / lower face laxity</option>
           <option value="Loose neck skin">Loose neck skin</option>
           <option value="Deep nasolabial folds">Deep nasolabial folds</option>
+          <option value="Facial volume loss">Facial volume loss</option>
+          <option value="Eye area aging">Eye area aging</option>
+          <option value="Overall anti-aging assessment">Overall anti-aging assessment</option>
+          <option value="Not sure">Not sure</option>
         </select>
         <select
           className="h-11 rounded-md border border-ink/12 bg-porcelain px-4 text-sm text-graphite outline-none transition focus:border-champagne"
@@ -466,6 +503,21 @@ function BlogLeadForm() {
           name="wechat"
           placeholder="WeChat ID (optional)"
         />
+        <select
+          className="h-11 rounded-md border border-ink/12 bg-porcelain px-4 text-sm text-graphite outline-none transition focus:border-champagne sm:col-span-2"
+          name="hearAbout"
+          defaultValue=""
+          required
+        >
+          <option value="" disabled>
+            How did you hear about us?
+          </option>
+          {blogHearAboutOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
       <textarea
         className="mt-3 min-h-20 w-full rounded-md border border-ink/12 bg-porcelain px-4 py-3 text-sm outline-none transition placeholder:text-graphite/42 focus:border-champagne"
