@@ -1,6 +1,12 @@
 const WEBHOOK_SECRET = "";
 const SPREADSHEET_ID = "1jUpyRU57I97AiiACZyKbStT2Gq9Awr2uoD6m1BNTQIs";
 const SHEET_NAME = "";
+const SCRIPT_VERSION = "2026-06-22-cms-schema-v3";
+const ACTIVE_SHEET_PROPERTY = "ACTIVE_SHEET_NAME";
+const FRESH_SHEET_PREFIX = "CMS同步数据";
+const SANITY_PROJECT_ID = "rawfdegz";
+const SANITY_DATASET = "production";
+const SANITY_API_VERSION = "2025-02-19";
 
 const HEADERS = [
   "Name",
@@ -66,7 +72,13 @@ function doPost(e) {
     ]]);
 
     return jsonOutput({
-      ok: true
+      ok: true,
+      scriptVersion: SCRIPT_VERSION,
+      spreadsheetId: sheet.getParent().getId(),
+      sheetName: sheet.getName(),
+      rowNumber: nextRow,
+      headers: getCurrentHeaders(sheet),
+      headerMatches: headersMatch(sheet)
     });
   } catch (error) {
     return jsonOutput({
@@ -82,10 +94,16 @@ function doGet() {
 
     return jsonOutput({
       ok: true,
+      scriptVersion: SCRIPT_VERSION,
       spreadsheetId: sheet.getParent().getId(),
       spreadsheetName: sheet.getParent().getName(),
       sheetName: sheet.getName(),
-      lastRow: sheet.getLastRow()
+      activeSheetName: getActiveSheetName(),
+      lastRow: sheet.getLastRow(),
+      expectedHeaders: HEADERS,
+      currentHeaders: getCurrentHeaders(sheet),
+      headerMatches: headersMatch(sheet),
+      latestRows: getLatestRows(sheet, 5)
     });
   } catch (error) {
     return jsonOutput({
@@ -95,7 +113,7 @@ function doGet() {
   }
 }
 
-function getTargetSheet() {
+function getTargetSpreadsheet() {
   const spreadsheet = SPREADSHEET_ID
     ? SpreadsheetApp.openById(SPREADSHEET_ID)
     : SpreadsheetApp.getActiveSpreadsheet();
@@ -104,10 +122,21 @@ function getTargetSheet() {
     throw new Error("No spreadsheet found. Set SPREADSHEET_ID to your Google Sheet ID.");
   }
 
-  if (SHEET_NAME) {
-    const namedSheet = spreadsheet.getSheetByName(SHEET_NAME);
+  return spreadsheet;
+}
+
+function getActiveSheetName() {
+  return PropertiesService.getScriptProperties().getProperty(ACTIVE_SHEET_PROPERTY) || SHEET_NAME || "";
+}
+
+function getTargetSheet() {
+  const spreadsheet = getTargetSpreadsheet();
+  const activeSheetName = getActiveSheetName();
+
+  if (activeSheetName) {
+    const namedSheet = spreadsheet.getSheetByName(activeSheetName);
     if (!namedSheet) {
-      throw new Error("Sheet tab not found: " + SHEET_NAME);
+      throw new Error("Sheet tab not found: " + activeSheetName);
     }
 
     return namedSheet;
@@ -121,10 +150,165 @@ function ensureHeaders(sheet) {
   sheet.setFrozenRows(1);
 }
 
+function getCurrentHeaders(sheet) {
+  if (sheet.getLastColumn() < 1) return [];
+  return sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), HEADERS.length)).getValues()[0].map(function (header) {
+    return String(header || "").trim();
+  });
+}
+
+function headersMatch(sheet) {
+  const currentHeaders = getCurrentHeaders(sheet).slice(0, HEADERS.length);
+  if (currentHeaders.length < HEADERS.length) return false;
+
+  for (let i = 0; i < HEADERS.length; i++) {
+    if (currentHeaders[i] !== HEADERS[i]) return false;
+  }
+
+  return true;
+}
+
+function getLatestRows(sheet, count) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return [];
+
+  const startRow = Math.max(2, lastRow - count + 1);
+  const rowCount = lastRow - startRow + 1;
+  const values = sheet.getRange(startRow, 1, rowCount, HEADERS.length).getDisplayValues();
+
+  return values.map(function (row, index) {
+    const object = {
+      rowNumber: startRow + index
+    };
+
+    HEADERS.forEach(function (header, columnIndex) {
+      object[header] = row[columnIndex] || "";
+    });
+
+    return object;
+  });
+}
+
 function formatTextColumns(sheet, startRow, rowCount) {
-  sheet.getRange(startRow, 5, rowCount, 1).setNumberFormat("@");
-  sheet.getRange(startRow, 6, rowCount, 1).setNumberFormat("@");
-  sheet.getRange(startRow, 7, rowCount, 1).setNumberFormat("@");
+  return;
+}
+
+function createFreshCmsSubmissionSheet() {
+  const spreadsheet = getTargetSpreadsheet();
+  const sheetName = getUniqueSheetName(spreadsheet, FRESH_SHEET_PREFIX + " " + Utilities.formatDate(new Date(), "Asia/Shanghai", "yyyyMMdd-HHmm"));
+  const sheet = spreadsheet.insertSheet(sheetName);
+
+  PropertiesService.getScriptProperties().setProperty(ACTIVE_SHEET_PROPERTY, sheetName);
+
+  return syncFromSanityToSheet(sheet, true);
+}
+
+function syncFromSanity() {
+  return syncFromSanityToSheet(getTargetSheet(), true);
+}
+
+function syncFromSanityToSheet(sheet, clearSheet) {
+  const submissions = fetchSanitySubmissions();
+  const rows = submissions.map(mapSanitySubmissionToRow);
+
+  if (clearSheet) {
+    sheet.clearContents();
+  }
+
+  ensureHeaders(sheet);
+
+  if (rows.length) {
+    sheet.getRange(2, 1, rows.length, HEADERS.length).setValues(rows);
+  }
+
+  sheet.autoResizeColumns(1, HEADERS.length);
+
+  return {
+    ok: true,
+    scriptVersion: SCRIPT_VERSION,
+    spreadsheetId: sheet.getParent().getId(),
+    spreadsheetName: sheet.getParent().getName(),
+    sheetName: sheet.getName(),
+    activeSheetName: getActiveSheetName(),
+    rowsWritten: rows.length,
+    headers: getCurrentHeaders(sheet),
+    headerMatches: headersMatch(sheet)
+  };
+}
+
+function fetchSanitySubmissions() {
+  const query = [
+    '*[_type == "consultationSubmission"] | order(coalesce(createdAt, _createdAt) asc) {',
+    '  _id,',
+    '  name,',
+    '  gender,',
+    '  ageGroup,',
+    '  nationality,',
+    '  country,',
+    '  facialConcerns,',
+    '  concern,',
+    '  budget,',
+    '  whatsapp,',
+    '  email,',
+    '  wechat,',
+    '  phone,',
+    '  interestedIn,',
+    '  hearAbout,',
+    '  message,',
+    '  status,',
+    '  source,',
+    '  createdAt,',
+    '  _createdAt',
+    '}'
+  ].join("\n");
+  const url = "https://" + SANITY_PROJECT_ID + ".api.sanity.io/v" + SANITY_API_VERSION + "/data/query/" + SANITY_DATASET + "?query=" + encodeURIComponent(query);
+  const response = UrlFetchApp.fetch(url, {
+    method: "get",
+    muteHttpExceptions: true
+  });
+  const statusCode = response.getResponseCode();
+  const body = response.getContentText();
+
+  if (statusCode < 200 || statusCode >= 300) {
+    throw new Error("Sanity fetch failed with " + statusCode + ": " + body.slice(0, 200));
+  }
+
+  const payload = JSON.parse(body);
+  return payload.result || [];
+}
+
+function mapSanitySubmissionToRow(item) {
+  return [
+    item.name || "",
+    item.gender || "",
+    item.ageGroup || "",
+    item.nationality || item.country || "",
+    item.facialConcerns || item.concern || "",
+    item.budget || "",
+    item.whatsapp || "",
+    item.email || "",
+    item.wechat || "",
+    item.phone || "",
+    item.interestedIn || "",
+    item.hearAbout || "",
+    item.message || "",
+    item.status || "new",
+    item.source || "website",
+    item.createdAt || item._createdAt || "",
+    item._id || ""
+  ];
+}
+
+function getUniqueSheetName(spreadsheet, baseName) {
+  let sheetName = baseName;
+  let index = 2;
+
+  while (spreadsheet.getSheetByName(sheetName)) {
+    sheetName = baseName + " " + index;
+    index++;
+  }
+
+  return sheetName;
 }
 
 function reorderExistingSheetColumns() {
@@ -157,10 +341,18 @@ function reorderExistingSheetColumns() {
 }
 
 function findHeaderIndex(currentHeaders, header) {
+  const aliases = HEADER_ALIASES[header] || [];
+
+  if (header === "Created At") {
+    for (let i = 0; i < aliases.length; i++) {
+      const aliasIndex = currentHeaders.indexOf(aliases[i]);
+      if (aliasIndex !== -1) return aliasIndex;
+    }
+  }
+
   const directIndex = currentHeaders.indexOf(header);
   if (directIndex !== -1) return directIndex;
 
-  const aliases = HEADER_ALIASES[header] || [];
   for (let i = 0; i < aliases.length; i++) {
     const aliasIndex = currentHeaders.indexOf(aliases[i]);
     if (aliasIndex !== -1) return aliasIndex;
