@@ -99,6 +99,20 @@ export const consultationSubmission = defineType({
     defineField({ name: "wechat", title: "WeChat", type: "string" }),
     defineField({ name: "phone", title: "Phone", type: "string" }),
     defineField({
+      name: "interestedIn",
+      title: "Interested In",
+      type: "string",
+      options: {
+        list: [
+          { title: "9D Facelift", value: "9D Facelift" },
+          { title: "Deep Plane Facelift", value: "Deep Plane Facelift" },
+          { title: "Online Consultation", value: "Online Consultation" },
+          { title: "International Patient Plan", value: "International Patient Plan" },
+          { title: "Not sure yet", value: "Not sure yet" }
+        ]
+      }
+    }),
+    defineField({
       name: "hearAbout",
       title: "How Did You Hear About Us?",
       type: "string",

@@ -169,14 +169,6 @@ export function GlobalBottomCTA({
     const phoneDialCode = submittedPhoneCountry.dialCode;
     const whatsappNumber = String(formData.get("whatsapp") || "").trim();
     const whatsapp = [phoneDialCode, whatsappNumber].filter(Boolean).join(" ");
-    const composedMessage = [
-      interestedIn ? `Interested In: ${interestedIn}` : "",
-      hearAbout ? `How Did You Hear About Us: ${hearAbout}` : "",
-      additionalInfo ? `Additional Information: ${additionalInfo}` : ""
-    ]
-      .filter(Boolean)
-      .join("\n");
-
     const payload = {
       name: formData.get("name"),
       gender: formData.get("gender"),
@@ -186,9 +178,10 @@ export function GlobalBottomCTA({
       whatsapp,
       phone: whatsapp,
       facialConcerns: formData.get("facialConcerns"),
+      interestedIn,
       budget: formData.get("budget"),
       hearAbout,
-      message: composedMessage,
+      message: additionalInfo,
       source
     };
 

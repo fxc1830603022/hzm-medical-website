@@ -17,6 +17,7 @@ type ContactPayload = {
   phone?: string;
   country?: string;
   concern?: string;
+  interestedIn?: string;
   hearAbout?: string;
   message?: string;
   source?: string;
@@ -81,6 +82,7 @@ export async function POST(request: Request) {
     phone: clean(body.phone),
     country: countryRegion,
     concern: facialConcerns,
+    interestedIn: clean(body.interestedIn),
     hearAbout: clean(body.hearAbout),
     message: clean(body.message),
     status: "new",

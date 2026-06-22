@@ -32,12 +32,13 @@ The script writes these columns:
 8. Country / Region
 9. Facial Concerns
 10. Budget
-11. How Did You Hear About Us?
-12. Additional Info
-13. Submitted At
-14. Source Page
-15. Follow-up Status
-16. Sanity Record ID
+11. Interested In
+12. How Did You Hear About Us?
+13. Additional Info
+14. Submitted At
+15. Source Page
+16. Follow-up Status
+17. Sanity Record ID
 
 ## Reorder existing rows
 
