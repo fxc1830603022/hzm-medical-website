@@ -6,21 +6,28 @@ const HEADERS = [
   "Name",
   "Gender",
   "Age Group",
-  "Email",
-  "Phone",
-  "WhatsApp",
-  "WeChat",
   "Country / Region",
   "Facial Concerns",
   "Budget",
+  "WhatsApp",
+  "Email",
+  "WeChat",
+  "Phone",
   "Interested In",
   "How Did You Hear About Us?",
-  "Additional Info",
-  "Submitted At",
-  "Source Page",
-  "Follow-up Status",
+  "Message",
+  "Status",
+  "Source",
+  "Created At",
   "Sanity Record ID"
 ];
+
+const HEADER_ALIASES = {
+  "Message": ["Additional Info"],
+  "Source": ["Source Page"],
+  "Status": ["Follow-up Status"],
+  "Created At": ["Submitted At"]
+};
 
 function doPost(e) {
   try {
@@ -42,19 +49,19 @@ function doPost(e) {
       data.name || "",
       data.gender || "",
       data.ageGroup || "",
-      data.email || "",
-      data.phone || "",
-      data.whatsapp || "",
-      data.wechat || "",
       data.country || data.nationality || "",
       data.facialConcerns || "",
       data.budget || "",
+      data.whatsapp || "",
+      data.email || "",
+      data.wechat || "",
+      data.phone || "",
       data.interestedIn || "",
       data.hearAbout || "",
       data.message || "",
-      data.submittedAt || new Date().toISOString(),
-      data.source || "website",
       data.status || "new",
+      data.source || "website",
+      data.createdAt || data.submittedAt || new Date().toISOString(),
       data.sanityRecordId || ""
     ]]);
 
@@ -135,7 +142,7 @@ function reorderExistingSheetColumns() {
 
   const reorderedRows = values.slice(1).map(function (row) {
     return HEADERS.map(function (header) {
-      const oldIndex = currentHeaders.indexOf(header);
+      const oldIndex = findHeaderIndex(currentHeaders, header);
       return oldIndex === -1 ? "" : row[oldIndex];
     });
   });
@@ -147,6 +154,19 @@ function reorderExistingSheetColumns() {
   if (reorderedRows.length) {
     formatTextColumns(sheet, 2, reorderedRows.length);
   }
+}
+
+function findHeaderIndex(currentHeaders, header) {
+  const directIndex = currentHeaders.indexOf(header);
+  if (directIndex !== -1) return directIndex;
+
+  const aliases = HEADER_ALIASES[header] || [];
+  for (let i = 0; i < aliases.length; i++) {
+    const aliasIndex = currentHeaders.indexOf(aliases[i]);
+    if (aliasIndex !== -1) return aliasIndex;
+  }
+
+  return -1;
 }
 
 function jsonOutput(data) {

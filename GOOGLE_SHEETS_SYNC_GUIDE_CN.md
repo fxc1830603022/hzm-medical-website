@@ -25,19 +25,19 @@ The script writes these columns:
 1. Name
 2. Gender
 3. Age Group
-4. Email
-5. Phone
-6. WhatsApp
-7. WeChat
-8. Country / Region
-9. Facial Concerns
-10. Budget
+4. Country / Region
+5. Facial Concerns
+6. Budget
+7. WhatsApp
+8. Email
+9. WeChat
+10. Phone
 11. Interested In
 12. How Did You Hear About Us?
-13. Additional Info
-14. Submitted At
-15. Source Page
-16. Follow-up Status
+13. Message
+14. Status
+15. Source
+16. Created At
 17. Sanity Record ID
 
 ## Reorder existing rows
@@ -48,7 +48,7 @@ After replacing and saving the Apps Script, run this function once from the Apps
 reorderExistingSheetColumns
 ```
 
-This reorders the existing sheet columns to match the website form order. Future submissions will use the same order automatically.
+This reorders the existing sheet columns to match the CMS consultation submission schema order. Future submissions will use the same order automatically.
 
 ## Vercel environment variable
 

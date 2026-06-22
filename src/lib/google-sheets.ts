@@ -91,6 +91,7 @@ export async function syncLeadToGoogleSheets(payload: LeadPayload, sanityRecordI
       signal: controller.signal,
       body: JSON.stringify({
         secret: getGoogleSheetsWebhookSecret(),
+        createdAt: formatSubmittedAt(payload.createdAt),
         submittedAt: formatSubmittedAt(payload.createdAt),
         name: payload.name,
         gender: payload.gender || "",
