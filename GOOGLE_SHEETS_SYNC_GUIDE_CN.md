@@ -18,6 +18,8 @@ https://docs.google.com/spreadsheets/d/1jUpyRU57I97AiiACZyKbStT2Gq9Awr2uoD6m1BNT
    - Who has access: Anyone
 7. Click Deploy / Update.
 
+Important: the script now uses `SPREADSHEET_ID` to write directly to the target Google Sheet. This avoids the common problem where Apps Script returns `ok: true` but writes to another bound spreadsheet instead of the sheet you are viewing.
+
 The script writes these columns:
 
 1. Name
@@ -30,11 +32,12 @@ The script writes these columns:
 8. Country / Region
 9. Facial Concerns
 10. Budget
-11. Additional Info
-12. Submitted At
-13. Source Page
-14. Follow-up Status
-15. Sanity Record ID
+11. How Did You Hear About Us?
+12. Additional Info
+13. Submitted At
+14. Source Page
+15. Follow-up Status
+16. Sanity Record ID
 
 ## Reorder existing rows
 

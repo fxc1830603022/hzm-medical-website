@@ -1,4 +1,6 @@
 const WEBHOOK_SECRET = "";
+const SPREADSHEET_ID = "1jUpyRU57I97AiiACZyKbStT2Gq9Awr2uoD6m1BNTQIs";
+const SHEET_NAME = "";
 
 const HEADERS = [
   "Name",
@@ -11,6 +13,7 @@ const HEADERS = [
   "Country / Region",
   "Facial Concerns",
   "Budget",
+  "How Did You Hear About Us?",
   "Additional Info",
   "Submitted At",
   "Source Page",
@@ -20,7 +23,7 @@ const HEADERS = [
 
 function doPost(e) {
   try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    const sheet = getTargetSheet();
     const data = JSON.parse((e && e.postData && e.postData.contents) || "{}");
 
     if (WEBHOOK_SECRET && data.secret !== WEBHOOK_SECRET) {
@@ -45,6 +48,7 @@ function doPost(e) {
       data.country || data.nationality || "",
       data.facialConcerns || "",
       data.budget || "",
+      data.hearAbout || "",
       data.message || "",
       data.submittedAt || new Date().toISOString(),
       data.source || "website",
@@ -63,6 +67,46 @@ function doPost(e) {
   }
 }
 
+function doGet() {
+  try {
+    const sheet = getTargetSheet();
+
+    return jsonOutput({
+      ok: true,
+      spreadsheetId: sheet.getParent().getId(),
+      spreadsheetName: sheet.getParent().getName(),
+      sheetName: sheet.getName(),
+      lastRow: sheet.getLastRow()
+    });
+  } catch (error) {
+    return jsonOutput({
+      ok: false,
+      error: String(error)
+    });
+  }
+}
+
+function getTargetSheet() {
+  const spreadsheet = SPREADSHEET_ID
+    ? SpreadsheetApp.openById(SPREADSHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+
+  if (!spreadsheet) {
+    throw new Error("No spreadsheet found. Set SPREADSHEET_ID to your Google Sheet ID.");
+  }
+
+  if (SHEET_NAME) {
+    const namedSheet = spreadsheet.getSheetByName(SHEET_NAME);
+    if (!namedSheet) {
+      throw new Error("Sheet tab not found: " + SHEET_NAME);
+    }
+
+    return namedSheet;
+  }
+
+  return spreadsheet.getSheets()[0];
+}
+
 function ensureHeaders(sheet) {
   sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   sheet.setFrozenRows(1);
@@ -75,7 +119,7 @@ function formatTextColumns(sheet, startRow, rowCount) {
 }
 
 function reorderExistingSheetColumns() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  const sheet = getTargetSheet();
   const values = sheet.getDataRange().getValues();
 
   if (!values.length) {

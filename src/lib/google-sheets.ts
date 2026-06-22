@@ -11,6 +11,7 @@ type LeadPayload = {
   phone?: string;
   country?: string;
   concern?: string;
+  hearAbout?: string;
   message?: string;
   source?: string;
   createdAt: string;
@@ -102,6 +103,7 @@ export async function syncLeadToGoogleSheets(payload: LeadPayload, sanityRecordI
         phone: formatSheetText(payload.phone),
         country: payload.country || "",
         concern: payload.concern || "",
+        hearAbout: payload.hearAbout || "",
         message: payload.message || "",
         source: payload.source || "website",
         status: payload.status || "new",

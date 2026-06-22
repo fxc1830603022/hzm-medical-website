@@ -187,6 +187,7 @@ export function GlobalBottomCTA({
       phone: whatsapp,
       facialConcerns: formData.get("facialConcerns"),
       budget: formData.get("budget"),
+      hearAbout,
       message: composedMessage,
       source
     };

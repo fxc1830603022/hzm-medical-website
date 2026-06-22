@@ -15,6 +15,7 @@ type ConsultationSubmission = {
   phone?: string;
   country?: string;
   concern?: string;
+  hearAbout?: string;
   message?: string;
   status: string;
   source: string;

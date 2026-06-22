@@ -98,6 +98,22 @@ export const consultationSubmission = defineType({
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({ name: "wechat", title: "WeChat", type: "string" }),
     defineField({ name: "phone", title: "Phone", type: "string" }),
+    defineField({
+      name: "hearAbout",
+      title: "How Did You Hear About Us?",
+      type: "string",
+      options: {
+        list: [
+          { title: "Instagram", value: "Instagram" },
+          { title: "Facebook", value: "Facebook" },
+          { title: "YouTube", value: "YouTube" },
+          { title: "Google Search", value: "Google Search" },
+          { title: "Friend / Referral", value: "Friend / Referral" },
+          { title: "Doctor / Clinic referral", value: "Doctor / Clinic referral" },
+          { title: "Other", value: "Other" }
+        ]
+      }
+    }),
     defineField({ name: "message", title: "Message", type: "text", rows: 4 }),
     defineField({
       name: "status",
