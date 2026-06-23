@@ -392,7 +392,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                         fill
                         unoptimized
                         sizes="(max-width: 1024px) 100vw, 30vw"
-                        className="object-cover"
+                        className="object-contain"
                       />
                     </div>
                     <div className="p-6">
