@@ -17,6 +17,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
+import { VideoWithSoundControl } from "@/components/VideoWithSoundControl";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
 import { Reveal } from "./Reveal";
@@ -311,18 +312,13 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
               <div className="pointer-events-none absolute -inset-8 rounded-[42px] bg-[radial-gradient(circle_at_center,rgba(184,138,59,0.16),transparent_68%)] blur-2xl" />
               <div className="relative aspect-[9/16] overflow-hidden rounded-[30px] border border-[#DCC7A6] bg-[#FFFDF8] shadow-[0_30px_90px_rgba(60,42,22,0.18)]">
                 {methodologyVideoUrl ? (
-                  <video
-                    aria-label="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
+                  <VideoWithSoundControl
+                    ariaLabel="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
+                    src={methodologyVideoUrl}
+                    type={getVideoMimeType(methodologyVideoUrl)}
                     poster={methodologyPoster}
                     className="h-full w-full object-cover"
-                  >
-                    <source src={methodologyVideoUrl} type={getVideoMimeType(methodologyVideoUrl)} />
-                  </video>
+                  />
                 ) : (
                   <Image
                     src={methodologyPoster}
