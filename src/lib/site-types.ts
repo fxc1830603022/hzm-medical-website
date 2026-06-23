@@ -31,8 +31,12 @@ export type GalleryItem = {
   sortOrder: number;
   displayRole?: "case" | "hero" | "featured";
   age?: string;
+  gender?: string;
   country?: string;
   procedure?: string;
+  caseLabel?: string;
+  mainConcerns?: string;
+  visibleChange?: string;
   beforeLabel?: string;
   afterLabel?: string;
   description?: string;

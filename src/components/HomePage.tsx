@@ -19,7 +19,6 @@ import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
-import { Gallery } from "./Gallery";
 import { Reveal } from "./Reveal";
 
 type HomePageProps = {
@@ -148,6 +147,30 @@ const pathCards = [
   }
 ];
 
+const featuredCaseFallbacks = [
+  {
+    label: "Case 01",
+    demographics: "Female, 48",
+    procedure: "9D Facelift",
+    concerns: "jowls, nasolabial folds, lower-face heaviness",
+    visibleChange: "cleaner jawline, softer folds, fresher expression"
+  },
+  {
+    label: "Case 02",
+    demographics: "Female, 50s",
+    procedure: "9D Deep Plane Facelift",
+    concerns: "lower-face sagging, neck laxity",
+    visibleChange: "lifted lower face, improved contour"
+  },
+  {
+    label: "Case 03",
+    demographics: "Male, 40s",
+    procedure: "9D Facelift",
+    concerns: "tired look, blurred jawline",
+    visibleChange: "sharper lower-face definition, natural masculine result"
+  }
+];
+
 export function HomePage({ settings, galleryItems }: HomePageProps) {
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
@@ -155,6 +178,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
   const heroImage = heroGalleryItem?.image || "/images/international-patients-hero-consultation.webp";
   const heroAlt =
     heroGalleryItem?.alt || "Dr. Xiao 9D Facelift online assessment for international patients in Shanghai";
+  const featuredCaseItems = getFeaturedCaseItems(galleryItems);
 
   return (
     <>
@@ -249,7 +273,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
       <section className="bg-[#F4EFE7] px-5 py-24 sm:px-8 lg:py-32">
         <div className="mx-auto max-w-[1180px] text-center">
           <Reveal>
-            <p className="section-label">Charm Preservation</p>
+            <p className="section-label">Reject the Assembly Line</p>
             <h2 className="mx-auto mt-5 max-w-4xl font-display text-[clamp(40px,5vw,68px)] font-semibold leading-[1.05] text-ink">
               Not a Different Face.{" "}
               <span className="block text-bronze">A Younger Version of You.</span>
@@ -272,7 +296,8 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
             ))}
           </div>
           <Reveal className="mt-12">
-            <p className="font-display text-3xl font-semibold text-bronze sm:text-4xl">Only One 9D. Only by Dr. Xiao.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-graphite/45">Charm Preservation</p>
+            <p className="mt-3 font-display text-3xl font-semibold text-bronze sm:text-4xl">Only One 9D. Only by Dr. Xiao.</p>
           </Reveal>
         </div>
       </section>
@@ -335,12 +360,72 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
       <section id="gallery" className="bg-white px-5 py-20 sm:px-8 lg:py-32">
         <div className="mx-auto max-w-[1280px]">
           <SectionIntro
-            label="CASE GALLERY"
-            title="Real Results. Natural Beauty."
-            description="Explore natural-looking facial rejuvenation results for jawline definition, lower-face sagging, nasolabial folds, and overall facial harmony."
+            label="SELECTED PATIENT RESULTS"
+            title="Real Results. Real Confidence."
+            description="Natural-looking facial rejuvenation for jowls, nasolabial folds, lower-face sagging, and jawline definition."
           />
-          <div className="mt-12">
-            <Gallery items={galleryItems} />
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {featuredCaseItems.map((item, index) => {
+              const fallback = featuredCaseFallbacks[index] || featuredCaseFallbacks[0];
+              const age = normalizeCaseValue(item.age);
+              const gender = normalizeCaseValue(item.gender);
+              const demographics =
+                age && gender
+                  ? `${gender}, ${age}`
+                  : age
+                    ? `${fallback.demographics.split(",")[0]}, ${age}`
+                    : gender
+                      ? `${gender}, ${fallback.demographics.split(",").slice(1).join(",").trim() || "Private"}`
+                      : fallback.demographics;
+              const caseLabel = normalizeCaseValue(item.caseLabel) || fallback.label;
+              const mainConcerns = normalizeCaseValue(item.mainConcerns) || fallback.concerns;
+              const visibleChange = normalizeCaseValue(item.visibleChange) || fallback.visibleChange;
+              const procedure = item.procedure || fallback.procedure;
+
+              return (
+                <Reveal key={item.id || item.image || fallback.label} delay={index * 0.06}>
+                  <article className="h-full overflow-hidden rounded-[18px] border border-[#E3D6C2] bg-[#FFFDF8] shadow-[0_24px_70px_rgba(60,42,22,0.08)]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#F4EFE7]">
+                      <Image
+                        src={item.image}
+                        alt={item.alt || item.title || `${procedure} before and after result`}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 1024px) 100vw, 30vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">{caseLabel}</p>
+                      <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-ink">
+                        {item.title || procedure}
+                      </h3>
+                      <dl className="mt-5 space-y-3 text-sm leading-6 text-graphite/78">
+                        <div>
+                          <dt className="inline font-bold text-ink">Age / Gender: </dt>
+                          <dd className="inline">{demographics}</dd>
+                        </div>
+                        <div>
+                          <dt className="inline font-bold text-ink">Procedure: </dt>
+                          <dd className="inline">{procedure}</dd>
+                        </div>
+                        <div>
+                          <dt className="inline font-bold text-ink">Main concerns: </dt>
+                          <dd className="inline">{mainConcerns}</dd>
+                        </div>
+                        <div>
+                          <dt className="inline font-bold text-ink">Visible change: </dt>
+                          <dd className="inline">{visibleChange}</dd>
+                        </div>
+                      </dl>
+                      <p className="mt-5 border-t border-[#E3D6C2] pt-4 text-xs font-semibold uppercase tracking-[0.14em] text-graphite/45">
+                        Individual results vary.
+                      </p>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
           <div className="mt-10 text-center">
             <Link
@@ -555,4 +640,25 @@ function SectionIntro({
       {description ? <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-graphite/70">{description}</p> : null}
     </Reveal>
   );
+}
+
+function getFeaturedCaseItems(items: GalleryItem[]) {
+  const sortedItems = [...items].sort((a, b) => a.sortOrder - b.sortOrder);
+  const featuredItems = sortedItems.filter((item) => item.displayRole === "featured");
+  const nonHeroItems = sortedItems.filter((item) => item.displayRole !== "hero");
+  const caseItems = nonHeroItems.length ? nonHeroItems : sortedItems;
+  const selectedItems = (featuredItems.length ? featuredItems : caseItems).slice(0, 3);
+
+  if (selectedItems.length >= 3) return selectedItems;
+
+  const selectedImages = new Set(selectedItems.map((item) => item.image));
+  const fillItems = caseItems.filter((item) => !selectedImages.has(item.image));
+
+  return [...selectedItems, ...fillItems].slice(0, 3);
+}
+
+function normalizeCaseValue(value?: string) {
+  const normalized = value?.trim();
+  if (!normalized || normalized.toLowerCase() === "private") return "";
+  return normalized;
 }

@@ -67,6 +67,19 @@ export const galleryItem = defineType({
       type: "string"
     }),
     defineField({
+      name: "gender",
+      title: "Gender",
+      description: "Used on homepage featured case cards. Example: Female, Male, or Private.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Female", value: "Female" },
+          { title: "Male", value: "Male" },
+          { title: "Private", value: "Private" }
+        ]
+      }
+    }),
+    defineField({
       name: "country",
       title: "Country / Region",
       description: "Example: United States, Singapore, Malaysia, Russia, or Hong Kong.",
@@ -77,6 +90,26 @@ export const galleryItem = defineType({
       title: "Procedure",
       description: "Example: 9D Deep Plane Facelift.",
       type: "string"
+    }),
+    defineField({
+      name: "caseLabel",
+      title: "Homepage Case Label",
+      description: "Optional label for homepage featured cases, for example Case 01.",
+      type: "string"
+    }),
+    defineField({
+      name: "mainConcerns",
+      title: "Main Concerns",
+      description: "Used on homepage featured case cards. Example: jowls, nasolabial folds, lower-face heaviness.",
+      type: "text",
+      rows: 2
+    }),
+    defineField({
+      name: "visibleChange",
+      title: "Visible Change",
+      description: "Used on homepage featured case cards. Example: cleaner jawline, softer folds, fresher expression.",
+      type: "text",
+      rows: 2
     }),
     defineField({
       name: "beforeLabel",

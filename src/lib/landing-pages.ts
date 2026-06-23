@@ -82,7 +82,7 @@ export const landingPages: Record<string, LandingPageData> = {
     secondaryHref: "/before-after",
     stats: [
       { value: "9D", label: "Exclusive lifting system" },
-      { value: "3N", label: "No nerve, scar, fake look" },
+      { value: "3N", label: "Safety, scar, natural-look planning" },
       { value: "Global", label: "International patients" }
     ],
     lead: {
@@ -101,22 +101,22 @@ export const landingPages: Record<string, LandingPageData> = {
     sections: [
       {
         eyebrow: "Surgical Philosophy",
-        title: "The 3N standard is the operating promise.",
+        title: "The 3N standard guides safer, natural-looking planning.",
         items: [
           {
-            title: "No Nerve Damage",
+            title: "Nerve Safety Planning",
             description:
-              "Deep work is planned around safe anatomical zones. Nerve safety must be discussed clearly before surgery."
+              "Deep work is designed around safer anatomical zones and careful surgical planning."
           },
           {
-            title: "No Visible Scars",
+            title: "Scar Concealment Strategy",
             description:
-              "Incisions are designed for concealment around natural folds, hairline transitions, and low-tension closure."
+              "Incision planning and closure techniques are designed to help scars remain discreet where possible."
           },
           {
-            title: "No Fake Look",
+            title: "No Fake-Look Result",
             description:
-              "The result should keep the patient's dynamic smile, expression, and recognizable character."
+              "The goal is a natural-looking result that preserves facial expression and identity."
           }
         ]
       },
@@ -188,7 +188,7 @@ export const landingPages: Record<string, LandingPageData> = {
     secondaryHref: "/before-after",
     stats: [
       { value: "Only 9D", label: "Dr. Xiao proprietary planning" },
-      { value: "3N", label: "No nerve, scar, fake-look standard" },
+      { value: "3N", label: "Safety, scar, natural-look standard" },
       { value: "Custom", label: "Incision and depth by anatomy" }
     ],
     heroCard: {
@@ -238,17 +238,17 @@ export const landingPages: Record<string, LandingPageData> = {
       },
       {
         eyebrow: "3N Standard",
-        title: "The operating promise: safer planning, discreet scars, no fake-look.",
+        title: "The operating standard: safer planning, discreet scars, natural-looking results.",
         description:
-          "All surgery has risk, so these standards must be discussed seriously in consultation. The 3N rule is the direction of Dr. Xiao's planning and execution.",
+          "All surgery has risk, so these standards must be discussed seriously in consultation. The 3N standard is the direction of Dr. Xiao's planning and execution.",
         items: [
           {
-            title: "No nerve damage mindset",
+            title: "Nerve safety planning",
             description:
               "Deep work is planned around safer anatomical zones and careful dissection. Nerve safety must be part of the medical conversation before surgery."
           },
           {
-            title: "No visible scar focus",
+            title: "Scar concealment strategy",
             description:
               "Low-tension closure and incision concealment are used to reduce obvious scarring around hairline transitions and natural folds when anatomy allows."
           },

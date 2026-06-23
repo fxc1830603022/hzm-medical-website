@@ -158,8 +158,12 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       sortOrder,
       displayRole,
       age,
+      gender,
       country,
       procedure,
+      caseLabel,
+      mainConcerns,
+      visibleChange,
       beforeLabel,
       afterLabel,
       description

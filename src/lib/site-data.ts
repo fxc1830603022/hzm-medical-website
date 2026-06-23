@@ -79,24 +79,24 @@ export const procedures: Procedure[] = [
 export const rules: Rule[] = [
   {
     number: "01",
-    title: "No Nerve Damage",
-    subtitle: "Precise deep dissection in safe anatomical zones",
+    title: "Nerve Safety Planning",
+    subtitle: "Designed around safer anatomical zones",
     description:
-      "Facial nerve branches are protected throughout the procedure so expression and movement remain natural."
+      "Designed around safer anatomical zones and careful surgical planning."
   },
   {
     number: "02",
-    title: "No Scars",
-    subtitle: "No obvious scars",
+    title: "Scar Concealment Strategy",
+    subtitle: "Discreet incision planning",
     description:
-      "Zero-tension suturing helps avoid thick, track-like scars, while incisions are hidden in the hairline and natural ear creases."
+      "Incision planning and closure techniques are designed to help scars remain discreet where possible."
   },
   {
     number: "03",
-    title: "No Fake-Look",
-    subtitle: "No pulled or artificial appearance",
+    title: "No Fake-Look Result",
+    subtitle: "Natural-looking expression and identity",
     description:
-      "No wind-swept face. 9D preserves your own dynamic smile and identity, creating a younger you rather than a stranger."
+      "The goal is a natural-looking result that preserves facial expression and identity."
   }
 ];
 
@@ -158,7 +158,7 @@ export const defaultGalleryItems: GalleryItem[] = [
   },
   {
     image: "/images/gallery-case-08.jpg",
-    title: "No Fake Look - Natural Movement",
+    title: "Natural Movement - Preserved Expression",
     alt: "Case 8",
     sortOrder: 80
   },
