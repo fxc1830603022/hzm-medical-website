@@ -49,6 +49,15 @@ export const siteSettings = defineType({
     defineField({ name: "heroTitleBottom", title: "Hero Title Bottom", type: "string" }),
     defineField({ name: "heroDescription", title: "Hero Description", type: "text", rows: 3 }),
     defineField({
+      name: "methodologyVideoFile",
+      title: "Homepage Methodology Video File",
+      type: "file",
+      options: {
+        accept: "video/mp4,video/webm,video/quicktime"
+      },
+      description: "Upload the short muted video used in the homepage 9D Methodology media block. MP4 or WebM is recommended."
+    }),
+    defineField({
       name: "methodologyVideoUrl",
       title: "Homepage Methodology Video URL",
       type: "url",
