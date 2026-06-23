@@ -13,6 +13,7 @@ import {
   UserRoundCheck
 } from "lucide-react";
 import type { FormEvent } from "react";
+import type { ReactNode } from "react";
 import { useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
@@ -152,6 +153,43 @@ export function GlobalBottomCTA({
   const [phoneCountryCode, setPhoneCountryCode] = useState(phoneCountryOptions[0].code);
   const selectedPhoneCountry =
     phoneCountryOptions.find((option) => option.code === phoneCountryCode) || phoneCountryOptions[0];
+  const contactChannels: Array<{
+    label: string;
+    href: string;
+    color: string;
+    icon: ReactNode;
+  }> = [
+    {
+      label: "WhatsApp",
+      href: whatsappUrl,
+      color: "#25D366",
+      icon: <WhatsAppMiniIcon />
+    },
+    {
+      label: "Email",
+      href: `mailto:${safeSettings.email}`,
+      color: "#B88A3B",
+      icon: <Mail size={24} strokeWidth={1.8} />
+    },
+    {
+      label: "Instagram",
+      href: safeSettings.instagramUrl && safeSettings.instagramUrl !== "#contact" ? safeSettings.instagramUrl : "#home-bottom-cta",
+      color: "#E4405F",
+      icon: <InstagramMiniIcon />
+    },
+    {
+      label: "YouTube",
+      href: safeSettings.youtubeUrl && safeSettings.youtubeUrl !== "#contact" ? safeSettings.youtubeUrl : "#home-bottom-cta",
+      color: "#FF0000",
+      icon: <YouTubeMiniIcon />
+    },
+    {
+      label: "Facebook",
+      href: safeSettings.facebookUrl && safeSettings.facebookUrl !== "#contact" ? safeSettings.facebookUrl : "#home-bottom-cta",
+      color: "#1877F2",
+      icon: <FacebookMiniIcon />
+    }
+  ];
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -225,7 +263,7 @@ export function GlobalBottomCTA({
               READY TO TAKE THE NEXT STEP?
             </p>
             <h2 className="mt-5 max-w-[740px] font-display text-[clamp(38px,3.1vw,56px)] font-semibold leading-[1.08] text-[#171717]">
-              <span className="block">Send Your Photos for</span>
+              <span className="block">Send Your Photos for{" "}</span>
               <span className="block text-[#9F7432]">Personalized Assessment</span>
             </h2>
             <div className="mt-6 h-px w-56 bg-gradient-to-r from-[#B88A3B] via-[#E8C46E] to-transparent" />
@@ -272,6 +310,30 @@ export function GlobalBottomCTA({
                 <span className="justify-self-center whitespace-nowrap">Email Us</span>
                 <ArrowRight className="justify-self-center text-[#B88A3B]" size={20} />
               </a>
+            </div>
+
+            <div className="mt-6 rounded-md border border-[#E3D6C2] bg-[#FFFDF8]/76 px-4 py-5 shadow-[0_20px_60px_rgba(60,42,22,0.07)] sm:px-5">
+              <div className="grid grid-cols-5 place-items-center gap-3">
+                {contactChannels.map((item) => {
+                  const isExternal = /^https?:\/\//.test(item.href);
+
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noreferrer" : undefined}
+                      aria-label={item.label}
+                      title={item.label}
+                      className="group flex h-12 w-12 items-center justify-center rounded-md border border-[#E3D6C2] bg-white text-[#B88A3B] transition hover:-translate-y-0.5 hover:border-[#B88A3B] hover:shadow-[0_14px_34px_rgba(60,42,22,0.10)] sm:h-14 sm:w-14"
+                      style={{ color: item.color }}
+                    >
+                      <span className="transition group-hover:scale-105">{item.icon}</span>
+                    </a>
+                  );
+                })}
+              </div>
+              <div className="mt-5 h-px w-full bg-[#E3D6C2]" />
             </div>
           </div>
 
@@ -393,6 +455,55 @@ export function GlobalBottomCTA({
         </div>
       </div>
     </section>
+  );
+}
+
+function WhatsAppMiniIcon() {
+  return (
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12.03 3.25a8.61 8.61 0 0 0-7.34 13.11L3.75 20l3.75-.98a8.6 8.6 0 1 0 4.53-15.77Z"
+        fill="currentColor"
+      />
+      <path
+        d="M9.44 7.72c.18-.4.37-.41.64-.41h.46c.15 0 .35.05.52.4l.71 1.7c.08.2.07.36-.04.53l-.34.46c-.13.15-.11.31.03.5.35.48.93 1.17 1.62 1.53.23.12.39.1.53-.06l.62-.71c.15-.18.33-.22.55-.12l1.65.78c.26.12.39.28.35.57-.06.5-.46 1.2-1 1.46-.42.2-1.91.27-4.05-1.59-2.18-1.9-2.8-3.72-2.56-4.4.18-.51.5-.96.7-1.08Z"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
+function InstagramMiniIcon() {
+  return (
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <rect x="4" y="4" width="16" height="16" rx="4.2" fill="currentColor" />
+      <circle cx="12" cy="12" r="3.35" stroke="#fff" strokeWidth="1.8" />
+      <circle cx="16.1" cy="7.9" r="1.05" fill="#fff" />
+    </svg>
+  );
+}
+
+function YouTubeMiniIcon() {
+  return (
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M20.5 8.06a2.54 2.54 0 0 0-1.79-1.8C17.12 5.84 12 5.84 12 5.84s-5.12 0-6.71.42a2.54 2.54 0 0 0-1.79 1.8A26.5 26.5 0 0 0 3.08 12c0 1.33.13 2.64.42 3.94a2.54 2.54 0 0 0 1.79 1.8c1.59.42 6.71.42 6.71.42s5.12 0 6.71-.42a2.54 2.54 0 0 0 1.79-1.8c.29-1.3.42-2.61.42-3.94 0-1.33-.13-2.64-.42-3.94Z"
+        fill="currentColor"
+      />
+      <path d="m10.35 15.1 4.85-2.8-4.85-2.8v5.6Z" fill="#fff" />
+    </svg>
+  );
+}
+
+function FacebookMiniIcon() {
+  return (
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8.5" fill="currentColor" />
+      <path
+        d="M13.32 20.35v-6.54h2.2l.33-2.55h-2.53V9.63c0-.74.2-1.24 1.27-1.24h1.35V6.1a18.05 18.05 0 0 0-1.97-.1c-1.95 0-3.29 1.2-3.29 3.38v1.88H8.48v2.55h2.2v6.54h2.64Z"
+        fill="#fff"
+      />
+    </svg>
   );
 }
 

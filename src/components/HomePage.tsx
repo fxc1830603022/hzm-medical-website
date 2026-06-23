@@ -1,259 +1,243 @@
 import {
-  BriefcaseMedical,
-  Check,
+  ArrowRight,
+  BadgeCheck,
+  ChevronRight,
+  CircleDot,
+  Gem,
   Globe2,
-  Mail,
+  HeartPulse,
+  Layers3,
   MapPin,
   MessageCircle,
+  Plane,
   ShieldCheck,
   Sparkles,
-  Star,
-  UserRoundCheck
+  Stethoscope
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { defaultSettings, getWhatsAppUrl, procedures, rules, whyItems } from "@/lib/site-data";
+import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
+import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
-import { ContactForm } from "./ContactForm";
 import { Gallery } from "./Gallery";
 import { Reveal } from "./Reveal";
-import { WeChatContactCard } from "./WeChatContactCard";
 
 type HomePageProps = {
   settings: SiteSettings;
   galleryItems: GalleryItem[];
 };
 
+export const homeFaqs = [
+  {
+    question: "What is 9D Facelift?",
+    answer:
+      "9D Facelift is Dr. Xiao's surgeon-led facial rejuvenation system for lifting, restoring facial support, and preserving natural identity. The final plan is personalized after consultation and medical evaluation."
+  },
+  {
+    question: "Is 9D Facelift the same as thread lift?",
+    answer:
+      "No. True 9D is not a short-term thread lift. It is positioned as a medical lifting system based on deeper structural planning and doctor-led assessment."
+  },
+  {
+    question: "Who is suitable for 9D Facelift?",
+    answer:
+      "It may be considered for patients with jowls, nasolabial folds, lower-face sagging, facial heaviness, or a blurred jawline. Suitability must be confirmed after photo review and consultation."
+  },
+  {
+    question: "What is the difference between 9D Facelift and Deep Plane Facelift?",
+    answer:
+      "9D Facelift is generally used for mild to moderate aging concerns, while 9D Deep Plane Facelift is designed for more advanced sagging, heavier jowls, neck laxity, and deeper structural descent."
+  },
+  {
+    question: "Can international patients start online?",
+    answer:
+      "Yes. International patients can begin with online photo assessment before booking flights to Shanghai. The team can review photos, goals, travel timing, and recovery planning first."
+  },
+  {
+    question: "Are results guaranteed?",
+    answer:
+      "No medical result can be guaranteed. Individual results vary based on anatomy, skin quality, health status, procedure plan, recovery, and aftercare."
+  }
+];
+
+const painPoints = [
+  {
+    icon: CircleDot,
+    title: "Jowls & Lower Face Laxity",
+    description: "Lower-face heaviness that makes the face look tired or older."
+  },
+  {
+    icon: HeartPulse,
+    title: "Nasolabial Folds",
+    description: "Deep folds that become more visible as facial support descends."
+  },
+  {
+    icon: Layers3,
+    title: "Sagging Lower Face",
+    description: "Loss of youthful contour and facial support."
+  },
+  {
+    icon: Sparkles,
+    title: "Blurred Jawline",
+    description: "A less defined jawline caused by aging and soft-tissue laxity."
+  }
+];
+
+const charmCards = [
+  {
+    title: "Customized, Not Assembly-Line",
+    description:
+      "No two faces age the same way. Every 9D plan is designed around facial anatomy, aging pattern, and personal goals."
+  },
+  {
+    title: "Surgical, Not Thread Lift",
+    description:
+      "True 9D is not a short-term thread lift. It is a doctor-led surgical lifting system based on deeper structural planning."
+  },
+  {
+    title: "Natural, Not Over-Pulled",
+    description:
+      "The result should look refreshed, lifted, and recognizable - never artificial."
+  }
+];
+
+const techniquePoints = [
+  {
+    title: "Multi-Layered Lifting",
+    description: "Addresses deeper support layers, not only the skin surface."
+  },
+  {
+    title: "Stronger, Longer-Lasting Results",
+    description: "Designed to restore support and facial contour with a structural approach."
+  },
+  {
+    title: "Natural Expression Preserved",
+    description: "Refreshes the face while keeping natural movement and identity."
+  }
+];
+
+const doctorTrustPoints = [
+  "27+ Years Experience",
+  "9D Lifting System™",
+  "Global Patient Support",
+  "Doctor-Led Planning & Surgery"
+];
+
+const travelSteps = [
+  "Send Photos",
+  "Medical Review",
+  "Travel & Consultation Planning",
+  "Procedure & Recovery Stay",
+  "Remote Follow-Up"
+];
+
+const pathCards = [
+  {
+    title: "9D Facelift",
+    href: "/procedures/9d-facelift",
+    description:
+      "For mild to moderate aging concerns such as early jowls, nasolabial folds, lower-face sagging, and blurred jawline.",
+    cta: "Learn About 9D Facelift"
+  },
+  {
+    title: "9D Deep Plane Facelift",
+    href: "/procedures/9d-deep-plane-facelift",
+    description:
+      "For advanced sagging, heavier jowls, neck laxity, and deeper structural descent.",
+    cta: "Learn About Deep Plane Facelift"
+  }
+];
+
 export function HomePage({ settings, galleryItems }: HomePageProps) {
   const safeSettings = { ...defaultSettings, ...settings };
-  const heroLines = safeSettings.heroDescription.split("\n");
-  const socialLinks: Array<{
-    label: string;
-    href: string;
-    icon: ReactNode;
-    color: string;
-  }> = [
-    {
-      label: "WhatsApp",
-      href: getWhatsAppUrl(safeSettings),
-      icon: <WhatsAppBrandIcon />,
-      color: "#25D366"
-    },
-    {
-      label: "Email",
-      href: `mailto:${safeSettings.email}`,
-      icon: <EnvelopeBrandIcon />,
-      color: "#C9A76A"
-    },
-    {
-      label: "Instagram",
-      href: safeSettings.instagramUrl,
-      icon: <InstagramBrandIcon />,
-      color: "#E4405F"
-    },
-    {
-      label: "YouTube",
-      href: safeSettings.youtubeUrl,
-      icon: <YouTubeBrandIcon />,
-      color: "#FF0000"
-    },
-    {
-      label: "Facebook",
-      href: safeSettings.facebookUrl,
-      icon: <FacebookBrandIcon />,
-      color: "#1877F2"
-    }
-  ];
+  const whatsappUrl = getWhatsAppUrl(safeSettings);
+  const heroGalleryItem = galleryItems.find((item) => item.displayRole === "hero");
+  const heroImage = heroGalleryItem?.image || "/images/international-patients-hero-consultation.webp";
+  const heroAlt =
+    heroGalleryItem?.alt || "Dr. Xiao 9D Facelift online assessment for international patients in Shanghai";
 
   return (
     <>
-      <section id="hero" className="relative flex min-h-[92vh] items-center overflow-hidden bg-ink px-5 py-28 text-white sm:px-8">
-        <Image
-          src="/images/896412cd7db178d8aff7975c761cf596.jpg"
-          alt="Dr. Xiao Zhongye 9D Facelift"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-[0.42]"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(21,21,20,0.88),rgba(21,21,20,0.58),rgba(21,21,20,0.35))]" />
-        <div className="relative mx-auto w-full max-w-7xl">
-          <Reveal direction="none" className="max-w-4xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-champagne">
-              {safeSettings.heroSubtitle}
+      <section id="hero" className="relative isolate min-h-[calc(100vh-76px)] overflow-hidden bg-[#FAF8F3] px-5 py-16 sm:px-8 lg:flex lg:items-center lg:py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(184,138,59,0.13),transparent_32%),linear-gradient(135deg,#FFFDF8_0%,#F5EEE3_100%)]" />
+        <div className="pointer-events-none absolute -left-36 top-0 h-[34rem] w-[62rem] -rotate-12 rounded-[50%] border-t border-[#B88A3B]/20" />
+        <div className="relative mx-auto grid w-full max-w-[1280px] gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center xl:gap-16">
+          <Reveal direction="right" className="max-w-2xl">
+            <p className="flex items-center gap-3 text-xs font-bold uppercase text-bronze sm:text-sm" style={{ letterSpacing: "0.22em" }}>
+              <Gem size={16} strokeWidth={1.7} />
+              Dr. Xiao 9D Facelift
             </p>
-            <h1 className="mt-7 font-display text-5xl font-semibold leading-[1.04] text-white sm:text-6xl lg:text-7xl">
-              <span className="block">{safeSettings.heroTitleTop}</span>
-              <span className="mt-2 block text-champagne">{safeSettings.heroTitleBottom}</span>
+            <h1 className="mt-6 font-display text-[clamp(48px,7.5vw,88px)] font-semibold leading-[0.96] tracking-[-0.01em] text-ink">
+              Natural 9D Facelift{" "}
+              <span className="block text-bronze">in Shanghai</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/85">
-              {heroLines.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
+            <p className="mt-7 max-w-xl text-lg leading-8 text-graphite/78 sm:text-xl sm:leading-9">
+              A surgeon-led facial rejuvenation system that lifts, restores, and preserves your natural charm.
             </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-9 grid gap-4 sm:grid-cols-2">
               <Link
-                href="/consultation"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-champagne px-6 text-sm font-bold text-ink transition hover:bg-white"
+                href="#home-bottom-cta"
+                className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md bg-champagne px-6 text-sm font-bold text-ink shadow-soft transition hover:bg-bronze hover:text-white"
               >
-                Book a 1-on-1 Online Consultation
+                Send Photos for Assessment
+                <ArrowRight size={18} />
               </Link>
               <Link
-                href="#about"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-white/35 px-6 text-sm font-bold text-white transition hover:border-champagne hover:text-champagne"
+                href="/before-after"
+                className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md border border-bronze bg-white/70 px-6 text-sm font-bold text-ink transition hover:bg-white"
               >
-                Discover 9D Facelift
+                View Before & After
+                <ArrowRight size={18} />
               </Link>
             </div>
-          </Reveal>
-        </div>
-        <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-center text-xs uppercase tracking-[0.24em] text-white/70 md:block">
-          <span>Explore</span>
-          <span className="mx-auto mt-3 block h-14 w-px bg-champagne" />
-        </div>
-      </section>
-
-      <section id="about" className="bg-porcelain px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-          <Reveal direction="right">
-            <p className="section-label">ABOUT 9D FACELIFT</p>
-            <h2 className="section-title">
-              What Is
-              <br />
-              <span>9D Facelift</span>
-            </h2>
-            <p className="mt-7 text-xl leading-9 text-ink">
-              9D Facelift, also known as the 9D Lifting System, is the exclusive proprietary facelift planning
-              approach of Dr. Xiao Zhongye. Its core principle is always <strong>Charm Preservation</strong>.
-            </p>
-            <p className="mt-5 text-base leading-8 text-graphite/75">
-              Many anti-aging procedures make one critical mistake: in the pursuit of youth, patients lose the
-              essence of who they are. 9D refuses assembly-line aesthetics. Every plan is tailored to your facial
-              anatomy, aging pattern, goals, and budget.
-            </p>
-            <div className="mt-10 grid grid-cols-3 gap-3">
-              {[
-                ["100%", "Customized"],
-                ["3N", "Golden Rules"],
-                ["0", "Fake Look"]
-              ].map(([value, label]) => (
-                <div key={label} className="rounded-md border border-ink/10 bg-white p-4 text-center shadow-soft">
-                  <div className="font-display text-3xl font-semibold text-bronze">{value}</div>
-                  <div className="mt-1 text-xs font-semibold uppercase text-graphite/60">{label}</div>
-                </div>
-              ))}
+            <div className="mt-9 grid gap-3 sm:grid-cols-2">
+              {["Surgeon-Led Treatment", "27+ Years Experience", "International Patient Support", "Medical-Grade Safety"].map(
+                (item) => (
+                  <div key={item} className="flex items-center gap-3 rounded-md border border-[#E6DED2] bg-white/62 px-4 py-3 text-sm font-semibold text-graphite shadow-[0_12px_36px_rgba(60,42,22,0.06)]">
+                    <ShieldCheck size={17} className="shrink-0 text-bronze" />
+                    {item}
+                  </div>
+                )
+              )}
             </div>
           </Reveal>
 
           <Reveal direction="left">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-mist shadow-lift">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-[640px] overflow-hidden rounded-[26px] border border-white/80 bg-white shadow-[0_30px_90px_rgba(60,42,22,0.16)] lg:max-w-none">
               <Image
-                src="/images/896412cd7db178d8aff7975c761cf596.jpg"
-                alt="9D Facelift by Dr. Xiao Zhongye"
+                src={heroImage}
+                alt={heroAlt}
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+                unoptimized
+                sizes="(max-width: 1024px) 100vw, 56vw"
                 className="object-cover"
               />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/55 to-transparent p-6 text-white">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-champagne">Facial Rejuvenation in China</p>
+                <p className="mt-2 max-w-md font-display text-2xl font-semibold">Online assessment before traveling to Shanghai.</p>
+              </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section id="procedures" className="bg-white px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            label="PROCEDURES"
-            title="Procedure Options"
-            highlight="Precisely Customized"
-            description="Because every face, aging pattern, and budget is different, no 9D surgical plan is ever one-size-fits-all."
+      <section className="bg-white px-5 py-20 sm:px-8 lg:py-28">
+        <div className="mx-auto max-w-[1280px]">
+          <SectionIntro
+            label="START WITH THE REAL CONCERNS"
+            title="Is Any of This Starting to Bother You?"
+            description="Most facelift decisions begin with small changes in the lower face, jawline, folds, and facial support."
           />
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {procedures.map((item, index) => {
-              const procedureHref =
-                item.name === "9D Deep Plane Facelift"
-                  ? "/procedures/9d-deep-plane-facelift"
-                  : "/procedures/9d-facelift";
-
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {painPoints.map((item, index) => {
+              const Icon = item.icon;
               return (
-              <Reveal key={item.name} delay={index * 0.08}>
-                <div
-                  className={`relative h-full rounded-md border p-7 shadow-soft ${
-                    item.featured ? "border-champagne bg-ink text-white" : "border-ink/10 bg-porcelain text-ink"
-                  }`}
-                >
-                  {item.featured ? (
-                    <span className="absolute right-5 top-5 rounded-md bg-champagne px-3 py-1 text-xs font-bold text-ink">
-                      Signature Procedure
-                    </span>
-                  ) : null}
-                  <div
-                    className={`inline-flex h-14 w-14 items-center justify-center rounded-md ${
-                      item.featured ? "bg-white/10 text-champagne" : "bg-white text-bronze"
-                    }`}
-                  >
-                    <BriefcaseMedical size={28} />
-                  </div>
-                  <h3 className="mt-7 font-display text-3xl font-semibold">{item.name}</h3>
-                  <p className={`mt-2 text-sm font-semibold ${item.featured ? "text-white/70" : "text-graphite/60"}`}>
-                    {item.target}
-                  </p>
-                  <ul className="mt-7 grid gap-4">
-                    {item.features.map((feature) => (
-                      <li key={feature} className="flex gap-3 text-sm leading-7">
-                        <Check className="mt-1 shrink-0 text-champagne" size={17} />
-                        <span className={item.featured ? "text-white/80" : "text-graphite/75"}>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div
-                    className={`mt-7 rounded-md px-4 py-3 text-sm font-bold ${
-                      item.featured ? "bg-white/10 text-champagne" : "bg-white text-bronze"
-                    }`}
-                  >
-                    {item.tag}
-                  </div>
-                  <Link
-                    href={procedureHref}
-                    className={`mt-5 inline-flex h-11 items-center rounded-md px-5 text-sm font-bold transition ${
-                      item.featured
-                        ? "bg-champagne text-ink hover:bg-white"
-                        : "bg-ink text-white hover:bg-champagne hover:text-ink"
-                    }`}
-                  >
-                    Learn more
-                  </Link>
-                </div>
-              </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="3n" className="bg-mist px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            label="GOLDEN RULES"
-            title="3N Golden Rules"
-            highlight="Dr. Xiao's Promise"
-            description="Whichever 9D plan you choose, every procedure must honor these three commitments."
-          />
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {rules.map((rule, index) => {
-              const Icon = index === 0 ? ShieldCheck : index === 1 ? Sparkles : UserRoundCheck;
-              return (
-                <Reveal key={rule.title} delay={index * 0.08}>
-                  <div className="h-full rounded-md bg-white p-7 shadow-soft">
-                    <div className="flex items-center justify-between">
-                      <span className="font-display text-5xl text-champagne/50">{rule.number}</span>
-                      <Icon className="text-bronze" size={34} />
-                    </div>
-                    <h3 className="mt-7 font-display text-2xl font-semibold text-ink">{rule.title}</h3>
-                    <p className="mt-2 text-sm font-semibold text-sage">{rule.subtitle}</p>
-                    <p className="mt-5 text-sm leading-7 text-graphite/75">{rule.description}</p>
+                <Reveal key={item.title} delay={index * 0.05}>
+                  <div className="h-full rounded-md border border-[#E6DED2] bg-[#FAF8F3] p-6 shadow-[0_18px_50px_rgba(60,42,22,0.06)]">
+                    <Icon className="text-bronze" size={34} strokeWidth={1.6} />
+                    <h3 className="mt-6 font-display text-2xl font-semibold leading-tight text-ink">{item.title}</h3>
+                    <p className="mt-4 text-sm leading-7 text-graphite/72">{item.description}</p>
                   </div>
                 </Reveal>
               );
@@ -262,277 +246,313 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
         </div>
       </section>
 
-      <section className="bg-ink px-5 py-20 text-center text-white sm:px-8">
-        <Reveal>
-          <p className="font-display text-4xl font-semibold leading-tight sm:text-5xl">
-            You still look like yourself,
-            <br />
-            only ten years younger,
-            <br />
-            not like a stiff stranger.
-          </p>
-          <p className="mt-6 text-sm uppercase tracking-[0.2em] text-champagne">Dr. Xiao Zhongye</p>
-        </Reveal>
+      <section className="bg-[#F4EFE7] px-5 py-24 sm:px-8 lg:py-32">
+        <div className="mx-auto max-w-[1180px] text-center">
+          <Reveal>
+            <p className="section-label">Charm Preservation</p>
+            <h2 className="mx-auto mt-5 max-w-4xl font-display text-[clamp(40px,5vw,68px)] font-semibold leading-[1.05] text-ink">
+              Not a Different Face.{" "}
+              <span className="block text-bronze">A Younger Version of You.</span>
+            </h2>
+            <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-graphite/76 sm:text-lg sm:leading-9">
+              The goal of Dr. Xiao&apos;s 9D Lifting System™ is not to create a stiff, over-pulled, or unfamiliar look.
+              It is designed to preserve your natural identity while restoring facial support, contour, and expression.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            {charmCards.map((card, index) => (
+              <Reveal key={card.title} delay={index * 0.06}>
+                <div className="h-full rounded-md border border-[#E3D6C2] bg-[#FFFDF8] p-7 text-left shadow-[0_22px_60px_rgba(60,42,22,0.07)]">
+                  <span className="font-display text-4xl text-champagne/70">0{index + 1}</span>
+                  <h3 className="mt-5 font-display text-2xl font-semibold leading-tight text-ink">{card.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-graphite/74">{card.description}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="mt-12">
+            <p className="font-display text-3xl font-semibold text-bronze sm:text-4xl">Only One 9D. Only by Dr. Xiao.</p>
+          </Reveal>
+        </div>
       </section>
 
-      <section id="gallery" className="bg-porcelain px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            label="GALLERY"
-            title="Case Gallery"
-            highlight="Real Results, Natural Beauty"
-            description="Real transformations from global patients, across ethnicities and borders."
+      <section className="bg-[#FAF8F3] px-5 py-20 sm:px-8 lg:py-32">
+        <div className="mx-auto grid max-w-[1280px] gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <Reveal direction="right">
+            <div className="relative overflow-hidden rounded-[24px] border border-[#E6DED2] bg-white p-5 shadow-[0_26px_80px_rgba(60,42,22,0.10)]">
+              <div className="relative aspect-[5/4] overflow-hidden rounded-[18px] bg-[#F4EFE7]">
+                <Image
+                  src="/images/dr-xiao-team-hero.webp"
+                  alt="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 48vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 rounded-md border border-white/35 bg-white/86 p-4 backdrop-blur">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">9D Methodology</p>
+                  <p className="mt-2 font-display text-2xl font-semibold leading-tight text-ink">
+                    Structural planning for natural facelift results.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal direction="left">
+            <p className="section-label">The 9D Facelift System</p>
+            <h2 className="mt-5 font-display text-[clamp(40px,4.8vw,64px)] font-semibold leading-[1.05] text-ink">
+              More Than Pulling Skin.{" "}
+              <span className="block text-bronze">A Customized Lifting Plan.</span>
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-graphite/76 sm:text-lg sm:leading-9">
+              9D is not about simply pulling the skin. It is a customized lifting plan based on facial structure, aging
+              pattern, and charm preservation.
+            </p>
+            <div className="mt-8 grid gap-4">
+              {techniquePoints.map((point) => (
+                <div key={point.title} className="flex gap-4 rounded-md border border-[#E6DED2] bg-white p-5 shadow-[0_16px_40px_rgba(60,42,22,0.05)]">
+                  <BadgeCheck className="mt-1 shrink-0 text-bronze" size={24} />
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-ink">{point.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-graphite/72">{point.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/procedures/9d-facelift"
+              className="mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 rounded-md bg-ink px-6 py-4 text-sm font-bold text-white transition hover:bg-champagne hover:text-ink"
+            >
+              Learn About 9D Facelift
+              <ArrowRight size={18} />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <section id="gallery" className="bg-white px-5 py-20 sm:px-8 lg:py-32">
+        <div className="mx-auto max-w-[1280px]">
+          <SectionIntro
+            label="CASE GALLERY"
+            title="Real Results. Natural Beauty."
+            description="Explore natural-looking facial rejuvenation results for jawline definition, lower-face sagging, nasolabial folds, and overall facial harmony."
           />
           <div className="mt-12">
             <Gallery items={galleryItems} />
           </div>
-        </div>
-      </section>
-
-      <section id="why-xiao" className="bg-white px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            label="WHY DR. XIAO"
-            title="Why True 9D"
-            highlight="Can Only Be Performed By Dr. Xiao"
-          />
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {whyItems.map((item, index) => {
-              const Icon = index === 0 ? Star : Globe2;
-              return (
-                <Reveal key={item.title} direction={index === 0 ? "right" : "left"}>
-                  <div className="h-full rounded-md border border-ink/10 bg-porcelain p-7 shadow-soft">
-                    <Icon className="text-bronze" size={34} />
-                    <h3 className="mt-6 font-display text-2xl font-semibold text-ink">{item.title}</h3>
-                    <p className="mt-5 text-sm leading-7 text-graphite/75">{item.description}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
+          <div className="mt-10 text-center">
+            <Link
+              href="/before-after"
+              className="inline-flex h-12 items-center justify-center gap-3 rounded-md border border-bronze bg-[#FFFDF8] px-6 text-sm font-bold text-ink transition hover:bg-champagne hover:text-ink"
+            >
+              View More Before & After
+              <ArrowRight size={18} />
+            </Link>
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-graphite/45">Individual results vary.</p>
           </div>
-          <Reveal className="mt-8 rounded-md bg-ink p-7 text-white">
-            <p className="text-base leading-8">
-              Because 9D works precisely on deep structures, it is designed to avoid common traditional facelift
-              complications:
-            </p>
-            <ul className="mt-5 grid gap-3 text-sm text-white/80 md:grid-cols-2">
-              <li className="flex gap-3">
-                <Check className="mt-1 shrink-0 text-champagne" size={17} />
-                Hair follicle necrosis, hair loss, or a receding hairline
-              </li>
-              <li className="flex gap-3">
-                <Check className="mt-1 shrink-0 text-champagne" size={17} />
-                Ear distortion, a key test of skill in deep plane facelift surgery
-              </li>
-            </ul>
-          </Reveal>
         </div>
       </section>
 
-      <section className="bg-mist px-5 py-20 text-center sm:px-8">
-        <Reveal>
-          <p className="section-label">GLOBAL AESTHETICS</p>
-          <h2 className="mx-auto max-w-4xl font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
-            Travel Halfway Around The World
-            <br />
-            Because Your Beauty Allows No Trial And Error
-          </h2>
-          <p className="mt-5 text-sm font-semibold uppercase tracking-[0.2em] text-bronze">
-            Only One 9D | Only By Dr. Xiao
-          </p>
-          <Link
-            href="/consultation"
-            className="mt-9 inline-flex h-12 items-center justify-center rounded-md bg-ink px-6 text-sm font-bold text-white transition hover:bg-champagne hover:text-ink"
-          >
-            Book Your 1-on-1 Online Consultation
-          </Link>
-        </Reveal>
-      </section>
-
-      <section id="contact" className="bg-porcelain px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+      <section className="bg-[#F4EFE7] px-5 py-20 sm:px-8 lg:py-32">
+        <div className="mx-auto grid max-w-[1280px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal direction="right">
-            <p className="section-label">CONTACT US</p>
-            <h2 className="section-title">Book A Consultation</h2>
-            <p className="mt-6 text-base leading-8 text-graphite/75">
-              Contact us to begin your Charm Preservation journey. Dr. Xiao's team will reply within 24 hours.
-            </p>
-            <div className="mt-9 grid gap-4">
-              <ContactItem icon={<MessageCircle size={22} />} title="WhatsApp">
-                <a className="font-semibold text-whatsapp" href={getWhatsAppUrl(safeSettings)} target="_blank" rel="noreferrer">
-                  Chat directly -&gt;
-                </a>
-              </ContactItem>
-              <WeChatContactCard
-                description={safeSettings.wechatDescription || defaultSettings.wechatDescription}
-                qrImage={safeSettings.wechatQrImage || defaultSettings.wechatQrImage}
-                wechatId={safeSettings.wechatId}
+            <div className="relative mx-auto aspect-[4/5] max-w-[520px] overflow-hidden rounded-[24px] border border-white bg-white shadow-[0_28px_80px_rgba(60,42,22,0.14)] lg:mx-0">
+              <Image
+                src="/images/dr-xiao-scrubs-portrait.jpg"
+                alt="Dr. Xiao Zhongye, surgeon focused on natural facial rejuvenation"
+                fill
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                className="object-cover"
               />
-              <ContactItem icon={<Mail size={22} />} title="Email">
-                {safeSettings.email}
-              </ContactItem>
-              <ContactItem icon={<MapPin size={22} />} title="Location">
-                {safeSettings.location}
-              </ContactItem>
-            </div>
-            <div className="mt-8 rounded-md border border-ink/10 bg-white px-5 pb-5 pt-6 shadow-soft">
-              <div className="flex items-center justify-between gap-3">
-                {socialLinks.map((item) => {
-                  const href = item.href || "#contact";
-                  const isExternal = /^https?:\/\//.test(href);
-
-                  return (
-                    <a
-                      key={item.label}
-                      href={href}
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noreferrer" : undefined}
-                      aria-label={item.label}
-                      title={item.label}
-                      style={{ color: item.color }}
-                      className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-ink/10 bg-porcelain shadow-soft transition hover:-translate-y-0.5 hover:border-champagne hover:bg-white hover:shadow-lift"
-                    >
-                      {item.icon}
-                    </a>
-                  );
-                })}
-              </div>
-              <div className="mt-5 h-px w-full bg-ink/10" />
             </div>
           </Reveal>
 
           <Reveal direction="left">
-            <ContactForm />
+            <p className="section-label">Meet Dr. Xiao</p>
+            <h2 className="mt-5 max-w-3xl font-display text-[clamp(40px,4.8vw,64px)] font-semibold leading-[1.05] text-ink">
+              A Surgeon Focused on Natural Facial Rejuvenation
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-graphite/76 sm:text-lg sm:leading-9">
+              Dr. Xiao Zhongye is known for his 9D Lifting System™ and his philosophy of Charm Preservation - helping
+              patients look younger while staying recognizable.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {doctorTrustPoints.map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-md border border-[#E3D6C2] bg-[#FFFDF8] px-5 py-4 font-semibold text-ink shadow-[0_14px_40px_rgba(60,42,22,0.06)]">
+                  <Stethoscope size={20} className="shrink-0 text-bronze" />
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <Link
+                href="/doctor"
+                className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-md bg-ink px-6 py-4 text-sm font-bold text-white transition hover:bg-champagne hover:text-ink"
+              >
+                About Dr. Xiao
+                <ArrowRight size={18} />
+              </Link>
+              <Link
+                href="#home-bottom-cta"
+                className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-md border border-bronze bg-white px-6 py-4 text-sm font-bold text-ink transition hover:bg-[#FFFDF8]"
+              >
+                Send Photos for Review
+                <ArrowRight size={18} />
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>
+
+      <section className="bg-[#FAF8F3] px-5 py-20 sm:px-8 lg:py-32">
+        <div className="mx-auto grid max-w-[1280px] gap-12 lg:grid-cols-[1fr_0.95fr] lg:items-center">
+          <Reveal direction="right">
+            <p className="section-label">International Patients</p>
+            <h2 className="mt-5 max-w-3xl font-display text-[clamp(40px,4.8vw,64px)] font-semibold leading-[1.05] text-ink">
+              Planning a Facelift in China?{" "}
+              <span className="block text-bronze">Start With Online Assessment.</span>
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-graphite/76 sm:text-lg sm:leading-9">
+              Before booking flights to Shanghai, send your photos and information first. Dr. Xiao&apos;s team will
+              review your case and suggest a suitable next step.
+            </p>
+            <div className="mt-9 grid gap-3">
+              {travelSteps.map((step, index) => (
+                <div key={step} className="flex items-center gap-4 rounded-md border border-[#E6DED2] bg-white px-5 py-4 shadow-[0_14px_40px_rgba(60,42,22,0.05)]">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F4EFE7] text-sm font-bold text-bronze">
+                    {index + 1}
+                  </span>
+                  <span className="font-semibold text-ink">{step}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <Link
+                href="/international-patients"
+                className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-md bg-ink px-6 py-4 text-sm font-bold text-white transition hover:bg-champagne hover:text-ink"
+              >
+                International Patient Guide
+                <Plane size={18} />
+              </Link>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-md border border-bronze bg-white px-6 py-4 text-sm font-bold text-ink transition hover:bg-[#FFFDF8]"
+              >
+                Send Photos on WhatsApp
+                <MessageCircle size={18} />
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal direction="left">
+            <div className="relative overflow-hidden rounded-[24px] border border-white bg-white shadow-[0_28px_80px_rgba(60,42,22,0.12)]">
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src="/images/international-patient-recovery-visit.jpg"
+                  alt="International patients planning facial rejuvenation in Shanghai"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 46vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="grid gap-3 p-6 sm:grid-cols-2">
+                <div className="rounded-md bg-[#FAF8F3] p-4">
+                  <Globe2 className="text-bronze" size={24} />
+                  <p className="mt-3 font-display text-xl font-semibold text-ink">Global Patients</p>
+                  <p className="mt-2 text-sm leading-6 text-graphite/68">Online review before travel decisions.</p>
+                </div>
+                <div className="rounded-md bg-[#FAF8F3] p-4">
+                  <MapPin className="text-bronze" size={24} />
+                  <p className="mt-3 font-display text-xl font-semibold text-ink">Shanghai, China</p>
+                  <p className="mt-2 text-sm leading-6 text-graphite/68">A clear destination plan for treatment and recovery.</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-20 sm:px-8 lg:py-32">
+        <div className="mx-auto max-w-[1280px]">
+          <SectionIntro
+            label="Procedure Direction"
+            title="Choose the Path That's Right for You"
+            description="A suitable plan must be confirmed after consultation and medical evaluation."
+          />
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {pathCards.map((card, index) => (
+              <Reveal key={card.title} direction={index === 0 ? "right" : "left"}>
+                <Link
+                  href={card.href}
+                  className="group flex h-full flex-col rounded-[22px] border border-[#E6DED2] bg-[#FAF8F3] p-8 shadow-[0_22px_70px_rgba(60,42,22,0.08)] transition hover:-translate-y-1 hover:border-champagne hover:bg-[#FFFDF8]"
+                >
+                  <div className="flex items-start justify-between gap-6">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">Path 0{index + 1}</p>
+                      <h3 className="mt-4 font-display text-4xl font-semibold leading-tight text-ink">{card.title}</h3>
+                    </div>
+                    <ChevronRight className="mt-3 shrink-0 text-bronze transition group-hover:translate-x-1" size={28} />
+                  </div>
+                  <p className="mt-6 max-w-xl text-base leading-8 text-graphite/74">{card.description}</p>
+                  <span className="mt-8 inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-ink px-6 text-sm font-bold text-white transition group-hover:bg-champagne group-hover:text-ink sm:w-fit">
+                    {card.cta}
+                    <ArrowRight size={18} />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#F4EFE7] px-5 py-20 sm:px-8 lg:py-28">
+        <div className="mx-auto max-w-[1000px]">
+          <SectionIntro
+            label="FAQ"
+            title="Frequently Asked Questions"
+            description="Clear answers before you decide whether to send photos, review cases, or plan a trip to Shanghai."
+          />
+          <div className="mt-12 grid gap-4">
+            {homeFaqs.map((faq) => (
+              <details key={faq.question} className="group rounded-md border border-[#E3D6C2] bg-[#FFFDF8] p-6 shadow-[0_14px_40px_rgba(60,42,22,0.05)]">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-xl font-semibold text-ink">
+                  {faq.question}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#E3D6C2] text-bronze transition group-open:rotate-90">
+                    <ChevronRight size={18} />
+                  </span>
+                </summary>
+                <p className="mt-4 max-w-3xl text-sm leading-7 text-graphite/74">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div id="home-bottom-cta">
+        <GlobalBottomCTA settings={safeSettings} source="home-global-bottom-cta" />
+      </div>
     </>
   );
 }
 
-function SectionHeader({
+function SectionIntro({
   label,
   title,
-  highlight,
   description
 }: {
   label: string;
   title: string;
-  highlight: string;
   description?: string;
 }) {
   return (
     <Reveal className="mx-auto max-w-3xl text-center">
       <p className="section-label">{label}</p>
-      <h2 className="section-title">
-        {title}
-        <br />
-        <span>{highlight}</span>
-      </h2>
-      {description ? <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-graphite/70">{description}</p> : null}
+      <h2 className="mt-4 font-display text-[clamp(36px,4.6vw,58px)] font-semibold leading-[1.08] text-ink">{title}</h2>
+      {description ? <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-graphite/70">{description}</p> : null}
     </Reveal>
-  );
-}
-
-function WhatsAppBrandIcon() {
-  return (
-    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12.03 3.25a8.61 8.61 0 0 0-7.34 13.11L3.75 20l3.75-.98a8.6 8.6 0 1 0 4.53-15.77Z"
-        fill="currentColor"
-      />
-      <path
-        d="M9.44 7.72c.18-.4.37-.41.64-.41h.46c.15 0 .35.05.52.4l.71 1.7c.08.2.07.36-.04.53l-.34.46c-.13.15-.11.31.03.5.35.48.93 1.17 1.62 1.53.23.12.39.1.53-.06l.62-.71c.15-.18.33-.22.55-.12l1.65.78c.26.12.39.28.35.57-.06.5-.46 1.2-1 1.46-.42.2-1.91.27-4.05-1.59-2.18-1.9-2.8-3.72-2.56-4.4.18-.51.5-.96.7-1.08Z"
-        fill="#fff"
-      />
-    </svg>
-  );
-}
-
-function EnvelopeBrandIcon() {
-  return (
-    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-      <rect x="3.5" y="5.75" width="17" height="12.5" rx="2.2" fill="currentColor" />
-      <path d="m5.25 8.05 6.75 5.1 6.75-5.1" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function InstagramBrandIcon() {
-  return (
-    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-      <defs>
-        <linearGradient id="instagram-brand-gradient" x1="5" y1="19" x2="19" y2="5" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#F58529" />
-          <stop offset="0.35" stopColor="#DD2A7B" />
-          <stop offset="0.7" stopColor="#8134AF" />
-          <stop offset="1" stopColor="#515BD4" />
-        </linearGradient>
-      </defs>
-      <rect x="4" y="4" width="16" height="16" rx="4.2" fill="url(#instagram-brand-gradient)" />
-      <circle cx="12" cy="12" r="3.3" stroke="#fff" strokeWidth="1.8" />
-      <circle cx="16.1" cy="7.9" r="1.05" fill="#fff" />
-    </svg>
-  );
-}
-
-function YouTubeBrandIcon() {
-  return (
-    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M20.5 8.06a2.54 2.54 0 0 0-1.79-1.8C17.12 5.84 12 5.84 12 5.84s-5.12 0-6.71.42a2.54 2.54 0 0 0-1.79 1.8A26.5 26.5 0 0 0 3.08 12c0 1.33.13 2.64.42 3.94a2.54 2.54 0 0 0 1.79 1.8c1.59.42 6.71.42 6.71.42s5.12 0 6.71-.42a2.54 2.54 0 0 0 1.79-1.8c.29-1.3.42-2.61.42-3.94 0-1.33-.13-2.64-.42-3.94Z"
-        fill="currentColor"
-      />
-      <path d="m10.35 15.1 4.85-2.8-4.85-2.8v5.6Z" fill="#fff" />
-    </svg>
-  );
-}
-
-function FacebookBrandIcon() {
-  return (
-    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="8.5" fill="currentColor" />
-      <path d="M13.32 20.35v-6.54h2.2l.33-2.55h-2.53V9.63c0-.74.2-1.24 1.27-1.24h1.35V6.1a18.05 18.05 0 0 0-1.97-.1c-1.95 0-3.29 1.2-3.29 3.38v1.88H8.48v2.55h2.2v6.54h2.64Z" fill="#fff" />
-    </svg>
-  );
-}
-
-function ContactItem({
-  icon,
-  title,
-  children,
-  href
-}: {
-  icon: ReactNode;
-  title: string;
-  children: ReactNode;
-  href?: string;
-}) {
-  const isExternal = Boolean(href && /^https?:\/\//.test(href));
-  const className = `flex gap-4 rounded-md border border-ink/10 bg-white p-4 shadow-soft ${
-    href ? "transition hover:-translate-y-0.5 hover:border-champagne hover:shadow-lift" : ""
-  }`;
-  const content = (
-    <>
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-mist text-bronze">{icon}</div>
-      <div>
-        <h3 className="text-sm font-bold text-ink">{title}</h3>
-        <div className="mt-1 text-sm leading-6 text-graphite/70">{children}</div>
-      </div>
-    </>
-  );
-
-  if (href) {
-    return (
-      <a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noreferrer" : undefined} className={className}>
-        {content}
-      </a>
-    );
-  }
-
-  return (
-    <div className={className}>
-      {content}
-    </div>
   );
 }
