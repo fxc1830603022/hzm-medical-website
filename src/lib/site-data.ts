@@ -40,6 +40,8 @@ export const defaultSettings: SiteSettings = {
   heroDescription: "True anti-aging preserves your original charm.\nYou still look like yourself, only ten years younger.",
   whatsappNumber: "+1 304-356-8136",
   whatsappMessage: "Hello, I am interested in 9D Facelift and would like to learn more.",
+  methodologyVideoUrl: "",
+  methodologyVideoPoster: "/images/dr-xiao-team-hero.webp",
   wechatDescription: "Add our assistant on WeChat for a personalized consultation plan.",
   wechatQrImage: "/images/wechat-qr.jpg",
   wechatId: "夏天的风",

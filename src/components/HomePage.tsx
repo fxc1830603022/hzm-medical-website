@@ -179,6 +179,8 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
   const heroAlt =
     heroGalleryItem?.alt || "Dr. Xiao 9D Facelift online assessment for international patients in Shanghai";
   const featuredCaseItems = getFeaturedCaseItems(galleryItems);
+  const methodologyPoster = safeSettings.methodologyVideoPoster || "/images/dr-xiao-team-hero.webp";
+  const methodologyVideoUrl = safeSettings.methodologyVideoUrl?.trim();
 
   return (
     <>
@@ -307,13 +309,28 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
           <Reveal direction="right">
             <div className="relative overflow-hidden rounded-[24px] border border-[#E6DED2] bg-white p-5 shadow-[0_26px_80px_rgba(60,42,22,0.10)]">
               <div className="relative aspect-[5/4] overflow-hidden rounded-[18px] bg-[#F4EFE7]">
-                <Image
-                  src="/images/dr-xiao-team-hero.webp"
-                  alt="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 48vw"
-                  className="object-cover"
-                />
+                {methodologyVideoUrl ? (
+                  <video
+                    aria-label="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    poster={methodologyPoster}
+                    className="h-full w-full object-cover"
+                  >
+                    <source src={methodologyVideoUrl} type={getVideoMimeType(methodologyVideoUrl)} />
+                  </video>
+                ) : (
+                  <Image
+                    src={methodologyPoster}
+                    alt="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 48vw"
+                    className="object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 rounded-md border border-white/35 bg-white/86 p-4 backdrop-blur">
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">9D Methodology</p>
@@ -661,4 +678,11 @@ function normalizeCaseValue(value?: string) {
   const normalized = value?.trim();
   if (!normalized || normalized.toLowerCase() === "private") return "";
   return normalized;
+}
+
+function getVideoMimeType(url: string) {
+  const cleanUrl = url.split("?")[0]?.toLowerCase() || "";
+  if (cleanUrl.endsWith(".webm")) return "video/webm";
+  if (cleanUrl.endsWith(".mov")) return "video/quicktime";
+  return "video/mp4";
 }

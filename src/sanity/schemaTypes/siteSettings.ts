@@ -49,6 +49,32 @@ export const siteSettings = defineType({
     defineField({ name: "heroTitleBottom", title: "Hero Title Bottom", type: "string" }),
     defineField({ name: "heroDescription", title: "Hero Description", type: "text", rows: 3 }),
     defineField({
+      name: "methodologyVideoUrl",
+      title: "Homepage Methodology Video URL",
+      type: "url",
+      description: "Optional MP4/WebM URL for the homepage 9D Methodology media block. Keep it muted, short, and professional."
+    }),
+    defineField({
+      name: "methodologyVideoPoster",
+      title: "Homepage Methodology Video Poster",
+      type: "image",
+      options: { hotspot: true },
+      description: "Poster image shown before the video loads, and used as the fallback visual."
+    }),
+    defineField({
+      name: "methodologyVideoPosterUrl",
+      title: "Homepage Methodology Poster URL",
+      type: "url",
+      description: "Optional external poster image URL. Used if no uploaded poster image is selected."
+    }),
+    defineField({
+      name: "methodologyVideoPosterPath",
+      title: "Local Homepage Methodology Poster Path",
+      type: "string",
+      initialValue: "/images/dr-xiao-team-hero.webp",
+      description: "Fallback local poster path, for example: /images/dr-xiao-team-hero.webp."
+    }),
+    defineField({
       name: "whatsappNumber",
       title: "WhatsApp Number",
       type: "string",

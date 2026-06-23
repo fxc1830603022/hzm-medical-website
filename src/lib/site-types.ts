@@ -50,6 +50,8 @@ export type SiteSettings = {
   heroDescription: string;
   whatsappNumber: string;
   whatsappMessage: string;
+  methodologyVideoUrl: string;
+  methodologyVideoPoster: string;
   wechatDescription: string;
   wechatQrImage: string;
   wechatId: string;

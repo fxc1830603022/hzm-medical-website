@@ -212,6 +212,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       heroTitleTop,
       heroTitleBottom,
       heroDescription,
+      methodologyVideoUrl,
+      "methodologyVideoPoster": coalesce(methodologyVideoPoster.asset->url, methodologyVideoPosterUrl, methodologyVideoPosterPath),
       whatsappNumber,
       whatsappMessage,
       wechatDescription,
