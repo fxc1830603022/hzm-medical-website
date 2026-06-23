@@ -185,7 +185,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
 
   return (
     <>
-      <section id="hero" className="relative isolate min-h-[calc(100vh-76px)] overflow-hidden bg-[#FAF8F3] px-5 py-16 sm:px-8 lg:flex lg:items-center lg:py-20">
+      <section id="hero" className="relative isolate min-h-[calc(100vh-76px)] overflow-hidden bg-[#FAF8F3] px-5 pb-16 pt-28 sm:px-8 sm:pt-32 lg:flex lg:items-center lg:py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(184,138,59,0.13),transparent_32%),linear-gradient(135deg,#FFFDF8_0%,#F5EEE3_100%)]" />
         <div className="pointer-events-none absolute -left-36 top-0 h-[34rem] w-[62rem] -rotate-12 rounded-[50%] border-t border-[#B88A3B]/20" />
         <div className="relative mx-auto grid w-full max-w-[1280px] gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center xl:gap-16">
