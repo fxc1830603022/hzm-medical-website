@@ -305,34 +305,49 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
       </section>
 
       <section className="bg-[#FAF8F3] px-5 py-20 sm:px-8 lg:py-32">
-        <div className="mx-auto grid max-w-[1280px] gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div className="mx-auto grid max-w-[1280px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
           <Reveal direction="right">
             <div className="relative overflow-hidden rounded-[24px] border border-[#E6DED2] bg-white p-5 shadow-[0_26px_80px_rgba(60,42,22,0.10)]">
-              <div className="relative aspect-[5/4] overflow-hidden rounded-[18px] bg-[#F4EFE7]">
+              <div className="relative min-h-[560px] overflow-hidden rounded-[18px] bg-[#F4EFE7] sm:min-h-[640px] lg:min-h-[660px]">
                 {methodologyVideoUrl ? (
-                  <video
-                    aria-label="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    poster={methodologyPoster}
-                    className="h-full w-full object-cover"
-                  >
-                    <source src={methodologyVideoUrl} type={getVideoMimeType(methodologyVideoUrl)} />
-                  </video>
+                  <>
+                    <Image
+                      src={methodologyPoster}
+                      alt=""
+                      aria-hidden="true"
+                      fill
+                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 55vw"
+                      className="scale-110 object-cover opacity-45 blur-2xl"
+                    />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,253,248,0.18),rgba(35,28,20,0.48))]" />
+                    <div className="absolute inset-0 flex items-center justify-center px-5 py-7 sm:px-8 sm:py-9">
+                      <video
+                        aria-label="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        poster={methodologyPoster}
+                        className="relative z-10 h-full max-h-[560px] w-auto max-w-[82%] rounded-[24px] border border-white/70 bg-black/10 object-contain shadow-[0_28px_80px_rgba(20,14,8,0.28)] sm:max-h-[610px] lg:max-h-[630px]"
+                      >
+                        <source src={methodologyVideoUrl} type={getVideoMimeType(methodologyVideoUrl)} />
+                      </video>
+                    </div>
+                  </>
                 ) : (
                   <Image
                     src={methodologyPoster}
                     alt="Dr. Xiao 9D Facelift structural planning and surgeon-led assessment"
                     fill
+                    unoptimized
                     sizes="(max-width: 1024px) 100vw, 48vw"
                     className="object-cover"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 rounded-md border border-white/35 bg-white/86 p-4 backdrop-blur">
+                <div className="absolute bottom-5 left-5 right-5 rounded-md border border-white/35 bg-white/86 p-4 backdrop-blur sm:right-auto sm:max-w-[440px]">
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">9D Methodology</p>
                   <p className="mt-2 font-display text-2xl font-semibold leading-tight text-ink">
                     Structural planning for natural facelift results.
