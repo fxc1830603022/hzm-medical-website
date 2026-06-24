@@ -175,33 +175,40 @@ const featuredCaseFallbacks = [
 export function HomePage({ settings, galleryItems }: HomePageProps) {
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
-  const heroGalleryItem = galleryItems.find((item) => item.displayRole === "hero");
-  const heroImage = heroGalleryItem?.image || "/images/international-patients-hero-consultation.webp";
-  const heroAlt =
-    heroGalleryItem?.alt || "Dr. Xiao 9D Facelift online assessment for international patients in Shanghai";
+  const heroBackgroundImage = "/images/home-hero-dr-xiao-consultation-bg.webp";
   const featuredCaseItems = getFeaturedCaseItems(galleryItems);
   const methodologyPoster = safeSettings.methodologyVideoPoster || "/images/dr-xiao-team-hero.webp";
   const methodologyVideoUrl = safeSettings.methodologyVideoUrl?.trim();
 
   return (
     <>
-      <section id="hero" className="relative isolate min-h-[calc(100vh-76px)] scroll-mt-32 overflow-hidden bg-[#FAF8F3] px-5 pb-16 pt-[150px] sm:px-8 sm:pt-[152px] lg:flex lg:items-center lg:py-20">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(184,138,59,0.13),transparent_32%),linear-gradient(135deg,#FFFDF8_0%,#F5EEE3_100%)]" />
-        <div className="pointer-events-none absolute -left-36 top-0 h-[34rem] w-[62rem] -rotate-12 rounded-[50%] border-t border-[#B88A3B]/20" />
-        <div className="relative mx-auto grid w-full max-w-[1280px] gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center xl:gap-16">
-          <Reveal direction="right" className="max-w-2xl">
+      <section id="hero" className="relative isolate min-h-screen scroll-mt-32 overflow-hidden bg-[#FAF8F3] px-5 pb-16 pt-[150px] sm:px-8 sm:pt-[152px] lg:flex lg:min-h-[calc(100vh-76px)] lg:items-center lg:pb-20 lg:pt-36">
+        <Image
+          src={heroBackgroundImage}
+          alt=""
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          aria-hidden="true"
+          className="object-cover object-[58%_center] sm:object-[56%_center] lg:object-center"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,253,248,0.8)_0%,rgba(255,253,248,0.68)_44%,rgba(255,253,248,0.24)_100%)] lg:bg-[linear-gradient(90deg,rgba(255,253,248,0.9)_0%,rgba(255,253,248,0.72)_34%,rgba(255,253,248,0.18)_62%,rgba(255,253,248,0)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_42%,rgba(184,138,59,0.12),transparent_36%)]" />
+        <div className="relative z-10 flex w-full max-w-[330px] sm:mx-auto sm:max-w-[1280px]">
+          <Reveal direction="right" className="w-full min-w-0 max-w-[330px] sm:max-w-2xl lg:max-w-[620px]">
             <p className="flex items-center gap-3 text-xs font-bold uppercase text-bronze sm:text-sm" style={{ letterSpacing: "0.22em" }}>
               <Gem size={16} strokeWidth={1.7} />
               Dr. Xiao 9D Facelift
             </p>
-            <h1 className="mt-6 font-display text-[clamp(48px,7.5vw,88px)] font-semibold leading-[0.96] tracking-[-0.01em] text-ink">
-              Natural 9D Facelift{" "}
+            <h1 className="mt-6 max-w-full font-display text-[40px] font-semibold leading-[0.96] tracking-[-0.01em] text-ink sm:text-[clamp(48px,7.5vw,88px)]">
+              Natural 9D <span className="block sm:inline">Facelift</span>{" "}
               <span className="block text-bronze">in Shanghai</span>
             </h1>
-            <p className="mt-7 max-w-xl text-lg leading-8 text-graphite/78 sm:text-xl sm:leading-9">
+            <p className="mt-7 max-w-full text-lg leading-8 text-graphite/78 sm:max-w-xl sm:text-xl sm:leading-9">
               A surgeon-led facial rejuvenation system that lifts, restores, and preserves your natural charm.
             </p>
-            <div className="mt-9 grid gap-4 sm:grid-cols-2">
+            <div className="mt-9 grid w-full gap-4 sm:max-w-none sm:grid-cols-2">
               <Link
                 href="#home-bottom-cta"
                 className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md bg-champagne px-6 text-sm font-bold text-ink shadow-soft transition hover:bg-bronze hover:text-white"
@@ -217,7 +224,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                 <ArrowRight size={18} />
               </Link>
             </div>
-            <div className="mt-9 grid gap-3 sm:grid-cols-2">
+            <div className="mt-9 grid w-full gap-3 sm:max-w-none sm:grid-cols-2">
               {["Surgeon-Led Treatment", "27+ Years Experience", "International Patient Support", "Medical-Grade Safety"].map(
                 (item) => (
                   <div key={item} className="flex items-center gap-3 rounded-md border border-[#E6DED2] bg-white/62 px-4 py-3 text-sm font-semibold text-graphite shadow-[0_12px_36px_rgba(60,42,22,0.06)]">
@@ -226,24 +233,6 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                   </div>
                 )
               )}
-            </div>
-          </Reveal>
-
-          <Reveal direction="left">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-[640px] overflow-hidden rounded-[26px] border border-white/80 bg-white shadow-[0_30px_90px_rgba(60,42,22,0.16)] lg:max-w-none">
-              <Image
-                src={heroImage}
-                alt={heroAlt}
-                fill
-                priority
-                unoptimized
-                sizes="(max-width: 1024px) 100vw, 56vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/55 to-transparent p-6 text-white">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-champagne">Facial Rejuvenation in China</p>
-                <p className="mt-2 max-w-md font-display text-2xl font-semibold">Online assessment before traveling to Shanghai.</p>
-              </div>
             </div>
           </Reveal>
         </div>
