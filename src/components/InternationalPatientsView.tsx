@@ -287,11 +287,11 @@ export function InternationalPatientsView({
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <Reveal className="relative min-h-[360px] overflow-hidden rounded-lg bg-[#f5f5f3]">
             <Image
-              src="/images/dr-xiao-scrubs-portrait.jpg"
+              src="/images/international-before-flights-assessment.webp"
               alt="Dr. Xiao reviewing Shanghai facelift medical assessment before travel"
               fill
               sizes="(min-width: 1024px) 54vw, 100vw"
-              className="object-cover object-[50%_18%]"
+              className="object-cover object-center"
             />
           </Reveal>
           <Reveal className="rounded-lg border border-[#d8c7a8]/55 bg-[#fbf8f2] p-7 sm:p-9">
