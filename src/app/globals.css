@@ -81,4 +81,21 @@ img {
     @apply mt-3 text-center text-xs uppercase text-graphite/50;
     letter-spacing: 0.08em;
   }
+
+  .home-hero-bg {
+    transform: translateY(76px) scale(1.08);
+    transform-origin: center top;
+  }
+
+  @media (min-width: 640px) {
+    .home-hero-bg {
+      transform: translateY(64px) scale(1.06);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero-bg {
+      transform: translateY(54px) scale(1.045);
+    }
+  }
 }

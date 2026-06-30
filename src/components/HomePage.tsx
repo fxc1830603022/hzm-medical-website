@@ -286,14 +286,14 @@ const featuredCaseFallbacks = [
 export function HomePage({ settings, galleryItems }: HomePageProps) {
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
-  const heroBackgroundImage = "/images/home-hero-dr-xiao-consultation-bg.webp";
+  const heroBackgroundImage = "/images/home-hero-dr-xiao-black-gold.png";
   const featuredCaseItems = getFeaturedCaseItems(galleryItems);
   const methodologyPoster = safeSettings.methodologyVideoPoster || "/images/dr-xiao-team-hero.webp";
   const methodologyVideoUrl = safeSettings.methodologyVideoUrl?.trim();
 
   return (
     <>
-      <section id="hero" className="relative isolate min-h-screen scroll-mt-32 overflow-hidden bg-[#FAF8F3] px-5 pb-16 pt-[150px] sm:px-8 sm:pt-[152px] lg:flex lg:min-h-[calc(100vh-76px)] lg:items-center lg:pb-20 lg:pt-36">
+      <section id="hero" className="relative isolate min-h-screen scroll-mt-32 overflow-hidden bg-ink px-5 pb-16 pt-[150px] text-white sm:px-8 sm:pt-[152px] lg:flex lg:min-h-[calc(100vh-76px)] lg:items-center lg:pb-20 lg:pt-36">
         <Image
           src={heroBackgroundImage}
           alt=""
@@ -302,21 +302,21 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
           unoptimized
           sizes="100vw"
           aria-hidden="true"
-          className="z-0 object-cover object-[58%_center] sm:object-[56%_center] lg:object-center"
+          className="home-hero-bg z-0 object-cover object-[58%_center] sm:object-[56%_center] lg:object-center"
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(255,253,248,0.8)_0%,rgba(255,253,248,0.68)_44%,rgba(255,253,248,0.24)_100%)] lg:bg-[linear-gradient(90deg,rgba(255,253,248,0.9)_0%,rgba(255,253,248,0.72)_34%,rgba(255,253,248,0.18)_62%,rgba(255,253,248,0)_100%)]" />
-        <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(circle_at_18%_42%,rgba(184,138,59,0.12),transparent_36%)]" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(9,8,6,0.72)_0%,rgba(9,8,6,0.48)_52%,rgba(9,8,6,0.38)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,6,5,0.78)_0%,rgba(7,6,5,0.62)_32%,rgba(7,6,5,0.22)_62%,rgba(7,6,5,0.06)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(circle_at_18%_42%,rgba(201,169,110,0.18),transparent_34%)]" />
         <div className="relative z-10 flex w-full max-w-[330px] sm:mx-auto sm:max-w-[1280px]">
           <div className="w-full min-w-0 max-w-[330px] sm:max-w-2xl lg:max-w-[620px]">
-            <p className="flex items-center gap-3 text-xs font-bold uppercase text-bronze sm:text-sm" style={{ letterSpacing: "0.22em" }}>
+            <p className="flex items-center gap-3 text-xs font-bold uppercase text-champagne sm:text-sm" style={{ letterSpacing: "0.22em" }}>
               <Gem size={16} strokeWidth={1.7} />
               Dr. Xiao 9D Facelift
             </p>
-            <h1 className="mt-6 max-w-full font-display text-[40px] font-semibold leading-[0.96] tracking-[-0.01em] text-ink sm:text-[clamp(48px,7.5vw,88px)]">
+            <h1 className="mt-6 max-w-full font-display text-[40px] font-semibold leading-[0.96] tracking-[-0.01em] text-white drop-shadow-[0_16px_38px_rgba(0,0,0,0.48)] sm:text-[clamp(48px,7.5vw,88px)]">
               Natural 9D <span className="block sm:inline">Facelift</span>{" "}
-              <span className="block text-bronze">in Shanghai</span>
+              <span className="block text-champagne">in Shanghai</span>
             </h1>
-            <p className="mt-7 max-w-full text-lg leading-8 text-graphite/78 sm:max-w-xl sm:text-xl sm:leading-9">
+            <p className="mt-7 max-w-full text-lg leading-8 text-white/82 drop-shadow-[0_10px_24px_rgba(0,0,0,0.42)] sm:max-w-xl sm:text-xl sm:leading-9">
               A surgeon-led facial rejuvenation system that lifts, restores, and preserves your natural charm.
             </p>
             <div className="mt-9 grid w-full gap-4 sm:max-w-none sm:grid-cols-2">
@@ -329,7 +329,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
               </Link>
               <Link
                 href="/before-after"
-                className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md border border-bronze bg-white/70 px-6 text-sm font-bold text-ink transition hover:bg-white"
+                className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md border border-champagne/70 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-ink"
               >
                 View Before & After
                 <ArrowRight size={18} />
@@ -338,18 +338,18 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
             <div className="mt-9 grid w-full gap-3 sm:max-w-none sm:grid-cols-2">
               {["Surgeon-Led Treatment", "27+ Years Experience", "International Patient Support", "Medical-Grade Safety"].map(
                 (item) => (
-                  <div key={item} className="flex items-center gap-3 rounded-md border border-[#E6DED2] bg-white/62 px-4 py-3 text-sm font-semibold text-graphite shadow-[0_12px_36px_rgba(60,42,22,0.06)]">
-                    <ShieldCheck size={17} className="shrink-0 text-bronze" />
+                  <div key={item} className="flex items-center gap-3 rounded-md border border-white/16 bg-white/10 px-4 py-3 text-sm font-semibold text-white/86 shadow-[0_12px_36px_rgba(0,0,0,0.16)] backdrop-blur">
+                    <ShieldCheck size={17} className="shrink-0 text-champagne" />
                     {item}
                   </div>
                 )
               )}
             </div>
-            <div className="mt-8 grid gap-3 border-t border-[#D8C8B1]/70 pt-6 sm:grid-cols-3">
+            <div className="mt-8 grid gap-3 border-t border-white/18 pt-6 sm:grid-cols-3">
               {heroMetrics.map((item) => (
                 <div key={item.label}>
-                  <p className="font-display text-3xl font-semibold leading-none text-bronze">{item.value}</p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-graphite/55">{item.label}</p>
+                  <p className="font-display text-3xl font-semibold leading-none text-champagne">{item.value}</p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/62">{item.label}</p>
                 </div>
               ))}
             </div>
