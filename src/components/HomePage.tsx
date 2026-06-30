@@ -304,7 +304,7 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
           aria-hidden="true"
           className="home-hero-bg z-0 object-cover object-[58%_center] sm:object-[56%_center] lg:object-center"
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(9,8,6,0.72)_0%,rgba(9,8,6,0.48)_52%,rgba(9,8,6,0.38)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,6,5,0.78)_0%,rgba(7,6,5,0.62)_32%,rgba(7,6,5,0.22)_62%,rgba(7,6,5,0.06)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(6,5,4,0.92)_0%,rgba(6,5,4,0.78)_46%,rgba(6,5,4,0.48)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,6,5,0.78)_0%,rgba(7,6,5,0.62)_32%,rgba(7,6,5,0.22)_62%,rgba(7,6,5,0.06)_100%)]" />
         <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(circle_at_18%_42%,rgba(201,169,110,0.18),transparent_34%)]" />
         <div className="relative z-10 flex w-full max-w-[330px] sm:mx-auto sm:max-w-[1280px]">
           <div className="w-full min-w-0 max-w-[330px] sm:max-w-2xl lg:max-w-[620px]">
