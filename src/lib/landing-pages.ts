@@ -174,14 +174,14 @@ export const landingPages: Record<string, LandingPageData> = {
     path: "/procedures/9d-facelift",
     breadcrumb: "9D Facelift",
     eyebrow: "Signature Procedure",
-    title: "9D Facelift",
+    title: "9D Facelift by Dr. Xiao",
     accent: "Natural Rejuvenation, No Fake-Look",
     intro:
       "9D Facelift, also known as the 9D Lifting System, is Dr. Xiao's proprietary facelift planning approach for suitable mild to moderate facial aging, designed to refresh the face while preserving the patient's own charm, expression, and identity.",
     description:
       "9D Facelift by Dr. Xiao focuses on charm preservation, customized incision planning, and natural movement for suitable mild to moderate facial aging.",
-    image: "/images/gallery-ai-02.jpeg",
-    imageAlt: "Natural 9D facelift result",
+    image: "/images/home-hero-dr-xiao-consultation-bg.webp",
+    imageAlt: "Dr. Xiao consulting with an international patient for 9D Facelift assessment",
     primaryCta: "Check If 9D Facelift Fits You",
     primaryHref: "/consultation",
     secondaryCta: "View Natural Results",
@@ -309,9 +309,9 @@ export const landingPages: Record<string, LandingPageData> = {
       href: "/consultation"
     },
     seo: {
-      title: "9D Facelift in China | Natural Facelift by Dr. Xiao",
+      title: "9D Facelift by Dr. Xiao | Natural Facial Rejuvenation",
       description:
-        "Explore 9D Facelift by Dr. Xiao: charm preservation, natural movement, customized incision planning, and online assessment for international patients."
+        "Learn about 9D Facelift by Dr. Xiao, a personalized facial rejuvenation planning approach designed for natural-looking results, international patients, and WhatsApp online assessment."
     }
   },
   "9d-deep-plane-facelift": {

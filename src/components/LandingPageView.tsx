@@ -17,6 +17,7 @@ import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
 import { BeforeAfterPageView } from "./BeforeAfterPageView";
 import { ContactForm } from "./ContactForm";
+import { NineDFaceliftPageView } from "./NineDFaceliftPageView";
 import { Reveal } from "./Reveal";
 
 type LandingPageViewProps = {
@@ -28,6 +29,10 @@ type LandingPageViewProps = {
 export function LandingPageView({ page, settings, galleryItems = [] }: LandingPageViewProps) {
   if (page.path === "/before-after") {
     return <BeforeAfterPageView page={page} settings={settings} galleryItems={galleryItems} />;
+  }
+
+  if (page.path === "/procedures/9d-facelift") {
+    return <NineDFaceliftPageView settings={settings} />;
   }
 
   const safeSettings = { ...defaultSettings, ...settings };
