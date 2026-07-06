@@ -46,6 +46,10 @@ export type ProcedurePageAsset = {
   slug: string;
   heroImage?: string;
   heroImageAlt?: string;
+  miniResultOneImage?: string;
+  miniResultOneImageAlt?: string;
+  miniResultTwoImage?: string;
+  miniResultTwoImageAlt?: string;
   philosophyImage?: string;
   philosophyImageAlt?: string;
   doctorAuthorityImage?: string;

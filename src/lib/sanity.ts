@@ -181,10 +181,14 @@ export async function getProcedurePageAsset(slug: string): Promise<ProcedurePage
   try {
     return await sanityClient.fetch<ProcedurePageAsset | null>(
       `*[_type == "procedurePageAsset" && slug == $slug && active != false][0] {
-        slug,
-        "heroImage": coalesce(heroImage.asset->url, heroImageUrl, heroImagePath),
-        heroImageAlt,
-        "philosophyImage": coalesce(philosophyImage.asset->url, philosophyImageUrl, philosophyImagePath),
+          slug,
+          "heroImage": coalesce(heroImage.asset->url, heroImageUrl, heroImagePath),
+          heroImageAlt,
+          "miniResultOneImage": coalesce(miniResultOneImage.asset->url, miniResultOneImageUrl, miniResultOneImagePath),
+          miniResultOneImageAlt,
+          "miniResultTwoImage": coalesce(miniResultTwoImage.asset->url, miniResultTwoImageUrl, miniResultTwoImagePath),
+          miniResultTwoImageAlt,
+          "philosophyImage": coalesce(philosophyImage.asset->url, philosophyImageUrl, philosophyImagePath),
         philosophyImageAlt,
         "doctorAuthorityImage": coalesce(doctorAuthorityImage.asset->url, doctorAuthorityImageUrl, doctorAuthorityImagePath),
         doctorAuthorityImageAlt,

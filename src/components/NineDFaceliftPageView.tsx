@@ -289,6 +289,10 @@ export function NineDFaceliftPageView({
   const pageImages = {
     hero: asset.heroImage || heroImage,
     heroAlt: asset.heroImageAlt || "Dr. Xiao consulting with an international patient for 9D Facelift assessment",
+    miniResultOne: asset.miniResultOneImage || "",
+    miniResultOneAlt: asset.miniResultOneImageAlt || "9D Facelift mini result preview case 1",
+    miniResultTwo: asset.miniResultTwoImage || "",
+    miniResultTwoAlt: asset.miniResultTwoImageAlt || "9D Facelift mini result preview case 2",
     philosophy: asset.philosophyImage || planningImage,
     philosophyAlt: asset.philosophyImageAlt || "Dr. Xiao facial rejuvenation planning consultation",
     doctorAuthority: asset.doctorAuthorityImage || doctorPortrait,
@@ -299,7 +303,7 @@ export function NineDFaceliftPageView({
   const cmsResultCards = galleryItems
     .filter((item) => {
       const searchable = `${item.procedure || ""} ${item.title || ""}`.toLowerCase();
-      return item.image && (searchable.includes("9d") || searchable.includes("facelift"));
+      return item.image && searchable.includes("facelift") && searchable.includes("9d");
     })
     .slice(0, 2)
     .map((item, index) => ({
@@ -312,7 +316,16 @@ export function NineDFaceliftPageView({
       concern: item.mainConcerns || fallbackResultCards[index]?.concern || "Lower-face aging concerns",
       result: item.visibleChange || item.description || fallbackResultCards[index]?.result || "Natural-looking refinement."
     }));
-  const resultCards = [...cmsResultCards, ...fallbackResultCards].slice(0, 2);
+  const resultCards = [...cmsResultCards, ...fallbackResultCards].slice(0, 2).map((item, index) => {
+    const manualImage = index === 0 ? pageImages.miniResultOne : pageImages.miniResultTwo;
+    const manualAlt = index === 0 ? pageImages.miniResultOneAlt : pageImages.miniResultTwoAlt;
+
+    return {
+      ...item,
+      image: manualImage || item.image,
+      alt: manualImage ? manualAlt : item.alt
+    };
+  });
 
   return (
     <div className="bg-[#F8F4EE] text-[#1F1C19]">
@@ -417,7 +430,7 @@ export function NineDFaceliftPageView({
         </div>
       </section>
 
-      <section className="px-5 py-20 sm:px-8 lg:py-28">
+      <section id="fit-check" className="px-5 py-20 sm:px-8 lg:py-28">
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <Reveal direction="right">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#B68A45]">Fit Check</p>

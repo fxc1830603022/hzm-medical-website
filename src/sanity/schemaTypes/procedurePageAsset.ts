@@ -66,6 +66,8 @@ export const procedurePageAsset = defineType({
       validation: (Rule) => Rule.required()
     }),
     ...imageFields("hero", "Hero Consultation Image"),
+    ...imageFields("miniResultOne", "Mini Result Preview Image 1"),
+    ...imageFields("miniResultTwo", "Mini Result Preview Image 2"),
     ...imageFields("philosophy", "Philosophy Section Image"),
     ...imageFields("doctorAuthority", "Doctor Authority Image"),
     ...imageFields("finalCta", "Final CTA Image"),
