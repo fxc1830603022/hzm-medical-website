@@ -9,7 +9,7 @@ import {
   defaultSettings,
   formatDisplayDate
 } from "./site-data";
-import type { BlogPost, CategoryKey, GalleryItem, SiteSettings } from "./site-types";
+import type { BlogPost, CategoryKey, GalleryItem, ProcedurePageAsset, SiteSettings } from "./site-types";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -172,6 +172,29 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
     return items.length ? items : defaultGalleryItems;
   } catch {
     return defaultGalleryItems;
+  }
+}
+
+export async function getProcedurePageAsset(slug: string): Promise<ProcedurePageAsset | null> {
+  if (!sanityConfigured) return null;
+
+  try {
+    return await sanityClient.fetch<ProcedurePageAsset | null>(
+      `*[_type == "procedurePageAsset" && slug == $slug && active != false][0] {
+        slug,
+        "heroImage": coalesce(heroImage.asset->url, heroImageUrl, heroImagePath),
+        heroImageAlt,
+        "philosophyImage": coalesce(philosophyImage.asset->url, philosophyImageUrl, philosophyImagePath),
+        philosophyImageAlt,
+        "doctorAuthorityImage": coalesce(doctorAuthorityImage.asset->url, doctorAuthorityImageUrl, doctorAuthorityImagePath),
+        doctorAuthorityImageAlt,
+        "finalCtaImage": coalesce(finalCtaImage.asset->url, finalCtaImageUrl, finalCtaImagePath),
+        finalCtaImageAlt
+      }`,
+      { slug }
+    );
+  } catch {
+    return null;
   }
 }
 

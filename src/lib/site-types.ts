@@ -42,6 +42,18 @@ export type GalleryItem = {
   description?: string;
 };
 
+export type ProcedurePageAsset = {
+  slug: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  philosophyImage?: string;
+  philosophyImageAlt?: string;
+  doctorAuthorityImage?: string;
+  doctorAuthorityImageAlt?: string;
+  finalCtaImage?: string;
+  finalCtaImageAlt?: string;
+};
+
 export type SiteSettings = {
   siteTitle: string;
   heroSubtitle: string;

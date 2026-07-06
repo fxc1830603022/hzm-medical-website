@@ -14,7 +14,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import type { LandingPageData } from "@/lib/landing-pages";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
-import type { GalleryItem, SiteSettings } from "@/lib/site-types";
+import type { GalleryItem, ProcedurePageAsset, SiteSettings } from "@/lib/site-types";
 import { BeforeAfterPageView } from "./BeforeAfterPageView";
 import { ContactForm } from "./ContactForm";
 import { NineDFaceliftPageView } from "./NineDFaceliftPageView";
@@ -24,15 +24,16 @@ type LandingPageViewProps = {
   page: LandingPageData;
   settings: SiteSettings;
   galleryItems?: GalleryItem[];
+  procedurePageAsset?: ProcedurePageAsset | null;
 };
 
-export function LandingPageView({ page, settings, galleryItems = [] }: LandingPageViewProps) {
+export function LandingPageView({ page, settings, galleryItems = [], procedurePageAsset = null }: LandingPageViewProps) {
   if (page.path === "/before-after") {
     return <BeforeAfterPageView page={page} settings={settings} galleryItems={galleryItems} />;
   }
 
   if (page.path === "/procedures/9d-facelift") {
-    return <NineDFaceliftPageView settings={settings} />;
+    return <NineDFaceliftPageView settings={settings} galleryItems={galleryItems} procedurePageAsset={procedurePageAsset} />;
   }
 
   const safeSettings = { ...defaultSettings, ...settings };

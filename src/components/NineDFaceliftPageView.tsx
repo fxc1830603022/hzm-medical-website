@@ -22,10 +22,12 @@ import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { Reveal } from "@/components/Reveal";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
-import type { SiteSettings } from "@/lib/site-types";
+import type { GalleryItem, ProcedurePageAsset, SiteSettings } from "@/lib/site-types";
 
 type NineDFaceliftPageViewProps = {
   settings: SiteSettings;
+  galleryItems?: GalleryItem[];
+  procedurePageAsset?: ProcedurePageAsset | null;
 };
 
 const heroImage = "/images/home-hero-dr-xiao-consultation-bg.webp";
@@ -64,15 +66,17 @@ const fitItems = [
   "Previous thread lift or filler history"
 ];
 
-const resultCards = [
+const fallbackResultCards = [
   {
     image: "/images/gallery-case-02.jpg",
+    alt: "Natural 9D Facelift before and after result",
     title: "Age 35 | Malaysia | 9D Facelift",
     concern: "Lower-face heaviness, jawline softening",
     result: "Natural lower-face refinement without an overfilled appearance."
   },
   {
     image: "/images/gallery-case-11.jpg",
+    alt: "Natural 9D Deep Plane Facelift before and after result",
     title: "Age 42 | United States | 9D Deep Plane Facelift",
     concern: "Jawline loss, lower-face sagging",
     result: "Restored support while preserving recognizable expression."
@@ -274,9 +278,41 @@ const faqItems = [
   }
 ];
 
-export function NineDFaceliftPageView({ settings }: NineDFaceliftPageViewProps) {
+export function NineDFaceliftPageView({
+  settings,
+  galleryItems = [],
+  procedurePageAsset = null
+}: NineDFaceliftPageViewProps) {
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
+  const asset: Partial<ProcedurePageAsset> = procedurePageAsset || {};
+  const pageImages = {
+    hero: asset.heroImage || heroImage,
+    heroAlt: asset.heroImageAlt || "Dr. Xiao consulting with an international patient for 9D Facelift assessment",
+    philosophy: asset.philosophyImage || planningImage,
+    philosophyAlt: asset.philosophyImageAlt || "Dr. Xiao facial rejuvenation planning consultation",
+    doctorAuthority: asset.doctorAuthorityImage || doctorPortrait,
+    doctorAuthorityAlt: asset.doctorAuthorityImageAlt || "Dr. Xiao portrait for 9D Facelift authority",
+    finalCta: asset.finalCtaImage || asset.heroImage || heroImage,
+    finalCtaAlt: asset.finalCtaImageAlt || "International patient preparing for online facial assessment"
+  };
+  const cmsResultCards = galleryItems
+    .filter((item) => {
+      const searchable = `${item.procedure || ""} ${item.title || ""}`.toLowerCase();
+      return item.image && (searchable.includes("9d") || searchable.includes("facelift"));
+    })
+    .slice(0, 2)
+    .map((item, index) => ({
+      image: item.image,
+      alt: item.alt || item.title || "Natural 9D Facelift before and after result",
+      title:
+        item.title ||
+        [item.age ? `Age ${item.age}` : null, item.country, item.procedure || "9D Facelift"].filter(Boolean).join(" | ") ||
+        fallbackResultCards[index]?.title,
+      concern: item.mainConcerns || fallbackResultCards[index]?.concern || "Lower-face aging concerns",
+      result: item.visibleChange || item.description || fallbackResultCards[index]?.result || "Natural-looking refinement."
+    }));
+  const resultCards = [...cmsResultCards, ...fallbackResultCards].slice(0, 2);
 
   return (
     <div className="bg-[#F8F4EE] text-[#1F1C19]">
@@ -290,8 +326,8 @@ export function NineDFaceliftPageView({ settings }: NineDFaceliftPageViewProps) 
             <div className="relative overflow-hidden rounded-[28px] border border-[#E6DED3] bg-white p-3 shadow-[0_30px_80px_rgba(43,37,32,0.12)]">
               <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-[#E6DED3] lg:aspect-[0.96/1] xl:aspect-[1.08/1]">
                 <Image
-                  src={heroImage}
-                  alt="Dr. Xiao consulting with an international patient for 9D Facelift assessment"
+                  src={pageImages.hero}
+                  alt={pageImages.heroAlt}
                   fill
                   priority
                   sizes="(min-width: 1024px) 50vw, 100vw"
@@ -419,7 +455,7 @@ export function NineDFaceliftPageView({ settings }: NineDFaceliftPageViewProps) 
                   <div className="relative aspect-[4/5] overflow-hidden bg-[#F8F4EE]">
                     <Image
                       src={item.image}
-                      alt="Natural 9D Facelift before and after result"
+                      alt={item.alt}
                       fill
                       sizes="(min-width: 768px) 34vw, 82vw"
                       className="object-contain"
@@ -447,8 +483,8 @@ export function NineDFaceliftPageView({ settings }: NineDFaceliftPageViewProps) 
           <Reveal direction="right">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/12 bg-white/5 shadow-[0_34px_90px_rgba(0,0,0,0.22)]">
               <Image
-                src={planningImage}
-                alt="Dr. Xiao facial rejuvenation planning consultation"
+                src={pageImages.philosophy}
+                alt={pageImages.philosophyAlt}
                 fill
                 sizes="(min-width: 1024px) 38vw, 100vw"
                 className="object-cover object-[58%_center]"
@@ -572,8 +608,8 @@ export function NineDFaceliftPageView({ settings }: NineDFaceliftPageViewProps) 
           <Reveal direction="left">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-[#E6DED3] bg-white p-3 shadow-[0_30px_80px_rgba(43,37,32,0.12)]">
               <Image
-                src={doctorPortrait}
-                alt="Dr. Xiao portrait for 9D Facelift authority"
+                src={pageImages.doctorAuthority}
+                alt={pageImages.doctorAuthorityAlt}
                 fill
                 sizes="(min-width: 1024px) 42vw, 100vw"
                 className="object-cover object-[62%_center]"
@@ -691,8 +727,8 @@ export function NineDFaceliftPageView({ settings }: NineDFaceliftPageViewProps) 
           <Reveal direction="right">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-white">
               <Image
-                src={heroImage}
-                alt="International patient preparing for online facial assessment"
+                src={pageImages.finalCta}
+                alt={pageImages.finalCtaAlt}
                 fill
                 sizes="(min-width: 1024px) 38vw, 100vw"
                 className="object-cover object-[62%_center]"

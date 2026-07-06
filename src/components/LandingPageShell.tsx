@@ -6,7 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import type { LandingPageData } from "@/lib/landing-pages";
-import { getFaqItemsForPage, getGalleryItems, getSiteSettings } from "@/lib/sanity";
+import { getFaqItemsForPage, getGalleryItems, getProcedurePageAsset, getSiteSettings } from "@/lib/sanity";
 import { breadcrumbJsonLd, faqJsonLd, medicalProcedureJsonLd, physicianJsonLd, webPageJsonLd } from "@/lib/seo";
 
 type LandingPageShellProps = {
@@ -14,11 +14,13 @@ type LandingPageShellProps = {
 };
 
 export async function LandingPageShell({ page }: LandingPageShellProps) {
-  const shouldLoadGallery = page.path === "/before-after";
-  const [settings, galleryItems, cmsFaqs] = await Promise.all([
+  const shouldLoadGallery = page.path === "/before-after" || page.path === "/procedures/9d-facelift";
+  const procedureSlug = page.path === "/procedures/9d-facelift" ? "9d-facelift" : "";
+  const [settings, galleryItems, cmsFaqs, procedurePageAsset] = await Promise.all([
     getSiteSettings(),
     shouldLoadGallery ? getGalleryItems() : Promise.resolve([]),
-    getFaqItemsForPage(page.path)
+    getFaqItemsForPage(page.path),
+    procedureSlug ? getProcedurePageAsset(procedureSlug) : Promise.resolve(null)
   ]);
   const pageWithFaqs: LandingPageData = {
     ...page,
@@ -62,7 +64,12 @@ export async function LandingPageShell({ page }: LandingPageShellProps) {
       <StructuredData data={structuredData} />
       <Navbar settings={settings} />
       <main>
-        <LandingPageView page={pageWithFaqs} settings={settings} galleryItems={galleryItems} />
+        <LandingPageView
+          page={pageWithFaqs}
+          settings={settings}
+          galleryItems={galleryItems}
+          procedurePageAsset={procedurePageAsset}
+        />
         {pageWithFaqs.path === "/before-after" ? (
           <GlobalBottomCTA settings={settings} source="before-after-global-bottom-cta" />
         ) : null}
