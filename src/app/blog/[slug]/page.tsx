@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArticleBackButton } from "@/components/ArticleBackButton";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
+import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { Navbar } from "@/components/Navbar";
 import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
@@ -131,6 +132,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </section>
         </article>
+        <GlobalBottomCTA settings={settings} source="article-bottom-cta" />
       </main>
       <Footer />
       <BackToTop />

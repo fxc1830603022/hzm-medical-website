@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { useEffect } from "react";
 
 type ArrivalSupportVideoProps = {
   src: string;
@@ -10,45 +10,52 @@ type ArrivalSupportVideoProps = {
 
 export function ArrivalSupportVideo({ src, poster }: ArrivalSupportVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
-  const toggleSound = async () => {
-    const video = videoRef.current;
-    if (!video) return;
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-    const nextMuted = !muted;
-    video.muted = nextMuted;
-    video.volume = nextMuted ? 0 : 1;
-    setMuted(nextMuted);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const video = videoRef.current;
+        if (!video) return;
 
-    if (video.paused) {
-      await video.play().catch(() => undefined);
-    }
-  };
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          video.play().catch(() => undefined);
+        } else {
+          video.pause();
+        }
+      },
+      { rootMargin: "180px 0px", threshold: 0.35 }
+    );
+
+    observer.observe(wrapper);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    videoRef.current?.play().catch(() => undefined);
+  }, [shouldLoad]);
 
   return (
-    <div className="relative overflow-hidden rounded-[26px] bg-[#1f1c17]">
+    <div ref={wrapperRef} className="relative overflow-hidden rounded-[26px] bg-[#1f1c17]">
       <video
         ref={videoRef}
         className="aspect-[9/16] h-auto w-full object-cover"
-        src={src}
+        src={shouldLoad ? src : undefined}
         poster={poster}
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
         aria-label="Real airport arrival support for international patients traveling to Shanghai"
       />
-      <button
-        type="button"
-        onClick={toggleSound}
-        className="absolute right-4 top-4 z-10 inline-flex min-h-10 items-center gap-2 rounded-full border border-[#d7bd82]/80 bg-[#f8f0df] px-4 text-xs font-bold uppercase tracking-[0.14em] text-[#1f1c17] shadow-[0_12px_32px_rgba(0,0,0,0.22)] transition hover:bg-white"
-        aria-label={muted ? "Turn arrival video sound on" : "Turn arrival video sound off"}
-      >
-        {muted ? <VolumeX size={15} /> : <Volume2 size={15} />}
-        <span>{muted ? "Sound" : "On"}</span>
-      </button>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent px-5 pb-5 pt-20 text-white">
         <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#d7bd82]">
           Real Patient Journey

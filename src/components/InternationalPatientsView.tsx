@@ -20,7 +20,7 @@ import type { LandingFAQ } from "@/lib/landing-pages";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
 import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
-import { InternationalCtaLeadForm } from "./InternationalCtaLeadForm";
+import { GlobalBottomCTA } from "./GlobalBottomCTA";
 
 type InternationalPatientsViewProps = {
   settings?: SiteSettings;
@@ -540,40 +540,9 @@ export function InternationalPatientsView({
         </div>
       </section>
 
-      <section id="online-assessment" className="relative overflow-hidden bg-[#1f1c17] px-5 py-14 sm:px-8 lg:py-16">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.68fr_1fr]">
-          <Reveal className="text-white">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#C8B898]">
-              Online Assessment
-            </p>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight sm:text-5xl">
-              Not Sure Whether 9D Facelift Is Suitable for You?
-            </h2>
-            <p className="mt-5 max-w-md text-base leading-7 text-white/72">
-              Start with photos before making travel plans.
-            </p>
-            <div className="mt-8">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-[#C8B898] bg-[#C8B898] px-5 py-3 text-sm font-bold text-[#222222] transition hover:border-[#b6a37d] hover:bg-[#b6a37d] sm:w-auto"
-              >
-                <MessageCircle size={17} />
-                Send Photos on WhatsApp
-              </a>
-            </div>
-          </Reveal>
-          <Reveal className="rounded-lg border border-white/10 bg-white/[0.06] p-4 sm:p-5">
-            <h3 className="font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
-              Submit Your Online Assessment Request
-            </h3>
-            <div className="mt-5">
-              <InternationalCtaLeadForm />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <div id="online-assessment">
+        <GlobalBottomCTA settings={safeSettings} source="international-patients-bottom-cta" />
+      </div>
     </div>
   );
 }

@@ -70,8 +70,8 @@ export async function LandingPageShell({ page }: LandingPageShellProps) {
           galleryItems={galleryItems}
           procedurePageAsset={procedurePageAsset}
         />
-        {pageWithFaqs.path === "/before-after" ? (
-          <GlobalBottomCTA settings={settings} source="before-after-global-bottom-cta" />
+        {pageWithFaqs.path !== "/procedures/9d-facelift" ? (
+          <GlobalBottomCTA settings={settings} source={`${pageWithFaqs.path.replace(/^\//, "").replace(/\//g, "-")}-bottom-cta`} />
         ) : null}
       </main>
       <Footer />

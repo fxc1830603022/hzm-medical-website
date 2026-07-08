@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { BlogIndex } from "@/components/BlogIndex";
 import { Navbar } from "@/components/Navbar";
+import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { StructuredData } from "@/components/StructuredData";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getFaqItemsForPage, getPosts, getSiteSettings } from "@/lib/sanity";
@@ -93,6 +94,7 @@ export default async function BlogPage() {
           </div>
         </section>
         <BlogIndex posts={posts} faqItems={faqItems} />
+        <GlobalBottomCTA settings={settings} source="blog-bottom-cta" />
       </main>
       <Footer />
       <BackToTop />
