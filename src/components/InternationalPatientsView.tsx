@@ -19,6 +19,7 @@ import type { ReactNode } from "react";
 import type { LandingFAQ } from "@/lib/landing-pages";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
+import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
 import { InternationalCtaLeadForm } from "./InternationalCtaLeadForm";
 
 type InternationalPatientsViewProps = {
@@ -173,6 +174,29 @@ const journeySteps = [
     icon: Plane,
     title: "Follow-Up",
     text: "Continue online recovery communication after returning home."
+  }
+];
+
+const arrivalSupportCards = [
+  {
+    icon: Plane,
+    title: "Before You Fly",
+    text: "Online guidance before you travel, including photo assessment, treatment direction, and expected stay planning."
+  },
+  {
+    icon: CalendarCheck2,
+    title: "Arrival Coordination",
+    text: "Airport pickup coordination can be arranged based on your schedule and treatment plan."
+  },
+  {
+    icon: Building2,
+    title: "Clinic Schedule Support",
+    text: "Our team helps coordinate consultation timing, clinic visits, and key preparation steps."
+  },
+  {
+    icon: Headphones,
+    title: "English-Speaking Assistance",
+    text: "International patients receive communication support throughout the consultation journey."
   }
 ];
 
@@ -395,6 +419,65 @@ export function InternationalPatientsView({
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section id="arrival-support" className="bg-[#fbf8f2] px-5 py-16 sm:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.46fr_0.54fr] lg:gap-14">
+          <Reveal className="order-2 lg:order-1">
+            <div className="mx-auto max-w-[390px] rounded-[34px] border border-[#d8c7a8]/70 bg-white p-3 shadow-[0_30px_90px_rgba(48,38,26,0.13)]">
+              <ArrivalSupportVideo
+                src="/videos/international-arrival-support.mp4"
+                poster="/images/international-patients-hero-consultation.webp"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal className="order-1 lg:order-2">
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#b28a3d]">
+              International Patient Support
+            </p>
+            <h2 className="mt-5 font-display text-4xl font-semibold leading-tight text-[#222222] sm:text-5xl">
+              From Airport Arrival to Doctor-Led Care
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-[#222222]/72 sm:text-lg">
+              For international patients, feeling supported after landing matters. From online assessment before
+              travel to airport pickup coordination, clinic scheduling, and in-person consultation support in
+              Shanghai, our team helps make your 9D facial rejuvenation journey feel more organized, clear, and
+              comfortable.
+            </p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {arrivalSupportCards.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="rounded-lg border border-[#d8c7a8]/60 bg-white/86 p-5 shadow-[0_18px_55px_rgba(48,38,26,0.06)]"
+                  >
+                    <Icon className="text-[#b28a3d]" size={30} strokeWidth={1.45} />
+                    <h3 className="mt-4 font-display text-xl font-semibold leading-tight text-[#222222]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-[#222222]/68">{item.text}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <LuxuryButton href={whatsappUrl} variant="gold" external icon={<MessageCircle size={18} />}>
+                Start Online Assessment
+              </LuxuryButton>
+              <LuxuryButton href={whatsappUrl} variant="outline" external icon={<ArrowRight size={18} />}>
+                Ask About Travel Support
+              </LuxuryButton>
+            </div>
+            <p className="mt-5 max-w-2xl text-xs leading-6 text-[#222222]/55">
+              Travel support details may vary depending on schedule, location, treatment plan, and individual
+              arrangements.
+            </p>
+          </Reveal>
         </div>
       </section>
 
