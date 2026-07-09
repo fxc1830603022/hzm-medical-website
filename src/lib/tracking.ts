@@ -34,7 +34,9 @@ const socialWhatsAppMessages: Record<string, string> = {
   instagram:
     "Hello, I came across you on Instagram and am very interested in the 9D Lifting procedure; I would like to know more details.",
   facebook:
-    "Hello, I came across you on Facebook and am very interested in the 9D Lifting procedure; I would like to know more details."
+    "Hello, I came across you on Facebook and am very interested in the 9D Lifting procedure; I would like to know more details.",
+  google:
+    "Hello, I came across you on Google and am very interested in the 9D Lifting procedure; I would like to know more details."
 };
 
 export function captureTrafficSource() {
@@ -180,6 +182,7 @@ function getStoredSocialSource() {
 
   if (source === "instagram") return "instagram";
   if (source === "facebook") return "facebook";
+  if (source === "google") return "google";
   return "";
 }
 
