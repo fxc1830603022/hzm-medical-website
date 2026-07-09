@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Analytics } from "@/components/Analytics";
+import { TrackingProvider } from "@/components/TrackingProvider";
 import { imageUrl, seoDefaults, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en">
       <body>
         {children}
+        <TrackingProvider />
         <Analytics />
       </body>
     </html>

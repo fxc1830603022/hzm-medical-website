@@ -21,6 +21,7 @@ import { useMemo, useState } from "react";
 import type { LandingPageData } from "@/lib/landing-pages";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
+import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type BeforeAfterPageViewProps = {
   page: LandingPageData;
@@ -227,15 +228,15 @@ export function BeforeAfterPageView({ page, settings, galleryItems }: BeforeAfte
                 View Real Facelift Cases
                 <ArrowRight size={17} />
               </a>
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="before_after_hero_whatsapp"
+                label="Before After hero WhatsApp"
                 className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md border border-[#C59236] bg-white/72 px-5 text-sm font-bold text-[#171717] transition hover:bg-white"
               >
                 <MessageCircle size={17} />
                 Send Photos for Assessment
-              </a>
+              </TrackedWhatsAppLink>
             </div>
 
             <div className="mt-9 grid gap-4 sm:grid-cols-3">
@@ -382,24 +383,24 @@ export function BeforeAfterPageView({ page, settings, galleryItems }: BeforeAfte
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="before_after_final_consultation_whatsapp"
+                label="Before After final WhatsApp consultation"
                 className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#C59236] px-6 text-sm font-bold text-[#171717] shadow-[0_12px_28px_rgba(184,138,59,0.20)] transition hover:bg-[#B3822F] sm:w-auto"
               >
                 WhatsApp Consultation
                 <ArrowRight size={16} />
-              </a>
-              <a
+              </TrackedWhatsAppLink>
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="before_after_final_photos_whatsapp"
+                label="Before After final send photos WhatsApp"
                 className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md border border-[#C59236] bg-white px-6 text-sm font-bold text-[#171717] transition hover:bg-[#FFF8EA] sm:w-auto"
               >
                 <MessageCircle size={16} />
                 Send Photos for Assessment
-              </a>
+              </TrackedWhatsAppLink>
             </div>
           </div>
         </div>

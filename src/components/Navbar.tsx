@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { defaultSettings, getWhatsAppUrl, navItems } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
+import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type NavbarProps = {
   settings?: SiteSettings;
@@ -36,16 +37,16 @@ export function Navbar({ settings }: NavbarProps) {
             <span>International 9D Facelift Consultation</span>
           </div>
           <div className="grid w-full grid-cols-3 items-center gap-2 md:flex md:w-auto md:justify-end md:gap-6">
-            <a
+            <TrackedWhatsAppLink
               href={getWhatsAppUrl(safeSettings)}
-              target="_blank"
-              rel="noreferrer"
+              placement="navbar_top_whatsapp"
+              label="Navbar top WhatsApp"
               className="inline-flex min-w-0 items-center justify-start gap-1.5 font-semibold text-white/82 transition hover:text-champagne md:gap-2"
             >
               <Phone size={13} />
               <span>WhatsApp</span>
               <span className="hidden sm:inline">{safeSettings.whatsappNumber}</span>
-            </a>
+            </TrackedWhatsAppLink>
             <a
               href={instagramHref}
               target={instagramHref.startsWith("http") ? "_blank" : undefined}

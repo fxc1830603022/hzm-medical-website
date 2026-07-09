@@ -20,6 +20,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 import { VideoWithSoundControl } from "@/components/VideoWithSoundControl";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
@@ -754,15 +755,15 @@ export function HomePage({ settings, galleryItems }: HomePageProps) {
                 International Patient Guide
                 <Plane size={18} />
               </Link>
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="home_international_section_whatsapp"
+                label="Home international section WhatsApp"
                 className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-md border border-bronze bg-white px-6 py-4 text-sm font-bold text-ink transition hover:bg-[#FFFDF8]"
               >
                 Send Photos on WhatsApp
                 <MessageCircle size={18} />
-              </a>
+              </TrackedWhatsAppLink>
             </div>
           </Reveal>
 

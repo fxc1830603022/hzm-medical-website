@@ -21,6 +21,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { Reveal } from "@/components/Reveal";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, ProcedurePageAsset, SiteSettings } from "@/lib/site-types";
 
@@ -380,15 +381,15 @@ export function NineDFaceliftPageView({
               expression, charm, and identity.
             </p>
             <div className="mt-9 grid gap-4 sm:grid-cols-2">
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="9d_facelift_hero_whatsapp"
+                label="9D Facelift hero WhatsApp assessment"
                 className="inline-flex h-14 items-center justify-center gap-3 rounded-md bg-[#D8B56D] px-6 text-sm font-bold text-[#15120E] shadow-[0_18px_42px_rgba(182,138,69,0.22)] transition hover:bg-[#E3C57F]"
               >
                 WhatsApp Assessment
                 <ArrowRight size={18} />
-              </a>
+              </TrackedWhatsAppLink>
               <Link
                 href="/before-after"
                 className="inline-flex h-14 items-center justify-center gap-3 rounded-md border border-[#B68A45] bg-white/70 px-6 text-sm font-bold text-[#1F1C19] transition hover:bg-white"
@@ -449,15 +450,15 @@ export function NineDFaceliftPageView({
                   </div>
                 ))}
               </div>
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="9d_facelift_fit_check_whatsapp"
+                label="9D Facelift fit check WhatsApp assessment"
                 className="mt-7 inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#2B2520] px-5 text-sm font-bold text-white transition hover:bg-[#B68A45] hover:text-[#1F1C19] sm:w-auto"
               >
                 Start Online Assessment
                 <MessageCircle size={18} />
-              </a>
+              </TrackedWhatsAppLink>
             </div>
           </Reveal>
 
@@ -758,15 +759,15 @@ export function NineDFaceliftPageView({
               advise whether 9D Facelift, 9D Deep Plane Facelift, or another plan is more suitable.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="9d_facelift_final_whatsapp"
+                label="9D Facelift final WhatsApp assessment"
                 className="inline-flex h-14 items-center justify-center gap-3 rounded-md bg-[#D8B56D] px-6 text-sm font-bold text-[#15120E] transition hover:bg-[#E3C57F]"
               >
                 WhatsApp Assessment
                 <MessageCircle size={18} />
-              </a>
+              </TrackedWhatsAppLink>
               <Link
                 href="/consultation"
                 className="inline-flex h-14 items-center justify-center gap-3 rounded-md border border-[#B68A45] bg-white px-6 text-sm font-bold text-[#1F1C19] transition hover:bg-[#FFFDFC]"

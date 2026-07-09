@@ -17,6 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
 import { Reveal } from "@/components/Reveal";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
 
@@ -229,15 +230,15 @@ export function ConsultationPageView({ settings, faqs }: ConsultationPageViewPro
                 Send Photos for Assessment
                 <ArrowRight size={18} />
               </a>
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement="consultation_hero_whatsapp"
+                label="Consultation hero WhatsApp"
                 className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md border border-bronze/55 bg-white/70 px-7 text-sm font-bold text-ink backdrop-blur transition hover:border-bronze hover:bg-white sm:w-auto"
               >
                 <MessageCircle size={18} />
                 Chat on WhatsApp
-              </a>
+              </TrackedWhatsAppLink>
             </div>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-3">

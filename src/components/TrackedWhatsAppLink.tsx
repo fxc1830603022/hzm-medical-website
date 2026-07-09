@@ -1,0 +1,46 @@
+"use client";
+
+import type { AnchorHTMLAttributes, MouseEvent, ReactNode } from "react";
+import { buildWhatsAppClickPayload, trackWhatsAppClick } from "@/lib/tracking";
+
+type TrackedWhatsAppLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick"> & {
+  href: string;
+  placement: string;
+  label?: string;
+  children: ReactNode;
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+};
+
+export function TrackedWhatsAppLink({
+  href,
+  placement,
+  label,
+  children,
+  target = "_blank",
+  rel = "noopener noreferrer",
+  onClick,
+  ...props
+}: TrackedWhatsAppLinkProps) {
+  function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+    const payload = buildWhatsAppClickPayload({
+      placement,
+      label: label || getText(children) || "WhatsApp",
+      whatsappUrl: href
+    });
+
+    trackWhatsAppClick(payload);
+    onClick?.(event);
+  }
+
+  return (
+    <a href={href} target={target} rel={rel} onClick={handleClick} {...props}>
+      {children}
+    </a>
+  );
+}
+
+function getText(children: ReactNode): string {
+  if (typeof children === "string" || typeof children === "number") return String(children);
+  if (Array.isArray(children)) return children.map(getText).join(" ").trim();
+  return "";
+}

@@ -19,6 +19,7 @@ import { BeforeAfterPageView } from "./BeforeAfterPageView";
 import { ContactForm } from "./ContactForm";
 import { NineDFaceliftPageView } from "./NineDFaceliftPageView";
 import { Reveal } from "./Reveal";
+import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type LandingPageViewProps = {
   page: LandingPageData;
@@ -39,6 +40,7 @@ export function LandingPageView({ page, settings, galleryItems = [], procedurePa
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
   const secondaryHref = page.secondaryHref === "#whatsapp" ? whatsappUrl : page.secondaryHref;
+  const pageTrackingKey = page.path.replace(/^\/+/, "").replace(/[^a-z0-9]+/gi, "_") || "home";
   const usesPhotoHero = page.path === "/doctor";
 
   return (
@@ -86,7 +88,11 @@ export function LandingPageView({ page, settings, galleryItems = [], procedurePa
                 {page.primaryCta}
               </CtaLink>
               {secondaryHref && page.secondaryCta ? (
-                <CtaLink href={secondaryHref} variant="ghost">
+                <CtaLink
+                  href={secondaryHref}
+                  variant="ghost"
+                  trackingPlacement={page.secondaryHref === "#whatsapp" ? `${pageTrackingKey}_hero_whatsapp` : undefined}
+                >
                   {page.secondaryCta}
                 </CtaLink>
               ) : null}
@@ -232,15 +238,15 @@ export function LandingPageView({ page, settings, galleryItems = [], procedurePa
                 <p className="mt-5 text-sm leading-7 text-white/75">
                   WhatsApp is usually the quickest way to send photos and receive scheduling guidance.
                 </p>
-                <a
+                <TrackedWhatsAppLink
                   href={whatsappUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  placement={`${pageTrackingKey}_assessment_form_whatsapp`}
+                  label="Assessment form WhatsApp"
                   className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-champagne px-5 text-sm font-bold text-ink transition hover:bg-white"
                 >
                   Send Photos on WhatsApp
                   <ArrowUpRight size={17} />
-                </a>
+                </TrackedWhatsAppLink>
               </div>
             </Reveal>
             <Reveal direction="left">
@@ -300,12 +306,14 @@ function CtaLink({
   href,
   variant,
   className = "",
-  children
+  children,
+  trackingPlacement
 }: {
   href: string;
   variant: "primary" | "ghost" | "dark";
   className?: string;
   children: ReactNode;
+  trackingPlacement?: string;
 }) {
   const styles = {
     primary: "bg-champagne text-ink hover:bg-white",
@@ -321,6 +329,14 @@ function CtaLink({
   );
 
   const baseClass = `inline-flex h-12 items-center justify-center gap-2 rounded-md px-6 text-sm font-bold transition ${styles[variant]} ${className}`;
+
+  if (trackingPlacement) {
+    return (
+      <TrackedWhatsAppLink href={href} placement={trackingPlacement} className={baseClass}>
+        {content}
+      </TrackedWhatsAppLink>
+    );
+  }
 
   if (href.startsWith("http")) {
     return (

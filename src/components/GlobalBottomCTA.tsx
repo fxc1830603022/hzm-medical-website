@@ -17,6 +17,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
+import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -292,16 +293,16 @@ export function GlobalBottomCTA({
             </div>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <a
+              <TrackedWhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+                placement={`${source}_primary_whatsapp`}
+                label="Bottom CTA primary WhatsApp"
                 className="grid h-14 w-full grid-cols-[56px_minmax(0,1fr)_56px] items-center rounded-md bg-[#E2B95E] px-2 text-base font-bold text-[#171717] shadow-[0_18px_46px_rgba(184,138,59,0.24)] transition hover:bg-[#D8A94C]"
               >
                 <MessageCircle className="justify-self-center" size={26} />
                 <span className="justify-self-center whitespace-nowrap">Chat on WhatsApp</span>
                 <ArrowRight className="justify-self-center" size={20} />
-              </a>
+              </TrackedWhatsAppLink>
               <a
                 href={`mailto:${safeSettings.email}`}
                 className="grid h-14 w-full grid-cols-[56px_minmax(0,1fr)_56px] items-center rounded-md border border-[#B88A3B] bg-[#FFFDF8] px-2 text-base font-bold text-[#171717] transition hover:bg-white"
@@ -316,6 +317,23 @@ export function GlobalBottomCTA({
               <div className="grid grid-cols-5 place-items-center gap-3">
                 {contactChannels.map((item) => {
                   const isExternal = /^https?:\/\//.test(item.href);
+
+                  if (item.label === "WhatsApp") {
+                    return (
+                      <TrackedWhatsAppLink
+                        key={item.label}
+                        href={item.href}
+                        placement={`${source}_contact_icon_whatsapp`}
+                        label="Bottom CTA WhatsApp icon"
+                        aria-label={item.label}
+                        title={item.label}
+                        className="group flex h-12 w-12 items-center justify-center rounded-md border border-[#E3D6C2] bg-white text-[#B88A3B] transition hover:-translate-y-0.5 hover:border-[#B88A3B] hover:shadow-[0_14px_34px_rgba(60,42,22,0.10)] sm:h-14 sm:w-14"
+                        style={{ color: item.color }}
+                      >
+                        <span className="transition group-hover:scale-105">{item.icon}</span>
+                      </TrackedWhatsAppLink>
+                    );
+                  }
 
                   return (
                     <a

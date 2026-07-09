@@ -21,6 +21,7 @@ import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
 import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
 import { GlobalBottomCTA } from "./GlobalBottomCTA";
+import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type InternationalPatientsViewProps = {
   settings?: SiteSettings;
@@ -253,7 +254,13 @@ export function InternationalPatientsView({
                 team will review your case and suggest a suitable next step for your journey.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <LuxuryButton href={whatsappUrl} variant="gold" external icon={<MessageCircle size={18} />}>
+                <LuxuryButton
+                  href={whatsappUrl}
+                  variant="gold"
+                  external
+                  trackingPlacement="international_hero_whatsapp"
+                  icon={<MessageCircle size={18} />}
+                >
                   Send Photos for Assessment
                 </LuxuryButton>
                 <LuxuryButton href="#journey" variant="outline" icon={<ArrowRight size={18} />}>
@@ -466,10 +473,22 @@ export function InternationalPatientsView({
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <LuxuryButton href={whatsappUrl} variant="gold" external icon={<MessageCircle size={18} />}>
+              <LuxuryButton
+                href={whatsappUrl}
+                variant="gold"
+                external
+                trackingPlacement="international_arrival_start_whatsapp"
+                icon={<MessageCircle size={18} />}
+              >
                 Start Online Assessment
               </LuxuryButton>
-              <LuxuryButton href={whatsappUrl} variant="outline" external icon={<ArrowRight size={18} />}>
+              <LuxuryButton
+                href={whatsappUrl}
+                variant="outline"
+                external
+                trackingPlacement="international_arrival_support_whatsapp"
+                icon={<ArrowRight size={18} />}
+              >
                 Ask About Travel Support
               </LuxuryButton>
             </div>
@@ -553,9 +572,17 @@ type LuxuryButtonProps = {
   variant?: "gold" | "outline";
   icon?: ReactNode;
   external?: boolean;
+  trackingPlacement?: string;
 };
 
-function LuxuryButton({ href, children, variant = "gold", icon, external = false }: LuxuryButtonProps) {
+function LuxuryButton({
+  href,
+  children,
+  variant = "gold",
+  icon,
+  external = false,
+  trackingPlacement
+}: LuxuryButtonProps) {
   const classes = {
     gold: "border border-[#C8B898] bg-[#C8B898] text-[#222222] hover:bg-[#b6a37d] hover:border-[#b6a37d]",
     outline: "border border-[#C8B898] bg-white/70 text-[#b28a3d] hover:bg-[#C8B898] hover:text-[#222222]"
@@ -567,6 +594,14 @@ function LuxuryButton({ href, children, variant = "gold", icon, external = false
       <span>{children}</span>
     </>
   );
+
+  if (trackingPlacement) {
+    return (
+      <TrackedWhatsAppLink href={href} placement={trackingPlacement} className={className}>
+        {content}
+      </TrackedWhatsAppLink>
+    );
+  }
 
   if (external) {
     return (

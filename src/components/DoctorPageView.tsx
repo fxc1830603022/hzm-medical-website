@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { GlobalBottomCTA } from "@/components/GlobalBottomCTA";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 import { VideoWithSoundControl } from "@/components/VideoWithSoundControl";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
@@ -504,15 +505,15 @@ export function DoctorPageView({ settings }: DoctorPageViewProps) {
             </h2>
           </Reveal>
           <Reveal direction="left" className="flex flex-col gap-3 sm:flex-row">
-            <a
+            <TrackedWhatsAppLink
               href={getWhatsAppUrl(safeSettings)}
-              target="_blank"
-              rel="noreferrer"
+              placement="doctor_final_whatsapp"
+              label="Doctor final WhatsApp"
               className="inline-flex h-14 items-center justify-center gap-3 rounded-md bg-champagne px-6 text-sm font-bold text-ink transition hover:bg-bronze hover:text-white"
             >
               <MessageCircle size={18} />
               Chat on WhatsApp
-            </a>
+            </TrackedWhatsAppLink>
             <Link
               href="/consultation"
               className="inline-flex h-14 items-center justify-center gap-3 rounded-md border border-white/24 px-6 text-sm font-bold text-white transition hover:bg-white hover:text-ink"
