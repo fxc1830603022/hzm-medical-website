@@ -38,7 +38,7 @@ export const defaultSettings: SiteSettings = {
   heroTitleTop: "Reject the Assembly Line",
   heroTitleBottom: "Charm Preservation",
   heroDescription: "True anti-aging preserves your original charm.\nYou still look like yourself, only ten years younger.",
-  whatsappNumber: "+1 304-356-8136",
+  whatsappNumber: "+1 213-527-5514",
   whatsappMessage: "Hello, I am interested in 9D Facelift and would like to learn more.",
   methodologyVideoUrl: "",
   methodologyVideoPoster: "/images/dr-xiao-team-hero.webp",

@@ -87,11 +87,11 @@ export const siteSettings = defineType({
       name: "whatsappNumber",
       title: "WhatsApp Number",
       type: "string",
-      description: "Use the standard US display format: +1 304-356-8136.",
+      description: "Use the standard US display format: +1 213-527-5514.",
       validation: (rule) =>
         rule.required().custom((value) => {
           const digits = String(value || "").replace(/\D/g, "");
-          return /^1\d{10}$/.test(digits) || "Use a valid US WhatsApp number, for example: +1 304-356-8136.";
+          return /^1\d{10}$/.test(digits) || "Use a valid US WhatsApp number, for example: +1 213-527-5514.";
         })
     }),
     defineField({ name: "whatsappMessage", title: "WhatsApp Message", type: "text", rows: 3 }),
