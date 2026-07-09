@@ -30,6 +30,12 @@ export type WhatsAppClickPayload = {
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
+const socialWhatsAppMessages: Record<string, string> = {
+  instagram:
+    "Hello, I came across you on Instagram and am very interested in the 9D Lifting procedure; I would like to know more details.",
+  facebook:
+    "Hello, I came across you on Facebook and am very interested in the 9D Lifting procedure; I would like to know more details."
+};
 
 export function captureTrafficSource() {
   if (typeof window === "undefined") return;
@@ -101,6 +107,23 @@ export function buildWhatsAppClickPayload({
   };
 }
 
+export function getSourceAwareWhatsAppUrl(whatsappUrl: string) {
+  if (typeof window === "undefined") return whatsappUrl;
+
+  const source = getStoredSocialSource();
+  const message = source ? socialWhatsAppMessages[source] : "";
+  if (!message) return whatsappUrl;
+
+  try {
+    const url = new URL(whatsappUrl);
+    url.searchParams.set("text", message);
+    return url.toString();
+  } catch {
+    const separator = whatsappUrl.includes("?") ? "&" : "?";
+    return `${whatsappUrl}${separator}text=${encodeURIComponent(message)}`;
+  }
+}
+
 export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
   if (typeof window === "undefined") return;
 
@@ -149,6 +172,15 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
       keepalive: true
     }).catch(() => undefined);
   }
+}
+
+function getStoredSocialSource() {
+  const stored = readStoredTraffic();
+  const source = normalizeSource(stored?.lastTouch?.source || stored?.firstTouch?.source || "");
+
+  if (source === "instagram") return "instagram";
+  if (source === "facebook") return "facebook";
+  return "";
 }
 
 function writeStoredTraffic(value: StoredTraffic) {

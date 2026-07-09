@@ -1,7 +1,7 @@
 "use client";
 
 import type { AnchorHTMLAttributes, MouseEvent, ReactNode } from "react";
-import { buildWhatsAppClickPayload, trackWhatsAppClick } from "@/lib/tracking";
+import { buildWhatsAppClickPayload, getSourceAwareWhatsAppUrl, trackWhatsAppClick } from "@/lib/tracking";
 
 type TrackedWhatsAppLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick"> & {
   href: string;
@@ -22,10 +22,13 @@ export function TrackedWhatsAppLink({
   ...props
 }: TrackedWhatsAppLinkProps) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+    const finalHref = getSourceAwareWhatsAppUrl(href);
+    event.currentTarget.href = finalHref;
+
     const payload = buildWhatsAppClickPayload({
       placement,
       label: label || getText(children) || "WhatsApp",
-      whatsappUrl: href
+      whatsappUrl: finalHref
     });
 
     trackWhatsAppClick(payload);
