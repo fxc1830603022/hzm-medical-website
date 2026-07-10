@@ -174,6 +174,12 @@ export const siteSettings = defineType({
       type: "url",
       description: "Paste the Facebook page URL."
     }),
+    defineField({
+      name: "tiktokUrl",
+      title: "TikTok URL",
+      type: "url",
+      description: "Paste the TikTok profile URL. Used on the official /links social entry page."
+    }),
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({ name: "location", title: "Location", type: "string" })
   ],

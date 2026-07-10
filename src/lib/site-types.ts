@@ -77,6 +77,7 @@ export type SiteSettings = {
   instagramUrl: string;
   youtubeUrl: string;
   facebookUrl: string;
+  tiktokUrl: string;
   email: string;
   location: string;
 };

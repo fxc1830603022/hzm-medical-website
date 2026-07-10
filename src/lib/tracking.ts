@@ -36,6 +36,12 @@ export type LeadFormSubmitPayload = {
   source?: string;
 };
 
+export type LinksPageActionPayload = {
+  placement: string;
+  label: string;
+  destination: string;
+};
+
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
@@ -231,6 +237,28 @@ export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
     campaign: eventParams.campaign
   });
   window.fbq?.("trackCustom", "FormSubmitLead", eventParams);
+}
+
+export function trackLinksPageAction(payload: LinksPageActionPayload) {
+  if (typeof window === "undefined") return;
+
+  const stored = readStoredTraffic();
+  const page = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const eventParams = {
+    event_category: "navigation",
+    event_label: payload.placement,
+    placement: payload.placement,
+    link_text: payload.label,
+    destination: payload.destination,
+    page_path: page,
+    traffic_source: stored?.lastTouch?.source || stored?.firstTouch?.source || "unknown",
+    traffic_medium: stored?.lastTouch?.medium || stored?.firstTouch?.medium || "",
+    campaign: stored?.lastTouch?.campaign || stored?.firstTouch?.campaign || "",
+    content: stored?.lastTouch?.content || stored?.firstTouch?.content || ""
+  };
+
+  sendGaEvent("links_page_click", eventParams);
+  window.fbq?.("trackCustom", "LinksPageClick", eventParams);
 }
 
 function getCurrentOrStoredSocialSource(): WhatsAppGreetingSource | "" {

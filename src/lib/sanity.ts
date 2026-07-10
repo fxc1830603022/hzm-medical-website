@@ -252,6 +252,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       instagramUrl,
       youtubeUrl,
       facebookUrl,
+      tiktokUrl,
       email,
       location
     }`);

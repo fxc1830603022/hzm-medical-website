@@ -54,6 +54,7 @@ export const defaultSettings: SiteSettings = {
   instagramUrl: "#contact",
   youtubeUrl: "#contact",
   facebookUrl: "#contact",
+  tiktokUrl: "#contact",
   email: "contact@drxiao-9d.com",
   location: "Shanghai, China"
 };
