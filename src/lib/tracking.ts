@@ -163,8 +163,8 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
     content: payload.lastTouch?.content || payload.firstTouch?.content || ""
   };
 
-  window.gtag?.("event", "whatsapp_click", eventParams);
-  window.gtag?.("event", "generate_lead", {
+  sendGaEvent("whatsapp_click", eventParams);
+  sendGaEvent("generate_lead", {
     ...eventParams,
     lead_source: "whatsapp"
   });
@@ -217,8 +217,8 @@ export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
     content: stored?.lastTouch?.content || stored?.firstTouch?.content || ""
   };
 
-  window.gtag?.("event", "form_submit_lead", eventParams);
-  window.gtag?.("event", "generate_lead", {
+  sendGaEvent("form_submit_lead", eventParams);
+  sendGaEvent("generate_lead", {
     ...eventParams,
     lead_source: "form"
   });
@@ -241,6 +241,18 @@ function getStoredSocialSource(): WhatsAppGreetingSource | "" {
   if (source === "facebook") return "facebook";
   if (source === "google") return "google";
   return "";
+}
+
+function sendGaEvent(eventName: string, params: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", eventName, params);
+    return;
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(["event", eventName, params]);
 }
 
 function writeStoredTraffic(value: StoredTraffic) {
