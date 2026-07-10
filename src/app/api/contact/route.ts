@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { syncLeadToFeishu } from "@/lib/feishu";
+import { sendGa4ServerEvents } from "@/lib/ga4-server";
 import { syncLeadToGoogleSheets } from "@/lib/google-sheets";
 import { createConsultationSubmission } from "@/lib/sanity-write";
 import { makeSupabaseAdminClient } from "@/lib/supabase";
@@ -173,11 +174,40 @@ export async function POST(request: Request) {
   }
 
   if (primaryStorage || feishu.synced || googleSheets.synced) {
+    const ga4 = await sendGa4ServerEvents(request, [
+      {
+        name: "form_submit_lead",
+        params: {
+          event_category: "lead",
+          method: "form",
+          form_name: "consultation_submission",
+          form_source: payload.source,
+          lead_source: "form"
+        }
+      },
+      {
+        name: "generate_lead",
+        params: {
+          event_category: "lead",
+          method: "form",
+          form_name: "consultation_submission",
+          form_source: payload.source,
+          lead_source: "form"
+        }
+      }
+    ]);
+
+    if (ga4.configured && !ga4.sent) {
+      console.error("GA4 server lead sync failed", ga4.error);
+      errors.push("GA4 server sync failed.");
+    }
+
     return NextResponse.json({
       ok: true,
       storage: primaryStorage || (feishu.synced ? "feishu" : "googleSheets"),
       feishu,
       googleSheets,
+      ga4,
       warnings: errors
     });
   }
