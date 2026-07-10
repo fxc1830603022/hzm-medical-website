@@ -134,7 +134,7 @@ export function buildWhatsAppClickPayload({
 export function getSourceAwareWhatsAppUrl(whatsappUrl: string) {
   if (typeof window === "undefined") return whatsappUrl;
 
-  const source = getStoredSocialSource();
+  const source = getCurrentOrStoredSocialSource();
   const message = source ? configuredWhatsAppSourceGreetings[source] : "";
   if (!message) return whatsappUrl;
 
@@ -231,6 +231,25 @@ export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
     campaign: eventParams.campaign
   });
   window.fbq?.("trackCustom", "FormSubmitLead", eventParams);
+}
+
+function getCurrentOrStoredSocialSource(): WhatsAppGreetingSource | "" {
+  const currentSource = getCurrentUrlSocialSource();
+  if (currentSource) return currentSource;
+
+  return getStoredSocialSource();
+}
+
+function getCurrentUrlSocialSource(): WhatsAppGreetingSource | "" {
+  if (typeof window === "undefined") return "";
+
+  const params = new URL(window.location.href).searchParams;
+  const source = normalizeSource(params.get("utm_source") || "");
+
+  if (source === "instagram") return "instagram";
+  if (source === "facebook") return "facebook";
+  if (source === "google" || params.has("gclid")) return "google";
+  return "";
 }
 
 function getStoredSocialSource(): WhatsAppGreetingSource | "" {

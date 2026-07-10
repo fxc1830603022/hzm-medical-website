@@ -33,6 +33,16 @@ export function TrackedWhatsAppLink({
 
     trackWhatsAppClick(payload);
     onClick?.(event);
+
+    if (event.defaultPrevented) return;
+
+    event.preventDefault();
+    if (target === "_self") {
+      window.location.href = finalHref;
+      return;
+    }
+
+    window.open(finalHref, target, rel ? "noopener,noreferrer" : undefined);
   }
 
   return (
