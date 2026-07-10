@@ -66,6 +66,9 @@ export type SiteSettings = {
   heroDescription: string;
   whatsappNumber: string;
   whatsappMessage: string;
+  whatsappInstagramMessage: string;
+  whatsappFacebookMessage: string;
+  whatsappGoogleMessage: string;
   methodologyVideoUrl: string;
   methodologyVideoPoster: string;
   wechatDescription: string;

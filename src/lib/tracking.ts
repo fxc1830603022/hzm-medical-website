@@ -16,6 +16,10 @@ export type StoredTraffic = {
   lastTouch: TrafficSource;
 };
 
+export type WhatsAppGreetingSource = "instagram" | "facebook" | "google";
+
+export type WhatsAppSourceGreetings = Partial<Record<WhatsAppGreetingSource, string>>;
+
 export type WhatsAppClickPayload = {
   event: "whatsapp_click";
   placement: string;
@@ -30,7 +34,7 @@ export type WhatsAppClickPayload = {
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
-const socialWhatsAppMessages: Record<string, string> = {
+const defaultWhatsAppSourceGreetings: Record<WhatsAppGreetingSource, string> = {
   instagram:
     "Hello, I came across you on Instagram and am very interested in the 9D Lifting procedure; I would like to know more details.",
   facebook:
@@ -38,6 +42,19 @@ const socialWhatsAppMessages: Record<string, string> = {
   google:
     "Hello, I came across you on Google and am very interested in the 9D Lifting procedure; I would like to know more details."
 };
+
+let configuredWhatsAppSourceGreetings: Record<WhatsAppGreetingSource, string> = {
+  ...defaultWhatsAppSourceGreetings
+};
+
+export function configureWhatsAppSourceGreetings(messages?: WhatsAppSourceGreetings) {
+  configuredWhatsAppSourceGreetings = {
+    ...defaultWhatsAppSourceGreetings,
+    instagram: messages?.instagram?.trim() || defaultWhatsAppSourceGreetings.instagram,
+    facebook: messages?.facebook?.trim() || defaultWhatsAppSourceGreetings.facebook,
+    google: messages?.google?.trim() || defaultWhatsAppSourceGreetings.google
+  };
+}
 
 export function captureTrafficSource() {
   if (typeof window === "undefined") return;
@@ -113,7 +130,7 @@ export function getSourceAwareWhatsAppUrl(whatsappUrl: string) {
   if (typeof window === "undefined") return whatsappUrl;
 
   const source = getStoredSocialSource();
-  const message = source ? socialWhatsAppMessages[source] : "";
+  const message = source ? configuredWhatsAppSourceGreetings[source] : "";
   if (!message) return whatsappUrl;
 
   try {
@@ -176,7 +193,7 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
   }
 }
 
-function getStoredSocialSource() {
+function getStoredSocialSource(): WhatsAppGreetingSource | "" {
   const stored = readStoredTraffic();
   const source = normalizeSource(stored?.lastTouch?.source || stored?.firstTouch?.source || "");
 

@@ -96,6 +96,27 @@ export const siteSettings = defineType({
     }),
     defineField({ name: "whatsappMessage", title: "WhatsApp Message", type: "text", rows: 3 }),
     defineField({
+      name: "whatsappInstagramMessage",
+      title: "Instagram WhatsApp Greeting",
+      type: "text",
+      rows: 3,
+      description: "Used when visitors enter through /ig or Instagram UTM links before clicking WhatsApp."
+    }),
+    defineField({
+      name: "whatsappFacebookMessage",
+      title: "Facebook WhatsApp Greeting",
+      type: "text",
+      rows: 3,
+      description: "Used when visitors enter through /fb or Facebook UTM links before clicking WhatsApp."
+    }),
+    defineField({
+      name: "whatsappGoogleMessage",
+      title: "Google WhatsApp Greeting",
+      type: "text",
+      rows: 3,
+      description: "Used when visitors enter through /google or Google Ads UTM links before clicking WhatsApp."
+    }),
+    defineField({
       name: "wechatUrl",
       title: "Legacy WeChat URL",
       type: "url",
