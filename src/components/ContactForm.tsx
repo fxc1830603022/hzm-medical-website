@@ -3,6 +3,7 @@
 import { Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
+import { trackLeadFormSubmit } from "@/lib/tracking";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -87,6 +88,10 @@ export function ContactForm({
 
       setState("success");
       setMessage("Submitted! We will contact you soon.");
+      trackLeadFormSubmit({
+        formName: compact ? "compact_contact_form" : "contact_form",
+        source: String(payload.source || title || "contact_form")
+      });
       form.reset();
     } catch (error) {
       setState("error");

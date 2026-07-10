@@ -31,6 +31,11 @@ export type WhatsAppClickPayload = {
   clickedAt: string;
 };
 
+export type LeadFormSubmitPayload = {
+  formName: string;
+  source?: string;
+};
+
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
@@ -191,6 +196,41 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
       keepalive: true
     }).catch(() => undefined);
   }
+}
+
+export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
+  if (typeof window === "undefined") return;
+
+  const stored = readStoredTraffic();
+  const page =
+    typeof window === "undefined" ? "" : `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const eventParams = {
+    event_category: "lead",
+    event_label: payload.formName,
+    method: "form",
+    form_name: payload.formName,
+    form_source: payload.source || payload.formName,
+    page_path: page,
+    traffic_source: stored?.lastTouch?.source || stored?.firstTouch?.source || "unknown",
+    traffic_medium: stored?.lastTouch?.medium || stored?.firstTouch?.medium || "",
+    campaign: stored?.lastTouch?.campaign || stored?.firstTouch?.campaign || "",
+    content: stored?.lastTouch?.content || stored?.firstTouch?.content || ""
+  };
+
+  window.gtag?.("event", "form_submit_lead", eventParams);
+  window.gtag?.("event", "generate_lead", {
+    ...eventParams,
+    lead_source: "form"
+  });
+
+  window.fbq?.("track", "Lead", {
+    content_name: "Form submit",
+    content_category: payload.formName,
+    source: eventParams.traffic_source,
+    medium: eventParams.traffic_medium,
+    campaign: eventParams.campaign
+  });
+  window.fbq?.("trackCustom", "FormSubmitLead", eventParams);
 }
 
 function getStoredSocialSource(): WhatsAppGreetingSource | "" {

@@ -16,6 +16,7 @@ import { useState } from "react";
 import type { LandingFAQ } from "@/lib/landing-pages";
 import { categoryFilters } from "@/lib/site-data";
 import type { BlogPost, CategoryKey } from "@/lib/site-types";
+import { trackLeadFormSubmit } from "@/lib/tracking";
 import { Reveal } from "./Reveal";
 
 type BlogIndexProps = {
@@ -384,6 +385,7 @@ function BlogLeadForm() {
 
       setState("success");
       setMessage("Submitted. Our team will contact you soon.");
+      trackLeadFormSubmit({ formName: "blog_lead_form", source: String(payload.source || "blog-resource-center") });
       form.reset();
     } catch (error) {
       setState("error");

@@ -17,6 +17,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { SiteSettings } from "@/lib/site-types";
+import { trackLeadFormSubmit } from "@/lib/tracking";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -236,6 +237,7 @@ export function GlobalBottomCTA({
 
       setState("success");
       setMessage("Submitted. Dr. Xiao's team will contact you soon.");
+      trackLeadFormSubmit({ formName: "global_bottom_cta", source });
       form.reset();
     } catch (error) {
       setState("error");

@@ -3,6 +3,7 @@
 import { Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
+import { trackLeadFormSubmit } from "@/lib/tracking";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -49,6 +50,7 @@ export function InternationalCtaLeadForm() {
 
       setState("success");
       setMessage("Submitted. Our team will contact you soon.");
+      trackLeadFormSubmit({ formName: "international_cta_lead_form", source: "international-patients-cta" });
       form.reset();
     } catch (error) {
       setState("error");
