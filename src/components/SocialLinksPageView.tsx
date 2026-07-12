@@ -2,6 +2,7 @@
 
 import {
   ArrowRight,
+  CheckCircle2,
   ClipboardCheck,
   Facebook,
   Globe2,
@@ -17,7 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
 import { trackLinksPageAction } from "@/lib/tracking";
@@ -38,7 +39,21 @@ type ActionCard = {
   whatsapp?: boolean;
 };
 
-const heroImage = "/images/home-hero-dr-xiao-consultation-bg.webp";
+type PreviewCase = GalleryItem & {
+  age: string;
+  country: string;
+  procedure: string;
+  concern: string;
+  resultSummary: string;
+};
+
+const heroImage = "/images/dr-xiao-links-hero-portrait.webp";
+const methodologyFallbackVideo = "/videos/dr-xiao-9d-methodology-vertical.mp4";
+const methodologyFallbackPoster = "/videos/dr-xiao-9d-methodology-poster.jpg";
+const internationalJourneyVideo = "/videos/international-arrival-support.mp4";
+const internationalJourneyPoster = "/images/international-patients-hero-consultation.webp";
+const instagramFallbackUrl = "https://www.instagram.com/dr.xiao9d/";
+const facebookFallbackUrl = "https://www.facebook.com/profile.php?id=61580001223508";
 
 const mainActions: ActionCard[] = [
   {
@@ -120,6 +135,12 @@ const trustItems = [
   }
 ];
 
+const methodologyTrustPoints = [
+  "Facial structure assessment",
+  "Natural expression preservation",
+  "Personalized 9D planning"
+];
+
 const patientSteps = [
   {
     step: "1",
@@ -141,12 +162,47 @@ const patientSteps = [
   }
 ];
 
+const fallbackPreviewCases: Array<Pick<PreviewCase, "age" | "country" | "concern" | "procedure" | "resultSummary">> = [
+  {
+    age: "Private",
+    country: "Not disclosed",
+    concern: "Lower-face heaviness and softer jawline definition",
+    procedure: "9D Facelift",
+    resultSummary: "Cleaner lower-face contour while preserving a natural expression."
+  },
+  {
+    age: "Private",
+    country: "Not disclosed",
+    concern: "Mid-face volume descent and facial tiredness",
+    procedure: "9D Deep Plane Assessment",
+    resultSummary: "Improved facial support with a refreshed, not overfilled appearance."
+  },
+  {
+    age: "Private",
+    country: "Not disclosed",
+    concern: "Neck laxity and lower-face sagging",
+    procedure: "9D Facelift",
+    resultSummary: "More defined neck and jawline balance with subtle rejuvenation."
+  }
+];
+
 export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageViewProps) {
   const safeSettings = { ...defaultSettings, ...settings };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
   const [trackingQuery, setTrackingQuery] = useState("");
   const previewCases = useMemo(() => buildPreviewCases(galleryItems), [galleryItems]);
   const socialLinks = useMemo(() => buildSocialLinks(safeSettings), [safeSettings]);
+  const followActionCount = socialLinks.length + 1;
+  const followGridClass =
+    followActionCount >= 4
+      ? "mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+      : followActionCount === 3
+        ? "mt-6 grid gap-3 sm:grid-cols-3"
+        : "mt-6 grid gap-3 sm:grid-cols-2";
+  const methodologyVideoSrc = safeSettings.methodologyVideoUrl?.trim() || methodologyFallbackVideo;
+  const methodologyPoster = safeSettings.methodologyVideoUrl?.trim()
+    ? safeSettings.methodologyVideoPoster || methodologyFallbackPoster
+    : methodologyFallbackPoster;
 
   useEffect(() => {
     setTrackingQuery(window.location.search);
@@ -177,21 +233,24 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
               </span>
             </Link>
 
-            <div className="mt-8 grid gap-8 lg:grid-cols-[0.52fr_0.48fr] lg:items-center">
-              <div className="relative min-h-[300px] overflow-hidden rounded-lg border border-white/70 bg-white shadow-[0_28px_80px_rgba(80,55,24,0.12)] sm:min-h-[430px] lg:min-h-[540px]">
-                <Image
-                  src={heroImage}
-                  alt="Dr. Xiao consulting with an international patient in Shanghai"
-                  fill
-                  priority
-                  unoptimized
-                  sizes="(max-width: 1024px) 100vw, 580px"
-                  className="object-cover object-[58%_center]"
-                />
-                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#FBF8F1] to-transparent" />
+            <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(320px,0.43fr)_minmax(0,0.57fr)] lg:items-center">
+              <div className="relative order-2 mx-auto w-full max-w-[520px] rounded-lg bg-[linear-gradient(135deg,#D6BE8E_0%,rgba(255,255,255,0.86)_48%,#B88A3B_100%)] p-px shadow-[0_28px_80px_rgba(80,55,24,0.12)] lg:order-1 lg:mx-0">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[7px] bg-[#EFE7DC]">
+                  <Image
+                    src={heroImage}
+                    alt="Dr. Xiao portrait in a white coat at his Shanghai clinic"
+                    fill
+                    priority
+                    unoptimized
+                    sizes="(max-width: 1024px) 92vw, 520px"
+                    className="scale-[1.08] object-cover object-[50%_34%]"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.18),transparent_28%,rgba(255,255,255,0.08))]" />
+                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#FBF8F1] via-[#FBF8F1]/74 to-transparent" />
+                </div>
               </div>
 
-              <div className="min-w-0 lg:pl-3">
+              <div className="order-1 min-w-0 lg:order-2 lg:pl-3">
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#A67C32]">Official social entry</p>
                 <h1 className="mt-4 font-display text-[clamp(38px,6vw,64px)] font-semibold leading-[0.98] text-[#171717]">
                   Natural Facial Rejuvenation in Shanghai
@@ -199,6 +258,9 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
                 <p className="mt-5 max-w-xl text-base leading-7 text-[#3B342B] sm:text-lg sm:leading-8">
                   Personalized 9D facial assessment for international patients seeking natural, refined, and
                   non-overfilled results.
+                </p>
+                <p className="mt-3 max-w-xl text-sm font-semibold leading-6 text-[#6B6257]">
+                  Doctor-led 9D facial assessment by Dr. Xiao, founder of the 9D Lifting System™ in Shanghai.
                 </p>
 
                 <div className="mt-7 grid gap-3 sm:max-w-[430px]">
@@ -218,6 +280,10 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
                     <MessageCircle size={20} />
                     WhatsApp Facial Assessment
                   </TrackedWhatsAppLink>
+                  <p className="rounded-md border border-[#E7DBC8] bg-white/70 px-4 py-3 text-xs leading-6 text-[#6B6257]">
+                    For assessment, please send front, side, 45-degree, smile, and neck photos + your age, country, and
+                    main concerns.
+                  </p>
                   <TrackedActionLink
                     href="#real-results"
                     placement="links_hero_results"
@@ -283,6 +349,50 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
           </div>
         </section>
 
+        <section className="px-5 py-10 sm:px-8 lg:py-12">
+          <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.48fr_0.52fr] lg:items-center">
+            <div className="lg:pr-4">
+              <LazyTrustVideo
+                src={methodologyVideoSrc}
+                poster={methodologyPoster}
+                label="9D Method"
+                caption="Doctor-led 9D planning for natural facial rejuvenation."
+                ariaLabel="Dr. Xiao explaining the 9D Lifting System methodology"
+                phoneFrame={isLikelyVerticalVideo(methodologyVideoSrc)}
+              />
+            </div>
+
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#A67C32]">9D Method</p>
+              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
+                A Doctor-Led Approach to Natural Rejuvenation
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-[#6B6257] sm:text-base sm:leading-8">
+                Every face ages differently. Dr. Xiao's 9D Lifting System™ focuses on structure, expression, and
+                personalized planning - helping patients look refreshed without looking overfilled or pulled.
+              </p>
+              <div className="mt-5 grid gap-3">
+                {methodologyTrustPoints.map((item) => (
+                  <div key={item} className="flex items-center gap-3 text-sm font-semibold text-[#3B342B]">
+                    <CheckCircle2 size={18} className="shrink-0 text-[#A67C32]" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <TrackedActionLink
+                href="/procedures/9d-facelift"
+                placement="links_method_video_learn_9d"
+                label="Learn 9D Facelift"
+                trackingQuery={trackingQuery}
+                className="mt-7 inline-flex min-h-[48px] w-full items-center justify-center gap-3 rounded-md border border-[#C9A96E] bg-white px-6 py-3 text-sm font-bold text-[#171717] shadow-[0_12px_30px_rgba(60,42,22,0.07)] transition hover:-translate-y-0.5 hover:bg-[#FFF8EA] sm:w-auto"
+              >
+                Learn 9D Facelift
+                <ArrowRight size={16} className="text-[#A67C32]" />
+              </TrackedActionLink>
+            </div>
+          </div>
+        </section>
+
         <section id="real-results" className="scroll-mt-6 px-5 py-10 sm:px-8 lg:py-12">
           <div className="mx-auto max-w-[1180px]">
             <div className="flex flex-col gap-3 text-center sm:items-center">
@@ -311,12 +421,11 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
                   <div className="p-5">
                     <h3 className="font-display text-xl font-semibold leading-tight text-[#171717]">{item.title}</h3>
                     <div className="mt-3 grid gap-2 text-sm leading-6 text-[#6B6257]">
-                      {item.procedure ? <CaseLine label="Procedure" value={item.procedure} /> : null}
-                      {item.mainConcerns ? <CaseLine label="Concern" value={item.mainConcerns} /> : null}
-                      <CaseLine
-                        label="Result"
-                        value={item.visibleChange || item.description || "Natural-looking facial contour refinement."}
-                      />
+                      <CaseLine label="Age" value={item.age} />
+                      <CaseLine label="Country" value={item.country} />
+                      <CaseLine label="Concern" value={item.concern} />
+                      <CaseLine label="Procedure" value={item.procedure} />
+                      <CaseLine label="Result" value={item.resultSummary} />
                     </div>
                   </div>
                 </article>
@@ -339,40 +448,43 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
         </section>
 
         <section className="border-y border-[#E7DBC8] bg-[#FFFDF8] px-5 py-10 sm:px-8 lg:py-12">
-          <div className="mx-auto max-w-[1180px]">
-            <div className="text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#A67C32]">Online to Shanghai</p>
+          <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[minmax(0,0.64fr)_minmax(280px,0.36fr)] lg:items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#A67C32]">Real Patient Journey</p>
               <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
-                For International Patients
+                From Online Assessment to Arrival in Shanghai
               </h2>
-              <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#6B6257]">
-                Start online. Get assessed by Dr. Xiao. Travel to Shanghai with confidence.
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-[#6B6257] sm:text-base sm:leading-8">
+                For international patients, feeling supported matters. From the first WhatsApp assessment to arrival
+                coordination, clinic scheduling, and in-person consultation, our team helps make the journey clearer and
+                more organized.
               </p>
-            </div>
+              <p className="mt-4 max-w-2xl text-sm font-semibold leading-7 text-[#3B342B]">
+                Online assessment · Travel planning · English-speaking assistance · Recovery support in Shanghai.
+              </p>
 
-            <div className="mt-8 grid gap-6 lg:grid-cols-3">
-              {patientSteps.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <article key={item.step} className="relative flex gap-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#B88A3B] text-sm font-bold text-white">
-                      {item.step}
-                    </span>
-                    <div>
-                      <div className="flex h-12 w-12 items-center justify-center rounded-md border border-[#D8C196] bg-white text-[#A67C32]">
-                        <Icon size={23} strokeWidth={1.6} />
+              <div className="mt-7 grid gap-4 sm:grid-cols-3 lg:max-w-3xl">
+                {patientSteps.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <article key={item.step} className="relative flex gap-3 rounded-lg border border-[#E3D6C2] bg-white/82 p-4 shadow-[0_10px_28px_rgba(60,42,22,0.05)] sm:block">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#B88A3B] text-sm font-bold text-white">
+                        {item.step}
+                      </span>
+                      <div>
+                        <div className="hidden h-11 w-11 items-center justify-center rounded-md border border-[#D8C196] bg-white text-[#A67C32] sm:mt-4 sm:flex">
+                          <Icon size={21} strokeWidth={1.6} />
+                        </div>
+                        <h3 className="font-display text-lg font-semibold leading-tight text-[#171717] sm:mt-4">
+                          {item.title}
+                        </h3>
+                        <p className="mt-2 text-xs leading-5 text-[#6B6257]">{item.description}</p>
                       </div>
-                      <h3 className="mt-4 font-display text-xl font-semibold leading-tight text-[#171717]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-[#6B6257]">{item.description}</p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                    </article>
+                  );
+                })}
+              </div>
 
-            <div className="mt-8 flex justify-center">
               <TrackedWhatsAppLink
                 href={whatsappUrl}
                 placement="links_international_assessment_whatsapp"
@@ -384,12 +496,27 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
                     destination: "whatsapp"
                   })
                 }
-                className="inline-flex min-h-[52px] w-full max-w-[480px] items-center justify-center gap-3 rounded-md bg-[#B88A3B] px-6 py-4 text-sm font-bold text-white shadow-[0_16px_34px_rgba(184,138,59,0.20)] transition hover:-translate-y-0.5 hover:bg-[#A67C32]"
+                className="mt-7 inline-flex min-h-[52px] w-full max-w-[480px] items-center justify-center gap-3 rounded-md bg-[#B88A3B] px-6 py-4 text-sm font-bold text-white shadow-[0_16px_34px_rgba(184,138,59,0.20)] transition hover:-translate-y-0.5 hover:bg-[#A67C32]"
               >
                 <MessageCircle size={18} />
                 Start Online Assessment
                 <ArrowRight size={16} />
               </TrackedWhatsAppLink>
+              <p className="mt-4 max-w-[560px] text-xs leading-6 text-[#6B6257]">
+                Online assessment provides initial guidance only. Final recommendations require in-person medical
+                evaluation.
+              </p>
+            </div>
+
+            <div className="mx-auto w-full max-w-[310px] lg:max-w-[340px]">
+              <LazyTrustVideo
+                src={internationalJourneyVideo}
+                poster={internationalJourneyPoster}
+                label="Real Patient Journey"
+                caption="Arrival support and care coordination for international patients in Shanghai."
+                ariaLabel="International patient arrival and support journey in Shanghai"
+                phoneFrame
+              />
             </div>
           </div>
         </section>
@@ -400,7 +527,7 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
               <h2 className="text-center font-display text-3xl font-semibold leading-tight text-[#171717]">
                 Follow Dr. Xiao
               </h2>
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <div className={followGridClass}>
                 {socialLinks.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -424,6 +551,16 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
                     </a>
                   );
                 })}
+                <TrackedWhatsAppLink
+                  href={whatsappUrl}
+                  placement="links_social_whatsapp"
+                  label="WhatsApp"
+                  className="inline-flex h-12 items-center justify-center gap-3 rounded-md border border-[#B8DDBF] bg-[#F8FFF9] px-5 text-sm font-bold text-[#173B25] transition hover:-translate-y-0.5 hover:border-[#25D366] hover:bg-[#EFFFF3]"
+                >
+                  <MessageCircle size={20} className="text-[#25D366]" />
+                  WhatsApp
+                  <ArrowRight size={15} className="ml-auto text-[#1FAE55]" />
+                </TrackedWhatsAppLink>
               </div>
             </div>
           </section>
@@ -663,17 +800,121 @@ function CaseLine({ label, value }: { label: string; value: string }) {
   );
 }
 
+function LazyTrustVideo({
+  src,
+  poster,
+  label,
+  caption,
+  ariaLabel,
+  phoneFrame = false
+}: {
+  src: string;
+  poster: string;
+  label: string;
+  caption: string;
+  ariaLabel: string;
+  phoneFrame?: boolean;
+}) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          videoRef.current?.play().catch(() => undefined);
+          return;
+        }
+
+        videoRef.current?.pause();
+      },
+      { rootMargin: "220px 0px", threshold: 0.25 }
+    );
+
+    observer.observe(wrapper);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    videoRef.current?.play().catch(() => undefined);
+  }, [shouldLoad]);
+
+  const frameClass = phoneFrame
+    ? "mx-auto w-full max-w-[300px] rounded-[30px] border-[10px] border-[#171717] bg-[#171717] p-1 shadow-[0_26px_70px_rgba(60,42,22,0.18)]"
+    : "w-full rounded-xl border border-[#E3D6C2] bg-white p-2 shadow-[0_22px_60px_rgba(60,42,22,0.12)]";
+  const mediaClass = phoneFrame
+    ? "aspect-[9/16] w-full overflow-hidden rounded-[20px] bg-[#1B1814]"
+    : "aspect-video w-full overflow-hidden rounded-lg bg-[#1B1814]";
+
+  return (
+    <div ref={wrapperRef} className={frameClass}>
+      <div
+        className={`relative ${mediaClass}`}
+        style={{
+          aspectRatio: phoneFrame ? "9 / 16" : "16 / 9",
+          overflow: "hidden",
+          position: "relative"
+        }}
+      >
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full max-w-full object-cover"
+          style={{
+            display: "block",
+            height: "100%",
+            inset: 0,
+            maxWidth: "100%",
+            objectFit: "cover",
+            position: "absolute",
+            width: "100%"
+          }}
+          src={shouldLoad ? src : undefined}
+          poster={poster}
+          muted
+          autoPlay
+          loop
+          playsInline
+          preload="none"
+          aria-label={ariaLabel}
+        >
+          {shouldLoad ? <source src={src} type={getVideoMimeType(src)} /> : null}
+        </video>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 via-black/20 to-transparent px-4 pb-4 pt-16 text-white">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#D8BD80]">{label}</p>
+          <p className="mt-2 text-xs font-semibold leading-5">{caption}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function buildPreviewCases(items: GalleryItem[]) {
   const caseItems = [...items]
     .filter((item) => item.image && (!item.displayRole || item.displayRole === "case"))
     .sort((a, b) => a.sortOrder - b.sortOrder)
     .slice(0, 3);
 
-  return (caseItems.length ? caseItems : []).map((item, index) => ({
-    ...item,
-    title: item.caseLabel || item.title || `9D Facelift Case ${index + 1}`,
-    alt: item.alt || item.title || `9D Facelift case preview ${index + 1}`
-  }));
+  return (caseItems.length ? caseItems : []).map((item, index): PreviewCase => {
+    const fallback = fallbackPreviewCases[index % fallbackPreviewCases.length];
+
+    return {
+      ...item,
+      title: item.caseLabel || item.title || `9D Facelift Case ${index + 1}`,
+      alt: item.alt || item.title || `9D Facelift case preview ${index + 1}`,
+      age: item.age || fallback.age,
+      country: item.country || fallback.country,
+      concern: item.mainConcerns || fallback.concern,
+      procedure: item.procedure || fallback.procedure,
+      resultSummary: item.visibleChange || item.description || fallback.resultSummary
+    };
+  });
 }
 
 function buildSocialLinks(settings: SiteSettings) {
@@ -686,14 +927,14 @@ function buildSocialLinks(settings: SiteSettings) {
   }> = [
     {
       label: "Instagram",
-      href: normalizeSocialUrl(settings.instagramUrl) || "https://www.instagram.com/dr.xiao9d/",
+      href: normalizeSocialUrl(settings.instagramUrl) || instagramFallbackUrl,
       icon: Instagram,
       color: "text-[#E4405F]",
       placement: "links_social_instagram"
     },
     {
       label: "Facebook",
-      href: normalizeSocialUrl(settings.facebookUrl),
+      href: normalizeSocialUrl(settings.facebookUrl) || facebookFallbackUrl,
       icon: Facebook,
       color: "text-[#1877F2]",
       placement: "links_social_facebook"
@@ -714,6 +955,17 @@ function normalizeSocialUrl(value: string) {
   const trimmed = value?.trim();
   if (!trimmed || trimmed === "#contact" || trimmed === "#") return "";
   return /^https?:\/\//i.test(trimmed) ? trimmed : "";
+}
+
+function isLikelyVerticalVideo(src: string) {
+  return /vertical|portrait|9x16|reel|short/i.test(src);
+}
+
+function getVideoMimeType(src: string) {
+  const cleanSrc = src.split("?")[0]?.toLowerCase() || "";
+  if (cleanSrc.endsWith(".webm")) return "video/webm";
+  if (cleanSrc.endsWith(".mov")) return "video/quicktime";
+  return "video/mp4";
 }
 
 function withTrackingQuery(href: string, queryString: string) {
