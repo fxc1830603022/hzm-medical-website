@@ -199,10 +199,8 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
       : followActionCount === 3
         ? "mt-6 grid gap-3 sm:grid-cols-3"
         : "mt-6 grid gap-3 sm:grid-cols-2";
-  const methodologyVideoSrc = safeSettings.methodologyVideoUrl?.trim() || methodologyFallbackVideo;
-  const methodologyPoster = safeSettings.methodologyVideoUrl?.trim()
-    ? safeSettings.methodologyVideoPoster || methodologyFallbackPoster
-    : methodologyFallbackPoster;
+  const methodologyVideoSrc = methodologyFallbackVideo;
+  const methodologyPoster = methodologyFallbackPoster;
 
   useEffect(() => {
     setTrackingQuery(window.location.search);
@@ -358,7 +356,7 @@ export function SocialLinksPageView({ settings, galleryItems }: SocialLinksPageV
                 label="9D Method"
                 caption="Doctor-led 9D planning for natural facial rejuvenation."
                 ariaLabel="Dr. Xiao explaining the 9D Lifting System methodology"
-                phoneFrame={isLikelyVerticalVideo(methodologyVideoSrc)}
+                phoneFrame
               />
             </div>
 
@@ -955,10 +953,6 @@ function normalizeSocialUrl(value: string) {
   const trimmed = value?.trim();
   if (!trimmed || trimmed === "#contact" || trimmed === "#") return "";
   return /^https?:\/\//i.test(trimmed) ? trimmed : "";
-}
-
-function isLikelyVerticalVideo(src: string) {
-  return /vertical|portrait|9x16|reel|short/i.test(src);
 }
 
 function getVideoMimeType(src: string) {
