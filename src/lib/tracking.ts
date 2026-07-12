@@ -16,7 +16,7 @@ export type StoredTraffic = {
   lastTouch: TrafficSource;
 };
 
-export type WhatsAppGreetingSource = "instagram" | "facebook" | "google";
+export type WhatsAppGreetingSource = "instagram" | "facebook" | "facebook_ads" | "google";
 
 export type WhatsAppSourceGreetings = Partial<Record<WhatsAppGreetingSource, string>>;
 
@@ -50,6 +50,8 @@ const defaultWhatsAppSourceGreetings: Record<WhatsAppGreetingSource, string> = {
     "Hello, I came across you on Instagram and am very interested in the 9D Lifting procedure; I would like to know more details.",
   facebook:
     "Hello, I came across you on Facebook and am very interested in the 9D Lifting procedure; I would like to know more details.",
+  facebook_ads:
+    "您好，我是通过 Facebook 广告了解到您，对肖医生的“9D 面部评估”非常感兴趣，希望能了解更多详情。",
   google:
     "Hello, I came across you on Google and am very interested in the 9D Lifting procedure; I would like to know more details."
 };
@@ -63,6 +65,7 @@ export function configureWhatsAppSourceGreetings(messages?: WhatsAppSourceGreeti
     ...defaultWhatsAppSourceGreetings,
     instagram: messages?.instagram?.trim() || defaultWhatsAppSourceGreetings.instagram,
     facebook: messages?.facebook?.trim() || defaultWhatsAppSourceGreetings.facebook,
+    facebook_ads: messages?.facebook_ads?.trim() || defaultWhatsAppSourceGreetings.facebook_ads,
     google: messages?.google?.trim() || defaultWhatsAppSourceGreetings.google
   };
 }
@@ -273,7 +276,13 @@ function getCurrentUrlSocialSource(): WhatsAppGreetingSource | "" {
 
   const params = new URL(window.location.href).searchParams;
   const source = normalizeSource(params.get("utm_source") || "");
+  const medium = params.get("utm_medium") || "";
+  const campaign = params.get("utm_campaign") || "";
+  const content = params.get("utm_content") || "";
 
+  if (source === "facebook_ads" || (source === "facebook" && isFacebookAdsTraffic(medium, campaign, content))) {
+    return "facebook_ads";
+  }
   if (source === "instagram") return "instagram";
   if (source === "facebook") return "facebook";
   if (source === "google" || params.has("gclid")) return "google";
@@ -283,7 +292,13 @@ function getCurrentUrlSocialSource(): WhatsAppGreetingSource | "" {
 function getStoredSocialSource(): WhatsAppGreetingSource | "" {
   const stored = readStoredTraffic();
   const source = normalizeSource(stored?.lastTouch?.source || stored?.firstTouch?.source || "");
+  const medium = stored?.lastTouch?.medium || stored?.firstTouch?.medium || "";
+  const campaign = stored?.lastTouch?.campaign || stored?.firstTouch?.campaign || "";
+  const content = stored?.lastTouch?.content || stored?.firstTouch?.content || "";
 
+  if (source === "facebook_ads" || (source === "facebook" && isFacebookAdsTraffic(medium, campaign, content))) {
+    return "facebook_ads";
+  }
   if (source === "instagram") return "instagram";
   if (source === "facebook") return "facebook";
   if (source === "google") return "google";
@@ -330,7 +345,15 @@ function normalizeSource(source: string) {
   const value = source.trim().toLowerCase();
   if (value === "ig") return "instagram";
   if (value === "fb") return "facebook";
+  if (value === "fb_ads" || value === "facebook_ad" || value === "facebook_ads" || value === "meta_ads") {
+    return "facebook_ads";
+  }
   return value || "direct";
+}
+
+function isFacebookAdsTraffic(medium: string, campaign: string, content: string) {
+  const values = [medium, campaign, content].map((value) => value.trim().toLowerCase());
+  return values.some((value) => value.includes("paid") || value.includes("ad"));
 }
 
 declare global {

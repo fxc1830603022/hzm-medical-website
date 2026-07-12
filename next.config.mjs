@@ -13,6 +13,12 @@ const nextConfig = {
         permanent: false
       },
       {
+        source: "/ads",
+        destination:
+          "/links?utm_source=facebook&utm_medium=paid_social&utm_campaign=fb_ads_public_profile&utm_content=ads_shortlink",
+        permanent: false
+      },
+      {
         source: "/google",
         destination:
           "/procedures/9d-facelift?utm_source=google&utm_medium=cpc&utm_campaign=google_ads&utm_content=9d_facelift",
