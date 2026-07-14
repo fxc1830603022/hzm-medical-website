@@ -14,11 +14,11 @@ import {
 export const dynamic = "force-dynamic";
 
 const pageSeo = {
-  title: "Natural Facial Rejuvenation by Dr. Xiao",
+  title: 'Natural Rejuvenation Without Looking "Done" | Dr. Xiao 9D Facelift',
   description:
-    "Natural 9D Facelift assessment by Dr. Xiao in Shanghai. Send photos on WhatsApp for private online guidance before treatment planning.",
+    "Premium doctor-led 9D Facelift assessment by Dr. Xiao in Shanghai for natural-looking rejuvenation and private WhatsApp photo review.",
   path: "/ads/facebook-9d-facelift",
-  image: "/images/home-hero-dr-xiao-consultation-bg.webp"
+  image: "/images/doctor-hero-door-consultation.png"
 };
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export default async function FacebookAdsLandingPage() {
             image: pageSeo.image
           }),
           medicalProcedureJsonLd({
-            name: "Natural 9D Facelift by Dr. Xiao",
+            name: 'Natural 9D Facelift Without Looking "Done"',
             description: pageSeo.description,
             path: pageSeo.path,
             image: pageSeo.image
