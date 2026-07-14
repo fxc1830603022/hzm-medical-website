@@ -46,7 +46,7 @@ export function TrackedWhatsAppLink({
   }
 
   return (
-    <a href={href} target={target} rel={rel} onClick={handleClick} {...props}>
+    <a href={href} target={target} rel={rel} onClick={handleClick} data-whatsapp-placement={placement} {...props}>
       {children}
     </a>
   );

@@ -16,7 +16,13 @@ export type StoredTraffic = {
   lastTouch: TrafficSource;
 };
 
-export type WhatsAppGreetingSource = "instagram" | "facebook" | "facebook_ads" | "google";
+export type WhatsAppGreetingSource =
+  | "instagram"
+  | "facebook"
+  | "facebook_ads"
+  | "google"
+  | "google_ads_landing"
+  | "facebook_ads_landing";
 
 export type WhatsAppSourceGreetings = Partial<Record<WhatsAppGreetingSource, string>>;
 
@@ -45,15 +51,23 @@ export type LinksPageActionPayload = {
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
+const facebookAdsPublicProfileGreeting =
+  "\u60a8\u597d\uff0c\u6211\u662f\u901a\u8fc7 Facebook \u5e7f\u544a\u4e86\u89e3\u5230\u60a8\uff0c\u5bf9\u8096\u533b\u751f\u7684\u201c9D \u9762\u90e8\u8bc4\u4f30\u201d\u975e\u5e38\u611f\u5174\u8da3\uff0c\u5e0c\u671b\u80fd\u4e86\u89e3\u66f4\u591a\u8be6\u60c5\u3002";
+const googleAdsLandingGreeting =
+  "Hello, I found Dr. Xiao 9D Facelift through Google Ads. I would like to send my photos for a private 9D Facelift assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+const facebookAdsLandingGreeting =
+  "Hello, I saw Dr. Xiao 9D Facelift on Facebook and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+
 const defaultWhatsAppSourceGreetings: Record<WhatsAppGreetingSource, string> = {
   instagram:
     "Hello, I came across you on Instagram and am very interested in the 9D Lifting procedure; I would like to know more details.",
   facebook:
     "Hello, I came across you on Facebook and am very interested in the 9D Lifting procedure; I would like to know more details.",
-  facebook_ads:
-    "您好，我是通过 Facebook 广告了解到您，对肖医生的“9D 面部评估”非常感兴趣，希望能了解更多详情。",
+  facebook_ads: facebookAdsPublicProfileGreeting,
   google:
-    "Hello, I came across you on Google and am very interested in the 9D Lifting procedure; I would like to know more details."
+    "Hello, I came across you on Google and am very interested in the 9D Lifting procedure; I would like to know more details.",
+  google_ads_landing: googleAdsLandingGreeting,
+  facebook_ads_landing: facebookAdsLandingGreeting
 };
 
 let configuredWhatsAppSourceGreetings: Record<WhatsAppGreetingSource, string> = {
@@ -66,7 +80,10 @@ export function configureWhatsAppSourceGreetings(messages?: WhatsAppSourceGreeti
     instagram: messages?.instagram?.trim() || defaultWhatsAppSourceGreetings.instagram,
     facebook: messages?.facebook?.trim() || defaultWhatsAppSourceGreetings.facebook,
     facebook_ads: messages?.facebook_ads?.trim() || defaultWhatsAppSourceGreetings.facebook_ads,
-    google: messages?.google?.trim() || defaultWhatsAppSourceGreetings.google
+    google: messages?.google?.trim() || defaultWhatsAppSourceGreetings.google,
+    google_ads_landing: messages?.google_ads_landing?.trim() || defaultWhatsAppSourceGreetings.google_ads_landing,
+    facebook_ads_landing:
+      messages?.facebook_ads_landing?.trim() || defaultWhatsAppSourceGreetings.facebook_ads_landing
   };
 }
 
@@ -79,18 +96,27 @@ export function captureTrafficSource() {
   const hasClickId = params.has("fbclid") || params.has("gclid");
   const existing = readStoredTraffic();
   const detectedSource = detectSource(document.referrer);
+  const adLandingSource = getAdLandingSourceFromPath(url.pathname);
 
-  if (!hasUtm && !hasClickId && existing && detectedSource === "direct") return;
+  if (!hasUtm && !hasClickId && existing && detectedSource === "direct" && !adLandingSource) return;
 
-  const source = normalizeSource(params.get("utm_source") || detectedSource);
-  const medium = params.get("utm_medium") || (source === "direct" ? "none" : "referral");
+  const campaign = params.get("utm_campaign") || "";
+  const content = params.get("utm_content") || "";
+  let source = normalizeSource(adLandingSource || params.get("utm_source") || detectedSource);
+  const medium =
+    params.get("utm_medium") || (adLandingSource ? "paid_landing" : source === "direct" ? "none" : "referral");
+
+  if (source === "facebook" && isFacebookAdsTraffic(medium, campaign, content)) {
+    source = "facebook_ads";
+  }
+
   const current: TrafficSource = {
     landingPage: `${window.location.pathname}${window.location.search}`,
     referrer: document.referrer || "",
     source,
     medium,
-    campaign: params.get("utm_campaign") || "",
-    content: params.get("utm_content") || "",
+    campaign,
+    content,
     term: params.get("utm_term") || "",
     fbclid: params.get("fbclid") || "",
     gclid: params.get("gclid") || "",
@@ -160,16 +186,21 @@ export function getSourceAwareWhatsAppUrl(whatsappUrl: string) {
 export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
   if (typeof window === "undefined") return;
 
+  const adLandingSource = getAdLandingSourceFromPath(window.location.pathname);
+  const trafficSource = adLandingSource || payload.lastTouch?.source || payload.firstTouch?.source || "unknown";
+  const trafficMedium = payload.lastTouch?.medium || payload.firstTouch?.medium || "";
+  const campaign = payload.lastTouch?.campaign || payload.firstTouch?.campaign || "";
+  const content = payload.lastTouch?.content || payload.firstTouch?.content || "";
   const eventParams = {
     event_category: "lead",
     event_label: payload.placement,
     method: "whatsapp",
     placement: payload.placement,
     page_path: payload.page,
-    traffic_source: payload.lastTouch?.source || payload.firstTouch?.source || "unknown",
-    traffic_medium: payload.lastTouch?.medium || payload.firstTouch?.medium || "",
-    campaign: payload.lastTouch?.campaign || payload.firstTouch?.campaign || "",
-    content: payload.lastTouch?.content || payload.firstTouch?.content || ""
+    traffic_source: trafficSource,
+    traffic_medium: trafficMedium,
+    campaign,
+    content
   };
 
   sendGaEvent("whatsapp_click", eventParams);
@@ -274,12 +305,18 @@ function getCurrentOrStoredSocialSource(): WhatsAppGreetingSource | "" {
 function getCurrentUrlSocialSource(): WhatsAppGreetingSource | "" {
   if (typeof window === "undefined") return "";
 
-  const params = new URL(window.location.href).searchParams;
+  const url = new URL(window.location.href);
+  const adLandingSource = getAdLandingSourceFromPath(url.pathname);
+  if (adLandingSource) return adLandingSource;
+
+  const params = url.searchParams;
   const source = normalizeSource(params.get("utm_source") || "");
   const medium = params.get("utm_medium") || "";
   const campaign = params.get("utm_campaign") || "";
   const content = params.get("utm_content") || "";
 
+  if (source === "google_ads_landing") return "google_ads_landing";
+  if (source === "facebook_ads_landing") return "facebook_ads_landing";
   if (source === "facebook_ads" || (source === "facebook" && isFacebookAdsTraffic(medium, campaign, content))) {
     return "facebook_ads";
   }
@@ -296,6 +333,8 @@ function getStoredSocialSource(): WhatsAppGreetingSource | "" {
   const campaign = stored?.lastTouch?.campaign || stored?.firstTouch?.campaign || "";
   const content = stored?.lastTouch?.content || stored?.firstTouch?.content || "";
 
+  if (source === "google_ads_landing") return "google_ads_landing";
+  if (source === "facebook_ads_landing") return "facebook_ads_landing";
   if (source === "facebook_ads" || (source === "facebook" && isFacebookAdsTraffic(medium, campaign, content))) {
     return "facebook_ads";
   }
@@ -345,10 +384,29 @@ function normalizeSource(source: string) {
   const value = source.trim().toLowerCase();
   if (value === "ig") return "instagram";
   if (value === "fb") return "facebook";
+  if (value === "google_ad" || value === "google_ads") return "google";
+  if (value === "google_ads_landing" || value === "google-ad-landing") return "google_ads_landing";
+  if (
+    value === "fb_ads_landing" ||
+    value === "facebook_ads_landing" ||
+    value === "facebook-ad-landing" ||
+    value === "meta_ads_landing"
+  ) {
+    return "facebook_ads_landing";
+  }
   if (value === "fb_ads" || value === "facebook_ad" || value === "facebook_ads" || value === "meta_ads") {
     return "facebook_ads";
   }
   return value || "direct";
+}
+
+function getAdLandingSourceFromPath(
+  pathname: string
+): Extract<WhatsAppGreetingSource, "google_ads_landing" | "facebook_ads_landing"> | "" {
+  const normalizedPath = pathname.replace(/\/$/, "");
+  if (normalizedPath === "/ads/google-9d-facelift") return "google_ads_landing";
+  if (normalizedPath === "/ads/facebook-9d-facelift") return "facebook_ads_landing";
+  return "";
 }
 
 function isFacebookAdsTraffic(medium: string, campaign: string, content: string) {
