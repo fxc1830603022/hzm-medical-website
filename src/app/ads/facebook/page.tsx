@@ -14,11 +14,11 @@ import {
 export const dynamic = "force-dynamic";
 
 const pageSeo = {
-  title: "9D Facelift in Shanghai by Dr. Xiao | Online Assessment",
+  title: 'Natural Rejuvenation Without Looking "Done" | Dr. Xiao 9D Facelift',
   description:
-    "Learn about Dr. Xiao's doctor-led 9D Facelift in Shanghai, natural-looking patient results, recovery, international patient planning, and private WhatsApp photo assessment.",
-  path: "/ads/google-9d-facelift",
-  image: "/images/home-hero-dr-xiao-consultation-bg.webp"
+    "Premium doctor-led 9D Facelift assessment by Dr. Xiao in Shanghai for natural-looking rejuvenation and private WhatsApp photo review.",
+  path: "/ads/facebook",
+  image: "/images/facebook-ads-hero-dr-xiao-portrait.webp"
 };
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function GoogleAdsLandingPage() {
+export default async function FacebookAdsShortLandingPage() {
   const [settings, galleryItems] = await Promise.all([getSiteSettings(), getGalleryItems()]);
 
   return (
@@ -59,14 +59,14 @@ export default async function GoogleAdsLandingPage() {
             image: pageSeo.image
           }),
           medicalProcedureJsonLd({
-            name: "9D Facelift in Shanghai by Dr. Xiao",
+            name: 'Natural 9D Facelift Without Looking "Done"',
             description: pageSeo.description,
             path: pageSeo.path,
             image: pageSeo.image
           })
         ]}
       />
-      <AdsLandingPageView variant="google" settings={settings} galleryItems={galleryItems} />
+      <AdsLandingPageView variant="facebook" settings={settings} galleryItems={galleryItems} />
     </>
   );
 }

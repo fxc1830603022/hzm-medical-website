@@ -54,7 +54,7 @@ const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm
 const facebookAdsPublicProfileGreeting =
   "\u60a8\u597d\uff0c\u6211\u662f\u901a\u8fc7 Facebook \u5e7f\u544a\u4e86\u89e3\u5230\u60a8\uff0c\u5bf9\u8096\u533b\u751f\u7684\u201c9D \u9762\u90e8\u8bc4\u4f30\u201d\u975e\u5e38\u611f\u5174\u8da3\uff0c\u5e0c\u671b\u80fd\u4e86\u89e3\u66f4\u591a\u8be6\u60c5\u3002";
 const googleAdsLandingGreeting =
-  "Hello, I found Dr. Xiao 9D Facelift through Google Ads. I would like to send my photos for a private 9D Facelift assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+  "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
 const facebookAdsLandingGreeting =
   "Hello, I saw Dr. Xiao 9D Facelift on Facebook and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
 
@@ -404,6 +404,7 @@ function getAdLandingSourceFromPath(
   pathname: string
 ): Extract<WhatsAppGreetingSource, "google_ads_landing" | "facebook_ads_landing"> | "" {
   const normalizedPath = pathname.replace(/\/$/, "");
+  if (normalizedPath === "/ads/facebook") return "facebook_ads_landing";
   if (normalizedPath === "/ads/google-9d-facelift") return "google_ads_landing";
   if (normalizedPath === "/ads/facebook-9d-facelift") return "facebook_ads_landing";
   return "";

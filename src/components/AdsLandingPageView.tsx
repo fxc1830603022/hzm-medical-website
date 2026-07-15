@@ -84,7 +84,7 @@ const facebookAdsWhatsAppNumber =
   process.env.NEXT_PUBLIC_FACEBOOK_ADS_WHATSAPP_NUMBER?.trim() || "+601161325783";
 
 const googleWhatsAppMessage =
-  "Hello, I found Dr. Xiao 9D Facelift through Google Ads. I would like to send my photos for a private 9D Facelift assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+  "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
 
 const facebookWhatsAppMessage =
   "Hello, I saw Dr. Xiao 9D Facelift on Facebook and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
@@ -134,29 +134,49 @@ const planCards = [
 
 const faqs = [
   {
+    question: "What is 9D Facelift?",
+    answer:
+      "9D Facelift is Dr. Xiao's doctor-led facial rejuvenation planning system. It reviews facial anatomy, aging pattern, tissue descent, skin laxity, previous treatments, recovery expectations, and natural expression before deciding which treatment direction may be appropriate."
+  },
+  {
     question: "Is 9D Facelift the same as deep plane facelift?",
     answer:
       "No. 9D is Dr. Xiao's planning system. Deep plane technique may be recommended when deeper structural support is needed."
   },
   {
-    question: "Can I be assessed online first?",
+    question: "Can international patients start with an online assessment?",
     answer:
-      "Yes. Online assessment can provide initial guidance from photos. Final recommendations require in-person medical evaluation."
+      "Yes. International patients can begin by sending photos and key concerns through WhatsApp. Online assessment provides preliminary direction before travel planning, while the final treatment recommendation requires in-person medical evaluation in Shanghai."
   },
   {
     question: "What photos should I send?",
     answer:
-      "Front, side, 45-degree, smile, and neck photos, plus age, country, main concerns, and previous treatments."
-  },
-  {
-    question: "Will I look different?",
-    answer:
-      "The goal is natural rejuvenation, preserving recognizable expression rather than creating an overfilled or pulled look."
+      "Please send front, side, 45-degree, smile, and neck photos, together with your age, country, main concerns, previous treatments, and any relevant medical considerations."
   },
   {
     question: "Am I too young for facelift?",
     answer:
-      "Suitability depends on anatomy, laxity, skin quality, and treatment history rather than age alone."
+      "Suitability depends on facial anatomy, laxity, skin quality, aging pattern, previous treatments, and goals rather than age alone. Some patients may need a lighter plan or may be advised to wait."
+  },
+  {
+    question: "Will I look different or overdone?",
+    answer:
+      "The goal is natural rejuvenation, preserving recognizable expression rather than creating an overfilled or pulled look."
+  },
+  {
+    question: "How is the treatment cost determined?",
+    answer:
+      "The cost depends on facial anatomy, degree of aging, procedure depth, treatment combination, previous procedures, and individual planning. A preliminary range may be discussed after photo assessment, while the final plan requires medical evaluation."
+  },
+  {
+    question: "How long should international patients plan to stay in Shanghai?",
+    answer:
+      "The recommended stay depends on the selected procedure, recovery progress, follow-up schedule, and individual health considerations. The team can provide initial planning guidance after reviewing your case."
+  },
+  {
+    question: "What are the risks?",
+    answer:
+      "All surgery has risks, including swelling, bruising, scarring, asymmetry, nerve-related concerns, infection, delayed healing, or results that differ from expectations. Individual risk discussion requires medical evaluation."
   },
   {
     question: "How do I start?",
@@ -267,18 +287,110 @@ const facebookAfterPhotosSteps = [
   }
 ];
 
+const whatIs9dTags = ["Facial Anatomy", "Aging Pattern", "Personalized Surgical Planning"];
+
+const googleInternationalJourneySteps = [
+  {
+    number: "01",
+    title: "Send Photos",
+    description: "Send front, side, 45-degree, smile, and neck photos with your concerns and previous treatments."
+  },
+  {
+    number: "02",
+    title: "Receive Preliminary Guidance",
+    description: "The team reviews your case and provides initial direction before travel planning."
+  },
+  {
+    number: "03",
+    title: "Plan Your Shanghai Visit",
+    description: "Receive guidance on consultation timing, expected arrangements, and preparation steps."
+  },
+  {
+    number: "04",
+    title: "In-Person Medical Evaluation",
+    description: "Dr. Xiao confirms the final recommendation after an in-person consultation."
+  }
+];
+
+const googleInternationalSupportPoints = [
+  "Online Assessment",
+  "Travel Planning Guidance",
+  "Arrival Coordination",
+  "English-Speaking Assistance",
+  "Recovery Support"
+];
+
+const recoveryTimeline = [
+  {
+    period: "Day 1-3",
+    description: "Early swelling, tightness, bruising, and rest are expected after surgery."
+  },
+  {
+    period: "Week 1",
+    description: "Incision care and early follow-up are important during the initial recovery period."
+  },
+  {
+    period: "Week 2-4",
+    description: "Swelling usually continues to improve, although social recovery varies between patients."
+  },
+  {
+    period: "Month 2-3",
+    description: "Facial contours may continue to soften and appear more natural."
+  },
+  {
+    period: "Long-Term",
+    description: "Final refinement and scar maturation may continue over several months."
+  }
+];
+
+const recoverySafetyCards = [
+  {
+    title: "Nerve Safety Planning",
+    description: "Careful anatomical planning is required when deeper structural work is considered.",
+    icon: ShieldCheck
+  },
+  {
+    title: "Incision and Scar Strategy",
+    description: "Incision placement depends on anatomy, hairline, skin laxity, and the selected procedure.",
+    icon: ClipboardCheck
+  },
+  {
+    title: "Realistic Expectations",
+    description: "All surgery has risks, and recovery, scars, swelling, and outcomes vary between patients.",
+    icon: BadgeCheck
+  }
+];
+
+const googleAfterPhotosSteps = [
+  {
+    number: "01",
+    title: "Private Photo Review",
+    description: "Your facial photos, age, concerns, previous treatments, and goals are reviewed for preliminary guidance."
+  },
+  {
+    number: "02",
+    title: "Preliminary Plan Direction",
+    description: "The team explains whether 9D Facelift, a deeper approach, a lighter plan, or waiting may be appropriate to discuss."
+  },
+  {
+    number: "03",
+    title: "Next-Step Guidance",
+    description: "Receive guidance on consultation timing, Shanghai travel planning, and in-person doctor evaluation."
+  }
+];
+
 const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
   google: {
     path: "/ads/google-9d-facelift",
-    eyebrow: "Doctor-led 9D Facelift",
+    eyebrow: "9D Facelift in Shanghai",
     title: "9D Facelift in Shanghai by Dr. Xiao",
     titleLines: ["9D Facelift", "in Shanghai", "by Dr. Xiao"],
     intro:
-      "Doctor-led facial rejuvenation for patients seeking natural, refined, and non-overfilled results.",
+      "Natural facial rejuvenation without the overfilled or pulled look.",
     doctorLine: "Founder of the 9D Lifting System in Shanghai. Personalized facial planning by Dr. Xiao.",
-    heroImage: "/images/dr-xiao-links-hero-portrait.webp",
-    heroAlt: "Dr. Xiao Zhongye, founder of the 9D Lifting System in Shanghai",
-    heroImageMode: "portrait",
+    heroImage: "/images/home-hero-dr-xiao-consultation-bg.webp",
+    heroAlt: "Dr. Xiao reviewing facial structure during a private consultation in Shanghai",
+    heroImageMode: "wide",
     primaryCta: "Start WhatsApp Assessment",
     secondaryCta: "View Natural Results",
     whatsappMessage: googleWhatsAppMessage,
@@ -288,14 +400,15 @@ const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
       { title: "Natural-Looking", description: "Results", icon: Sparkles },
       { title: "International", description: "Patients Welcome", icon: Globe2 }
     ],
-    fitTitle: "Are You Looking for a Natural Facelift Solution?",
+    fitTitle: "Are You Searching for a Natural Facelift Solution?",
     fitSubtitle: "You may be suitable if you notice:",
     fitItems: [
       { title: "Jawline softening", icon: Sparkles },
       { title: "Early jowls", icon: UserRoundCheck },
+      { title: "Lower-face sagging", icon: Layers3 },
       { title: "Nasolabial folds", icon: BadgeCheck },
-      { title: "Neck appearance", icon: ShieldCheck },
-      { title: "Tired appearance", icon: Stethoscope }
+      { title: "Neck laxity", icon: ShieldCheck },
+      { title: "Tired facial appearance", icon: Stethoscope }
     ],
     differenceTitle: "What Makes 9D Facelift Different?",
     differenceItems: [
@@ -310,8 +423,8 @@ const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
         icon: Stethoscope
       },
       {
-        title: "Customized Depth Planning",
-        description: "The plan is adapted to facial anatomy instead of a single template.",
+        title: "Customized Depth and Incision Planning",
+        description: "The surgical direction and incision strategy depend on anatomy and procedure needs.",
         icon: ClipboardCheck
       },
       {
@@ -351,8 +464,9 @@ const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
       }
     ],
     finalTitle: "Find Out If 9D Facelift Fits Your Face",
-    finalDescription: "Start with a private WhatsApp assessment before making travel plans.",
-    finalButton: "Start Google Ads Assessment"
+    finalDescription:
+      "Send your photos, age, country, main concerns, and previous treatments for a private preliminary assessment before planning your visit to Shanghai.",
+    finalButton: "Send Photos on WhatsApp"
   },
   facebook: {
     path: "/ads/facebook-9d-facelift",
@@ -362,9 +476,9 @@ const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
     intro:
       "Not overfilled. Not pulled. Still yourself. 9D Facelift is designed for patients who want a refreshed lower-face and neck appearance while preserving natural expression.",
     doctorLine: "Doctor-led 9D facial assessment by Dr. Xiao, founder of the 9D Lifting System in Shanghai.",
-    heroImage: "/images/home-hero-dr-xiao-consultation-bg.webp",
-    heroAlt: "Dr. Xiao speaking with an international patient in consultation",
-    heroImageMode: "wide",
+    heroImage: "/images/facebook-ads-hero-dr-xiao-portrait.webp",
+    heroAlt: "Dr. Xiao Zhongye portrait in a white coat for private 9D facial assessment",
+    heroImageMode: "portrait",
     primaryCta: "Send Photos on WhatsApp",
     secondaryCta: "View Results",
     whatsappMessage: facebookWhatsAppMessage,
@@ -475,13 +589,17 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
       <main>
         <HeroSection config={config} whatsappUrl={whatsappUrl} />
         <TrustStrip items={config.trustItems} />
+        <WhatIs9DSection whatsappUrl={whatsappUrl} />
+        <GoogleMethodVideoSection whatsappUrl={whatsappUrl} />
         <FitCheckSection config={config} whatsappUrl={whatsappUrl} />
         <DifferenceSection config={config} />
         <ResultsSection title={config.resultsTitle} results={resultCards} trackingQuery={trackingQuery} />
         <DoctorAuthoritySection />
-        <ProcessSection whatsappUrl={whatsappUrl} />
+        <GoogleInternationalJourneySection whatsappUrl={whatsappUrl} />
         <PlanFitSection whatsappUrl={whatsappUrl} />
+        <RecoverySafetySection />
         <FaqSection />
+        <AfterPhotosSection whatsappUrl={whatsappUrl} />
         <FinalCtaSection config={config} whatsappUrl={whatsappUrl} />
       </main>
       <CompactFooter />
@@ -529,13 +647,16 @@ function FacebookHeroV2({ config, whatsappUrl }: { config: PageConfig; whatsappU
   return (
     <section className="relative isolate overflow-hidden border-b border-[#E5D8C4] bg-[#F8F4EE]">
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(120deg,rgba(255,255,255,0.98),rgba(248,244,238,0.82)_55%,rgba(224,210,188,0.32))]" />
-      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:py-12">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_0.82fr] lg:items-center lg:px-8 lg:py-12">
         <div className="min-w-0">
           <p className="text-xs font-bold uppercase tracking-[0.26em] text-[#B89A5A]">Facebook / Instagram assessment</p>
           <h1 className="mt-4 font-display text-[38px] font-semibold leading-[1.02] text-[#1C1C1C] sm:text-[60px] lg:text-[70px]">
             <span className="block">Natural</span>
             <span className="block">Rejuvenation.</span>
-            <span className="block text-[#7C6337]">Without Looking &quot;Done&quot;.</span>
+            <span className="block text-[#7C6337]">
+              <span className="block sm:inline">Without Looking </span>
+              <span className="block sm:inline">&quot;Done&quot;.</span>
+            </span>
           </h1>
           <p className="mt-5 max-w-[560px] text-base leading-8 text-[#3F3831] sm:text-lg">
             Doctor-led 9D facial assessment for patients who want a refreshed lower-face and neck appearance while
@@ -556,7 +677,8 @@ function FacebookHeroV2({ config, whatsappUrl }: { config: PageConfig; whatsappU
               className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#1C1C1C] px-5 text-sm font-bold text-white shadow-[0_18px_44px_rgba(28,28,28,0.22)] transition hover:-translate-y-0.5 hover:bg-[#2A2520] sm:w-auto"
             >
               <MessageCircle className="h-5 w-5 text-[#25D366]" aria-hidden="true" />
-              Send Photos for Private Assessment
+              <span className="sm:hidden">Start Private Assessment</span>
+              <span className="hidden sm:inline">Send Photos for Private Assessment</span>
             </TrackedWhatsAppLink>
             <Link
               href="#real-results"
@@ -569,20 +691,20 @@ function FacebookHeroV2({ config, whatsappUrl }: { config: PageConfig; whatsappU
           <p className="mt-4 max-w-[640px] text-xs leading-6 text-[#6A5E52]">{assessmentInstruction}</p>
         </div>
 
-        <div className="relative min-h-[360px] overflow-hidden rounded-md border border-[#D9C59F] bg-white shadow-[0_30px_90px_rgba(48,35,19,0.13)] sm:min-h-[520px]">
+        <div className="relative mx-auto aspect-[2/3] w-full max-w-[430px] overflow-hidden rounded-md border border-[#D9C59F] bg-[#4A4A4A] shadow-[0_30px_90px_rgba(48,35,19,0.16)] sm:max-w-[470px] lg:max-w-[430px]">
           <Image
-            src="/images/doctor-hero-door-consultation.png"
-            alt="Dr. Xiao welcoming a patient for private consultation"
+            src={config.heroImage}
+            alt={config.heroAlt}
             fill
             priority
             quality={92}
-            sizes="(min-width: 1024px) 560px, 92vw"
-            className="object-cover object-[62%_center]"
+            sizes="(min-width: 1024px) 430px, 92vw"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#F8F4EE] via-[#F8F4EE]/54 to-transparent px-5 pb-5 pt-24">
-            <div className="max-w-[360px] rounded-md border border-white/55 bg-white/86 p-4 shadow-[0_14px_42px_rgba(28,28,28,0.12)]">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#B89A5A]">Dr. Xiao Zhongye</p>
-              <p className="mt-1 text-sm font-bold text-[#1C1C1C]">Founder of the 9D Lifting System™ in Shanghai</p>
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#181818]/84 via-[#181818]/32 to-transparent px-4 pb-4 pt-24">
+            <div className="rounded-md border border-white/18 bg-[#181818]/72 p-4 text-white shadow-[0_18px_46px_rgba(0,0,0,0.22)] backdrop-blur-md [&_p:last-child]:!text-white">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#D9B878]">Dr. Xiao Zhongye</p>
+              <p className="mt-1 text-sm font-bold text-white">Founder of the 9D Lifting System™ in Shanghai</p>
             </div>
           </div>
         </div>
@@ -1205,37 +1327,86 @@ function TrustStrip({ items }: { items: PageConfig["trustItems"] }) {
   );
 }
 
-function VideoTrustSection({ whatsappUrl }: { whatsappUrl: string }) {
+function WhatIs9DSection({ whatsappUrl }: { whatsappUrl: string }) {
+  return (
+    <SectionShell className="bg-[#FFFEFB]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.94fr_1.06fr] lg:items-center">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">What is 9D Facelift?</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
+            A Personalized Facial Rejuvenation Planning System
+          </h2>
+          <div className="mt-5 space-y-4 text-sm leading-7 text-[#4E463F]">
+            <p>
+              9D Facelift is Dr. Xiao&apos;s doctor-led facial rejuvenation system. The plan is designed around facial
+              anatomy, aging pattern, tissue descent, skin laxity, previous treatments, recovery expectations, and the
+              patient&apos;s natural expression.
+            </p>
+            <p>
+              It is not a temporary thread lift and not one standardized operation for every patient.
+            </p>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {whatIs9dTags.map((tag) => (
+              <span key={tag} className="rounded-full border border-[#D8BE8B] bg-[#FBF8F1] px-4 py-2 text-xs font-bold text-[#3B332B]">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="what_is_9d"
+            label="What is 9D WhatsApp assessment"
+            className="mt-7 inline-flex h-11 items-center justify-center gap-3 rounded-md border border-[#C7A56D] bg-white px-5 text-sm font-bold text-[#171717] transition hover:-translate-y-0.5 hover:bg-[#FBF8F1]"
+          >
+            Ask If 9D Fits You
+            <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+          </TrackedWhatsAppLink>
+        </div>
+        <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] border border-[#E5D8C4] bg-[#F2EADD] shadow-[0_20px_60px_rgba(50,36,18,0.08)]">
+          <Image
+            src="/images/international-before-flights-assessment.webp"
+            alt="Doctor-led facial assessment planning before traveling to Shanghai"
+            fill
+            sizes="(min-width: 1024px) 560px, 92vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+function GoogleMethodVideoSection({ whatsappUrl }: { whatsappUrl: string }) {
   return (
     <SectionShell className="bg-[#FBF8F1]">
-      <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:items-center">
-        <div className="relative mx-auto aspect-[9/16] w-full max-w-[280px] rounded-[32px] border border-[#D9C59F] bg-[#151514] p-2 shadow-[0_24px_70px_rgba(24,18,12,0.18)] lg:mx-0">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.72fr_1fr] lg:items-center">
+        <div className="relative mx-auto aspect-[9/16] w-full max-w-[300px] rounded-[34px] border border-[#D9C59F] bg-[#151514] p-2 shadow-[0_24px_70px_rgba(24,18,12,0.16)] lg:mx-0">
           <div className="absolute left-1/2 top-3 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/18" />
           <video
             className="h-full w-full rounded-[24px] object-cover"
             muted
             playsInline
-            loop
             controls
             preload="none"
             poster="/videos/dr-xiao-9d-methodology-poster.jpg"
-            aria-label="9D Facelift method video"
+            aria-label="Doctor explanation video about the 9D Facelift method"
           >
             <source src="/videos/dr-xiao-9d-methodology-vertical.mp4" type="video/mp4" />
           </video>
         </div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">Seen our 9D Facelift video?</p>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">9D method video</p>
           <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
-            Your next step is a private facial assessment.
+            Dr. Xiao explains the 9D planning approach.
           </h2>
           <p className="mt-4 max-w-[650px] text-sm leading-7 text-[#4E463F]">
-            Send your photos and concerns through WhatsApp, and our team will help you understand whether 9D
-            Facelift, Deep Plane Facelift, or another plan may be more suitable.
+            Watch the doctor-led explanation before sending photos. The assessment focuses on facial structure, aging
+            pattern, natural expression, and whether 9D Facelift or a deeper approach may be more suitable.
           </p>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            {["Facial structure review", "Natural result focus", "Private photo guidance"].map((item) => (
-              <div key={item} className="rounded-md border border-[#E2D2B8] bg-white/76 p-4 text-sm font-bold text-[#24211E]">
+            {["Doctor-led planning", "Facial structure review", "Natural expression focus"].map((item) => (
+              <div key={item} className="rounded-[18px] border border-[#E2D2B8] bg-white/76 p-4 text-sm font-bold text-[#24211E]">
                 <CheckCircle2 className="mb-3 h-5 w-5 text-[#A47735]" aria-hidden="true" />
                 {item}
               </div>
@@ -1243,11 +1414,11 @@ function VideoTrustSection({ whatsappUrl }: { whatsappUrl: string }) {
           </div>
           <TrackedWhatsAppLink
             href={whatsappUrl}
-            placement="mid_page"
-            label="Facebook video section WhatsApp"
+            placement="what_is_9d_video"
+            label="9D method video WhatsApp assessment"
             className="mt-6 inline-flex h-12 items-center justify-center gap-3 rounded-md bg-[#171717] px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2B2723]"
           >
-            Send Photos on WhatsApp
+            Start Photo Assessment
             <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
           </TrackedWhatsAppLink>
         </div>
@@ -1266,7 +1437,7 @@ function FitCheckSection({ config, whatsappUrl }: { config: PageConfig; whatsapp
           return (
             <div
               key={item.title}
-              className="flex min-h-[118px] flex-col items-center justify-center rounded-md border border-[#E5D8C4] bg-[#FBF8F1] p-4 text-center shadow-[0_16px_45px_rgba(48,35,19,0.05)]"
+              className="flex min-h-[118px] flex-col items-center justify-center rounded-[18px] border border-[#E5D8C4] bg-[#FBF8F1] p-4 text-center shadow-[0_16px_45px_rgba(48,35,19,0.05)]"
             >
               <Icon className="h-6 w-6 text-[#A47735]" aria-hidden="true" />
               <p className="mt-3 text-xs font-bold leading-5 text-[#171717]">{item.title}</p>
@@ -1277,7 +1448,7 @@ function FitCheckSection({ config, whatsappUrl }: { config: PageConfig; whatsapp
       <div className="mt-7 text-center">
         <TrackedWhatsAppLink
           href={whatsappUrl}
-          placement="mid_page"
+          placement="suitability"
           label="Fit check WhatsApp"
           className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#171717] px-5 text-xs font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2B2723]"
         >
@@ -1293,11 +1464,11 @@ function DifferenceSection({ config }: { config: PageConfig }) {
   return (
     <SectionShell className="bg-[#FBF8F1]">
       <CenteredHeading eyebrow="9D difference" title={config.differenceTitle} />
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         {config.differenceItems.map((item) => {
           const Icon = item.icon;
           return (
-            <div key={item.title} className="rounded-md border border-[#E5D8C4] bg-white/78 p-5">
+            <div key={item.title} className="rounded-[20px] border border-[#E5D8C4] bg-white/78 p-6">
               <Icon className="h-7 w-7 text-[#A47735]" aria-hidden="true" />
               <h3 className="mt-4 text-base font-bold text-[#171717]">{item.title}</h3>
               <p className="mt-3 text-sm leading-6 text-[#5A5149]">{item.description}</p>
@@ -1323,33 +1494,23 @@ function ResultsSection({
       <CenteredHeading eyebrow="Real results" title={title} />
       <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
         {results.map((item) => (
-          <article key={`${item.age}-${item.country}-${item.procedure}`} className="overflow-hidden rounded-md border border-[#E5D8C4] bg-white shadow-[0_16px_42px_rgba(48,35,19,0.06)]">
-            <div className="relative aspect-[4/3] bg-[#EEE6D9]">
+          <article
+            key={`${item.age}-${item.country}-${item.procedure}`}
+            className="overflow-hidden rounded-[22px] border border-[#D8BE8B] bg-[#171717] shadow-[0_22px_70px_rgba(48,35,19,0.11)]"
+          >
+            <div className="relative aspect-[4/3]">
               <Image
                 src={item.image}
                 alt={item.alt}
                 fill
-                sizes="(min-width: 1024px) 360px, 92vw"
+                sizes="(min-width: 1280px) 380px, (min-width: 1024px) 31vw, 92vw"
                 className="object-cover"
               />
-            </div>
-            <div className="p-5">
-              <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#A47735]">
-                Age {item.age} | {item.country}
-              </p>
-              <p className="mt-3 text-sm leading-6 text-[#332F2B]">
-                <span className="font-bold">Concern:</span> {item.concern}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-[#332F2B]">
-                <span className="font-bold">Procedure:</span> {item.procedure}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-[#332F2B]">
-                <span className="font-bold">Result:</span> {item.result}
-              </p>
             </div>
           </article>
         ))}
       </div>
+      <p className="mt-5 text-center text-xs font-semibold text-[#6C6258]">Individual results vary.</p>
       <div className="mt-7 text-center">
         <Link
           href={withTrackingQuery("/before-after", trackingQuery)}
@@ -1366,33 +1527,15 @@ function ResultsSection({
 function DoctorAuthoritySection() {
   const points = [
     "Founder of the 9D Lifting System",
-    "Doctor-led facial assessment",
+    "Doctor-led facial assessment and planning",
     "Personalized planning based on anatomy",
-    "Focus on natural, long-lasting results",
-    "Experience with international patients"
+    "Experience supporting international patients in Shanghai"
   ];
 
   return (
     <SectionShell className="bg-[#FBF8F1]">
-      <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:items-center">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">Why patients choose Dr. Xiao</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
-            Doctor-led planning before procedure choice.
-          </h2>
-          <ul className="mt-6 space-y-3">
-            {points.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#332F2B]">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#A47735]" aria-hidden="true" />
-                {point}
-              </li>
-            ))}
-          </ul>
-          <blockquote className="mt-7 rounded-md border border-[#E1CFAD] bg-white/82 p-5 font-display text-xl leading-8 text-[#2C2824]">
-            "The best aesthetic results do not make you look different. They make you look like yourself again."
-          </blockquote>
-        </div>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-[#E5D8C4] bg-white shadow-[0_22px_70px_rgba(50,36,18,0.10)]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+        <div className="relative order-2 aspect-[4/3] overflow-hidden rounded-[22px] border border-[#E5D8C4] bg-white shadow-[0_22px_70px_rgba(50,36,18,0.10)] lg:order-1">
           <Image
             src="/images/doctor-hero-door-consultation.png"
             alt="Dr. Xiao welcoming a patient for consultation"
@@ -1401,32 +1544,102 @@ function DoctorAuthoritySection() {
             className="object-cover object-[62%_center]"
           />
         </div>
+        <div className="order-1 lg:order-2">
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">Doctor-led planning</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
+            Why Patients Choose Dr. Xiao
+          </h2>
+          <p className="mt-4 max-w-[650px] text-sm leading-7 text-[#4E463F]">
+            A serious facelift decision should start with facial anatomy, aging pattern, and realistic planning before
+            procedure choice.
+          </p>
+          <ul className="mt-6 space-y-3">
+            {points.map((point) => (
+              <li key={point} className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#332F2B]">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#A47735]" aria-hidden="true" />
+                {point}
+              </li>
+            ))}
+          </ul>
+          <blockquote className="mt-7 rounded-[20px] border border-[#E1CFAD] bg-white/82 p-5 font-display text-xl leading-8 text-[#2C2824]">
+            &quot;The best aesthetic results do not make you look different. They make you look like yourself again.&quot;
+          </blockquote>
+        </div>
       </div>
     </SectionShell>
   );
 }
 
-function ProcessSection({ whatsappUrl }: { whatsappUrl: string }) {
+function GoogleInternationalJourneySection({ whatsappUrl }: { whatsappUrl: string }) {
   return (
     <SectionShell className="bg-[#FFFEFB]">
-      <CenteredHeading
-        eyebrow="Start online"
-        title="Start Online Before You Travel to Shanghai"
-        description="Online assessment / travel planning / English-speaking assistance / recovery support in Shanghai."
-      />
-      <StepGrid />
-      <div className="mt-8 text-center">
-        <TrackedWhatsAppLink
-          href={whatsappUrl}
-          placement="mid_page"
-          label="Process WhatsApp Assessment"
-          className="inline-flex h-12 items-center justify-center gap-3 rounded-md bg-[#B98939] px-7 text-sm font-bold text-white shadow-[0_16px_36px_rgba(185,137,57,0.22)] transition hover:-translate-y-0.5 hover:bg-[#A47735]"
-        >
-          Start Online Assessment
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </TrackedWhatsAppLink>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_0.72fr] lg:items-center">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">International patient journey</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
+            From Online Assessment to Arrival in Shanghai
+          </h2>
+          <p className="mt-4 max-w-[690px] text-sm leading-7 text-[#4E463F]">
+            For international patients, the first step is clarity before travel: photos, preliminary direction,
+            consultation timing, and preparation for an in-person medical evaluation.
+          </p>
+
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {googleInternationalJourneySteps.map((step) => (
+              <div key={step.title} className="rounded-[18px] border border-[#E5D8C4] bg-[#FBF8F1] p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#A47735]">{step.number}</p>
+                <h3 className="mt-3 text-base font-bold text-[#171717]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#5A5149]">{step.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-7 lg:hidden">
+            <GoogleArrivalVideoCard />
+          </div>
+
+          <div className="mt-7 flex flex-wrap gap-2">
+            {googleInternationalSupportPoints.map((point) => (
+              <span key={point} className="rounded-full border border-[#D8BE8B] bg-white px-4 py-2 text-xs font-bold text-[#3B332B]">
+                {point}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-5 max-w-[680px] text-xs leading-6 text-[#6C6258]">
+            Travel support details may vary depending on schedule, location, treatment plan, and individual arrangements.
+          </p>
+
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="international_video"
+            label="International journey WhatsApp assessment"
+            className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-md bg-[#171717] px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2B2723]"
+          >
+            Start Online Assessment
+            <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+          </TrackedWhatsAppLink>
+        </div>
+
+        <div className="hidden lg:block">
+          <GoogleArrivalVideoCard />
+        </div>
       </div>
     </SectionShell>
+  );
+}
+
+function GoogleArrivalVideoCard() {
+  return (
+    <div className="mx-auto w-full max-w-[310px] rounded-[34px] border border-[#D9C59F] bg-[#171717] p-2 shadow-[0_24px_70px_rgba(24,18,12,0.16)]">
+      <ArrivalSupportVideo
+        src={facebookArrivalVideoSrc}
+        poster={facebookArrivalVideoPoster}
+        label="Real International Patient Journey"
+        caption="A real international patient arrival and consultation journey in Shanghai."
+        ariaLabel="Real international patient arrival and consultation journey in Shanghai"
+      />
+    </div>
   );
 }
 
@@ -1473,12 +1686,12 @@ function InternationalSection({ whatsappUrl }: { whatsappUrl: string }) {
 function PlanFitSection({ whatsappUrl }: { whatsappUrl: string }) {
   return (
     <SectionShell className="bg-[#FBF8F1]">
-      <CenteredHeading eyebrow="Plan fit" title="Which Plan May Fit You?" />
+      <CenteredHeading eyebrow="Plan fit" title="Which Approach May Fit Your Face?" />
       <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
         {planCards.map((plan) => (
           <article
             key={plan.title}
-            className={`overflow-hidden rounded-md border p-5 ${
+            className={`overflow-hidden rounded-[20px] border p-5 ${
               plan.featured
                 ? "border-[#C7A56D] bg-[#171717] text-white"
                 : "border-[#E5D8C4] bg-white/82 text-[#171717]"
@@ -1502,16 +1715,62 @@ function PlanFitSection({ whatsappUrl }: { whatsappUrl: string }) {
             {plan.featured ? (
               <TrackedWhatsAppLink
                 href={whatsappUrl}
-                placement="mid_page"
+                placement="plan_fit"
                 label="Plan fit WhatsApp"
                 className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#D8BE8B]"
               >
-                Start with online photo assessment
+                Find out which plan fits you
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </TrackedWhatsAppLink>
             ) : null}
           </article>
         ))}
+      </div>
+      <p className="mx-auto mt-7 max-w-[880px] text-center text-xs font-semibold leading-6 text-[#6C6258]">
+        The final recommendation depends on facial anatomy, aging pattern, previous treatments, medical history,
+        recovery expectations, and in-person evaluation.
+      </p>
+    </SectionShell>
+  );
+}
+
+function RecoverySafetySection() {
+  return (
+    <SectionShell className="bg-[#FFFEFB]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.98fr_1.02fr] lg:items-start">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">Medical transparency</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-4xl">
+            Recovery, Scars &amp; Safety
+          </h2>
+          <div className="mt-7 border-l border-[#D8BE8B]">
+            {recoveryTimeline.map((item) => (
+              <div key={item.period} className="relative pl-6 pb-7 last:pb-0">
+                <span className="absolute -left-[5px] top-1 h-2.5 w-2.5 rounded-full bg-[#B98939]" />
+                <p className="text-sm font-bold text-[#171717]">{item.period}</p>
+                <p className="mt-2 text-sm leading-6 text-[#5A5149]">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div className="grid grid-cols-1 gap-4">
+            {recoverySafetyCards.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="rounded-[20px] border border-[#E5D8C4] bg-[#FBF8F1] p-5">
+                  <Icon className="h-6 w-6 text-[#A47735]" aria-hidden="true" />
+                  <h3 className="mt-4 text-base font-bold text-[#171717]">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#5A5149]">{item.description}</p>
+                </article>
+              );
+            })}
+          </div>
+          <p className="mt-5 rounded-[18px] border border-[#E5D8C4] bg-white p-4 text-xs font-semibold leading-6 text-[#6C6258]">
+            The information above is general guidance only. Individual recovery, risks, incision planning, and suitability
+            must be discussed during medical evaluation.
+          </p>
+        </div>
       </div>
     </SectionShell>
   );
@@ -1536,29 +1795,65 @@ function FaqSection() {
   );
 }
 
+function AfterPhotosSection({ whatsappUrl }: { whatsappUrl: string }) {
+  return (
+    <SectionShell className="bg-[#FBF8F1]">
+      <CenteredHeading
+        eyebrow="After photos"
+        title="What Happens After You Send Your Photos?"
+        description="Your photos are reviewed privately for initial guidance before any in-person treatment decision."
+      />
+      <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        {googleAfterPhotosSteps.map((step) => (
+          <article key={step.title} className="rounded-[20px] border border-[#E5D8C4] bg-white/82 p-5">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#A47735]">{step.number}</p>
+            <h3 className="mt-3 text-base font-bold text-[#171717]">{step.title}</h3>
+            <p className="mt-2 text-sm leading-6 text-[#5A5149]">{step.description}</p>
+          </article>
+        ))}
+      </div>
+      <div className="mt-7 flex flex-col items-center gap-4 text-center">
+        <TrackedWhatsAppLink
+          href={whatsappUrl}
+          placement="after_photos"
+          label="After photos WhatsApp assessment"
+          className="inline-flex h-12 items-center justify-center gap-3 rounded-md bg-[#171717] px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2B2723]"
+        >
+          Send Photos on WhatsApp
+          <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+        </TrackedWhatsAppLink>
+        <p className="max-w-[760px] text-xs leading-6 text-[#6C6258]">
+          Your photos and information are reviewed privately for initial guidance only. Final treatment recommendations
+          require in-person medical evaluation.
+        </p>
+      </div>
+    </SectionShell>
+  );
+}
+
 function FinalCtaSection({ config, whatsappUrl }: { config: PageConfig; whatsappUrl: string }) {
   return (
-    <section className="bg-[#EFE4D4] px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 rounded-md border border-[#D5BF98] bg-[#FBF8F1] p-6 shadow-[0_22px_70px_rgba(50,36,18,0.10)] lg:grid-cols-2 lg:items-center lg:p-8">
+    <section className="bg-[#26221F] px-4 py-14 text-white sm:px-6 lg:px-8 lg:py-20">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#A47735]">Private assessment</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#171717] sm:text-5xl">
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#D8BE8B]">Private online assessment</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-5xl">
             {config.finalTitle}
           </h2>
-          <p className="mt-4 max-w-[620px] text-sm leading-7 text-[#4E463F]">{config.finalDescription}</p>
-          <p className="mt-3 max-w-[680px] text-xs leading-6 text-[#6C6258]">{assessmentInstruction}</p>
-          <p className="mt-3 max-w-[680px] text-xs font-semibold leading-6 text-[#6C6258]">
-            Online assessment provides initial guidance only. Final recommendations require in-person medical
-            evaluation.
+          <p className="mt-4 max-w-[660px] text-sm leading-7 text-white/76">{config.finalDescription}</p>
+          <p className="mt-3 max-w-[680px] text-xs leading-6 text-white/62">{assessmentInstruction}</p>
+          <p className="mt-3 max-w-[680px] text-xs font-semibold leading-6 text-white/68">
+            Your information and photos are reviewed privately for initial guidance. Online assessment does not replace
+            in-person medical evaluation.
           </p>
           <TrackedWhatsAppLink
             href={whatsappUrl}
-            placement="final_cta"
+            placement="final"
             label={config.finalButton}
-            className="mt-6 inline-flex h-12 items-center justify-center gap-3 rounded-md bg-[#171717] px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2B2723]"
+            className="mt-6 inline-flex h-12 items-center justify-center gap-3 rounded-md bg-[#2E8B57] px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#257247]"
           >
             {config.finalButton}
-            <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
           </TrackedWhatsAppLink>
         </div>
         <PhonePreview />
@@ -1661,7 +1956,7 @@ function SectionShell({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={`border-b border-[#E8DCCB] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 ${className || ""}`}>
+    <section id={id} className={`border-b border-[#E8DCCB] px-4 py-14 sm:px-6 lg:px-8 lg:py-24 ${className || ""}`}>
       <div className="mx-auto max-w-[1180px]">{children}</div>
     </section>
   );
