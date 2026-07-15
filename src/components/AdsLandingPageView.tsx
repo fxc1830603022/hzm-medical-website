@@ -705,39 +705,41 @@ function FacebookResultsStories({
   trackingQuery: string;
 }) {
   return (
-    <FacebookSection id="real-results" className="bg-[#F8F4EE]">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">Real patient stories</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#1C1C1C] sm:text-5xl">{title}</h2>
-        </div>
-        <Link
-          href={withTrackingQuery("/before-after", trackingQuery)}
-          className="inline-flex h-11 items-center justify-center gap-3 rounded-md border border-[#B89A5A] bg-white px-5 text-sm font-bold text-[#1C1C1C] transition hover:-translate-y-0.5"
-        >
-          View More Results
-          <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
-        </Link>
-      </div>
-      <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
-        {results.map((item) => (
-          <article
-            key={`${item.age}-${item.country}-${item.procedure}`}
-            className="overflow-hidden rounded-md border border-[#E0D0B3] bg-white shadow-[0_18px_54px_rgba(48,35,19,0.08)]"
+    <section id="real-results" className="border-b border-[#E5D8C4] bg-[#F8F4EE] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">Real patient stories</p>
+            <h2 className="mt-3 font-display text-4xl font-semibold leading-tight text-[#1C1C1C] sm:text-6xl">{title}</h2>
+          </div>
+          <Link
+            href={withTrackingQuery("/before-after", trackingQuery)}
+            className="inline-flex h-12 items-center justify-center gap-3 rounded-md border border-[#B89A5A] bg-white px-6 text-sm font-bold text-[#1C1C1C] transition hover:-translate-y-0.5"
           >
-            <div className="relative aspect-[4/3] bg-white">
-              <Image
-                src={item.image}
-                alt={item.alt}
-                fill
-                sizes="(min-width: 1024px) 360px, 92vw"
-                className="object-contain"
-              />
-            </div>
-          </article>
-        ))}
+            View More Results
+            <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-7">
+          {results.map((item) => (
+            <article
+              key={`${item.age}-${item.country}-${item.procedure}`}
+              className="overflow-hidden rounded-md border border-[#D8BE8B] bg-white shadow-[0_24px_72px_rgba(48,35,19,0.10)]"
+            >
+              <div className="relative aspect-[4/3] bg-[#FFFEFB]">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  sizes="(min-width: 1280px) 430px, (min-width: 1024px) 31vw, 92vw"
+                  className="object-contain"
+                />
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
-    </FacebookSection>
+    </section>
   );
 }
 
