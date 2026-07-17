@@ -57,6 +57,9 @@ const googleAdsLandingGreeting =
   "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
 const facebookAdsLandingGreeting =
   "Hello, I saw Dr. Xiao 9D Facelift on Facebook and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+const defaultGoogleAdsLeadConversion = "AW-18323943425/a4RWCPmBvNEcEIHgxKFE";
+const googleAdsLeadConversion =
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_CONVERSION_ID?.trim() || defaultGoogleAdsLeadConversion;
 
 const defaultWhatsAppSourceGreetings: Record<WhatsAppGreetingSource, string> = {
   instagram:
@@ -208,6 +211,7 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
     ...eventParams,
     lead_source: "whatsapp"
   });
+  reportGoogleAdsLeadConversion();
 
   window.fbq?.("track", "Lead", {
     content_name: "WhatsApp click",
@@ -262,6 +266,7 @@ export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
     ...eventParams,
     lead_source: "form"
   });
+  reportGoogleAdsLeadConversion();
 
   window.fbq?.("track", "Lead", {
     content_name: "Form submit",
@@ -356,6 +361,21 @@ function sendGaEvent(eventName: string, params: Record<string, unknown>) {
   window.dataLayer.push(["event", eventName, params]);
 }
 
+function reportGoogleAdsLeadConversion() {
+  if (typeof window === "undefined") return;
+
+  if (typeof window.gtag_report_conversion === "function") {
+    window.gtag_report_conversion();
+    return;
+  }
+
+  sendGaEvent("conversion", {
+    send_to: googleAdsLeadConversion,
+    value: 1.0,
+    currency: "CNY"
+  });
+}
+
 function writeStoredTraffic(value: StoredTraffic) {
   try {
     window.localStorage.setItem(trafficStorageKey, JSON.stringify(value));
@@ -419,6 +439,7 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    gtag_report_conversion?: (url?: string) => false;
     fbq?: (...args: unknown[]) => void;
   }
 }

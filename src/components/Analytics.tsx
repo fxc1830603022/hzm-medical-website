@@ -1,10 +1,13 @@
 import Script from "next/script";
 
 const defaultGoogleAdsId = "AW-18323943425";
+const defaultGoogleAdsLeadConversion = "AW-18323943425/a4RWCPmBvNEcEIHgxKFE";
 
 export function Analytics() {
   const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() || defaultGoogleAdsId;
+  const googleAdsLeadConversion =
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_CONVERSION_ID?.trim() || defaultGoogleAdsLeadConversion;
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const googleTagIds = [measurementId, googleAdsId].filter(Boolean);
   const primaryGoogleTagId = googleTagIds[0];
@@ -23,6 +26,24 @@ export function Analytics() {
               window.gtag = gtag;
               gtag('js', new Date());
               ${googleTagIds.map((tagId) => `gtag('config', ${JSON.stringify(tagId)});`).join("\n              ")}
+            `}
+          </Script>
+          <Script id="google-ads-lead-conversion" strategy="beforeInteractive">
+            {`
+              window.gtag_report_conversion = function(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                gtag('event', 'conversion', {
+                  'send_to': ${JSON.stringify(googleAdsLeadConversion)},
+                  'value': 1.0,
+                  'currency': 'CNY',
+                  'event_callback': callback
+                });
+                return false;
+              };
             `}
           </Script>
         </>
