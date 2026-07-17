@@ -1,23 +1,28 @@
 import Script from "next/script";
 
-export function Analytics() {
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const defaultGoogleAdsId = "AW-18323943425";
 
-  if (!measurementId && !metaPixelId) return null;
+export function Analytics() {
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+  const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() || defaultGoogleAdsId;
+  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const googleTagIds = [measurementId, googleAdsId].filter(Boolean);
+  const primaryGoogleTagId = googleTagIds[0];
+
+  if (!primaryGoogleTagId && !metaPixelId) return null;
 
   return (
     <>
-      {measurementId ? (
+      {primaryGoogleTagId ? (
         <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`} strategy="afterInteractive" />
-          <Script id="ga4-init" strategy="afterInteractive">
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${primaryGoogleTagId}`} strategy="beforeInteractive" />
+          <Script id="google-tag-init" strategy="beforeInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               window.gtag = gtag;
               gtag('js', new Date());
-              gtag('config', '${measurementId}');
+              ${googleTagIds.map((tagId) => `gtag('config', ${JSON.stringify(tagId)});`).join("\n              ")}
             `}
           </Script>
         </>
