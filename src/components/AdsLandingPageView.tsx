@@ -1492,23 +1492,25 @@ function ResultsSection({
   return (
     <SectionShell id="real-results" className="bg-[#FFFEFB]">
       <CenteredHeading eyebrow="Real results" title={title} />
-      <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
-        {results.map((item) => (
-          <article
-            key={`${item.age}-${item.country}-${item.procedure}`}
-            className="overflow-hidden rounded-[22px] border border-[#D8BE8B] bg-[#171717] shadow-[0_22px_70px_rgba(48,35,19,0.11)]"
-          >
-            <div className="relative aspect-[4/3]">
-              <Image
-                src={item.image}
-                alt={item.alt}
-                fill
-                sizes="(min-width: 1280px) 380px, (min-width: 1024px) 31vw, 92vw"
-                className="object-cover"
-              />
-            </div>
-          </article>
-        ))}
+      <div className="relative left-1/2 mt-10 w-screen max-w-[1380px] -translate-x-1/2 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1304px] grid-cols-1 justify-items-center gap-7 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+          {results.map((item) => (
+            <article
+              key={`${item.age}-${item.country}-${item.procedure}`}
+              className="w-full max-w-[400px] overflow-hidden rounded-[24px] border border-[#D8BE8B] bg-[#171717] shadow-[0_30px_86px_rgba(48,35,19,0.13)]"
+            >
+              <div className="relative aspect-[512/680]">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  sizes="(min-width: 1024px) 512px, (min-width: 768px) 48vw, 92vw"
+                  className="object-cover"
+                />
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
       <p className="mt-5 text-center text-xs font-semibold text-[#6C6258]">Individual results vary.</p>
       <div className="mt-7 text-center">
