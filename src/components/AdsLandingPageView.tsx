@@ -18,10 +18,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
 import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
+import { BackToTop } from "./BackToTop";
+import { Footer } from "./Footer";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type AdsLandingVariant = "google" | "facebook";
@@ -84,7 +86,8 @@ type PageConfig = {
 const assessmentInstruction =
   "For assessment, please send front, side, 45-degree, smile, and neck photos + your age, country, and main concerns.";
 
-const facebookArrivalVideoSrc = "/videos/facebook-arrival-support-v21.mp4";
+const facebookMethodVideoSrc = "/videos/dr-xiao-9d-methodology-mobile-v2.mp4";
+const facebookArrivalVideoSrc = "/videos/facebook-arrival-support-mobile-v2.mp4";
 const facebookArrivalVideoPoster = "/videos/facebook-arrival-support-v21-poster.jpg";
 const facebookAdsWhatsAppNumber = "+13043566178";
 
@@ -631,7 +634,7 @@ function FacebookAdsV2Page({
   trackingQuery: string;
 }) {
   return (
-    <div className="min-h-screen bg-[#F8F4EE] pb-24 text-[#1C1C1C] antialiased">
+    <div className="min-h-screen bg-[#F8F4EE] text-[#1C1C1C] antialiased">
       <SimpleHeader whatsappUrl={whatsappUrl} />
       <main>
         <FacebookHeroV2 config={config} whatsappUrl={whatsappUrl} />
@@ -653,7 +656,10 @@ function FacebookAdsV2Page({
         <FacebookPhotoAssessmentGuide whatsappUrl={whatsappUrl} />
         <FacebookFinalCtaV2 config={config} whatsappUrl={whatsappUrl} />
       </main>
-      <CompactFooter />
+      <div className="bg-ink pb-20 sm:pb-0">
+        <Footer />
+      </div>
+      <BackToTop />
       <StickyWhatsApp whatsappUrl={whatsappUrl} label="Start Private Assessment" />
     </div>
   );
@@ -756,21 +762,7 @@ function FacebookVideoContinuation({ whatsappUrl }: { whatsappUrl: string }) {
   return (
     <FacebookSection className="bg-[#F8F4EE]">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.76fr_1fr] lg:items-center">
-        <div className="relative mx-auto aspect-[9/16] w-full max-w-[270px] rounded-[32px] border border-[#D9C59F] bg-[#151514] p-2 shadow-[0_24px_70px_rgba(24,18,12,0.18)] lg:mx-0">
-          <div className="absolute left-1/2 top-3 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/18" />
-          <video
-            className="h-full w-full rounded-[24px] object-cover"
-            muted
-            playsInline
-            loop
-            controls
-            preload="none"
-            poster="/videos/dr-xiao-9d-methodology-poster.jpg"
-            aria-label="9D Facelift video continuation"
-          >
-            <source src="/videos/dr-xiao-9d-methodology-vertical.mp4" type="video/mp4" />
-          </video>
-        </div>
+        <FacebookMethodVideo />
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">Seen our 9D Facelift video?</p>
           <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-[#1C1C1C] sm:text-5xl">
@@ -800,6 +792,64 @@ function FacebookVideoContinuation({ whatsappUrl }: { whatsappUrl: string }) {
         </div>
       </div>
     </FacebookSection>
+  );
+}
+
+function FacebookMethodVideo() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+        } else {
+          videoRef.current?.pause();
+        }
+      },
+      { rootMargin: "720px 0px", threshold: 0.01 }
+    );
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    videoRef.current?.load();
+  }, [shouldLoad]);
+
+  return (
+    <div
+      ref={frameRef}
+      className="relative isolate mx-auto aspect-[9/16] w-full max-w-[270px] overflow-hidden rounded-[32px] border border-[#D9C59F] bg-[#151514] p-2 shadow-[0_24px_70px_rgba(24,18,12,0.18)] lg:mx-0"
+    >
+      <div className="pointer-events-none absolute left-1/2 top-3 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/18" />
+      <div
+        className="relative h-full w-full overflow-hidden rounded-[24px] bg-[#151514]"
+        style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
+      >
+        <video
+          ref={videoRef}
+          className="block h-full w-full object-cover"
+          style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
+          muted
+          playsInline
+          loop
+          controls
+          preload={shouldLoad ? "auto" : "none"}
+          poster="/videos/dr-xiao-9d-methodology-poster.jpg"
+          aria-label="9D Facelift video continuation"
+        >
+          {shouldLoad ? <source src={facebookMethodVideoSrc} type="video/mp4" /> : null}
+        </video>
+      </div>
+    </div>
   );
 }
 

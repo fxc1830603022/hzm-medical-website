@@ -11,7 +11,7 @@ export function Footer() {
           All information on this website is for reference only. A specific surgical plan must be confirmed
           after consultation. Individual results may vary.
         </p>
-        <p className="mt-5 text-xs text-white/45">© 2024 Dr. Xiao Zhongye. All Rights Reserved.</p>
+        <p className="mt-5 text-xs text-white/45">&copy; 2024 Dr. Xiao Zhongye. All Rights Reserved.</p>
       </div>
     </footer>
   );

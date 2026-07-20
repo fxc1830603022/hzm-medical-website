@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ArrivalSupportVideoProps = {
   src: string;
@@ -20,6 +19,7 @@ export function ArrivalSupportVideo({
 }: ArrivalSupportVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(false);
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
@@ -31,14 +31,18 @@ export function ArrivalSupportVideo({
         const video = videoRef.current;
         if (!video) return;
 
+        isVisibleRef.current = entry.isIntersecting;
+
         if (entry.isIntersecting) {
           setShouldLoad(true);
-          video.play().catch(() => undefined);
+          if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+            video.play().catch(() => undefined);
+          }
         } else {
           video.pause();
         }
       },
-      { rootMargin: "180px 0px", threshold: 0.35 }
+      { rootMargin: "720px 0px", threshold: 0.01 }
     );
 
     observer.observe(wrapper);
@@ -48,21 +52,44 @@ export function ArrivalSupportVideo({
 
   useEffect(() => {
     if (!shouldLoad) return;
-    videoRef.current?.play().catch(() => undefined);
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playWhenReady = () => {
+      if (isVisibleRef.current) {
+        video.play().catch(() => undefined);
+      }
+    };
+
+    video.load();
+
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      playWhenReady();
+      return;
+    }
+
+    video.addEventListener("canplay", playWhenReady, { once: true });
+    return () => video.removeEventListener("canplay", playWhenReady);
   }, [shouldLoad]);
 
   return (
-    <div ref={wrapperRef} className="relative overflow-hidden rounded-[26px] bg-[#1f1c17]">
+    <div
+      ref={wrapperRef}
+      className="relative isolate overflow-hidden rounded-[26px] bg-[#1f1c17]"
+      style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
+    >
       <video
         ref={videoRef}
-        className="aspect-[9/16] h-auto w-full object-cover"
+        className="block aspect-[9/16] h-auto w-full object-cover"
+        style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
         src={shouldLoad ? src : undefined}
         poster={poster}
         autoPlay
         muted
         loop
         playsInline
-        preload="none"
+        preload={shouldLoad ? "auto" : "none"}
         aria-label={ariaLabel}
       />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent px-5 pb-5 pt-20 text-white">

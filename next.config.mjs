@@ -1,5 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    const immutableVideoHeaders = [
+      {
+        key: "Cache-Control",
+        value: "public, max-age=31536000, immutable"
+      }
+    ];
+
+    return [
+      {
+        source: "/videos/dr-xiao-9d-methodology-mobile-v2.mp4",
+        headers: immutableVideoHeaders
+      },
+      {
+        source: "/videos/facebook-arrival-support-mobile-v2.mp4",
+        headers: immutableVideoHeaders
+      }
+    ];
+  },
   async redirects() {
     return [
       {
