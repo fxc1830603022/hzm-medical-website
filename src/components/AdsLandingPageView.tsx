@@ -34,13 +34,19 @@ type AdsLandingPageViewProps = {
 };
 
 type ResultCardData = {
+  id?: string;
   image: string;
   alt: string;
+  title?: string;
   age: string;
   country: string;
   concern: string;
   procedure: string;
   result: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  postOpTime?: string;
+  featured?: boolean;
 };
 
 type FeatureCardData = {
@@ -566,7 +572,13 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
       : safeSettings;
   const whatsappUrl = getWhatsAppUrl(pageSettings);
   const [trackingQuery, setTrackingQuery] = useState("");
-  const resultCards = useMemo(() => buildResultCards(config.results, galleryItems), [config.results, galleryItems]);
+  const resultCards = useMemo(
+    () =>
+      variant === "facebook"
+        ? buildFacebookResultCards(galleryItems)
+        : buildResultCards(config.results, galleryItems),
+    [config.results, galleryItems, variant]
+  );
 
   useEffect(() => {
     setTrackingQuery(window.location.search);
@@ -827,39 +839,101 @@ function FacebookResultsStories({
   trackingQuery: string;
 }) {
   return (
-    <section id="real-results" className="border-b border-[#E5D8C4] bg-[#F8F4EE] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div>
+    <section id="real-results" className="overflow-hidden border-b border-[#E5D8C4] bg-[#FBF8F1] py-14 lg:py-24">
+      <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-[760px]">
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">Real patient stories</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold leading-tight text-[#1C1C1C] sm:text-6xl">{title}</h2>
+            <h2 className="mt-3 font-display text-[36px] font-semibold leading-[1.08] text-[#1C1C1C] sm:text-5xl lg:text-[58px]">
+              {title}
+            </h2>
+            <p className="mt-4 max-w-[680px] text-sm leading-7 text-[#665C52] sm:text-base">
+              Selected before-and-after cases showing personalized facial rejuvenation while preserving each patient&apos;s
+              natural expression.
+            </p>
           </div>
           <Link
             href={withTrackingQuery("/before-after", trackingQuery)}
-            className="inline-flex h-12 items-center justify-center gap-3 rounded-md border border-[#B89A5A] bg-white px-6 text-sm font-bold text-[#1C1C1C] transition hover:-translate-y-0.5"
+            className="inline-flex h-11 w-fit items-center justify-center gap-3 rounded-md border border-[#C8A664] bg-transparent px-5 text-sm font-bold text-[#2A251F] transition-colors hover:bg-white"
           >
             View More Results
             <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-7">
-          {results.map((item) => (
-            <article
-              key={`${item.age}-${item.country}-${item.procedure}`}
-              className="overflow-hidden rounded-md border border-[#D8BE8B] bg-white shadow-[0_24px_72px_rgba(48,35,19,0.10)]"
+
+        <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-5 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
+          {results.map((item, index) => (
+            <Link
+              key={item.id || `${item.image}-${index}`}
+              href={withTrackingQuery("/before-after#case-gallery", trackingQuery)}
+              aria-label={`View ${item.title || item.procedure} case details`}
+              className="group block h-auto w-[86vw] max-w-[420px] shrink-0 snap-center sm:w-[68vw] lg:w-auto lg:max-w-none"
             >
-              <div className="relative aspect-[4/3] bg-[#FFFEFB]">
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  fill
-                  sizes="(min-width: 1280px) 430px, (min-width: 1024px) 31vw, 92vw"
-                  className="object-contain"
-                />
-              </div>
-            </article>
+              <article className="flex h-full flex-col overflow-hidden rounded-md border border-[#DDCBA9] bg-[#FFFEFB] shadow-[0_12px_30px_rgba(48,35,19,0.045)] transition-colors group-hover:border-[#B89A5A]">
+                <div className="relative aspect-square overflow-hidden bg-[#EDE7DD]">
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    sizes="(min-width: 1280px) 430px, (min-width: 1024px) 31vw, 86vw"
+                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                  />
+                  <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-white/72 shadow-[0_0_0_1px_rgba(29,25,20,0.08)]" />
+                  <span className="absolute left-3 top-3 rounded-sm bg-[#1D1A17]/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+                    {item.beforeLabel || "Before"}
+                  </span>
+                  <span className="absolute right-3 top-3 rounded-sm bg-[#1D1A17]/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+                    {item.afterLabel || "After"}
+                  </span>
+                  {item.featured ? (
+                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm border border-white/55 bg-[#B08A45]/92 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+                      Featured Result
+                    </span>
+                  ) : null}
+                </div>
+
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-4 border-b border-[#E9DFCE] pb-4">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#A67B36]">
+                        Age {item.age} <span className="px-1 text-[#C8B48E]">|</span> {item.country}
+                      </p>
+                      <h3 className="mt-2 font-display text-[22px] font-semibold leading-tight text-[#211D19]">
+                        {item.title || item.procedure}
+                      </h3>
+                    </div>
+                    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-[#B89A5A] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </div>
+
+                  <dl className="mt-4 grid gap-3 text-sm leading-6 text-[#5D544B]">
+                    <div>
+                      <dt className="inline font-bold text-[#211D19]">Procedure: </dt>
+                      <dd className="inline">{item.procedure}</dd>
+                    </div>
+                    {item.postOpTime ? (
+                      <div>
+                        <dt className="inline font-bold text-[#211D19]">Post-op: </dt>
+                        <dd className="inline">{item.postOpTime}</dd>
+                      </div>
+                    ) : null}
+                    <div>
+                      <dt className="inline font-bold text-[#211D19]">Concern: </dt>
+                      <dd className="inline">{item.concern}</dd>
+                    </div>
+                    <div>
+                      <dt className="inline font-bold text-[#211D19]">Result focus: </dt>
+                      <dd className="inline">{item.result}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
+
+        <p className="mt-6 text-center text-xs leading-6 text-[#74695E]">
+          Individual results vary. Photos show real patient examples and do not guarantee a specific outcome.
+        </p>
       </div>
     </section>
   );
@@ -1992,6 +2066,34 @@ function buildResultCards(
     ...result,
     image: galleryImages[index + 1] || result.imageFallback
   }));
+}
+
+function buildFacebookResultCards(galleryItems: GalleryItem[]): ResultCardData[] {
+  const availableItems = galleryItems.filter((item) => item.image && item.displayRole !== "hero");
+  const selectedItems = (availableItems.length >= 3 ? availableItems : galleryItems.filter((item) => item.image)).slice(0, 3);
+
+  return selectedItems.map((item, index) => ({
+    id: item.id,
+    image: item.image,
+    alt: item.alt || item.title || `9D facial rejuvenation result ${index + 1}`,
+    title: item.title || item.caseLabel || "Natural Facial Rejuvenation",
+    age: item.age?.trim() || "Private",
+    country: item.country?.trim() || "Not disclosed",
+    concern: item.mainConcerns?.trim() || item.description?.trim() || "Personalized facial rejuvenation",
+    procedure: item.procedure?.trim() || "9D Facial Rejuvenation",
+    result: item.visibleChange?.trim() || "Natural-looking refinement with expression preserved",
+    beforeLabel: item.beforeLabel?.trim() || "Before",
+    afterLabel: item.afterLabel?.trim() || "After",
+    postOpTime: getPostOpTime(item.afterLabel),
+    featured: item.displayRole === "featured" || index === 1
+  }));
+}
+
+function getPostOpTime(afterLabel?: string) {
+  const value = afterLabel?.trim();
+  if (!value || /^after$/i.test(value)) return undefined;
+
+  return value.replace(/^after\s*/i, "");
 }
 
 function withTrackingQuery(href: string, trackingQuery: string) {
