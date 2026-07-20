@@ -56,7 +56,7 @@ const facebookAdsPublicProfileGreeting =
 const googleAdsLandingGreeting =
   "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
 const facebookAdsLandingGreeting =
-  "Hello, I saw Dr. Xiao 9D Facelift on Facebook and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+  "Hello, I’m interested in Dr. Xiao’s 9D Facelift. Could you please share more details about the treatment and online assessment process?";
 const defaultGoogleAdsLeadConversion = "AW-18323943425/a4RWCPmBvNEcEIHgxKFE";
 const googleAdsLeadConversion =
   process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_CONVERSION_ID?.trim() || defaultGoogleAdsLeadConversion;

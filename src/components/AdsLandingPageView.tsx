@@ -95,7 +95,7 @@ const googleWhatsAppMessage =
   "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
 
 const facebookWhatsAppMessage =
-  "Hello, I saw Dr. Xiao 9D Facelift on Facebook and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
+  "Hello, I’m interested in Dr. Xiao’s 9D Facelift. Could you please share more details about the treatment and online assessment process?";
 
 const processSteps = [
   {
