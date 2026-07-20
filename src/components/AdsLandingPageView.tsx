@@ -86,8 +86,7 @@ const assessmentInstruction =
 
 const facebookArrivalVideoSrc = "/videos/facebook-arrival-support-v21.mp4";
 const facebookArrivalVideoPoster = "/videos/facebook-arrival-support-v21-poster.jpg";
-const facebookAdsWhatsAppNumber =
-  process.env.NEXT_PUBLIC_FACEBOOK_ADS_WHATSAPP_NUMBER?.trim() || "+601161325783";
+const facebookAdsWhatsAppNumber = "+13043566178";
 
 const googleWhatsAppMessage =
   "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
@@ -640,7 +639,12 @@ function FacebookAdsV2Page({
         <FacebookVideoContinuation whatsappUrl={whatsappUrl} />
         <FacebookSelfAssessment config={config} whatsappUrl={whatsappUrl} />
         <FacebookNaturalDifference config={config} />
-        <FacebookResultsStories title={config.resultsTitle} results={resultCards} trackingQuery={trackingQuery} />
+        <FacebookResultsStories
+          title={config.resultsTitle}
+          results={resultCards}
+          trackingQuery={trackingQuery}
+          whatsappUrl={whatsappUrl}
+        />
         <FacebookDoctorAuthorityV2 whatsappUrl={whatsappUrl} />
         <FacebookInternationalJourneyV2 whatsappUrl={whatsappUrl} />
         <FacebookArrivalExperience whatsappUrl={whatsappUrl} />
@@ -832,11 +836,13 @@ function FacebookSelfAssessment({ config, whatsappUrl }: { config: PageConfig; w
 function FacebookResultsStories({
   title,
   results,
-  trackingQuery
+  trackingQuery,
+  whatsappUrl
 }: {
   title: string;
   results: ResultCardData[];
   trackingQuery: string;
+  whatsappUrl: string;
 }) {
   return (
     <section id="real-results" className="overflow-hidden border-b border-[#E5D8C4] bg-[#FBF8F1] py-14 lg:py-24">
@@ -852,13 +858,15 @@ function FacebookResultsStories({
               natural expression.
             </p>
           </div>
-          <Link
-            href={withTrackingQuery("/before-after", trackingQuery)}
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="middle"
+            label="Results section WhatsApp"
             className="inline-flex h-11 w-fit items-center justify-center gap-3 rounded-md border border-[#C8A664] bg-transparent px-5 text-sm font-bold text-[#2A251F] transition-colors hover:bg-white"
           >
-            View More Results
+            Ask About Results on WhatsApp
             <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
-          </Link>
+          </TrackedWhatsAppLink>
         </div>
 
         <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-5 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
@@ -2074,7 +2082,7 @@ function buildFacebookResultCards(galleryItems: GalleryItem[]): ResultCardData[]
 
   return selectedItems.map((item, index) => ({
     id: item.id,
-    image: item.image,
+    image: index === 2 ? "/images/facebook-ads-result-case-03-day30-20260720.jpg" : item.image,
     alt: item.alt || item.title || `9D facial rejuvenation result ${index + 1}`,
     title: item.title || item.caseLabel || "Natural Facial Rejuvenation",
     age: item.age?.trim() || "Private",
