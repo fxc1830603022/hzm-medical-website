@@ -2,6 +2,7 @@ import { consultationSubmission } from "./consultationSubmission";
 import { doctor } from "./doctor";
 import { faqItem } from "./faqItem";
 import { galleryItem } from "./galleryItem";
+import { googleAdsLandingPage } from "./googleAdsLandingPage";
 import { newsletterSubscriber } from "./newsletterSubscriber";
 import { post } from "./post";
 import { procedurePageAsset } from "./procedurePageAsset";
@@ -15,6 +16,7 @@ export const schemaTypes = [
   treatment,
   procedurePageAsset,
   galleryItem,
+  googleAdsLandingPage,
   faqItem,
   testimonial,
   consultationSubmission,

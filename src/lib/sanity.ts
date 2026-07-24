@@ -1,6 +1,12 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import {
+  defaultGoogleAdsLandingPageContent,
+  mergeGoogleAdsLandingPageContent,
+  type DeepPartial,
+  type GoogleAdsLandingPageContent
+} from "./google-ads-landing";
 import type { LandingFAQ } from "./landing-pages";
 import {
   categoryLabels,
@@ -172,6 +178,137 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
     return items.length ? items : defaultGalleryItems;
   } catch {
     return defaultGalleryItems;
+  }
+}
+
+export async function getGoogleAdsLandingPageContent(): Promise<GoogleAdsLandingPageContent> {
+  if (!sanityConfigured) return defaultGoogleAdsLandingPageContent;
+
+  try {
+    const content = await sanityClient.fetch<DeepPartial<GoogleAdsLandingPageContent> | null>(
+      `*[_type == "googleAdsLandingPage" && _id == "googleAdsLandingPage"][0] {
+        seoTitle,
+        seoDescription,
+        whatsappNumber,
+        whatsappMessage,
+        hero {
+          eyebrow,
+          title,
+          description,
+          "image": image.asset->url,
+          imageAlt,
+          doctorName,
+          doctorCredential,
+          primaryCtaLabel,
+          secondaryCtaLabel,
+          privacyNote
+        },
+        trustItems[] { value, label },
+        results {
+          enabled,
+          eyebrow,
+          title,
+          description,
+          cases[] {
+            "image": image.asset->url,
+            alt,
+            age,
+            country,
+            title,
+            concern,
+            treatment,
+            timing,
+            result,
+            featured
+          },
+          beforeLabel,
+          afterLabel,
+          selectedLabel,
+          disclaimer,
+          ctaLabel
+        },
+        concerns {
+          enabled,
+          eyebrow,
+          title,
+          description,
+          items[] { title, description },
+          ctaLabel
+        },
+        method {
+          enabled,
+          eyebrow,
+          title,
+          description,
+          points,
+          "video": video.asset->url,
+          "poster": poster.asset->url,
+          videoLabel,
+          ctaLabel
+        },
+        comparison {
+          enabled,
+          eyebrow,
+          title,
+          description,
+          cards[] { index, title, description, points },
+          disclaimer
+        },
+        doctor {
+          enabled,
+          eyebrow,
+          title,
+          description,
+          "image": image.asset->url,
+          imageAlt,
+          points,
+          ctaLabel
+        },
+        international {
+          enabled,
+          eyebrow,
+          title,
+          description,
+          "video": video.asset->url,
+          "poster": poster.asset->url,
+          videoLabel,
+          steps[] { title, description },
+          ctaLabel
+        },
+        faq {
+          enabled,
+          eyebrow,
+          title,
+          items[] { question, answer }
+        },
+        assessment {
+          eyebrow,
+          title,
+          description,
+          benefits,
+          concernOptions,
+          privacyText
+        },
+        finalCta { eyebrow, title, description, ctaLabel },
+        footer { doctorName, brandLine, disclaimer, whatsappLabel },
+        thankYou {
+          whatsappMessage,
+          eyebrow,
+          title,
+          description,
+          whatsappLabel,
+          returnLabel,
+          checklistTitle,
+          photoItems,
+          photoInstructions,
+          disclaimer
+        }
+      }`
+    );
+
+    return mergeGoogleAdsLandingPageContent(content);
+  } catch {
+    return defaultGoogleAdsLandingPageContent;
   }
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GoogleAssessmentThankYou } from "@/components/GoogleAssessmentThankYou";
-import { getSiteSettings } from "@/lib/sanity";
+import { getGoogleAdsLandingPageContent } from "@/lib/sanity";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default async function GoogleAssessmentThankYouPage() {
-  const settings = await getSiteSettings();
-  return <GoogleAssessmentThankYou settings={settings} />;
+  const content = await getGoogleAdsLandingPageContent();
+  return <GoogleAssessmentThankYou content={content} />;
 }

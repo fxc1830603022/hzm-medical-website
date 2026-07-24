@@ -2,23 +2,19 @@
 
 import { ArrowRight, Camera, CheckCircle2, LockKeyhole, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import type { GoogleAdsLandingPageContent } from "@/lib/google-ads-landing";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
-import type { SiteSettings } from "@/lib/site-types";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type GoogleAssessmentThankYouProps = {
-  settings: SiteSettings;
+  content: GoogleAdsLandingPageContent;
 };
 
-const whatsappMessage =
-  "Hello, I have submitted the private assessment form for Dr. Xiao's 9D Facelift. I am ready to send my front, side, 45-degree, smile and neck photos.";
-
-export function GoogleAssessmentThankYou({ settings }: GoogleAssessmentThankYouProps) {
+export function GoogleAssessmentThankYou({ content }: GoogleAssessmentThankYouProps) {
   const whatsappUrl = getWhatsAppUrl({
     ...defaultSettings,
-    ...settings,
-    whatsappNumber: "+601121706171",
-    whatsappMessage
+    whatsappNumber: content.whatsappNumber,
+    whatsappMessage: content.thankYou.whatsappMessage
   });
 
   return (
@@ -38,11 +34,10 @@ export function GoogleAssessmentThankYou({ settings }: GoogleAssessmentThankYouP
           <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#E5EDE7] text-[#42564D]">
             <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
           </span>
-          <p className="mt-7 text-[11px] font-bold uppercase tracking-[0.2em] text-[#9B8562]">Assessment Received</p>
-          <h1 className="mt-3 font-display text-[42px] font-semibold leading-tight sm:text-[54px]">Thank you. Your request has been submitted.</h1>
+          <p className="mt-7 text-[11px] font-bold uppercase tracking-[0.2em] text-[#9B8562]">{content.thankYou.eyebrow}</p>
+          <h1 className="mt-3 font-display text-[42px] font-semibold leading-tight sm:text-[54px]">{content.thankYou.title}</h1>
           <p className="mt-5 max-w-[600px] text-base leading-8 text-[#4B504D]">
-            Dr. Xiao's team will review your information and contact you through your preferred method. You can now send
-            the requested photos on WhatsApp to help the team prepare initial guidance.
+            {content.thankYou.description}
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <TrackedWhatsAppLink
@@ -52,13 +47,13 @@ export function GoogleAssessmentThankYou({ settings }: GoogleAssessmentThankYouP
               className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
-              Send Photos on WhatsApp
+              {content.thankYou.whatsappLabel}
             </TrackedWhatsAppLink>
             <Link
               href="/ads/google-9d-facelift#real-results"
               className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] border border-[#B8A98F] bg-[#FCFBF8] px-6 text-sm font-bold"
             >
-              Return to Patient Results
+              {content.thankYou.returnLabel}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
@@ -67,10 +62,10 @@ export function GoogleAssessmentThankYou({ settings }: GoogleAssessmentThankYouP
         <section className="rounded-[16px] border border-[#D8CBB7] bg-[#FCFBF8] p-6 shadow-[0_24px_70px_rgba(32,35,33,0.08)] sm:p-8">
           <div className="flex items-center gap-3">
             <Camera className="h-5 w-5 text-[#53685E]" aria-hidden="true" />
-            <h2 className="font-display text-2xl font-semibold">Photo checklist</h2>
+            <h2 className="font-display text-2xl font-semibold">{content.thankYou.checklistTitle}</h2>
           </div>
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {["Front", "Left Side", "Right Side", "45-Degree", "Smile", "Neck"].map((photo, index) => (
+            {content.thankYou.photoItems.map((photo, index) => (
               <div key={photo} className="rounded-[12px] border border-[#DED6C8] bg-[#F7F4EE] p-4">
                 <span className="text-[10px] font-bold text-[#9B8562]">0{index + 1}</span>
                 <p className="mt-2 text-xs font-bold">{photo}</p>
@@ -78,12 +73,11 @@ export function GoogleAssessmentThankYou({ settings }: GoogleAssessmentThankYouP
             ))}
           </div>
           <div className="mt-6 rounded-[12px] bg-[#E8EEE9] p-4 text-xs leading-6 text-[#42564D]">
-            Use clear, unfiltered photos in even lighting. Include your age, country, main concerns and any previous
-            facial treatments when you send them.
+            {content.thankYou.photoInstructions}
           </div>
           <p className="mt-5 flex items-start gap-2 text-[11px] leading-5 text-[#6A6F6C]">
             <LockKeyhole className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            Online assessment provides initial guidance only. Final recommendations require in-person medical evaluation.
+            {content.thankYou.disclaimer}
           </p>
         </section>
       </main>

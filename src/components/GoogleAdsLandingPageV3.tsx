@@ -10,7 +10,6 @@ import {
   Globe2,
   LockKeyhole,
   MessageCircle,
-  Plane,
   Play,
   ShieldCheck,
   Stethoscope,
@@ -21,12 +20,12 @@ import { useRouter } from "next/navigation";
 import type { FormEvent, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
-import type { SiteSettings } from "@/lib/site-types";
+import type { GoogleAdsLandingPageContent } from "@/lib/google-ads-landing";
 import { trackAdsLandingEvent, trackLeadFormSubmit } from "@/lib/tracking";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type GoogleAdsLandingPageV3Props = {
-  settings: SiteSettings;
+  content: GoogleAdsLandingPageContent;
 };
 
 type AssessmentValues = {
@@ -43,129 +42,8 @@ type AssessmentValues = {
   consent: boolean;
 };
 
-const googleAdsWhatsAppNumber = "+601121706171";
-const googleAdsWhatsAppMessage =
-  "Hello, I found Dr. Xiao's 9D Facelift through Google Ads. I have completed the private assessment form and would like to send my photos for review.";
-
-const trustItems = [
-  { value: "27+", label: "Years of Clinical Experience", icon: BadgeCheck },
-  { value: "Doctor-Led", label: "Facial Assessment", icon: Stethoscope },
-  { value: "International", label: "Patient Support", icon: Globe2 },
-  { value: "Shanghai", label: "Treatment and Recovery", icon: ShieldCheck }
-];
-
-const resultCases = [
-  {
-    image: "/images/gallery-case-11.jpg",
-    alt: "Before and after facial rejuvenation result showing lower-face refinement",
-    age: "45",
-    country: "USA",
-    concern: "Jawline softening and early lower-face heaviness",
-    treatment: "9D facial rejuvenation direction",
-    timing: "Early clinical follow-up",
-    result: "Refined lower-face support while preserving recognizable expression."
-  },
-  {
-    image: "/images/gallery-case-03.jpg",
-    alt: "Before and after facial rejuvenation result showing structural support",
-    age: "46",
-    country: "Singapore",
-    concern: "Lower-face descent and reduced jawline definition",
-    treatment: "Personalized 9D surgical direction",
-    timing: "Post-treatment clinical photo",
-    result: "Improved structural support with a natural-looking facial balance."
-  },
-  {
-    image: "/images/facebook-ads-result-case-03-day30-20260720.jpg",
-    alt: "Before treatment and day 30 facial rejuvenation patient result",
-    age: "Private",
-    country: "Not disclosed",
-    concern: "Jawline, lower-face and neck aging",
-    treatment: "Doctor-led facial rejuvenation plan",
-    timing: "Day 30",
-    result: "Early recovery result with clearer lower-face and neck definition."
-  }
-];
-
-const concerns = [
-  {
-    title: "Jawline Softening",
-    description: "Your lower face may feel less defined than it used to.",
-    icon: UserRoundCheck
-  },
-  {
-    title: "Early Jowls",
-    description: "You notice tissue gathering beside the chin or jawline.",
-    icon: CheckCircle2
-  },
-  {
-    title: "Lower-Face Heaviness",
-    description: "The lower face can look heavier even without weight change.",
-    icon: ClipboardCheck
-  },
-  {
-    title: "Neck Laxity",
-    description: "Skin or deeper tissue under the jaw may feel less supported.",
-    icon: ShieldCheck
-  },
-  {
-    title: "Previous Filler Heaviness",
-    description: "Past volume treatments may have changed facial balance.",
-    icon: BadgeCheck
-  },
-  {
-    title: "Not Sure Where to Start",
-    description: "A private assessment can help organize the right questions.",
-    icon: Stethoscope
-  }
-];
-
-const methodPoints = [
-  "Facial structure and aging-pattern assessment",
-  "Natural expression and recognizable features",
-  "Personalized depth and treatment planning",
-  "Final direction confirmed through medical evaluation"
-];
-
-const journeySteps = [
-  { title: "Send Your Information", description: "Complete a short private assessment before planning travel." },
-  { title: "Receive Initial Guidance", description: "The team reviews your concerns and previous treatments." },
-  { title: "Plan Your Shanghai Visit", description: "Discuss timing, consultation, travel and recovery support." },
-  { title: "Confirm the Plan in Person", description: "Dr. Xiao completes the medical evaluation in Shanghai." }
-];
-
-const faqs = [
-  {
-    question: "What is the 9D Facelift approach?",
-    answer:
-      "9D is Dr. Xiao's doctor-led planning system. It considers facial structure, aging pattern, tissue descent, skin quality, previous treatments and natural expression before a treatment direction is discussed."
-  },
-  {
-    question: "Can international patients begin online?",
-    answer:
-      "Yes. You can begin with the private assessment form. The team can then explain which photos are needed and provide initial guidance before you plan a Shanghai visit."
-  },
-  {
-    question: "Will an online assessment confirm my final treatment?",
-    answer:
-      "No. Online assessment provides initial guidance only. Final recommendations require an in-person medical evaluation with Dr. Xiao."
-  },
-  {
-    question: "Will I look overfilled or pulled?",
-    answer:
-      "The planning focus is structural support and natural expression. Results and suitability vary, and the appropriate direction depends on your individual anatomy."
-  },
-  {
-    question: "What photos may be requested after I submit the form?",
-    answer:
-      "The team may request clear front, side, 45-degree, smile and neck photos, together with your age, country, main concerns and previous treatment history."
-  },
-  {
-    question: "How long should I plan to stay in Shanghai?",
-    answer:
-      "Timing depends on the treatment direction, medical evaluation, recovery needs and follow-up plan. The team can provide initial travel guidance after reviewing your information."
-  }
-];
+const trustIcons = [BadgeCheck, Stethoscope, Globe2, ShieldCheck];
+const concernIcons = [UserRoundCheck, CheckCircle2, ClipboardCheck, ShieldCheck, BadgeCheck, Stethoscope];
 
 const initialAssessmentValues: AssessmentValues = {
   country: "",
@@ -181,12 +59,11 @@ const initialAssessmentValues: AssessmentValues = {
   consent: false
 };
 
-export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props) {
+export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props) {
   const safeSettings = {
     ...defaultSettings,
-    ...settings,
-    whatsappNumber: googleAdsWhatsAppNumber,
-    whatsappMessage: googleAdsWhatsAppMessage
+    whatsappNumber: content.whatsappNumber,
+    whatsappMessage: content.whatsappMessage
   };
   const whatsappUrl = getWhatsAppUrl(safeSettings);
   const resultsRef = useRef<HTMLElement>(null);
@@ -240,10 +117,10 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
             </span>
           </div>
           <nav className="hidden items-center gap-7 text-xs font-semibold text-[#4B504D] lg:flex" aria-label="Page sections">
-            <a className="transition hover:text-[#42564D]" href="#real-results">Results</a>
-            <a className="transition hover:text-[#42564D]" href="#about-9d">About 9D</a>
-            <a className="transition hover:text-[#42564D]" href="#doctor">Dr. Xiao</a>
-            <a className="transition hover:text-[#42564D]" href="#international">International</a>
+            {content.results.enabled ? <a className="transition hover:text-[#42564D]" href="#real-results">Results</a> : null}
+            {content.method.enabled ? <a className="transition hover:text-[#42564D]" href="#about-9d">About 9D</a> : null}
+            {content.doctor.enabled ? <a className="transition hover:text-[#42564D]" href="#doctor">Dr. Xiao</a> : null}
+            {content.international.enabled ? <a className="transition hover:text-[#42564D]" href="#international">International</a> : null}
           </nav>
           <a
             href="#private-assessment"
@@ -261,14 +138,13 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
           <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:gap-16 lg:py-16">
             <div className="min-w-0">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9B8562]">
-                Doctor-Led Facial Rejuvenation in Shanghai
+                {content.hero.eyebrow}
               </p>
               <h1 className="mt-4 max-w-[660px] font-display text-[42px] font-semibold leading-[1.02] sm:text-[58px] lg:text-[66px]">
-                9D Facelift in Shanghai for International Patients
+                {content.hero.title}
               </h1>
               <p className="mt-5 max-w-[620px] text-base leading-7 text-[#4B504D] sm:text-lg sm:leading-8">
-                A personalized facial rejuvenation approach for jawline softening, jowls, lower-face heaviness and neck
-                laxity. Every treatment direction is confirmed through medical assessment.
+                {content.hero.description}
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -276,34 +152,36 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                   onClick={() => trackAssessmentStart("hero")}
                   className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] bg-[#42564D] px-6 text-sm font-bold text-white shadow-[0_16px_38px_rgba(66,86,77,0.18)] transition hover:-translate-y-0.5 hover:bg-[#53685E]"
                 >
-                  Request a Private Assessment
+                  {content.hero.primaryCtaLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
-                <a
-                  href="#real-results"
-                  className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] border border-[#B8A98F] bg-[#FCFBF8] px-6 text-sm font-bold transition hover:-translate-y-0.5 hover:bg-white"
-                >
-                  View Real Patient Results
-                </a>
+                {content.results.enabled ? (
+                  <a
+                    href="#real-results"
+                    className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] border border-[#B8A98F] bg-[#FCFBF8] px-6 text-sm font-bold transition hover:-translate-y-0.5 hover:bg-white"
+                  >
+                    {content.hero.secondaryCtaLabel}
+                  </a>
+                ) : null}
               </div>
               <p className="mt-4 flex items-center gap-2 text-xs leading-5 text-[#6A6F6C]">
                 <LockKeyhole className="h-4 w-4 shrink-0 text-[#53685E]" aria-hidden="true" />
-                Private inquiry. Your information is reviewed only for assessment and contact.
+                {content.hero.privacyNote}
               </p>
             </div>
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-[#DED6C8] bg-[#EDE7DD] shadow-[0_24px_70px_rgba(32,35,33,0.11)] lg:aspect-[1.04/1]">
               <Image
-                src="/images/home-hero-dr-xiao-consultation-bg.webp"
-                alt="Dr. Xiao consulting with an international patient in Shanghai"
+                src={content.hero.image}
+                alt={content.hero.imageAlt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 600px, 92vw"
                 className="object-cover object-[63%_center]"
               />
               <div className="absolute inset-x-4 bottom-4 rounded-[12px] border border-white/20 bg-[#202321]/88 p-4 text-white backdrop-blur-md sm:left-auto sm:w-[360px]">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D8C5A5]">Dr. Xiao Zhongye</p>
-                <p className="mt-1 text-sm font-semibold">Founder of the 9D Lifting System{String.fromCharCode(8482)}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D8C5A5]">{content.hero.doctorName}</p>
+                <p className="mt-1 text-sm font-semibold">{content.hero.doctorCredential}</p>
               </div>
             </div>
           </div>
@@ -311,8 +189,8 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
 
         <section className="border-b border-[#DED6C8] bg-[#FCFBF8]">
           <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-x-4 gap-y-6 px-5 py-7 sm:px-8 lg:grid-cols-4 lg:py-8">
-            {trustItems.map((item) => {
-              const Icon = item.icon;
+            {content.trustItems.slice(0, 4).map((item, index) => {
+              const Icon = trustIcons[index % trustIcons.length];
               return (
                 <div key={item.label} className="flex items-start gap-3 lg:border-r lg:border-[#DED6C8] lg:last:border-r-0">
                   <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#CDBFAD] text-[#53685E]">
@@ -330,15 +208,15 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
           </div>
         </section>
 
-        <section ref={resultsRef} id="real-results" className="scroll-mt-24 bg-[#FCFBF8] py-16 sm:py-20">
+        {content.results.enabled ? <section ref={resultsRef} id="real-results" className="scroll-mt-24 bg-[#FCFBF8] py-16 sm:py-20">
           <SectionHeading
-            eyebrow="Real Patient Results"
-            title="Natural-looking refinement, shown clearly."
-            description="Selected clinical cases with patient context, treatment direction and photo timing."
+            eyebrow={content.results.eyebrow}
+            title={content.results.title}
+            description={content.results.description}
           />
           <div className="mx-auto mt-9 max-w-[1280px] px-5 sm:px-8">
             <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-3 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
-              {resultCases.map((item, index) => (
+              {content.results.cases.slice(0, 3).map((item) => (
                 <article
                   key={item.image}
                   className="w-[86vw] max-w-[408px] shrink-0 snap-center overflow-hidden rounded-[16px] border border-[#D8CBB7] bg-white shadow-[0_18px_55px_rgba(32,35,33,0.07)] md:w-auto"
@@ -352,14 +230,14 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                       className="object-cover object-top"
                     />
                     <span className="absolute left-3 top-3 rounded-full bg-[#202321]/82 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
-                      Before
+                      {content.results.beforeLabel}
                     </span>
                     <span className="absolute right-3 top-3 rounded-full bg-[#202321]/82 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
-                      After
+                      {content.results.afterLabel}
                     </span>
-                    {index === 1 ? (
+                    {item.featured ? (
                       <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-[#FCFBF8]/92 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-[#42564D]">
-                        Selected Case
+                        {content.results.selectedLabel}
                       </span>
                     ) : null}
                   </div>
@@ -367,7 +245,7 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                     <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#9B8562]">
                       Age {item.age} <span className="px-1.5 text-[#C6B9A7]">|</span> {item.country}
                     </p>
-                    <h3 className="mt-3 font-display text-2xl font-semibold">Before and After Facial Rejuvenation</h3>
+                    <h3 className="mt-3 font-display text-2xl font-semibold">{item.title}</h3>
                     <div className="mt-4 space-y-2.5 border-t border-[#E4DDD1] pt-4 text-xs leading-5 text-[#4B504D]">
                       <p><strong className="text-[#202321]">Concern:</strong> {item.concern}</p>
                       <p><strong className="text-[#202321]">Direction:</strong> {item.treatment}</p>
@@ -379,7 +257,7 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
               ))}
             </div>
             <p className="mt-4 text-center text-[11px] leading-5 text-[#6A6F6C]">
-              Individual results vary. Images do not guarantee a specific outcome.
+              {content.results.disclaimer}
             </p>
             <div className="mt-6 text-center">
               <a
@@ -387,22 +265,22 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                 onClick={() => trackAssessmentStart("results")}
                 className="inline-flex h-12 items-center justify-center gap-3 rounded-[10px] border border-[#B8A98F] bg-[#FCFBF8] px-6 text-sm font-bold transition hover:bg-white"
               >
-                Request a Private Assessment
+                {content.results.ctaLabel}
                 <ArrowRight className="h-4 w-4 text-[#9B8562]" aria-hidden="true" />
               </a>
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="border-y border-[#DED6C8] bg-[#F7F4EE] py-16 sm:py-20">
+        {content.concerns.enabled ? <section className="border-y border-[#DED6C8] bg-[#F7F4EE] py-16 sm:py-20">
           <SectionHeading
-            eyebrow="Common Concerns"
-            title="Does this sound like what you notice?"
-            description="Aging can show up differently from one face to another."
+            eyebrow={content.concerns.eyebrow}
+            title={content.concerns.title}
+            description={content.concerns.description}
           />
           <div className="mx-auto mt-9 grid max-w-[1240px] grid-cols-1 gap-4 px-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
-            {concerns.map((item) => {
-              const Icon = item.icon;
+            {content.concerns.items.slice(0, 6).map((item, index) => {
+              const Icon = concernIcons[index % concernIcons.length];
               return (
                 <div key={item.title} className="rounded-[16px] border border-[#DED6C8] bg-[#FCFBF8] p-5">
                   <Icon className="h-5 w-5 text-[#53685E]" aria-hidden="true" />
@@ -418,39 +296,38 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
               onClick={() => trackAssessmentStart("concerns")}
               className="inline-flex h-12 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
             >
-              Tell Us What You Notice
+              {content.concerns.ctaLabel}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
-        </section>
+        </section> : null}
 
-        <section id="about-9d" className="scroll-mt-24 bg-[#FCFBF8] py-16 sm:py-20">
+        {content.method.enabled ? <section id="about-9d" className="scroll-mt-24 bg-[#FCFBF8] py-16 sm:py-20">
           <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-9 px-5 sm:px-8 lg:grid-cols-[0.72fr_1fr] lg:items-center lg:gap-16">
             <div className="lg:hidden">
               <SectionHeadingContent
-                eyebrow="What Is 9D"
-                title="A doctor-led planning system, not a one-size-fits-all procedure."
+                eyebrow={content.method.eyebrow}
+                title={content.method.title}
               />
             </div>
             <LazyTrackedVideo
-              src="/videos/dr-xiao-9d-methodology-mobile-v2.mp4"
-              poster="/videos/dr-xiao-9d-methodology-poster.jpg"
-              label="9D Method Video"
+              src={content.method.video}
+              poster={content.method.poster}
+              label={content.method.videoLabel}
               className="mx-auto aspect-[9/16] w-full max-w-[330px]"
             />
             <div>
               <div className="hidden lg:block">
                 <SectionHeadingContent
-                  eyebrow="What Is 9D"
-                  title="A doctor-led planning system, not a one-size-fits-all procedure."
+                  eyebrow={content.method.eyebrow}
+                  title={content.method.title}
                 />
               </div>
               <p className="mt-5 max-w-[650px] text-base leading-8 text-[#4B504D]">
-                Every face ages differently. Dr. Xiao reviews facial structure, expression, tissue descent, skin
-                quality and previous treatment history before recommending a direction.
+                {content.method.description}
               </p>
               <ul className="mt-6 space-y-3">
-                {methodPoints.map((point) => (
+                {content.method.points.map((point) => (
                   <li key={point} className="flex items-start gap-3 text-sm font-semibold leading-6">
                     <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#E8EEE9] text-[#42564D]">
                       <Check className="h-3 w-3" aria-hidden="true" />
@@ -464,63 +341,47 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                 onClick={() => trackAssessmentStart("about_9d")}
                 className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-[10px] border border-[#B8A98F] px-6 text-sm font-bold transition hover:bg-[#F7F4EE]"
               >
-                Request a Private Assessment
+                {content.method.ctaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="border-y border-[#DED6C8] bg-[#F7F4EE] py-16 sm:py-20">
+        {content.comparison.enabled ? <section className="border-y border-[#DED6C8] bg-[#F7F4EE] py-16 sm:py-20">
           <SectionHeading
-            eyebrow="Treatment Direction"
-            title="Different concerns may need different depth."
-            description="The appropriate direction depends on anatomy, aging pattern, previous treatments and in-person evaluation."
+            eyebrow={content.comparison.eyebrow}
+            title={content.comparison.title}
+            description={content.comparison.description}
           />
           <div className="mx-auto mt-9 grid max-w-[1080px] grid-cols-1 gap-5 px-5 sm:px-8 lg:grid-cols-2">
-            <ComparisonCard
-              index="01"
-              title="9D Facial Rejuvenation Direction"
-              description="May be discussed for earlier lower-face change, a softer jawline or mild-to-moderate tissue descent."
-              points={["Earlier jowls", "Jawline softening", "Lower-face heaviness"]}
-            />
-            <ComparisonCard
-              index="02"
-              title="Deeper Surgical Direction"
-              description="May be discussed when laxity, neck change or deeper structural descent appears more advanced."
-              points={["More pronounced jowls", "Neck laxity", "Heavier tissue descent"]}
-            />
+            {content.comparison.cards.slice(0, 2).map((card) => (
+              <ComparisonCard key={`${card.index}-${card.title}`} {...card} />
+            ))}
           </div>
           <p className="mx-auto mt-6 max-w-[860px] px-5 text-center text-xs leading-6 text-[#6A6F6C]">
-            No treatment direction is automatically better. Final recommendations depend on medical evaluation and
-            individual suitability.
+            {content.comparison.disclaimer}
           </p>
-        </section>
+        </section> : null}
 
-        <section id="doctor" className="scroll-mt-24 bg-[#FCFBF8] py-16 sm:py-20">
+        {content.doctor.enabled ? <section id="doctor" className="scroll-mt-24 bg-[#FCFBF8] py-16 sm:py-20">
           <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-9 px-5 sm:px-8 lg:grid-cols-[0.78fr_1fr] lg:items-center lg:gap-16">
             <div className="relative mx-auto aspect-[3/4] w-full max-w-[470px] overflow-hidden rounded-[20px] border border-[#DED6C8] bg-[#EDE7DD]">
               <Image
-                src="/images/dr-xiao-links-hero-portrait.webp"
-                alt="Portrait of Dr. Xiao Zhongye in his Shanghai clinic"
+                src={content.doctor.image}
+                alt={content.doctor.imageAlt}
                 fill
                 sizes="(min-width: 1024px) 470px, 92vw"
                 className="object-cover object-top"
               />
             </div>
             <div>
-              <SectionHeadingContent eyebrow="Meet the Doctor" title="Dr. Xiao Zhongye" />
+              <SectionHeadingContent eyebrow={content.doctor.eyebrow} title={content.doctor.title} />
               <p className="mt-5 max-w-[650px] text-base leading-8 text-[#4B504D]">
-                Founder of the 9D Lifting System{String.fromCharCode(8482)} with more than 27 years of clinical
-                experience in facial rejuvenation assessment and planning.
+                {content.doctor.description}
               </p>
               <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                {[
-                  "Doctor-led facial assessment",
-                  "Anatomy-based planning",
-                  "Natural expression focus",
-                  "International patient experience"
-                ].map((point) => (
+                {content.doctor.points.map((point) => (
                   <div key={point} className="flex items-center gap-3 rounded-[12px] border border-[#DED6C8] bg-[#F7F4EE] p-4 text-sm font-semibold">
                     <CheckCircle2 className="h-4 w-4 shrink-0 text-[#53685E]" aria-hidden="true" />
                     {point}
@@ -532,41 +393,40 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                 onClick={() => trackAssessmentStart("doctor")}
                 className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
               >
-                Request a Private Assessment
+                {content.doctor.ctaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section id="international" className="scroll-mt-24 border-y border-[#DED6C8] bg-[#F7F4EE] py-16 sm:py-20">
+        {content.international.enabled ? <section id="international" className="scroll-mt-24 border-y border-[#DED6C8] bg-[#F7F4EE] py-16 sm:py-20">
           <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
             <div className="lg:hidden">
               <SectionHeadingContent
-                eyebrow="International Patient Journey"
-                title="Begin online before planning your visit to Shanghai."
+                eyebrow={content.international.eyebrow}
+                title={content.international.title}
               />
             </div>
             <div className="mt-8 grid grid-cols-1 gap-10 lg:mt-0 lg:grid-cols-[0.72fr_1fr] lg:items-center lg:gap-16">
               <LazyTrackedVideo
-                src="/videos/facebook-arrival-support-mobile-v2.mp4"
-                poster="/videos/facebook-arrival-support-v21-poster.jpg"
-                label="International Patient Journey Video"
+                src={content.international.video}
+                poster={content.international.poster}
+                label={content.international.videoLabel}
                 className="mx-auto aspect-[9/16] w-full max-w-[330px]"
               />
               <div>
                 <div className="hidden lg:block">
                   <SectionHeadingContent
-                    eyebrow="International Patient Journey"
-                    title="Begin online before planning your visit to Shanghai."
+                    eyebrow={content.international.eyebrow}
+                    title={content.international.title}
                   />
                 </div>
                 <p className="mt-5 text-base leading-8 text-[#4B504D]">
-                  Online assessment, travel planning, English-speaking assistance and recovery support help make each
-                  step clearer for international patients.
+                  {content.international.description}
                 </p>
                 <div className="mt-7 space-y-3">
-                  {journeySteps.map((step, index) => (
+                  {content.international.steps.slice(0, 4).map((step, index) => (
                     <div key={step.title} className="grid grid-cols-[42px_1fr] gap-4 rounded-[14px] border border-[#DED6C8] bg-[#FCFBF8] p-4">
                       <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#42564D] text-xs font-bold text-white">
                         {index + 1}
@@ -583,18 +443,18 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
                   onClick={() => trackAssessmentStart("international_journey")}
                   className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
                 >
-                  Start Your Private Assessment
+                  {content.international.ctaLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
               </div>
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="bg-[#FCFBF8] py-16 sm:py-20">
-          <SectionHeading eyebrow="Before You Begin" title="Frequently asked questions" />
+        {content.faq.enabled ? <section className="bg-[#FCFBF8] py-16 sm:py-20">
+          <SectionHeading eyebrow={content.faq.eyebrow} title={content.faq.title} />
           <div className="mx-auto mt-8 max-w-[900px] px-5 sm:px-8">
-            {faqs.map((item, index) => (
+            {content.faq.items.map((item, index) => (
               <details
                 key={item.question}
                 open={index === 0}
@@ -613,34 +473,34 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
               </details>
             ))}
           </div>
-        </section>
+        </section> : null}
 
         <section ref={formRef} id="private-assessment" className="scroll-mt-20 bg-[#42564D] py-16 text-white sm:py-20">
           <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-[0.72fr_1fr] lg:items-start lg:gap-16">
             <div className="lg:sticky lg:top-28">
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D8C5A5]">Private Online Assessment</p>
-              <h2 className="mt-3 font-display text-4xl font-semibold leading-tight sm:text-5xl">Tell us what you notice.</h2>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D8C5A5]">{content.assessment.eyebrow}</p>
+              <h2 className="mt-3 font-display text-4xl font-semibold leading-tight sm:text-5xl">{content.assessment.title}</h2>
               <p className="mt-5 max-w-[480px] text-base leading-8 text-white/76">
-                This short two-step form helps the team understand your concerns before discussing photos, travel or
-                the next medical consultation step.
+                {content.assessment.description}
               </p>
               <div className="mt-7 space-y-3 text-sm text-white/82">
-                <p className="flex items-center gap-3"><LockKeyhole className="h-4 w-4 text-[#D8C5A5]" /> Private and confidential</p>
-                <p className="flex items-center gap-3"><Stethoscope className="h-4 w-4 text-[#D8C5A5]" /> Doctor-led assessment pathway</p>
-                <p className="flex items-center gap-3"><Globe2 className="h-4 w-4 text-[#D8C5A5]" /> International patient support</p>
+                {content.assessment.benefits.map((benefit, index) => {
+                  const Icon = [LockKeyhole, Stethoscope, Globe2][index % 3];
+                  return <p key={benefit} className="flex items-center gap-3"><Icon className="h-4 w-4 text-[#D8C5A5]" /> {benefit}</p>;
+                })}
               </div>
             </div>
-            <PrivateAssessmentForm />
+            <PrivateAssessmentForm content={content.assessment} />
           </div>
         </section>
 
         <section className="bg-[#F7F4EE] py-14 sm:py-16">
           <div className="mx-auto flex max-w-[1080px] flex-col items-start justify-between gap-7 px-5 sm:px-8 lg:flex-row lg:items-center">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9B8562]">A quieter way to begin</p>
-              <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">Assessment first. Travel planning second.</h2>
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9B8562]">{content.finalCta.eyebrow}</p>
+              <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{content.finalCta.title}</h2>
               <p className="mt-3 max-w-[680px] text-sm leading-7 text-[#4B504D]">
-                Online assessment provides initial guidance only. Final recommendations require in-person medical evaluation.
+                {content.finalCta.description}
               </p>
             </div>
             <a
@@ -648,7 +508,7 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
               onClick={() => trackAssessmentStart("final_cta")}
               className="inline-flex h-14 shrink-0 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
             >
-              Request a Private Assessment
+              {content.finalCta.ctaLabel}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
@@ -658,13 +518,12 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
       <footer className="border-t border-white/10 bg-[#202321] px-5 py-10 text-white sm:px-8">
         <div className="mx-auto grid max-w-[1180px] gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
-            <p className="font-display text-2xl font-semibold">Dr. Xiao Zhongye</p>
+            <p className="font-display text-2xl font-semibold">{content.footer.doctorName}</p>
             <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D8C5A5]">
-              Dr. Xiao Zhongye | 9D Facelift
+              {content.footer.brandLine}
             </p>
             <p className="mt-5 max-w-[720px] text-xs leading-6 text-white/55">
-              Information on this page is for reference only. A specific treatment plan must be confirmed after medical
-              consultation. Individual results vary.
+              {content.footer.disclaimer}
             </p>
           </div>
           <div>
@@ -675,7 +534,7 @@ export function GoogleAdsLandingPageV3({ settings }: GoogleAdsLandingPageV3Props
               className="inline-flex h-11 items-center justify-center gap-2 rounded-[10px] border border-white/20 px-4 text-xs font-bold text-white/82 transition hover:bg-white/10"
             >
               <MessageCircle className="h-4 w-4 text-[#7EC894]" aria-hidden="true" />
-              WhatsApp
+              {content.footer.whatsappLabel}
             </TrackedWhatsAppLink>
           </div>
         </div>
@@ -804,7 +663,7 @@ function LazyTrackedVideo({ src, poster, label, className }: { src: string; post
   );
 }
 
-function PrivateAssessmentForm() {
+function PrivateAssessmentForm({ content }: { content: GoogleAdsLandingPageContent["assessment"] }) {
   const router = useRouter();
   const [step, setStep] = useState<1 | 2>(1);
   const [values, setValues] = useState<AssessmentValues>(initialAssessmentValues);
@@ -938,7 +797,7 @@ function PrivateAssessmentForm() {
           <fieldset>
             <legend className="text-xs font-bold text-[#303531]">Main Facial Concern <span className="font-normal text-[#7C827E]">(select all that apply)</span></legend>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {["Jawline", "Jowls", "Lower Face", "Neck", "Previous Fillers", "Other"].map((concern) => {
+              {content.concernOptions.map((concern) => {
                 const selected = values.facialConcerns.includes(concern);
                 return (
                   <button
@@ -1054,7 +913,7 @@ function PrivateAssessmentForm() {
       {error ? <p role="alert" className="mt-4 rounded-[10px] bg-[#F9ECE8] px-4 py-3 text-xs font-semibold leading-5 text-[#8A4D4D]">{error}</p> : null}
       <p className="mt-5 flex items-center justify-center gap-2 text-center text-[10px] leading-5 text-[#7C827E]">
         <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
-        Your information is used only to respond to your assessment request.
+        {content.privacyText}
       </p>
     </form>
   );
