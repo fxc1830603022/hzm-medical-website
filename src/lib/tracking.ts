@@ -48,6 +48,17 @@ export type LinksPageActionPayload = {
   destination: string;
 };
 
+export type AdsLandingEventName =
+  | "ViewContent"
+  | "ViewResults"
+  | "StartAssessment"
+  | "FormStep1Complete"
+  | "Lead"
+  | "WhatsAppClick"
+  | "EmailClick"
+  | "VideoPlay"
+  | "FAQOpen";
+
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
@@ -190,6 +201,10 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
   if (typeof window === "undefined") return;
 
   const adLandingSource = getAdLandingSourceFromPath(window.location.pathname);
+  const isGoogleAssessmentJourney =
+    adLandingSource === "google_ads_landing" ||
+    payload.lastTouch?.source === "google_ads_landing" ||
+    payload.firstTouch?.source === "google_ads_landing";
   const trafficSource = adLandingSource || payload.lastTouch?.source || payload.firstTouch?.source || "unknown";
   const trafficMedium = payload.lastTouch?.medium || payload.firstTouch?.medium || "";
   const campaign = payload.lastTouch?.campaign || payload.firstTouch?.campaign || "";
@@ -207,19 +222,25 @@ export function trackWhatsAppClick(payload: WhatsAppClickPayload) {
   };
 
   sendGaEvent("whatsapp_click", eventParams);
-  sendGaEvent("generate_lead", {
-    ...eventParams,
-    lead_source: "whatsapp"
-  });
-  reportGoogleAdsLeadConversion();
+  sendGaEvent("WhatsAppClick", eventParams);
 
-  window.fbq?.("track", "Lead", {
-    content_name: "WhatsApp click",
-    content_category: payload.placement,
-    source: eventParams.traffic_source,
-    medium: eventParams.traffic_medium,
-    campaign: eventParams.campaign
-  });
+  // The Google Ads landing page uses successful form submission as its lead conversion.
+  // WhatsApp remains an auxiliary action there and must not inflate Lead reporting.
+  if (!isGoogleAssessmentJourney) {
+    sendGaEvent("generate_lead", {
+      ...eventParams,
+      lead_source: "whatsapp"
+    });
+    reportGoogleAdsLeadConversion();
+
+    window.fbq?.("track", "Lead", {
+      content_name: "WhatsApp click",
+      content_category: payload.placement,
+      source: eventParams.traffic_source,
+      medium: eventParams.traffic_medium,
+      campaign: eventParams.campaign
+    });
+  }
   window.fbq?.("trackCustom", "WhatsAppClick", {
     placement: payload.placement,
     page: payload.page,
@@ -262,6 +283,7 @@ export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
   };
 
   sendGaEvent("form_submit_lead", eventParams);
+  sendGaEvent("Lead", eventParams);
   sendGaEvent("generate_lead", {
     ...eventParams,
     lead_source: "form"
@@ -276,6 +298,21 @@ export function trackLeadFormSubmit(payload: LeadFormSubmitPayload) {
     campaign: eventParams.campaign
   });
   window.fbq?.("trackCustom", "FormSubmitLead", eventParams);
+}
+
+export function trackAdsLandingEvent(eventName: AdsLandingEventName, params: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+
+  const stored = readStoredTraffic();
+  sendGaEvent(eventName, {
+    event_category: eventName === "Lead" ? "lead" : "engagement",
+    page_path: `${window.location.pathname}${window.location.search}${window.location.hash}`,
+    traffic_source: stored?.lastTouch?.source || stored?.firstTouch?.source || "google_ads_landing",
+    traffic_medium: stored?.lastTouch?.medium || stored?.firstTouch?.medium || "paid_landing",
+    campaign: stored?.lastTouch?.campaign || stored?.firstTouch?.campaign || "",
+    content: stored?.lastTouch?.content || stored?.firstTouch?.content || "",
+    ...params
+  });
 }
 
 export function trackLinksPageAction(payload: LinksPageActionPayload) {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { AdsLandingPageView } from "@/components/AdsLandingPageView";
+import { GoogleAdsLandingPageV3 } from "@/components/GoogleAdsLandingPageV3";
 import { StructuredData } from "@/components/StructuredData";
-import { getGalleryItems, getSiteSettings } from "@/lib/sanity";
+import { getSiteSettings } from "@/lib/sanity";
 import {
   absoluteUrl,
   imageUrl,
@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 const pageSeo = {
   title: "9D Facelift in Shanghai by Dr. Xiao | Online Assessment",
   description:
-    "Learn about Dr. Xiao's doctor-led 9D Facelift in Shanghai, natural-looking patient results, recovery, international patient planning, and private WhatsApp photo assessment.",
+    "Request a private doctor-led 9D facial assessment with Dr. Xiao in Shanghai. View real patient results and learn about international patient planning.",
   path: "/ads/google-9d-facelift",
   image: "/images/home-hero-dr-xiao-consultation-bg.webp"
 };
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export default async function GoogleAdsLandingPage() {
-  const [settings, galleryItems] = await Promise.all([getSiteSettings(), getGalleryItems()]);
+  const settings = await getSiteSettings();
 
   return (
     <>
@@ -66,7 +66,7 @@ export default async function GoogleAdsLandingPage() {
           })
         ]}
       />
-      <AdsLandingPageView variant="google" settings={settings} galleryItems={galleryItems} />
+      <GoogleAdsLandingPageV3 settings={settings} />
     </>
   );
 }

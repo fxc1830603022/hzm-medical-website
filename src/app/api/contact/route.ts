@@ -22,6 +22,10 @@ type ContactPayload = {
   hearAbout?: string;
   message?: string;
   source?: string;
+  previousTreatments?: string;
+  treatmentTimeline?: string;
+  preferredContactMethod?: string;
+  consent?: string | boolean;
 };
 
 function clean(value: unknown) {
@@ -68,41 +72,64 @@ function inferCountryRegion(request: Request) {
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as ContactPayload;
+  const source = clean(body.source) || "website";
+  const isGooglePrivateAssessment = source === "google-ads-private-assessment-v3";
   const countryRegion = clean(body.country) || clean(body.nationality) || inferCountryRegion(request);
   const facialConcerns = clean(body.facialConcerns) || clean(body.concern);
+  const assessmentContext = isGooglePrivateAssessment
+    ? [
+        `Previous treatments: ${clean(body.previousTreatments) || "Not provided"}`,
+        `Expected timeline: ${clean(body.treatmentTimeline) || "Not provided"}`,
+        `Preferred contact: ${clean(body.preferredContactMethod) || "Not provided"}`,
+        clean(body.message) ? `Additional notes: ${clean(body.message)}` : ""
+      ]
+        .filter(Boolean)
+        .join("\n")
+    : clean(body.message);
   const payload = {
     name: clean(body.name),
-    gender: clean(body.gender),
+    gender: clean(body.gender) || (isGooglePrivateAssessment ? "Not provided" : ""),
     ageGroup: clean(body.ageGroup),
     nationality: countryRegion,
     facialConcerns,
-    budget: clean(body.budget),
+    budget: clean(body.budget) || (isGooglePrivateAssessment ? "Not provided" : ""),
     whatsapp: clean(body.whatsapp),
     email: clean(body.email),
     wechat: clean(body.wechat),
     phone: clean(body.phone),
     country: countryRegion,
     concern: facialConcerns,
-    interestedIn: clean(body.interestedIn),
-    hearAbout: clean(body.hearAbout),
-    message: clean(body.message),
+    interestedIn: clean(body.interestedIn) || (isGooglePrivateAssessment ? "Private 9D Assessment" : ""),
+    hearAbout: clean(body.hearAbout) || (isGooglePrivateAssessment ? "Google Search" : ""),
+    message: assessmentContext,
     status: "new",
-    source: clean(body.source) || "website",
+    source,
     createdAt: new Date().toISOString()
   };
 
-  if (
-    !payload.name ||
-    !payload.email ||
-    !payload.gender ||
-    !payload.ageGroup ||
-    !payload.country ||
-    !payload.facialConcerns ||
-    !payload.budget ||
-    !payload.whatsapp ||
-    !payload.interestedIn ||
-    !payload.hearAbout
-  ) {
+  const hasGoogleAssessmentConsent = body.consent === true || body.consent === "true" || body.consent === "on";
+  const googleAssessmentInvalid =
+    isGooglePrivateAssessment &&
+    (!payload.name ||
+      !payload.ageGroup ||
+      !payload.country ||
+      !payload.facialConcerns ||
+      (!payload.whatsapp && !payload.email) ||
+      !hasGoogleAssessmentConsent);
+  const standardFormInvalid =
+    !isGooglePrivateAssessment &&
+    (!payload.name ||
+      !payload.email ||
+      !payload.gender ||
+      !payload.ageGroup ||
+      !payload.country ||
+      !payload.facialConcerns ||
+      !payload.budget ||
+      !payload.whatsapp ||
+      !payload.interestedIn ||
+      !payload.hearAbout);
+
+  if (googleAssessmentInvalid || standardFormInvalid) {
     return NextResponse.json({ ok: false, error: "Please complete all required fields." }, { status: 422 });
   }
 
