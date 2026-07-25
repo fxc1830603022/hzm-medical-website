@@ -186,7 +186,7 @@ export async function getGoogleAdsLandingPageContent(): Promise<GoogleAdsLanding
 
   try {
     const content = await sanityClient.fetch<DeepPartial<GoogleAdsLandingPageContent> | null>(
-      `*[_type == "googleAdsLandingPage" && _id == "googleAdsLandingPage"][0] {
+      `*[_type == "googleAdsLandingPage" && _id == "googleAdsLandingPage.content"][0] {
         seoTitle,
         seoDescription,
         whatsappNumber,

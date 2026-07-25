@@ -1,6 +1,6 @@
 import type { StructureBuilder } from "sanity/structure";
 
-export const googleAdsLandingPageDocumentId = "googleAdsLandingPage";
+export const googleAdsLandingPageDocumentId = "googleAdsLandingPage.content";
 export const singletonSchemaTypes = new Set(["googleAdsLandingPage"]);
 
 export function studioStructure(S: StructureBuilder) {
