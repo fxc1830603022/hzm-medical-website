@@ -90,6 +90,12 @@ const facebookMethodVideoSrc = "/videos/dr-xiao-9d-methodology-mobile-v2.mp4";
 const facebookArrivalVideoSrc = "/videos/facebook-arrival-support-mobile-v2.mp4";
 const facebookArrivalVideoPoster = "/videos/facebook-arrival-support-v21-poster.jpg";
 const facebookAdsWhatsAppNumber = "+13043566178";
+const googleAdsWhatsAppNumber = "+601121706171";
+const facebookResultImageOverrides = [
+  "/images/facebook-ads-result-case-01-20260724.jpg",
+  "/images/facebook-ads-result-case-02-20260724.jpg",
+  "/images/facebook-ads-result-case-03-day30-20260720.jpg"
+];
 
 const googleWhatsAppMessage =
   "Hello, I found Dr. Xiao 9D Facelift through Google Ads and would like to send my photos for a private online assessment.\n\nMy age:\nMy country:\nMy main concerns:\nPrevious treatments:";
@@ -568,12 +574,9 @@ const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
 export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandingPageViewProps) {
   const config = pageConfigs[variant];
   const safeSettings = { ...defaultSettings, ...settings, whatsappMessage: config.whatsappMessage };
-  const pageSettings =
-    variant === "facebook" && facebookAdsWhatsAppNumber
-      ? { ...safeSettings, whatsappNumber: facebookAdsWhatsAppNumber }
-      : safeSettings;
+  const adsWhatsAppNumber = variant === "google" ? googleAdsWhatsAppNumber : facebookAdsWhatsAppNumber;
+  const pageSettings = { ...safeSettings, whatsappNumber: adsWhatsAppNumber };
   const whatsappUrl = getWhatsAppUrl(pageSettings);
-  const [trackingQuery, setTrackingQuery] = useState("");
   const resultCards = useMemo(
     () =>
       variant === "facebook"
@@ -582,17 +585,12 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
     [config.results, galleryItems, variant]
   );
 
-  useEffect(() => {
-    setTrackingQuery(window.location.search);
-  }, []);
-
   if (variant === "facebook") {
     return (
       <FacebookAdsV2Page
         config={config}
         whatsappUrl={whatsappUrl}
         resultCards={resultCards}
-        trackingQuery={trackingQuery}
       />
     );
   }
@@ -607,7 +605,7 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
         <GoogleMethodVideoSection whatsappUrl={whatsappUrl} />
         <FitCheckSection config={config} whatsappUrl={whatsappUrl} />
         <DifferenceSection config={config} />
-        <ResultsSection title={config.resultsTitle} results={resultCards} trackingQuery={trackingQuery} />
+        <ResultsSection title={config.resultsTitle} results={resultCards} whatsappUrl={whatsappUrl} />
         <DoctorAuthoritySection />
         <GoogleInternationalJourneySection whatsappUrl={whatsappUrl} />
         <PlanFitSection whatsappUrl={whatsappUrl} />
@@ -625,17 +623,15 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
 function FacebookAdsV2Page({
   config,
   whatsappUrl,
-  resultCards,
-  trackingQuery
+  resultCards
 }: {
   config: PageConfig;
   whatsappUrl: string;
   resultCards: ResultCardData[];
-  trackingQuery: string;
 }) {
   return (
     <div className="min-h-screen bg-[#F8F4EE] text-[#1C1C1C] antialiased">
-      <SimpleHeader whatsappUrl={whatsappUrl} />
+      <SimpleHeader whatsappUrl={whatsappUrl} allowHomeLink={false} />
       <main>
         <FacebookHeroV2 config={config} whatsappUrl={whatsappUrl} />
         <FacebookDoctorTrustBar />
@@ -645,7 +641,6 @@ function FacebookAdsV2Page({
         <FacebookResultsStories
           title={config.resultsTitle}
           results={resultCards}
-          trackingQuery={trackingQuery}
           whatsappUrl={whatsappUrl}
         />
         <FacebookDoctorAuthorityV2 whatsappUrl={whatsappUrl} />
@@ -886,12 +881,10 @@ function FacebookSelfAssessment({ config, whatsappUrl }: { config: PageConfig; w
 function FacebookResultsStories({
   title,
   results,
-  trackingQuery,
   whatsappUrl
 }: {
   title: string;
   results: ResultCardData[];
-  trackingQuery: string;
   whatsappUrl: string;
 }) {
   return (
@@ -921,20 +914,18 @@ function FacebookResultsStories({
 
         <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-5 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
           {results.map((item, index) => (
-            <Link
+            <div
               key={item.id || `${item.image}-${index}`}
-              href={withTrackingQuery("/before-after#case-gallery", trackingQuery)}
-              aria-label={`View ${item.title || item.procedure} case details`}
               className="group block h-auto w-[86vw] max-w-[420px] shrink-0 snap-center sm:w-[68vw] lg:w-auto lg:max-w-none"
             >
-              <article className="flex h-full flex-col overflow-hidden rounded-md border border-[#DDCBA9] bg-[#FFFEFB] shadow-[0_12px_30px_rgba(48,35,19,0.045)] transition-colors group-hover:border-[#B89A5A]">
+              <article className="flex h-full flex-col overflow-hidden rounded-md border border-[#DDCBA9] bg-[#FFFEFB] shadow-[0_12px_30px_rgba(48,35,19,0.045)]">
                 <div className="relative aspect-square overflow-hidden bg-[#EDE7DD]">
                   <Image
                     src={item.image}
                     alt={item.alt}
                     fill
                     sizes="(min-width: 1280px) 430px, (min-width: 1024px) 31vw, 86vw"
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                    className="object-cover object-top"
                   />
                   <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-white/72 shadow-[0_0_0_1px_rgba(29,25,20,0.08)]" />
                   <span className="absolute left-3 top-3 rounded-sm bg-[#1D1A17]/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
@@ -960,7 +951,6 @@ function FacebookResultsStories({
                         {item.title || item.procedure}
                       </h3>
                     </div>
-                    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-[#B89A5A] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </div>
 
                   <dl className="mt-4 grid gap-3 text-sm leading-6 text-[#5D544B]">
@@ -985,7 +975,7 @@ function FacebookResultsStories({
                   </dl>
                 </div>
               </article>
-            </Link>
+            </div>
           ))}
         </div>
 
@@ -1348,16 +1338,28 @@ function FacebookSection({
   );
 }
 
-function SimpleHeader({ whatsappUrl }: { whatsappUrl: string }) {
+function SimpleHeader({ whatsappUrl, allowHomeLink = true }: { whatsappUrl: string; allowHomeLink?: boolean }) {
+  const brand = (
+    <>
+      <span className="font-display text-2xl tracking-[0.13em] text-[#171717]">DR. XIAO</span>
+      <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8C6B35]">
+        9D Lifting System
+      </span>
+    </>
+  );
+
   return (
     <header className="border-b border-[#E8DCCB] bg-[#FBF8F1]/95">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group inline-flex min-w-0 flex-col leading-none" aria-label="Dr. Xiao home">
-          <span className="font-display text-2xl tracking-[0.13em] text-[#171717]">DR. XIAO</span>
-          <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8C6B35]">
-            9D Lifting System
-          </span>
-        </Link>
+        {allowHomeLink ? (
+          <Link href="/" className="group inline-flex min-w-0 flex-col leading-none" aria-label="Dr. Xiao home">
+            {brand}
+          </Link>
+        ) : (
+          <div className="inline-flex min-w-0 flex-col leading-none" aria-label="Dr. Xiao 9D Lifting System">
+            {brand}
+          </div>
+        )}
         <TrackedWhatsAppLink
           href={whatsappUrl}
           placement="hero"
@@ -1615,11 +1617,11 @@ function DifferenceSection({ config }: { config: PageConfig }) {
 function ResultsSection({
   title,
   results,
-  trackingQuery
+  whatsappUrl
 }: {
   title: string;
   results: ResultCardData[];
-  trackingQuery: string;
+  whatsappUrl: string;
 }) {
   return (
     <SectionShell id="real-results" className="bg-[#FFFEFB]">
@@ -1646,13 +1648,15 @@ function ResultsSection({
       </div>
       <p className="mt-5 text-center text-xs font-semibold text-[#6C6258]">Individual results vary.</p>
       <div className="mt-7 text-center">
-        <Link
-          href={withTrackingQuery("/before-after", trackingQuery)}
+        <TrackedWhatsAppLink
+          href={whatsappUrl}
+          placement="google_ads_results_whatsapp"
+          label="Google Ads results WhatsApp assessment"
           className="inline-flex h-11 items-center justify-center gap-3 rounded-md border border-[#C7A56D] bg-white px-7 text-sm font-bold text-[#A47735] transition hover:-translate-y-0.5 hover:bg-[#FBF8F1]"
         >
-          View More Results
+          Ask About Results on WhatsApp
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
+        </TrackedWhatsAppLink>
       </div>
     </SectionShell>
   );
@@ -1819,46 +1823,65 @@ function InternationalSection({ whatsappUrl }: { whatsappUrl: string }) {
 
 function PlanFitSection({ whatsappUrl }: { whatsappUrl: string }) {
   return (
-    <SectionShell className="bg-[#FBF8F1]">
-      <CenteredHeading eyebrow="Plan fit" title="Which Approach May Fit Your Face?" />
-      <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
-        {planCards.map((plan) => (
-          <article
-            key={plan.title}
-            className={`overflow-hidden rounded-[20px] border p-5 ${
-              plan.featured
-                ? "border-[#C7A56D] bg-[#171717] text-white"
-                : "border-[#E5D8C4] bg-white/82 text-[#171717]"
-            }`}
-          >
-            <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-md bg-[#EEE6D9]">
-              <Image src={plan.image} alt={plan.title} fill sizes="(min-width: 1024px) 330px, 92vw" className="object-cover" />
-            </div>
-            <h3 className="text-lg font-bold">{plan.title}</h3>
-            <p className={`mt-2 text-sm leading-6 ${plan.featured ? "text-white/76" : "text-[#5A5149]"}`}>
-              {plan.description}
-            </p>
-            <ul className="mt-4 space-y-2">
-              {plan.items.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm font-semibold">
-                  <CheckCircle2 className={`h-4 w-4 ${plan.featured ? "text-[#D8BE8B]" : "text-[#A47735]"}`} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {plan.featured ? (
-              <TrackedWhatsAppLink
-                href={whatsappUrl}
-                placement="plan_fit"
-                label="Plan fit WhatsApp"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#D8BE8B]"
-              >
-                Find out which plan fits you
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </TrackedWhatsAppLink>
-            ) : null}
-          </article>
-        ))}
+    <SectionShell className="overflow-hidden bg-[#F8F4EE]">
+      <CenteredHeading
+        eyebrow="Plan fit"
+        title="Which Approach May Fit Your Face?"
+        description="A private photo assessment helps identify the most appropriate direction for your facial anatomy and aging pattern."
+      />
+      <div className="relative left-1/2 mt-10 w-screen max-w-[1380px] -translate-x-1/2 px-4 sm:px-6 lg:px-8">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-5 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
+          {planCards.map((plan, index) => (
+            <article
+              key={plan.title}
+              className="flex h-auto w-[86vw] max-w-[430px] shrink-0 snap-center flex-col overflow-hidden rounded-md bg-[#FFFEFB] shadow-[0_12px_30px_rgba(48,35,19,0.045)] sm:w-[68vw] lg:w-auto lg:max-w-none"
+            >
+              <div className="relative aspect-[3/4] overflow-hidden bg-[#F1ECE4]">
+                <Image
+                  src={plan.image}
+                  alt={plan.title}
+                  fill
+                  sizes="(min-width: 1280px) 430px, (min-width: 1024px) 31vw, 86vw"
+                  className="object-contain object-center"
+                />
+                <span className="absolute left-4 top-4 rounded-sm bg-[#1D1A17]/82 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+                  {plan.featured ? "Private assessment" : `Approach 0${index + 1}`}
+                </span>
+              </div>
+
+              <div className="flex flex-1 flex-col p-5 sm:p-6">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#A67B36]">
+                    {plan.featured ? "Start with facial assessment" : "Personalized treatment direction"}
+                  </p>
+                  <h3 className="mt-2 font-display text-[24px] font-semibold leading-tight text-[#211D19]">{plan.title}</h3>
+                </div>
+
+                <p className="mt-4 text-sm leading-6 text-[#5D544B]">{plan.description}</p>
+                <ul className="mt-5 grid gap-3 text-sm font-semibold text-[#2A251F]">
+                  {plan.items.map((item) => (
+                    <li key={item} className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#B89A5A]" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                {plan.featured ? (
+                  <TrackedWhatsAppLink
+                    href={whatsappUrl}
+                    placement="plan_fit"
+                    label="Plan fit WhatsApp"
+                    className="mt-6 inline-flex h-11 w-fit items-center justify-center gap-3 rounded-md border border-[#C8A664] px-5 text-sm font-bold text-[#2A251F] transition-colors hover:bg-[#F8F4EE]"
+                  >
+                    Find Out on WhatsApp
+                    <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
+                  </TrackedWhatsAppLink>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
       <p className="mx-auto mt-7 max-w-[880px] text-center text-xs font-semibold leading-6 text-[#6C6258]">
         The final recommendation depends on facial anatomy, aging pattern, previous treatments, medical history,
@@ -2132,7 +2155,7 @@ function buildFacebookResultCards(galleryItems: GalleryItem[]): ResultCardData[]
 
   return selectedItems.map((item, index) => ({
     id: item.id,
-    image: index === 2 ? "/images/facebook-ads-result-case-03-day30-20260720.jpg" : item.image,
+    image: facebookResultImageOverrides[index] || item.image,
     alt: item.alt || item.title || `9D facial rejuvenation result ${index + 1}`,
     title: item.title || item.caseLabel || "Natural Facial Rejuvenation",
     age: item.age?.trim() || "Private",
@@ -2152,12 +2175,4 @@ function getPostOpTime(afterLabel?: string) {
   if (!value || /^after$/i.test(value)) return undefined;
 
   return value.replace(/^after\s*/i, "");
-}
-
-function withTrackingQuery(href: string, trackingQuery: string) {
-  if (!trackingQuery || href.startsWith("#") || href.startsWith("http")) return href;
-
-  const [path, hash] = href.split("#");
-  const separator = path.includes("?") ? "&" : "?";
-  return `${path}${separator}${trackingQuery.replace(/^\?/, "")}${hash ? `#${hash}` : ""}`;
 }
