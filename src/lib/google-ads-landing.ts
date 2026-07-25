@@ -394,6 +394,72 @@ export const defaultGoogleAdsLandingPageContent: GoogleAdsLandingPageContent = {
   }
 };
 
+export const googleAdsLandingPageDocumentId = "googleAdsLandingPage.content";
+
+function keyedCmsItems<T extends Record<string, unknown>>(items: T[], type: string, prefix: string) {
+  return items.map((item, index) => ({
+    _key: `${prefix}-${index + 1}`,
+    _type: type,
+    ...item
+  }));
+}
+
+export function getGoogleAdsLandingPageCmsInitialValue() {
+  const defaults = defaultGoogleAdsLandingPageContent;
+  const { image: _heroImage, ...hero } = defaults.hero;
+  const { video: _methodVideo, poster: _methodPoster, ...method } = defaults.method;
+  const { image: _doctorImage, ...doctor } = defaults.doctor;
+  const { video: _internationalVideo, poster: _internationalPoster, ...international } = defaults.international;
+
+  return {
+    internalTitle: "Google Ads - 9D Facelift Landing Page",
+    seoTitle: defaults.seoTitle,
+    seoDescription: defaults.seoDescription,
+    whatsappNumber: defaults.whatsappNumber,
+    whatsappMessage: defaults.whatsappMessage,
+    hero,
+    trustItems: keyedCmsItems(defaults.trustItems, "trustItem", "trust"),
+    results: {
+      ...defaults.results,
+      cases: keyedCmsItems(
+        defaults.results.cases.map(({ image: _image, ...item }) => item),
+        "resultCase",
+        "result"
+      )
+    },
+    concerns: {
+      ...defaults.concerns,
+      items: keyedCmsItems(defaults.concerns.items, "textItem", "concern")
+    },
+    method,
+    comparison: {
+      ...defaults.comparison,
+      cards: keyedCmsItems(defaults.comparison.cards, "comparisonCard", "comparison")
+    },
+    doctor,
+    international: {
+      ...international,
+      steps: keyedCmsItems(defaults.international.steps, "textItem", "journey")
+    },
+    faq: {
+      ...defaults.faq,
+      items: keyedCmsItems(defaults.faq.items, "faqItem", "faq")
+    },
+    assessment: defaults.assessment,
+    finalCta: defaults.finalCta,
+    footer: defaults.footer,
+    thankYou: defaults.thankYou
+  };
+}
+
+export function getGoogleAdsLandingPageCmsDocument() {
+  return {
+    _id: googleAdsLandingPageDocumentId,
+    _type: "googleAdsLandingPage",
+    ...getGoogleAdsLandingPageCmsInitialValue()
+  };
+}
+
 function mergeObjectList<T extends Record<string, unknown>>(
   value: Array<DeepPartial<T>> | undefined,
   fallback: T[]

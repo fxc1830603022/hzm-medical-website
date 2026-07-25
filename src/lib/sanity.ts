@@ -3,6 +3,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import {
   defaultGoogleAdsLandingPageContent,
+  getGoogleAdsLandingPageCmsDocument,
   mergeGoogleAdsLandingPageContent,
   type DeepPartial,
   type GoogleAdsLandingPageContent
@@ -305,6 +306,14 @@ export async function getGoogleAdsLandingPageContent(): Promise<GoogleAdsLanding
         }
       }`
     );
+
+    if (!content) {
+      const serverClient = makeServerSanityClient();
+      if (serverClient) {
+        await serverClient.createIfNotExists(getGoogleAdsLandingPageCmsDocument());
+      }
+      return defaultGoogleAdsLandingPageContent;
+    }
 
     return mergeGoogleAdsLandingPageContent(content);
   } catch {

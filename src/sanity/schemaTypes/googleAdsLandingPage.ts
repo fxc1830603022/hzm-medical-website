@@ -1,45 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { defaultGoogleAdsLandingPageContent } from "../../lib/google-ads-landing";
+import { getGoogleAdsLandingPageCmsInitialValue } from "../../lib/google-ads-landing";
 
-const defaults = defaultGoogleAdsLandingPageContent;
-
-const initialValue = {
-  internalTitle: "Google Ads - 9D Facelift Landing Page",
-  seoTitle: defaults.seoTitle,
-  seoDescription: defaults.seoDescription,
-  whatsappNumber: defaults.whatsappNumber,
-  whatsappMessage: defaults.whatsappMessage,
-  hero: {
-    ...defaults.hero,
-    image: undefined
-  },
-  trustItems: defaults.trustItems,
-  results: {
-    ...defaults.results,
-    cases: defaults.results.cases.map(({ image: _image, ...item }) => item)
-  },
-  concerns: defaults.concerns,
-  method: {
-    ...defaults.method,
-    video: undefined,
-    poster: undefined
-  },
-  comparison: defaults.comparison,
-  doctor: {
-    ...defaults.doctor,
-    image: undefined
-  },
-  international: {
-    ...defaults.international,
-    video: undefined,
-    poster: undefined
-  },
-  faq: defaults.faq,
-  assessment: defaults.assessment,
-  finalCta: defaults.finalCta,
-  footer: defaults.footer,
-  thankYou: defaults.thankYou
-};
+const initialValue = getGoogleAdsLandingPageCmsInitialValue();
 
 const enabledField = defineField({
   name: "enabled",
