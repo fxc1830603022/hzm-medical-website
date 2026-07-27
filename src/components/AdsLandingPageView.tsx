@@ -89,7 +89,7 @@ const assessmentInstruction =
 const facebookMethodVideoSrc = "/videos/dr-xiao-9d-methodology-mobile-v2.mp4";
 const facebookArrivalVideoSrc = "/videos/facebook-arrival-support-mobile-v2.mp4";
 const facebookArrivalVideoPoster = "/videos/facebook-arrival-support-v21-poster.jpg";
-const facebookAdsWhatsAppNumber = "+13043566178";
+const facebookAdsWhatsAppNumber = "+17023035859";
 const googleAdsWhatsAppNumber = "+601121706171";
 const facebookResultImageOverrides = [
   "/images/facebook-ads-result-case-01-20260724.jpg",
