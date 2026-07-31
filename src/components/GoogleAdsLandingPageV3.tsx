@@ -122,14 +122,24 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
             {content.doctor.enabled ? <a className="transition hover:text-[#42564D]" href="#doctor">Dr. Xiao</a> : null}
             {content.international.enabled ? <a className="transition hover:text-[#42564D]" href="#international">International</a> : null}
           </nav>
-          <a
-            href="#private-assessment"
-            onClick={() => trackAssessmentStart("sticky_navigation")}
-            className="inline-flex h-11 items-center justify-center rounded-[10px] bg-[#42564D] px-4 text-xs font-bold text-white transition hover:bg-[#53685E] sm:px-5"
-          >
-            <span className="sm:hidden">Assessment</span>
-            <span className="hidden sm:inline">Request Assessment</span>
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href="#private-assessment"
+              onClick={() => trackAssessmentStart("sticky_navigation")}
+              className="hidden h-11 items-center justify-center rounded-[10px] bg-[#42564D] px-5 text-xs font-bold text-white transition hover:bg-[#53685E] sm:inline-flex"
+            >
+              Request Assessment
+            </a>
+            <TrackedWhatsAppLink
+              href={whatsappUrl}
+              placement="google_ads_header_whatsapp"
+              label="WhatsApp assessment"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-[10px] bg-[#16884F] px-3.5 text-xs font-bold text-white shadow-[0_10px_26px_rgba(22,136,79,0.2)] transition hover:-translate-y-0.5 hover:bg-[#117443] sm:px-5"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              WhatsApp
+            </TrackedWhatsAppLink>
+          </div>
         </div>
       </header>
 
@@ -147,23 +157,34 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
                 {content.hero.description}
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <TrackedWhatsAppLink
+                  href={whatsappUrl}
+                  placement="google_ads_hero_whatsapp"
+                  label="Start WhatsApp assessment"
+                  className="inline-flex h-14 items-center justify-center gap-3 whitespace-nowrap rounded-[11px] bg-[#16884F] px-5 text-sm font-bold text-white shadow-[0_18px_40px_rgba(22,136,79,0.22)] transition hover:-translate-y-0.5 hover:bg-[#117443]"
+                >
+                  <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                  Start on WhatsApp
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </TrackedWhatsAppLink>
                 <a
                   href="#private-assessment"
                   onClick={() => trackAssessmentStart("hero")}
-                  className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] bg-[#42564D] px-6 text-sm font-bold text-white shadow-[0_16px_38px_rgba(66,86,77,0.18)] transition hover:-translate-y-0.5 hover:bg-[#53685E]"
+                  className="inline-flex h-14 items-center justify-center gap-3 whitespace-nowrap rounded-[11px] bg-[#42564D] px-5 text-sm font-bold text-white shadow-[0_16px_38px_rgba(66,86,77,0.16)] transition hover:-translate-y-0.5 hover:bg-[#53685E]"
                 >
                   {content.hero.primaryCtaLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
-                {content.results.enabled ? (
-                  <a
-                    href="#real-results"
-                    className="inline-flex h-14 items-center justify-center gap-3 rounded-[11px] border border-[#B8A98F] bg-[#FCFBF8] px-6 text-sm font-bold transition hover:-translate-y-0.5 hover:bg-white"
-                  >
-                    {content.hero.secondaryCtaLabel}
-                  </a>
-                ) : null}
               </div>
+              {content.results.enabled ? (
+                <a
+                  href="#real-results"
+                  className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-[#53685E] underline decoration-[#B8A98F] underline-offset-4 transition hover:text-[#202321]"
+                >
+                  {content.hero.secondaryCtaLabel}
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              ) : null}
               <p className="mt-4 flex items-center gap-2 text-xs leading-5 text-[#6A6F6C]">
                 <LockKeyhole className="h-4 w-4 shrink-0 text-[#53685E]" aria-hidden="true" />
                 {content.hero.privacyNote}
@@ -259,7 +280,16 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
             <p className="mt-4 text-center text-[11px] leading-5 text-[#6A6F6C]">
               {content.results.disclaimer}
             </p>
-            <div className="mt-6 text-center">
+            <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+              <TrackedWhatsAppLink
+                href={whatsappUrl}
+                placement="google_ads_results_whatsapp"
+                label="Ask about patient results on WhatsApp"
+                className="inline-flex h-12 items-center justify-center gap-2.5 rounded-[10px] bg-[#16884F] px-6 text-sm font-bold text-white shadow-[0_12px_30px_rgba(22,136,79,0.18)] transition hover:-translate-y-0.5 hover:bg-[#117443]"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                Ask About These Results
+              </TrackedWhatsAppLink>
               <a
                 href="#private-assessment"
                 onClick={() => trackAssessmentStart("results")}
@@ -438,14 +468,25 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
                     </div>
                   ))}
                 </div>
-                <a
-                  href="#private-assessment"
-                  onClick={() => trackAssessmentStart("international_journey")}
-                  className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
-                >
-                  {content.international.ctaLabel}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <TrackedWhatsAppLink
+                    href={whatsappUrl}
+                    placement="google_ads_international_whatsapp"
+                    label="Chat with international patient team"
+                    className="inline-flex h-12 items-center justify-center gap-2.5 rounded-[10px] bg-[#16884F] px-5 text-sm font-bold text-white shadow-[0_12px_30px_rgba(22,136,79,0.18)] transition hover:-translate-y-0.5 hover:bg-[#117443]"
+                  >
+                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    Chat With Our International Team
+                  </TrackedWhatsAppLink>
+                  <a
+                    href="#private-assessment"
+                    onClick={() => trackAssessmentStart("international_journey")}
+                    className="inline-flex h-12 items-center justify-center gap-3 rounded-[10px] border border-[#AFA18B] bg-[#FCFBF8] px-5 text-sm font-bold transition hover:bg-white"
+                  >
+                    {content.international.ctaLabel}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -503,14 +544,25 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
                 {content.finalCta.description}
               </p>
             </div>
-            <a
-              href="#private-assessment"
-              onClick={() => trackAssessmentStart("final_cta")}
-              className="inline-flex h-14 shrink-0 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
-            >
-              {content.finalCta.ctaLabel}
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+            <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col xl:flex-row">
+              <TrackedWhatsAppLink
+                href={whatsappUrl}
+                placement="google_ads_final_whatsapp"
+                label="Continue on WhatsApp"
+                className="inline-flex h-14 items-center justify-center gap-2.5 rounded-[10px] bg-[#16884F] px-6 text-sm font-bold text-white shadow-[0_14px_34px_rgba(22,136,79,0.2)] transition hover:-translate-y-0.5 hover:bg-[#117443]"
+              >
+                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                Continue on WhatsApp
+              </TrackedWhatsAppLink>
+              <a
+                href="#private-assessment"
+                onClick={() => trackAssessmentStart("final_cta")}
+                className="inline-flex h-14 items-center justify-center gap-3 rounded-[10px] bg-[#42564D] px-6 text-sm font-bold text-white transition hover:bg-[#53685E]"
+              >
+                {content.finalCta.ctaLabel}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </section>
       </main>
@@ -531,10 +583,10 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
               href={whatsappUrl}
               placement="google_ads_footer_auxiliary"
               label="Send photos on WhatsApp"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-[10px] border border-white/20 px-4 text-xs font-bold text-white/82 transition hover:bg-white/10"
+              className="inline-flex h-12 items-center justify-center gap-2.5 rounded-[10px] bg-[#16884F] px-5 text-xs font-bold text-white shadow-[0_12px_30px_rgba(0,0,0,0.2)] transition hover:-translate-y-0.5 hover:bg-[#1A9A5A]"
             >
-              <MessageCircle className="h-4 w-4 text-[#7EC894]" aria-hidden="true" />
-              {content.footer.whatsappLabel}
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              {content.footer.whatsappLabel} Assessment
             </TrackedWhatsAppLink>
           </div>
         </div>
@@ -549,21 +601,37 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
           <a
             href="#private-assessment"
             onClick={() => trackAssessmentStart("mobile_sticky")}
-            className="inline-flex h-14 flex-1 items-center justify-center rounded-[10px] bg-[#42564D] px-4 text-sm font-bold text-white"
+            className="inline-flex h-14 flex-[1.08] items-center justify-center rounded-[10px] bg-[#42564D] px-3 text-[13px] font-bold text-white"
           >
-            Request Assessment
+            Private Form
           </a>
           <TrackedWhatsAppLink
             href={whatsappUrl}
-            placement="google_ads_mobile_auxiliary"
-            label="WhatsApp"
+            placement="google_ads_mobile_sticky_whatsapp"
+            label="WhatsApp assessment"
             aria-label="Send photos on WhatsApp"
-            className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-[10px] border border-[#C9D3CB] bg-[#E8EEE9] p-3 text-[#42564D]"
+            className="inline-flex h-14 flex-1 items-center justify-center gap-2 rounded-[10px] bg-[#16884F] px-3 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(22,136,79,0.18)]"
           >
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            WhatsApp
           </TrackedWhatsAppLink>
         </div>
       </div>
+
+      <TrackedWhatsAppLink
+        href={whatsappUrl}
+        placement="google_ads_desktop_floating_whatsapp"
+        label="WhatsApp facial assessment"
+        aria-label="Start a WhatsApp facial assessment"
+        className={`fixed bottom-6 right-6 z-50 hidden h-14 items-center justify-center gap-3 rounded-full bg-[#16884F] px-5 text-sm font-bold text-white shadow-[0_18px_46px_rgba(22,136,79,0.28)] ring-1 ring-white/50 transition duration-300 hover:-translate-y-1 hover:bg-[#117443] lg:inline-flex ${
+          formVisible ? "pointer-events-none translate-y-4 opacity-0" : "translate-y-0 opacity-100"
+        }`}
+      >
+        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/14">
+          <MessageCircle className="h-5 w-5" aria-hidden="true" />
+        </span>
+        WhatsApp Assessment
+      </TrackedWhatsAppLink>
     </div>
   );
 }
