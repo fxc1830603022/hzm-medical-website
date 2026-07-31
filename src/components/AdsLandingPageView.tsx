@@ -631,7 +631,7 @@ function FacebookAdsV2Page({
 }) {
   return (
     <div className="min-h-screen bg-[#F8F4EE] text-[#1C1C1C] antialiased">
-      <SimpleHeader whatsappUrl={whatsappUrl} allowHomeLink={false} />
+      <SimpleHeader whatsappUrl={whatsappUrl} allowHomeLink={false} tone="dark" />
       <main>
         <FacebookHeroV2 config={config} whatsappUrl={whatsappUrl} />
         <FacebookDoctorTrustBar />
@@ -1338,19 +1338,30 @@ function FacebookSection({
   );
 }
 
-function SimpleHeader({ whatsappUrl, allowHomeLink = true }: { whatsappUrl: string; allowHomeLink?: boolean }) {
+function SimpleHeader({
+  whatsappUrl,
+  allowHomeLink = true,
+  tone = "light"
+}: {
+  whatsappUrl: string;
+  allowHomeLink?: boolean;
+  tone?: "light" | "dark";
+}) {
+  const isDark = tone === "dark";
   const brand = (
     <>
-      <span className="font-display text-2xl tracking-[0.13em] text-[#171717]">DR. XIAO</span>
-      <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8C6B35]">
+      <span className={`font-display text-[22px] tracking-[0.13em] ${isDark ? "text-white" : "text-[#171717]"}`}>
+        DR. XIAO
+      </span>
+      <span className={`mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] ${isDark ? "text-[#D8BE8B]" : "text-[#8C6B35]"}`}>
         9D Lifting System
       </span>
     </>
   );
 
   return (
-    <header className="border-b border-[#E8DCCB] bg-[#FBF8F1]/95">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+    <header className={isDark ? "border-b border-white/10 bg-[#171715]" : "border-b border-[#E8DCCB] bg-[#FBF8F1]/95"}>
+      <div className="mx-auto flex min-h-[64px] max-w-[1180px] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         {allowHomeLink ? (
           <Link href="/" className="group inline-flex min-w-0 flex-col leading-none" aria-label="Dr. Xiao home">
             {brand}
@@ -1360,14 +1371,26 @@ function SimpleHeader({ whatsappUrl, allowHomeLink = true }: { whatsappUrl: stri
             {brand}
           </div>
         )}
+        {isDark ? (
+          <div className="hidden items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.13em] text-white/62 md:flex">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#C7A56D]" aria-hidden="true" />
+            Doctor-led assessment
+            <span className="h-px w-5 bg-white/18" aria-hidden="true" />
+            International patients · Shanghai
+          </div>
+        ) : null}
         <TrackedWhatsAppLink
           href={whatsappUrl}
           placement="hero"
           label="Header WhatsApp Assessment"
-          className="hidden h-11 shrink-0 items-center justify-center gap-2 rounded-md border border-[#C7A56D] bg-white px-4 text-xs font-bold text-[#171717] shadow-[0_12px_32px_rgba(37,25,8,0.08)] transition hover:-translate-y-0.5 hover:border-[#25D366] hover:text-[#128C45] sm:inline-flex"
+          className={
+            isDark
+              ? "inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-md bg-[#1FA855] px-3.5 text-[11px] font-bold text-white shadow-[0_10px_28px_rgba(31,168,85,0.22)] transition hover:-translate-y-0.5 hover:bg-[#168845] sm:px-4 sm:text-xs"
+              : "hidden h-11 shrink-0 items-center justify-center gap-2 rounded-md border border-[#C7A56D] bg-white px-4 text-xs font-bold text-[#171717] shadow-[0_12px_32px_rgba(37,25,8,0.08)] transition hover:-translate-y-0.5 hover:border-[#25D366] hover:text-[#128C45] sm:inline-flex"
+          }
         >
-          <span className="hidden sm:inline">WhatsApp Assessment</span>
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          <span>{isDark ? "WhatsApp" : "WhatsApp Assessment"}</span>
         </TrackedWhatsAppLink>
       </div>
     </header>
