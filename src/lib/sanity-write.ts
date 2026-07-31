@@ -23,6 +23,24 @@ type ConsultationSubmission = {
   createdAt: string;
 };
 
+export type GoogleAdsLead = {
+  name: string;
+  countryRegion: string;
+  ageGroup: string;
+  facialConcerns: string[];
+  previousTreatments: string;
+  treatmentTimeline: string;
+  whatsapp?: string;
+  email?: string;
+  preferredContactMethod: string;
+  additionalNotes?: string;
+  consent: boolean;
+  status: string;
+  source: string;
+  createdAt: string;
+  googleSheetsSyncStatus: "pending" | "synced" | "not_configured" | "failed";
+};
+
 type SanityMutationResponse = {
   results?: Array<{
     id?: string;
@@ -44,7 +62,10 @@ function getSanityMutationUrl() {
   return `https://${projectId}.api.sanity.io/v${apiVersion}/data/mutate/${dataset}?returnDocuments=true`;
 }
 
-async function createWithWindowsPowerShell(payload: ConsultationSubmission) {
+async function createWithWindowsPowerShell(
+  documentType: "consultationSubmission" | "googleAdsLead",
+  payload: ConsultationSubmission | GoogleAdsLead
+) {
   if (process.platform !== "win32") return null;
 
   const token = process.env.SANITY_API_TOKEN;
@@ -55,7 +76,7 @@ async function createWithWindowsPowerShell(payload: ConsultationSubmission) {
     mutations: [
       {
         create: {
-          _type: "consultationSubmission",
+          _type: documentType,
           ...payload
         }
       }
@@ -110,11 +131,57 @@ export async function createConsultationSubmission(payload: ConsultationSubmissi
         ...sanityPayload
       });
     } catch (error) {
-      const fallback = await createWithWindowsPowerShell(sanityPayload);
+      const fallback = await createWithWindowsPowerShell("consultationSubmission", sanityPayload);
       if (fallback) return fallback;
       throw error;
     }
   }
 
-  return createWithWindowsPowerShell(sanityPayload);
+  return createWithWindowsPowerShell("consultationSubmission", sanityPayload);
+}
+
+export async function createGoogleAdsLead(payload: GoogleAdsLead) {
+  const sanity = makeServerSanityClient();
+
+  if (sanity) {
+    try {
+      return await sanity.create({
+        _type: "googleAdsLead",
+        ...payload
+      });
+    } catch (error) {
+      const fallback = await createWithWindowsPowerShell("googleAdsLead", payload);
+      if (fallback) return fallback;
+      throw error;
+    }
+  }
+
+  return createWithWindowsPowerShell("googleAdsLead", payload);
+}
+
+export async function updateGoogleAdsLeadSheetSync(
+  documentId: string,
+  result: { configured: boolean; synced: boolean; error?: string }
+) {
+  const sanity = makeServerSanityClient();
+  if (!sanity) return false;
+
+  const status = result.synced ? "synced" : result.configured ? "failed" : "not_configured";
+  const values: Record<string, string> = {
+    googleSheetsSyncStatus: status
+  };
+
+  if (result.synced) {
+    values.googleSheetsSyncedAt = new Date().toISOString();
+  }
+  if (result.error) {
+    values.googleSheetsSyncError = result.error.slice(0, 1000);
+  }
+
+  let patch = sanity.patch(documentId).set(values);
+  if (!result.error) {
+    patch = patch.unset(["googleSheetsSyncError"]);
+  }
+  await patch.commit();
+  return true;
 }

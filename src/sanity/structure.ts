@@ -2,6 +2,7 @@ import type { StructureBuilder } from "sanity/structure";
 
 export const googleAdsLandingPageDocumentId = "googleAdsLandingPage.content";
 export const singletonSchemaTypes = new Set(["googleAdsLandingPage"]);
+const customStructureSchemaTypes = new Set(["googleAdsLandingPage", "googleAdsLead"]);
 
 export function studioStructure(S: StructureBuilder) {
   return S.list()
@@ -20,12 +21,11 @@ export function studioStructure(S: StructureBuilder) {
         .child(
           S.documentList()
             .title("Google Ads Leads")
-            .schemaType("consultationSubmission")
-            .filter('_type == "consultationSubmission" && source == $source')
-            .params({ source: "google-ads-private-assessment-v3" })
+            .schemaType("googleAdsLead")
+            .filter('_type == "googleAdsLead"')
             .defaultOrdering([{ field: "createdAt", direction: "desc" }])
         ),
       S.divider(),
-      ...S.documentTypeListItems().filter((item) => !singletonSchemaTypes.has(item.getId() || ""))
+      ...S.documentTypeListItems().filter((item) => !customStructureSchemaTypes.has(item.getId() || ""))
     ]);
 }
