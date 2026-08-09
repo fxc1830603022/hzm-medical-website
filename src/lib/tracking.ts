@@ -57,7 +57,9 @@ export type AdsLandingEventName =
   | "WhatsAppClick"
   | "EmailClick"
   | "VideoPlay"
-  | "FAQOpen";
+  | "FAQOpen"
+  | "WeChatOpen"
+  | "WeChatIdCopy";
 
 export const trafficStorageKey = "dr_xiao_traffic_source_v1";
 

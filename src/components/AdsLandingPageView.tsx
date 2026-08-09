@@ -9,6 +9,7 @@ import {
   Globe2,
   Layers3,
   MessageCircle,
+  MessagesSquare,
   Plane,
   ShieldCheck,
   Sparkles,
@@ -18,11 +19,17 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { defaultSettings, getWhatsAppUrl } from "@/lib/site-data";
 import type { GalleryItem, SiteSettings } from "@/lib/site-types";
+import { trackAdsLandingEvent } from "@/lib/tracking";
 import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
 import { BackToTop } from "./BackToTop";
+import {
+  FacebookWeChatModal,
+  FacebookWeChatQrCard,
+  type FacebookWeChatDetails
+} from "./FacebookWeChatContact";
 import { Footer } from "./Footer";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
@@ -577,6 +584,11 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
   const adsWhatsAppNumber = variant === "google" ? googleAdsWhatsAppNumber : facebookAdsWhatsAppNumber;
   const pageSettings = { ...safeSettings, whatsappNumber: adsWhatsAppNumber };
   const whatsappUrl = getWhatsAppUrl(pageSettings);
+  const wechatDetails: FacebookWeChatDetails = {
+    description: safeSettings.wechatDescription || defaultSettings.wechatDescription,
+    qrImage: safeSettings.wechatQrImage || defaultSettings.wechatQrImage,
+    wechatId: safeSettings.wechatId || defaultSettings.wechatId
+  };
   const resultCards = useMemo(
     () =>
       variant === "facebook"
@@ -590,6 +602,7 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
       <FacebookAdsV2Page
         config={config}
         whatsappUrl={whatsappUrl}
+        wechatDetails={wechatDetails}
         resultCards={resultCards}
       />
     );
@@ -623,17 +636,30 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
 function FacebookAdsV2Page({
   config,
   whatsappUrl,
+  wechatDetails,
   resultCards
 }: {
   config: PageConfig;
   whatsappUrl: string;
+  wechatDetails: FacebookWeChatDetails;
   resultCards: ResultCardData[];
 }) {
+  const [wechatModal, setWechatModal] = useState({ open: false, placement: "facebook_wechat" });
+
+  const openWechat = useCallback((placement: string) => {
+    trackAdsLandingEvent("WeChatOpen", { placement });
+    setWechatModal({ open: true, placement });
+  }, []);
+
+  const closeWechat = useCallback(() => {
+    setWechatModal((current) => ({ ...current, open: false }));
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#F8F4EE] text-[#1C1C1C] antialiased">
       <SimpleHeader whatsappUrl={whatsappUrl} allowHomeLink={false} tone="dark" />
       <main>
-        <FacebookHeroV2 config={config} whatsappUrl={whatsappUrl} />
+        <FacebookHeroV2 config={config} whatsappUrl={whatsappUrl} onOpenWechat={() => openWechat("facebook_hero_wechat")} />
         <FacebookDoctorTrustBar />
         <FacebookVideoContinuation whatsappUrl={whatsappUrl} />
         <FacebookSelfAssessment config={config} whatsappUrl={whatsappUrl} />
@@ -649,18 +675,41 @@ function FacebookAdsV2Page({
         <FacebookPlanFitV2 whatsappUrl={whatsappUrl} />
         <FacebookAfterPhotosV2 whatsappUrl={whatsappUrl} />
         <FacebookPhotoAssessmentGuide whatsappUrl={whatsappUrl} />
-        <FacebookFinalCtaV2 config={config} whatsappUrl={whatsappUrl} />
+        <FacebookFinalCtaV2
+          config={config}
+          whatsappUrl={whatsappUrl}
+          wechatDetails={wechatDetails}
+          onOpenWechat={() => openWechat("facebook_final_wechat")}
+        />
       </main>
       <div className="bg-ink pb-20 sm:pb-0">
         <Footer />
       </div>
       <BackToTop />
-      <StickyWhatsApp whatsappUrl={whatsappUrl} label="Start Private Assessment" />
+      <StickyFacebookContacts
+        whatsappUrl={whatsappUrl}
+        label="Start Private Assessment"
+        onOpenWechat={() => openWechat("facebook_sticky_wechat")}
+      />
+      <FacebookWeChatModal
+        {...wechatDetails}
+        open={wechatModal.open}
+        placement={wechatModal.placement}
+        onClose={closeWechat}
+      />
     </div>
   );
 }
 
-function FacebookHeroV2({ config, whatsappUrl }: { config: PageConfig; whatsappUrl: string }) {
+function FacebookHeroV2({
+  config,
+  whatsappUrl,
+  onOpenWechat
+}: {
+  config: PageConfig;
+  whatsappUrl: string;
+  onOpenWechat: () => void;
+}) {
   return (
     <section className="relative isolate overflow-hidden border-b border-[#E5D8C4] bg-[#F8F4EE]">
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(120deg,rgba(255,255,255,0.98),rgba(248,244,238,0.82)_55%,rgba(224,210,188,0.32))]" />
@@ -705,6 +754,22 @@ function FacebookHeroV2({ config, whatsappUrl }: { config: PageConfig; whatsappU
               <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
             </Link>
           </div>
+          <button
+            type="button"
+            onClick={onOpenWechat}
+            className="mt-3 inline-flex h-11 w-full items-center justify-between gap-4 rounded-md border border-[#CFC0A7] bg-white/58 px-4 text-left transition hover:-translate-y-0.5 hover:border-[#07C160] hover:bg-white sm:max-w-[420px]"
+          >
+            <span className="flex min-w-0 items-center gap-3">
+              <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm bg-[#07C160] text-white">
+                <MessagesSquare className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 text-xs font-bold text-[#2B2722]">
+                Prefer WeChat?
+                <span className="ml-2 font-medium text-[#776B5E]">Open private contact</span>
+              </span>
+            </span>
+            <ArrowRight className="h-4 w-4 shrink-0 text-[#A47C3D]" aria-hidden="true" />
+          </button>
           <p className="mt-4 max-w-[640px] text-xs leading-6 text-[#6A5E52]">{assessmentInstruction}</p>
         </div>
 
@@ -1292,7 +1357,17 @@ function FacebookPhotoAssessmentGuide({ whatsappUrl }: { whatsappUrl: string }) 
   );
 }
 
-function FacebookFinalCtaV2({ config, whatsappUrl }: { config: PageConfig; whatsappUrl: string }) {
+function FacebookFinalCtaV2({
+  config,
+  whatsappUrl,
+  wechatDetails,
+  onOpenWechat
+}: {
+  config: PageConfig;
+  whatsappUrl: string;
+  wechatDetails: FacebookWeChatDetails;
+  onOpenWechat: () => void;
+}) {
   return (
     <section className="bg-[#1C1C1C] px-4 py-12 text-white sm:px-6 lg:px-8 lg:py-16">
       <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 lg:grid-cols-[1fr_0.56fr] lg:items-center">
@@ -1316,7 +1391,7 @@ function FacebookFinalCtaV2({ config, whatsappUrl }: { config: PageConfig; whats
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </TrackedWhatsAppLink>
         </div>
-        <PhonePreview />
+        <FacebookWeChatQrCard {...wechatDetails} onOpen={onOpenWechat} />
       </div>
     </section>
   );
@@ -2081,6 +2156,39 @@ function StickyWhatsApp({ whatsappUrl, label }: { whatsappUrl: string; label: st
       >
         <MessageCircle className="h-5 w-5" aria-hidden="true" />
         {label}
+      </TrackedWhatsAppLink>
+    </div>
+  );
+}
+
+function StickyFacebookContacts({
+  whatsappUrl,
+  label,
+  onOpenWechat
+}: {
+  whatsappUrl: string;
+  label: string;
+  onOpenWechat: () => void;
+}) {
+  return (
+    <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 sm:inset-x-auto sm:right-5 sm:w-[368px]">
+      <button
+        type="button"
+        aria-label="Open WeChat contact"
+        title="WeChat"
+        onClick={onOpenWechat}
+        className="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-md border border-[#07C160] bg-white text-[#07A653] shadow-[0_18px_48px_rgba(16,95,56,0.2)] transition hover:-translate-y-0.5 hover:bg-[#F2FFF8]"
+      >
+        <MessagesSquare className="h-5 w-5" aria-hidden="true" />
+      </button>
+      <TrackedWhatsAppLink
+        href={whatsappUrl}
+        placement="sticky"
+        label="Sticky WhatsApp Assessment"
+        className="flex h-[52px] min-w-0 flex-1 items-center justify-center gap-3 rounded-md border border-[#2EC266] bg-[#1FA855] px-3 text-sm font-bold text-white shadow-[0_18px_48px_rgba(31,168,85,0.32)] transition hover:-translate-y-0.5 hover:bg-[#168845]"
+      >
+        <MessageCircle className="h-5 w-5 shrink-0" aria-hidden="true" />
+        <span className="truncate">{label}</span>
       </TrackedWhatsAppLink>
     </div>
   );
