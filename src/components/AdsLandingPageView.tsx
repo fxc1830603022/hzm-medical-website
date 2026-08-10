@@ -9,7 +9,6 @@ import {
   Globe2,
   Layers3,
   MessageCircle,
-  MessagesSquare,
   Plane,
   ShieldCheck,
   Sparkles,
@@ -26,9 +25,10 @@ import { trackAdsLandingEvent } from "@/lib/tracking";
 import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
 import { BackToTop } from "./BackToTop";
 import {
+  FacebookWeChatButton,
   FacebookWeChatModal,
-  FacebookWeChatQrCard,
-  type FacebookWeChatDetails
+  type FacebookWeChatDetails,
+  WeChatBrandIcon
 } from "./FacebookWeChatContact";
 import { Footer } from "./Footer";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
@@ -587,7 +587,7 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
   const wechatDetails: FacebookWeChatDetails = {
     description: safeSettings.wechatDescription || defaultSettings.wechatDescription,
     qrImage: safeSettings.wechatQrImage || defaultSettings.wechatQrImage,
-    wechatId: safeSettings.wechatId || defaultSettings.wechatId
+    wechatId: "Hzm69968"
   };
   const resultCards = useMemo(
     () =>
@@ -735,41 +735,35 @@ function FacebookHeroV2({
               </div>
             ))}
           </div>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-7 grid w-full max-w-[620px] grid-cols-1 gap-3 sm:grid-cols-2">
             <TrackedWhatsAppLink
               href={whatsappUrl}
               placement="hero"
               label="Send Photos for Private Assessment"
-              className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#1C1C1C] px-5 text-sm font-bold text-white shadow-[0_18px_44px_rgba(28,28,28,0.22)] transition hover:-translate-y-0.5 hover:bg-[#2A2520] sm:w-auto"
+              className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#1C1C1C] px-5 text-sm font-bold text-white shadow-[0_18px_44px_rgba(28,28,28,0.22)] transition hover:-translate-y-0.5 hover:bg-[#2A2520]"
             >
               <MessageCircle className="h-5 w-5 text-[#25D366]" aria-hidden="true" />
               <span className="sm:hidden">Start Private Assessment</span>
               <span className="hidden sm:inline">Send Photos for Private Assessment</span>
             </TrackedWhatsAppLink>
-            <Link
-              href="#real-results"
-              className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md border border-[#B89A5A] bg-white/78 px-5 text-sm font-bold text-[#1C1C1C] transition hover:-translate-y-0.5 hover:bg-white sm:w-auto"
+            <button
+              type="button"
+              onClick={onOpenWechat}
+              className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md border border-[#08A653] bg-white/82 px-5 text-sm font-bold text-[#183F2B] shadow-[0_14px_34px_rgba(7,193,96,0.1)] transition hover:-translate-y-0.5 hover:bg-[#F1FFF7]"
             >
-              View Natural Results
-              <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
-            </Link>
-          </div>
-          <button
-            type="button"
-            onClick={onOpenWechat}
-            className="mt-3 inline-flex h-11 w-full items-center justify-between gap-4 rounded-md border border-[#CFC0A7] bg-white/58 px-4 text-left transition hover:-translate-y-0.5 hover:border-[#07C160] hover:bg-white sm:max-w-[420px]"
-          >
-            <span className="flex min-w-0 items-center gap-3">
               <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm bg-[#07C160] text-white">
-                <MessagesSquare className="h-4 w-4" aria-hidden="true" />
+                <WeChatBrandIcon className="h-[18px] w-[18px]" />
               </span>
-              <span className="min-w-0 text-xs font-bold text-[#2B2722]">
-                Prefer WeChat?
-                <span className="ml-2 font-medium text-[#776B5E]">Open private contact</span>
-              </span>
-            </span>
-            <ArrowRight className="h-4 w-4 shrink-0 text-[#A47C3D]" aria-hidden="true" />
-          </button>
+              WeChat Private Contact
+            </button>
+          </div>
+          <Link
+            href="#real-results"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#695943] transition hover:text-[#A47C3D]"
+          >
+            View Natural Results
+            <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
+          </Link>
           <p className="mt-4 max-w-[640px] text-xs leading-6 text-[#6A5E52]">{assessmentInstruction}</p>
         </div>
 
@@ -1391,7 +1385,7 @@ function FacebookFinalCtaV2({
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </TrackedWhatsAppLink>
         </div>
-        <FacebookWeChatQrCard {...wechatDetails} onOpen={onOpenWechat} />
+        <FacebookWeChatButton {...wechatDetails} onOpen={onOpenWechat} />
       </div>
     </section>
   );
@@ -2179,7 +2173,7 @@ function StickyFacebookContacts({
         onClick={onOpenWechat}
         className="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-md border border-[#07C160] bg-white text-[#07A653] shadow-[0_18px_48px_rgba(16,95,56,0.2)] transition hover:-translate-y-0.5 hover:bg-[#F2FFF8]"
       >
-        <MessagesSquare className="h-5 w-5" aria-hidden="true" />
+        <WeChatBrandIcon className="h-5 w-5" />
       </button>
       <TrackedWhatsAppLink
         href={whatsappUrl}
