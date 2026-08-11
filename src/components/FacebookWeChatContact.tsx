@@ -152,7 +152,7 @@ function QrArtwork({ qrImage }: { qrImage: string }) {
   return (
     <div className="mx-auto w-full max-w-[260px]">
       <div className="relative aspect-[520/680] overflow-hidden rounded-md border border-[#D6C49F] bg-white p-2 shadow-[0_20px_60px_rgba(72,52,25,0.12)]">
-        <Image src={qrImage} alt="WeChat QR code" fill unoptimized sizes="260px" className="object-contain p-2" />
+        <Image key={qrImage} src={qrImage} alt="WeChat QR code" fill unoptimized sizes="260px" className="object-contain p-2" />
       </div>
       <p className="mt-3 text-center text-[10px] font-bold uppercase tracking-[0.14em] text-[#8A7862]">Scan with WeChat</p>
     </div>

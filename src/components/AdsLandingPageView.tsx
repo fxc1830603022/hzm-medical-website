@@ -586,7 +586,7 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
   const whatsappUrl = getWhatsAppUrl(pageSettings);
   const wechatDetails: FacebookWeChatDetails = {
     description: safeSettings.wechatDescription || defaultSettings.wechatDescription,
-    qrImage: "/images/facebook-wechat-qr-hzm69968.jpg",
+    qrImage: "/images/facebook-wechat-qr-hzm69968.jpg?v=20260811",
     wechatId: "Hzm69968"
   };
   const resultCards = useMemo(
