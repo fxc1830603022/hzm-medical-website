@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { syncLeadToFeishu } from "@/lib/feishu";
 import { sendGa4ServerEvents } from "@/lib/ga4-server";
 import { syncGoogleAdsLeadToSheets } from "@/lib/google-ads-leads-sheets";
@@ -159,22 +159,42 @@ export async function POST(request: Request) {
       warnings.push("Google Ads CMS storage failed.");
     }
 
-    const googleAdsSheets = await syncGoogleAdsLeadToSheets(googleAdsPayload, sanityRecordId);
+    if (sanityRecordId) {
+      after(async () => {
+        const [googleAdsSheets, ga4] = await Promise.all([
+          syncGoogleAdsLeadToSheets(googleAdsPayload, sanityRecordId),
+          sendLeadAnalytics(request, "google_ads_private_assessment_v3", source)
+        ]);
+
+        if (googleAdsSheets.configured && !googleAdsSheets.synced) {
+          console.error("Google Ads Sheets sync failed", googleAdsSheets.error);
+        }
+        if (ga4.configured && !ga4.sent) {
+          console.error("GA4 server lead sync failed", ga4.error);
+        }
+
+        try {
+          await updateGoogleAdsLeadSheetSync(sanityRecordId, googleAdsSheets);
+        } catch (error) {
+          console.error("Google Ads lead sync status update failed", error);
+        }
+      });
+
+      return NextResponse.json({
+        ok: true,
+        storage: "googleAdsCms",
+        backgroundSync: true,
+        warnings
+      });
+    }
+
+    const googleAdsSheets = await syncGoogleAdsLeadToSheets(googleAdsPayload);
     if (googleAdsSheets.configured && !googleAdsSheets.synced) {
       console.error("Google Ads Sheets sync failed", googleAdsSheets.error);
       warnings.push("Google Ads Sheets sync failed.");
     }
 
-    if (sanityRecordId) {
-      try {
-        await updateGoogleAdsLeadSheetSync(sanityRecordId, googleAdsSheets);
-      } catch (error) {
-        console.error("Google Ads lead sync status update failed", error);
-        warnings.push("CMS sync status update failed.");
-      }
-    }
-
-    if (sanityRecordId || googleAdsSheets.synced) {
+    if (googleAdsSheets.synced) {
       const ga4 = await sendLeadAnalytics(request, "google_ads_private_assessment_v3", source);
       if (ga4.configured && !ga4.sent) {
         console.error("GA4 server lead sync failed", ga4.error);
@@ -183,7 +203,7 @@ export async function POST(request: Request) {
 
       return NextResponse.json({
         ok: true,
-        storage: sanityRecordId ? "googleAdsCms" : "googleAdsSheets",
+        storage: "googleAdsSheets",
         googleAdsSheets,
         ga4,
         warnings
