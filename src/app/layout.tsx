@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Analytics } from "@/components/Analytics";
+import { Analytics, MetaPixelNoScript } from "@/components/Analytics";
 import { TrackingProvider } from "@/components/TrackingProvider";
 import { getSiteSettings } from "@/lib/sanity";
 import { imageUrl, seoDefaults, siteUrl } from "@/lib/seo";
@@ -46,7 +46,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
   return (
     <html lang="en">
+      <head>
+        <Analytics />
+      </head>
       <body>
+        <MetaPixelNoScript />
         {children}
         <TrackingProvider
           whatsappSourceGreetings={{
@@ -55,7 +59,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             google: settings.whatsappGoogleMessage
           }}
         />
-        <Analytics />
       </body>
     </html>
   );
