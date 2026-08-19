@@ -65,8 +65,10 @@ export function Analytics() {
         </>
       ) : null}
       {metaPixelIds.length > 0 ? (
-        <Script id="meta-pixel-init" strategy="beforeInteractive">
-          {`
+        <script
+          id="meta-pixel-init"
+          dangerouslySetInnerHTML={{
+            __html: `
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -77,8 +79,9 @@ export function Analytics() {
             'https://connect.facebook.net/en_US/fbevents.js');
             ${metaPixelIds.map((pixelId) => `fbq('init', ${JSON.stringify(pixelId)});`).join("\n            ")}
             fbq('track', 'PageView');
-          `}
-        </Script>
+          `
+          }}
+        />
       ) : null}
     </>
   );
