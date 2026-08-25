@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AdsLandingPageView } from "@/components/AdsLandingPageView";
+import { FacebookAdsPixel } from "@/components/FacebookAdsPixel";
 import { StructuredData } from "@/components/StructuredData";
 import { getGalleryItems, getSiteSettings } from "@/lib/sanity";
 import {
@@ -48,6 +49,7 @@ export default async function FacebookAdsShortLandingPage() {
 
   return (
     <>
+      <FacebookAdsPixel />
       <StructuredData
         data={[
           organizationJsonLd(),
