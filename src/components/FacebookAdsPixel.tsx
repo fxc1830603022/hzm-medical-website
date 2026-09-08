@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-const facebookAdsPixelId = "1559352332606230";
+const facebookAdsPixelIds = ["1559352332606230", "1968972384060712"] as const;
 
 export function FacebookAdsPixel() {
   return (
@@ -17,21 +17,27 @@ export function FacebookAdsPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', ${JSON.stringify(facebookAdsPixelId)});
-            fbq('trackSingle', ${JSON.stringify(facebookAdsPixelId)}, 'PageView');
+            ${facebookAdsPixelIds
+              .map(
+                (pixelId) => `fbq('init', ${JSON.stringify(pixelId)});
+            fbq('trackSingle', ${JSON.stringify(pixelId)}, 'PageView');`
+              )
+              .join("\n            ")}
           }
         `}
       </Script>
-      <noscript>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          alt=""
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${facebookAdsPixelId}&ev=PageView&noscript=1`}
-        />
-      </noscript>
+      {facebookAdsPixelIds.map((pixelId) => (
+        <noscript key={pixelId}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt=""
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+      ))}
     </>
   );
 }
