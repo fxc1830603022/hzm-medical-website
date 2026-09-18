@@ -567,28 +567,24 @@ export function GoogleAdsLandingPageV3({ content }: GoogleAdsLandingPageV3Props)
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-[#202321] px-5 py-10 text-white sm:px-8">
-        <div className="mx-auto grid max-w-[1180px] gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
-          <div>
-            <p className="font-display text-2xl font-semibold">{content.footer.doctorName}</p>
-            <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D8C5A5]">
-              {content.footer.brandLine}
-            </p>
-            <p className="mt-5 max-w-[720px] text-xs leading-6 text-white/55">
-              {content.footer.disclaimer}
-            </p>
-          </div>
-          <div>
-            <TrackedWhatsAppLink
-              href={whatsappUrl}
-              placement="google_ads_footer_auxiliary"
-              label="Send photos on WhatsApp"
-              className="inline-flex h-12 items-center justify-center gap-2.5 rounded-[10px] bg-[#16884F] px-5 text-xs font-bold text-white shadow-[0_12px_30px_rgba(0,0,0,0.2)] transition hover:-translate-y-0.5 hover:bg-[#1A9A5A]"
-            >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
-              {content.footer.whatsappLabel} Assessment
-            </TrackedWhatsAppLink>
-          </div>
+      <footer className="border-t border-white/10 bg-[#151515] px-5 py-12 text-center text-white sm:px-8 sm:py-16">
+        <div className="mx-auto max-w-[980px]">
+          <p className="font-display text-2xl font-semibold sm:text-[26px]">{content.footer.doctorName}</p>
+          <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C99A48] sm:text-[11px]">
+            {content.footer.brandLine}
+          </p>
+          <p className="mt-7 text-sm leading-6 text-white/80">
+            Charm Preservation | Only One 9D | Only By Dr. Xiao
+          </p>
+          <p className="mx-auto mt-4 max-w-[860px] text-[11px] leading-6 text-white/50 sm:text-xs">
+            {content.footer.disclaimer}
+          </p>
+          <p className="mt-5 text-[11px] text-white/45 sm:text-xs">
+            &copy; 2024 Dr. Xiao Zhongye. All Rights Reserved.
+          </p>
+          <p className="mt-2 text-[10px] uppercase tracking-[0.12em] text-white/40 sm:text-[11px]">
+            Copyright&copy; SMARTLOCK HAVWER LLC
+          </p>
         </div>
       </footer>
 
