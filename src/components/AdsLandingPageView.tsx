@@ -289,6 +289,33 @@ const facebookHospitalTrustPoints = [
   }
 ];
 
+const facebookCareMoments = [
+  {
+    label: "Private Consultation",
+    image: "/images/facebook-care-consultation.webp",
+    alt: "Dr. Xiao meeting an international patient in the Shanghai consultation room",
+    position: "center 38%"
+  },
+  {
+    label: "Treatment Day",
+    image: "/images/facebook-care-treatment-day.webp",
+    alt: "Dr. Xiao with an international patient in the clinical treatment room",
+    position: "center 36%"
+  },
+  {
+    label: "Recovery Check-In",
+    image: "/images/facebook-care-recovery-checkin.webp",
+    alt: "Dr. Xiao checking on an international patient during early recovery",
+    position: "center 34%"
+  },
+  {
+    label: "Hospital Follow-Up",
+    image: "/images/facebook-care-hospital-followup.webp",
+    alt: "Dr. Xiao supporting an international patient during a hospital follow-up",
+    position: "center 34%"
+  }
+];
+
 const facebookArrivalSupportSteps = [
   {
     number: "01",
@@ -693,6 +720,7 @@ function FacebookAdsV2Page({
         />
         <FacebookDoctorAuthorityV2 whatsappUrl={whatsappUrl} />
         <FacebookHospitalTrustSection whatsappUrl={whatsappUrl} />
+        <FacebookCareMoments whatsappUrl={whatsappUrl} />
         <FacebookInternationalJourneyV2 whatsappUrl={whatsappUrl} />
         <FacebookArrivalExperience whatsappUrl={whatsappUrl} />
         <FacebookPlanFitV2 whatsappUrl={whatsappUrl} />
@@ -1207,6 +1235,131 @@ function FacebookHospitalTrustSection({ whatsappUrl }: { whatsappUrl: string }) 
           <p className="max-w-[520px] text-xs leading-6 text-[#6C7576]">
             Final treatment recommendations require an in-person medical consultation.
           </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FacebookCareMoments({ whatsappUrl }: { whatsappUrl: string }) {
+  return (
+    <section
+      id="real-care-moments"
+      className="overflow-hidden border-b border-[#DED2C0] bg-[#F6F2EB] px-5 py-[76px] text-[#202827] sm:px-6 sm:py-24 lg:px-8 lg:py-[104px]"
+    >
+      <div className="mx-auto max-w-[1240px]">
+        <div className="grid gap-7 lg:grid-cols-[minmax(0,0.94fr)_minmax(360px,0.72fr)] lg:items-end lg:gap-16">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#9A7133]">
+              Real moments of care
+            </p>
+            <h2 className="mt-4 max-w-[700px] font-display text-[38px] font-semibold leading-[1.08] sm:text-[46px] lg:text-[52px]">
+              Doctor-Led Care, Seen Up Close.
+            </h2>
+          </div>
+          <div className="border-l border-[#B79252] pl-5 sm:pl-7">
+            <p className="max-w-[500px] text-[15px] leading-7 text-[#625E57] sm:text-base">
+              From private consultation and treatment planning to recovery follow-up, these real moments reflect the
+              personal care international patients receive in Shanghai.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 hidden grid-cols-[minmax(0,1.42fr)_minmax(0,1fr)] gap-3 lg:grid">
+          <figure className="group relative aspect-[4/3] overflow-hidden rounded-md border border-[#D7C9B3] bg-[#ECE5DA] shadow-[0_20px_55px_rgba(67,53,35,0.1)]">
+            <Image
+              src="/images/facebook-care-real-moments-main.webp"
+              alt="Dr. Xiao and his team with international patients in the Shanghai consultation room"
+              fill
+              sizes="(min-width: 1280px) 710px, 58vw"
+              className="object-cover transition duration-700 group-hover:scale-[1.015] motion-reduce:transform-none"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/30 to-transparent px-7 pb-6 pt-20">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#E2C58F]">Shanghai, China</p>
+              <figcaption className="mt-2 max-w-[520px] font-display text-2xl font-semibold leading-tight text-white">
+                Personal care, from the first meeting to follow-up.
+              </figcaption>
+            </div>
+          </figure>
+
+          <div className="grid min-h-0 grid-cols-2 grid-rows-2 gap-3">
+            {facebookCareMoments.map((moment) => (
+              <figure
+                key={moment.label}
+                className="group relative min-h-0 overflow-hidden rounded-md border border-[#D7C9B3] bg-[#ECE5DA] shadow-[0_14px_34px_rgba(67,53,35,0.08)]"
+              >
+                <Image
+                  src={moment.image}
+                  alt={moment.alt}
+                  fill
+                  sizes="(min-width: 1280px) 245px, 20vw"
+                  style={{ objectPosition: moment.position }}
+                  className="object-cover transition duration-700 group-hover:scale-[1.025] motion-reduce:transform-none"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/82 via-black/22 to-transparent px-4 pb-4 pt-14">
+                  <figcaption className="text-xs font-bold uppercase tracking-[0.14em] text-white">
+                    {moment.label}
+                  </figcaption>
+                </div>
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-9 lg:hidden">
+          <figure className="relative aspect-[4/3] overflow-hidden rounded-md border border-[#D7C9B3] bg-[#ECE5DA] shadow-[0_18px_44px_rgba(67,53,35,0.1)]">
+            <Image
+              src="/images/facebook-care-real-moments-main.webp"
+              alt="Dr. Xiao and his team with international patients in the Shanghai consultation room"
+              fill
+              sizes="calc(100vw - 40px)"
+              className="object-cover"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent px-5 pb-5 pt-16">
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#E2C58F]">Shanghai, China</p>
+              <figcaption className="mt-2 font-display text-xl font-semibold leading-tight text-white">
+                Personal care, from the first meeting to follow-up.
+              </figcaption>
+            </div>
+          </figure>
+
+          <div className="-mx-5 mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-6 sm:px-6">
+            {facebookCareMoments.map((moment) => (
+              <figure
+                key={moment.label}
+                className="relative aspect-[4/5] w-[68vw] max-w-[300px] shrink-0 snap-start overflow-hidden rounded-md border border-[#D7C9B3] bg-[#ECE5DA] shadow-[0_12px_28px_rgba(67,53,35,0.08)]"
+              >
+                <Image
+                  src={moment.image}
+                  alt={moment.alt}
+                  fill
+                  sizes="(max-width: 640px) 68vw, 300px"
+                  style={{ objectPosition: moment.position }}
+                  className="object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/82 via-black/22 to-transparent px-4 pb-4 pt-16">
+                  <figcaption className="text-[11px] font-bold uppercase tracking-[0.14em] text-white">
+                    {moment.label}
+                  </figcaption>
+                </div>
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col gap-4 border-t border-[#D8CCBA] pt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+          <p className="max-w-[610px] text-xs leading-6 text-[#726B61]">
+            Real patient moments shared with permission. Individual treatment journeys and recovery experiences vary.
+          </p>
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="real_care_moments"
+            label="Real care moments private assessment"
+            className="inline-flex h-14 w-full shrink-0 items-center justify-center gap-3 rounded-md border border-[#17393D] bg-[#17393D] px-7 text-sm font-bold text-white shadow-[0_14px_34px_rgba(23,57,61,0.18)] transition hover:-translate-y-px hover:bg-[#21494D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B79252] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F2EB] motion-reduce:transform-none sm:w-auto"
+          >
+            Start a Private Assessment
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          </TrackedWhatsAppLink>
         </div>
       </div>
     </section>
