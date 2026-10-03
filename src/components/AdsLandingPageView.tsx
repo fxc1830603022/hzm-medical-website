@@ -31,6 +31,7 @@ import {
   WeChatBrandIcon
 } from "./FacebookWeChatContact";
 import { Footer } from "./Footer";
+import { HospitalTrustVideo } from "./HospitalTrustVideo";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
 
 type AdsLandingVariant = "google" | "facebook";
@@ -96,6 +97,9 @@ const assessmentInstruction =
 const facebookMethodVideoSrc = "/videos/dr-xiao-9d-methodology-mobile-v2.mp4";
 const facebookArrivalVideoSrc = "/videos/facebook-arrival-support-mobile-v2.mp4";
 const facebookArrivalVideoPoster = "/videos/facebook-arrival-support-v21-poster.jpg";
+const facebookHospitalVideoMp4 = "/videos/shengya-hospital-trust.mp4";
+const facebookHospitalVideoWebm = "/videos/shengya-hospital-trust.webm";
+const facebookHospitalVideoPoster = "/images/shengya-hospital-trust-poster.webp";
 const facebookAdsWhatsAppNumber = "+13043567880";
 const googleAdsWhatsAppNumber = "+601121706171";
 const facebookResultImageOverrides = [
@@ -264,6 +268,24 @@ const facebookDoctorAuthorityPoints = [
     title: "International patient support",
     description: "The team helps patients plan assessment, travel timing, consultation, and recovery in Shanghai.",
     icon: Globe2
+  }
+];
+
+const facebookHospitalTrustPoints = [
+  {
+    number: "01",
+    title: "Professional Medical Environment",
+    description: "Consultation, treatment and recovery support within one coordinated setting."
+  },
+  {
+    number: "02",
+    title: "Doctor-Led Care",
+    description: "Your treatment direction is confirmed through an in-person assessment with Dr. Xiao."
+  },
+  {
+    number: "03",
+    title: "International Patient Support",
+    description: "Guidance for consultation, treatment arrangements and recovery in Shanghai."
   }
 ];
 
@@ -670,6 +692,7 @@ function FacebookAdsV2Page({
           whatsappUrl={whatsappUrl}
         />
         <FacebookDoctorAuthorityV2 whatsappUrl={whatsappUrl} />
+        <FacebookHospitalTrustSection whatsappUrl={whatsappUrl} />
         <FacebookInternationalJourneyV2 whatsappUrl={whatsappUrl} />
         <FacebookArrivalExperience whatsappUrl={whatsappUrl} />
         <FacebookPlanFitV2 whatsappUrl={whatsappUrl} />
@@ -1104,6 +1127,89 @@ function FacebookDoctorAuthorityV2({ whatsappUrl }: { whatsappUrl: string }) {
         </div>
       </div>
     </FacebookSection>
+  );
+}
+
+function FacebookHospitalTrustSection({ whatsappUrl }: { whatsappUrl: string }) {
+  return (
+    <section
+      id="hospital-trust"
+      className="border-b border-[#D9CDBB] bg-[#F5F2EC] px-5 py-[76px] text-[#162B30] sm:px-6 sm:py-24 lg:px-8 lg:py-[104px]"
+    >
+      <div className="mx-auto max-w-[1240px]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.76fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#A67B36]">
+              Your care in Shanghai
+            </p>
+            <h2 className="mt-4 max-w-[540px] font-display text-[38px] font-semibold leading-[1.08] text-[#162B30] sm:text-[46px] lg:text-[52px]">
+              Where the 9D Journey Becomes Real.
+            </h2>
+            <div className="mt-6 max-w-[540px] space-y-3 text-[15px] leading-7 text-[#536164] sm:text-base">
+              <p>
+                Shanghai Shengya Medical Beauty Hospital provides the medical setting for Dr. Xiao&apos;s facial
+                rejuvenation consultations, procedures, and recovery care in Shanghai.
+              </p>
+              <p>
+                From your in-person facial assessment and personalized planning to treatment and early-stage
+                follow-up, each step is coordinated within a professional medical environment.
+              </p>
+              <p>
+                For international patients, our team also helps make the journey in Shanghai clearer, more organized,
+                and more reassuring.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <HospitalTrustVideo
+              mp4Src={facebookHospitalVideoMp4}
+              webmSrc={facebookHospitalVideoWebm}
+              poster={facebookHospitalVideoPoster}
+            />
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#667174] sm:text-[11px]">
+              <span className="inline-flex items-center gap-2 text-[#8C6B35]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#C9A15D]" aria-hidden="true" />
+                Real clinical setting
+              </span>
+              <span>Shanghai Shengya Medical Beauty Hospital &middot; Shanghai, China</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 grid border-y border-[#D9CDBB] lg:grid-cols-3">
+          {facebookHospitalTrustPoints.map((point, index) => (
+            <div
+              key={point.number}
+              className={`grid grid-cols-[42px_1fr] gap-x-4 py-5 sm:grid-cols-[46px_1fr] lg:px-6 lg:py-6 ${
+                index === 0 ? "" : "border-t border-[#DDD3C4] lg:border-l lg:border-t-0"
+              }`}
+            >
+              <span className="pt-0.5 font-display text-lg font-semibold text-[#B48B47]">{point.number}</span>
+              <div>
+                <h3 className="text-sm font-bold leading-6 text-[#162B30]">{point.title}</h3>
+                <p className="mt-1 text-sm leading-6 text-[#5C686A]">{point.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="hospital_trust"
+            label="Plan Your Shanghai Visit"
+            className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md bg-[#17393D] px-8 text-sm font-bold text-white shadow-[0_14px_34px_rgba(23,57,61,0.18)] transition hover:-translate-y-px hover:bg-[#21494D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A15D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F5F2EC] motion-reduce:transform-none sm:w-auto"
+          >
+            Plan Your Shanghai Visit
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          </TrackedWhatsAppLink>
+          <p className="max-w-[520px] text-xs leading-6 text-[#6C7576]">
+            Final treatment recommendations require an in-person medical consultation.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 
