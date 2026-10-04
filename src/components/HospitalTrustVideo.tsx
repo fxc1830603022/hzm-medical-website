@@ -91,13 +91,6 @@ export function HospitalTrustVideo({ mp4Src, webmSrc, poster }: HospitalTrustVid
         {shouldLoad ? <source src={mp4Src} type="video/mp4" /> : null}
       </video>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#071416]/70 via-[#071416]/20 to-transparent" />
-      <div className="pointer-events-none absolute bottom-4 left-4 max-w-[calc(100%-2rem)] rounded-xl border border-white/20 bg-[#0A1414]/60 px-4 py-3 text-white shadow-lg backdrop-blur-xl sm:bottom-5 sm:left-5 sm:px-5">
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#E2C789] sm:text-[11px]">
-          Shanghai Shengya Medical Beauty Hospital
-        </p>
-        <p className="mt-1 text-[11px] text-white/72 sm:text-xs">Shanghai &middot; China</p>
-      </div>
     </div>
   );
 }
