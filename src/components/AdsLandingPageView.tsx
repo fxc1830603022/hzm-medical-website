@@ -5,6 +5,7 @@ import {
   BadgeCheck,
   Camera,
   CheckCircle2,
+  ChevronDown,
   ClipboardCheck,
   Globe2,
   Layers3,
@@ -223,6 +224,78 @@ const facebookPhotoGuideItems = [
   { title: "45-degree", image: "/images/international-photo-guide-04.webp" },
   { title: "Smile", image: "/images/international-photo-guide-05.webp" },
   { title: "Neck", image: "/images/international-photo-guide-07.webp" }
+];
+
+const facebookFaqs = [
+  {
+    question: "Is the 9D Facelift the same as a thread lift?",
+    answer:
+      "No. A thread lift relies mainly on threads placed within a limited tissue plane. The 9D Facelift is Dr. Xiao's personalized surgical planning approach across multiple facial regions, treatment points, and tissue layers. Depending on your anatomy and aging pattern, the plan may include deeper structural lifting and SMAS-level support."
+  },
+  {
+    question: "Who may be suitable for a 9D Facelift?",
+    answer:
+      "It may be considered for patients concerned about midface descent, deepened folds, lower-face heaviness, jowls, loss of jawline definition, or neck laxity. Suitability depends on anatomy, skin quality, medical history, previous treatments, and an in-person medical evaluation rather than age alone."
+  },
+  {
+    question: "Will I look pulled, overfilled, or different?",
+    answer:
+      "The design goal is to restore support while preserving the features, movement, and expressions that make you recognizable. Every plan is individualized; no specific appearance or outcome can be guaranteed."
+  },
+  {
+    question: "Can I receive an assessment before traveling to Shanghai?",
+    answer:
+      "Yes. You can send the requested photos, your age, country, main concerns, and previous treatments through WhatsApp for a private preliminary review. Final recommendations require an in-person medical consultation."
+  },
+  {
+    question: "What should I expect during recovery?",
+    answer:
+      "Recovery varies with the treatment plan and the individual. Swelling, bruising, tightness, temporary numbness, and activity restrictions may occur. A personalized recovery and follow-up plan is discussed after medical evaluation."
+  },
+  {
+    question: "How long should international patients stay in Shanghai?",
+    answer:
+      "The recommended stay depends on the procedure, recovery progress, and follow-up schedule. After the initial photo review, the team can provide preliminary guidance for travel timing and local support."
+  }
+];
+
+const facebookAgingPatterns = [
+  {
+    number: "01",
+    title: "Midface Descent",
+    description: "Reduced cheek support can make the midface appear flatter or more tired.",
+    marker: { left: "34%", top: "44%" }
+  },
+  {
+    number: "02",
+    title: "Nasolabial Folds",
+    description: "Deeper folds may create stronger shadows between the nose and mouth.",
+    marker: { left: "43%", top: "53%" }
+  },
+  {
+    number: "03",
+    title: "Neck Laxity",
+    description: "Changes in skin and support can soften the neck contour.",
+    marker: { left: "50%", top: "74%" }
+  },
+  {
+    number: "04",
+    title: "Lower-Face Heaviness",
+    description: "Tissue descent can make the lower face look heavier or less defined.",
+    marker: { left: "66%", top: "57%" }
+  },
+  {
+    number: "05",
+    title: "Periorbital Aging",
+    description: "Fine lines, under-eye hollowing, and tiredness can make the eye area look older.",
+    marker: { left: "72%", top: "40%" }
+  },
+  {
+    number: "06",
+    title: "Jawline Softening",
+    description: "A less defined jawline can reduce lower-face contour and balance.",
+    marker: { left: "78%", top: "60%" }
+  }
 ];
 
 const facebookJourneySteps = [
@@ -711,8 +784,8 @@ function FacebookAdsV2Page({
         <FacebookHeroV2 config={config} whatsappUrl={whatsappUrl} onOpenWechat={() => openWechat("facebook_hero_wechat")} />
         <FacebookDoctorTrustBar />
         <FacebookVideoContinuation whatsappUrl={whatsappUrl} />
-        <FacebookSelfAssessment config={config} whatsappUrl={whatsappUrl} />
-        <FacebookNaturalDifference config={config} />
+        <FacebookSelfAssessment whatsappUrl={whatsappUrl} />
+        <FacebookNaturalDifference whatsappUrl={whatsappUrl} />
         <FacebookResultsStories
           title={config.resultsTitle}
           results={resultCards}
@@ -726,6 +799,7 @@ function FacebookAdsV2Page({
         <FacebookPlanFitV2 whatsappUrl={whatsappUrl} />
         <FacebookAfterPhotosV2 whatsappUrl={whatsappUrl} />
         <FacebookPhotoAssessmentGuide whatsappUrl={whatsappUrl} />
+        <FacebookFaqSection whatsappUrl={whatsappUrl} />
         <FacebookFinalCtaV2
           config={config}
           whatsappUrl={whatsappUrl}
@@ -958,33 +1032,154 @@ function FacebookMethodVideo() {
   );
 }
 
-function FacebookSelfAssessment({ config, whatsappUrl }: { config: PageConfig; whatsappUrl: string }) {
+function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
+  const leftPatterns = facebookAgingPatterns.slice(0, 3);
+  const rightPatterns = facebookAgingPatterns.slice(3);
+
   return (
-    <FacebookSection className="bg-[#FFFFFF]">
-      <CenteredHeading eyebrow="Quick self assessment" title={config.fitTitle} description={config.fitSubtitle} />
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        {config.fitItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.title} className="flex min-h-[120px] flex-col justify-between rounded-md border border-[#E5D8C4] bg-[#F8F4EE] p-4">
-              <Icon className="h-6 w-6 text-[#B89A5A]" aria-hidden="true" />
-              <p className="mt-5 text-sm font-bold leading-5 text-[#1C1C1C]">{item.title}</p>
+    <section
+      id="facial-aging-patterns"
+      className="overflow-hidden border-b border-[#E0D5C4] bg-[#F6F2EB] px-5 py-[72px] sm:px-6 sm:py-24 lg:px-8"
+    >
+      <div className="mx-auto max-w-[1240px]">
+        <div className="mx-auto max-w-[860px] text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#A67B36]">Facial aging patterns</p>
+          <h2 className="mt-4 font-display text-[36px] font-semibold leading-[1.08] text-[#201D19] sm:text-[46px] lg:text-[54px]">
+            Where Facial Aging Often Becomes Visible
+          </h2>
+          <p className="mx-auto mt-5 max-w-[760px] text-[15px] leading-7 text-[#665F57] sm:text-base">
+            Each face ages differently. Dr. Xiao assesses structural changes across the midface, jawline, lower face,
+            and neck before recommending a treatment direction.
+          </p>
+        </div>
+
+        <div className="relative mx-auto mt-10 hidden h-[650px] max-w-[1200px] xl:block">
+          <div className="grid h-full grid-cols-[minmax(0,1fr)_430px_minmax(0,1fr)] items-center gap-10">
+            <div className="relative z-20 flex h-[560px] flex-col justify-around py-7">
+              {leftPatterns.map((pattern) => (
+                <div key={pattern.number} className="max-w-[285px] bg-[#F6F2EB] pr-4">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A67B36]">{pattern.number}</p>
+                  <h3 className="mt-2 font-display text-[24px] font-semibold leading-tight text-[#211E1A]">
+                    {pattern.title}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-6 text-[#70685E]">{pattern.description}</p>
+                </div>
+              ))}
             </div>
-          );
-        })}
+
+            <figure className="relative z-0 h-[620px] overflow-hidden rounded-md border border-[#D8CAB4] bg-[#E9E5DE] shadow-[0_24px_70px_rgba(58,45,30,0.12)]">
+              <Image
+                src="/images/facebook-aging-patterns-real-patient.webp"
+                alt="Front-facing patient photo illustrating common facial aging patterns"
+                fill
+                sizes="430px"
+                className="object-cover object-center"
+              />
+            </figure>
+
+            <div className="relative z-20 flex h-[560px] flex-col justify-around py-7">
+              {rightPatterns.map((pattern) => (
+                <div key={pattern.number} className="ml-auto max-w-[285px] bg-[#F6F2EB] pl-4">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A67B36]">{pattern.number}</p>
+                  <h3 className="mt-2 font-display text-[24px] font-semibold leading-tight text-[#211E1A]">
+                    {pattern.title}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-6 text-[#70685E]">{pattern.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <svg
+            className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+            viewBox="0 0 1200 650"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <g fill="none" stroke="#B68A43" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5">
+              <path d="M 285 140 L 380 140 L 531 273" />
+              <path d="M 285 325 L 390 325 L 570 329" />
+              <path d="M 285 510 L 405 510 L 600 459" />
+              <path d="M 915 140 L 820 140 L 669 353" />
+              <path d="M 915 325 L 815 325 L 695 248" />
+              <path d="M 915 510 L 805 510 L 720 372" />
+            </g>
+            <g fill="#B68A43" stroke="#F6F2EB" strokeWidth="3">
+              <circle cx="531" cy="273" r="6" />
+              <circle cx="570" cy="329" r="6" />
+              <circle cx="600" cy="459" r="6" />
+              <circle cx="669" cy="353" r="6" />
+              <circle cx="695" cy="248" r="6" />
+              <circle cx="720" cy="372" r="6" />
+            </g>
+          </svg>
+        </div>
+
+        <div className="mt-9 xl:hidden">
+          <figure className="relative mx-auto aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-md border border-[#D8CAB4] bg-[#E9E5DE] shadow-[0_20px_55px_rgba(58,45,30,0.1)]">
+            <Image
+              src="/images/facebook-aging-patterns-real-patient.webp"
+              alt="Front-facing patient photo with numbered facial aging pattern markers"
+              fill
+              sizes="(max-width: 640px) calc(100vw - 40px), 520px"
+              className="object-cover object-center"
+            />
+            {facebookAgingPatterns.map((pattern, index) => (
+              <span
+                key={pattern.number}
+                style={pattern.marker}
+                className="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#F6F2EB] bg-[#B68A43] text-[10px] font-bold text-white shadow-md"
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+            ))}
+          </figure>
+
+          <div className="mx-auto mt-6 grid max-w-[760px] grid-cols-1 border-y border-[#D8CCBA] sm:grid-cols-2">
+            {facebookAgingPatterns.map((pattern, index) => (
+              <div
+                key={pattern.number}
+                className={`grid grid-cols-[30px_1fr] gap-3 py-4 ${
+                  index > 0 ? "border-t border-[#E2D8C9] sm:border-t-0" : ""
+                } ${index % 2 === 1 ? "sm:border-l sm:pl-5" : "sm:pr-5"} ${
+                  index > 1 ? "sm:border-t sm:border-[#E2D8C9]" : ""
+                }`}
+              >
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#B68A43] text-[10px] font-bold text-white">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 className="text-sm font-bold text-[#211E1A]">{pattern.title}</h3>
+                  <p className="mt-1 text-xs leading-5 text-[#70685E]">{pattern.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto mt-7 max-w-[820px] border-t border-[#D8CCBA] pt-6 text-center">
+          <p className="text-sm leading-6 text-[#665F57]">
+            These signs often appear together, but every face ages differently.
+          </p>
+          <p className="mt-2 text-[11px] leading-5 text-[#8A8176]">
+            This visual highlights common aging patterns and is not a medical diagnosis.
+          </p>
+        </div>
+
+        <div className="mt-6 text-center">
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="facial_aging_patterns"
+            label="Facial aging patterns WhatsApp assessment"
+            className="inline-flex h-14 w-full items-center justify-center gap-3 rounded-md bg-[#25A85B] px-7 text-sm font-bold text-white shadow-[0_16px_36px_rgba(37,168,91,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1C8F4B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B68A43] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F2EB] motion-reduce:transform-none sm:w-auto"
+          >
+            Send Photos for Private Assessment
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          </TrackedWhatsAppLink>
+        </div>
       </div>
-      <div className="mt-7 text-center">
-        <TrackedWhatsAppLink
-          href={whatsappUrl}
-          placement="middle"
-          label="Quick self assessment WhatsApp"
-          className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#25A85B] px-6 text-sm font-bold text-white shadow-[0_16px_36px_rgba(37,168,91,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1C8F4B] sm:w-auto"
-        >
-          Start Private Assessment
-          <MessageCircle className="h-4 w-4" aria-hidden="true" />
-        </TrackedWhatsAppLink>
-      </div>
-    </FacebookSection>
+    </section>
   );
 }
 
@@ -1366,23 +1561,107 @@ function FacebookCareMoments({ whatsappUrl }: { whatsappUrl: string }) {
   );
 }
 
-function FacebookNaturalDifference({ config }: { config: PageConfig }) {
+function FacebookNaturalDifference({ whatsappUrl }: { whatsappUrl: string }) {
+  const concerns = [
+    "Midface descent and tired-looking contours",
+    "Deepened folds and lower-face heaviness",
+    "Jowls and loss of jawline definition",
+    "Neck laxity and tissue descent"
+  ];
+
   return (
-    <FacebookSection className="bg-[#FFFFFF]">
-      <CenteredHeading eyebrow="Why 9D looks natural" title={config.differenceTitle} />
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {config.differenceItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.title} className="rounded-md border border-[#E5D8C4] bg-[#F8F4EE] p-5">
-              <Icon className="h-7 w-7 text-[#B89A5A]" aria-hidden="true" />
-              <h3 className="mt-4 text-base font-bold text-[#1C1C1C]">{item.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[#5A5149]">{item.description}</p>
+    <section id="what-is-9d-facelift" className="border-b border-[#E4D8C6] bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-16 xl:gap-20">
+        <div className="lg:hidden">
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#A67B36]">What is 9D Facelift?</p>
+          <h2 className="mt-4 font-display text-[38px] font-semibold leading-[1.08] text-[#201D19] sm:text-[48px]">
+            Multi-Layer Lift. Natural Identity Preserved.
+          </h2>
+        </div>
+
+        <figure className="mx-auto w-full max-w-[500px] lg:mx-0">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-md border border-[#D8CAB4] bg-[#F3EEE6] shadow-[0_26px_70px_rgba(46,34,21,0.13)]">
+            <Image
+              src="/images/facebook-9d-method-case-20261013.webp"
+              alt="Real patient before and after 9D facial rejuvenation"
+              fill
+              sizes="(max-width: 1024px) calc(100vw - 40px), 500px"
+              className="object-cover"
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
+            <span className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+              Real patient · Before &amp; After
+            </span>
+          </div>
+          <figcaption className="mt-3 text-[11px] leading-5 text-[#82786C]">
+            Individual healing and results vary.
+          </figcaption>
+        </figure>
+
+        <div>
+          <div className="hidden lg:block">
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#A67B36]">What is 9D Facelift?</p>
+            <h2 className="mt-4 max-w-[680px] font-display text-[38px] font-semibold leading-[1.08] text-[#201D19] sm:text-[48px] lg:text-[54px]">
+              Multi-Layer Lift. Natural Identity Preserved.
+            </h2>
+          </div>
+          <p className="mt-6 max-w-[680px] text-[16px] leading-8 text-[#554D45]">
+            The 9D Facelift is not a thread lift. It is Dr. Xiao&apos;s personalized, doctor-led approach to facial
+            rejuvenation, planned across multiple facial regions, treatment points, and tissue layers. Depending on
+            the patient&apos;s anatomy and aging pattern, the plan may include deeper structural lifting and SMAS-level
+            support to reposition descended tissue and restore facial definition.
+          </p>
+
+          <div className="mt-7 grid grid-cols-1 border-y border-[#DCCFBC] sm:grid-cols-2">
+            <div className="py-5 sm:pr-6">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A67B36]">Technical principle</p>
+              <p className="mt-2 text-sm leading-6 text-[#3F3933]">
+                Multi-area, multi-point, and multi-layer lifting planned across the midface, lower face, jawline, and
+                neck.
+              </p>
             </div>
-          );
-        })}
+            <div className="border-t border-[#E4D9C8] py-5 sm:border-l sm:border-t-0 sm:pl-6">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A67B36]">Not a thread lift</p>
+              <p className="mt-2 text-sm leading-6 text-[#3F3933]">
+                Thread lifting relies mainly on threads within a more limited tissue plane. 9D planning addresses
+                several structural layers according to each patient&apos;s anatomy.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-7">
+            <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-[#27231F]">Designed to improve</h3>
+            <div className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+              {concerns.map((concern) => (
+                <div key={concern} className="flex items-start gap-3 border-b border-[#E9E1D5] pb-3">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#B68A43]" aria-hidden="true" />
+                  <span className="text-sm leading-6 text-[#554D45]">{concern}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-7 border-l-2 border-[#B68A43] bg-[#F7F2EA] px-5 py-4">
+            <p className="text-sm font-bold text-[#29241F]">Dr. Xiao&apos;s design principle</p>
+            <p className="mt-2 text-sm leading-6 text-[#62594F]">
+              Restore support while preserving the features that make you recognizable. The aim is a refreshed,
+              naturally lifted appearance that maintains facial movement, expression, and individual character. The
+              appropriate layers and degree of lifting are confirmed after in-person medical evaluation.
+            </p>
+          </div>
+
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="what_is_9d_facelift"
+            label="Ask if 9D Facelift fits you"
+            className="mt-7 inline-flex h-14 w-full items-center justify-center gap-3 rounded-md bg-[#1E1C19] px-7 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#302B25] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B68A43] focus-visible:ring-offset-2 sm:w-auto"
+          >
+            Ask If 9D Fits You
+            <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+          </TrackedWhatsAppLink>
+        </div>
       </div>
-    </FacebookSection>
+    </section>
   );
 }
 
@@ -1606,6 +1885,57 @@ function FacebookPhotoAssessmentGuide({ whatsappUrl }: { whatsappUrl: string }) 
           ))}
         </div>
       </div>
+    </FacebookSection>
+  );
+}
+
+function FacebookFaqSection({ whatsappUrl }: { whatsappUrl: string }) {
+  return (
+    <FacebookSection id="frequently-asked-questions" className="border-t border-[#E0D0B3] bg-white">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+        <div className="lg:sticky lg:top-24 lg:self-start">
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">Frequently asked questions</p>
+          <h2 className="mt-3 max-w-[430px] font-display text-3xl font-semibold leading-tight text-[#1C1C1C] sm:text-5xl">
+            Questions before your private assessment.
+          </h2>
+          <p className="mt-5 max-w-[470px] text-sm leading-7 text-[#4E463F]">
+            Clear guidance on the 9D approach, suitability, recovery, and planning your visit to Shanghai.
+          </p>
+          <TrackedWhatsAppLink
+            href={whatsappUrl}
+            placement="faq"
+            label="FAQ WhatsApp"
+            className="mt-7 inline-flex h-12 w-full items-center justify-center gap-3 rounded-md border border-[#1C1C1C] bg-[#1C1C1C] px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2A2520] sm:w-auto"
+          >
+            Ask a Private Question
+            <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+          </TrackedWhatsAppLink>
+        </div>
+
+        <div className="border-t border-[#D9C6A6]">
+          {facebookFaqs.map((faq, index) => (
+            <details key={faq.question} className="group border-b border-[#D9C6A6]" open={index === 0 ? true : undefined}>
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-5 text-left text-base font-bold text-[#1C1C1C] marker:content-none sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
+                <span className="flex items-start gap-4">
+                  <span className="mt-0.5 text-[11px] font-bold tracking-[0.16em] text-[#B89A5A]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>{faq.question}</span>
+                </span>
+                <ChevronDown
+                  className="h-5 w-5 shrink-0 text-[#B89A5A] transition-transform duration-200 group-open:rotate-180"
+                  aria-hidden="true"
+                />
+              </summary>
+              <p className="pb-6 pl-11 pr-8 text-sm leading-7 text-[#5A5149] sm:pr-12">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+      <p className="mt-8 border-t border-[#EEE4D5] pt-5 text-xs leading-6 text-[#6A5E52]">
+        Information on this page is general guidance only. Treatment suitability, risks, recovery, and final recommendations
+        require an in-person medical evaluation.
+      </p>
     </FacebookSection>
   );
 }
