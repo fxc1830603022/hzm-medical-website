@@ -1,6 +1,5 @@
 import Script from "next/script";
-
-const facebookAdsPixelIds = ["1559352332606230", "1968972384060712"] as const;
+import { facebookAdsPixelIds } from "@/lib/facebook-ads";
 
 export function FacebookAdsPixel() {
   return (

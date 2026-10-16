@@ -26,11 +26,11 @@ import { trackAdsLandingEvent } from "@/lib/tracking";
 import { ArrivalSupportVideo } from "./ArrivalSupportVideo";
 import { BackToTop } from "./BackToTop";
 import {
-  FacebookWeChatButton,
   FacebookWeChatModal,
   type FacebookWeChatDetails,
   WeChatBrandIcon
 } from "./FacebookWeChatContact";
+import { FacebookAssessmentSection } from "./FacebookAssessmentSection";
 import { Footer } from "./Footer";
 import { HospitalTrustVideo } from "./HospitalTrustVideo";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
@@ -1697,7 +1697,7 @@ function FacebookPlanFitV2({ whatsappUrl }: { whatsappUrl: string }) {
 
 function FacebookInternationalJourneyV2({ whatsappUrl }: { whatsappUrl: string }) {
   return (
-    <FacebookSection className="bg-[#FFFFFF]">
+    <FacebookSection id="international-patient-journey" className="bg-[#FFFFFF]">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_0.82fr] lg:items-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">International patient journey</p>
@@ -1730,13 +1730,13 @@ function FacebookInternationalJourneyV2({ whatsappUrl }: { whatsappUrl: string }
             <MessageCircle className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
           </TrackedWhatsAppLink>
         </div>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-[#E0D0B3] bg-white shadow-[0_22px_70px_rgba(50,36,18,0.10)]">
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-md border border-[#E0D0B3] bg-[#EDE3D6] shadow-[0_22px_70px_rgba(50,36,18,0.10)] lg:max-w-none">
           <Image
-            src="/images/international-patients-hero-consultation.webp"
-            alt="International patient consultation with Dr. Xiao"
+            src="/images/facebook-in-person-consultation.webp"
+            alt="Dr. Xiao reviewing a patient during an in-person facial consultation"
             fill
-            sizes="(min-width: 1024px) 430px, 92vw"
-            className="object-cover object-[64%_center]"
+            sizes="(min-width: 1440px) 540px, (min-width: 1024px) 42vw, (min-width: 640px) 520px, 92vw"
+            className="object-cover object-[50%_65%]"
           />
         </div>
       </div>
@@ -1940,44 +1940,13 @@ function FacebookFaqSection({ whatsappUrl }: { whatsappUrl: string }) {
   );
 }
 
-function FacebookFinalCtaV2({
-  config,
-  whatsappUrl,
-  wechatDetails,
-  onOpenWechat
-}: {
+function FacebookFinalCtaV2({ whatsappUrl, wechatDetails, onOpenWechat }: {
   config: PageConfig;
   whatsappUrl: string;
   wechatDetails: FacebookWeChatDetails;
   onOpenWechat: () => void;
 }) {
-  return (
-    <section className="bg-[#1C1C1C] px-4 py-12 text-white sm:px-6 lg:px-8 lg:py-16">
-      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 lg:grid-cols-[1fr_0.56fr] lg:items-center">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#D8BE8B]">Private assessment</p>
-          <h2 className="mt-3 font-display text-4xl font-semibold leading-tight sm:text-6xl">
-            Discover Your Personalized 9D Plan.
-          </h2>
-          <p className="mt-4 max-w-[620px] text-sm leading-7 text-white/72">{config.finalDescription}</p>
-          <p className="mt-3 max-w-[680px] text-xs leading-6 text-white/55">
-            Online assessment provides initial guidance only. Final recommendations require in-person medical
-            evaluation.
-          </p>
-          <TrackedWhatsAppLink
-            href={whatsappUrl}
-            placement="final"
-            label="Start Private Assessment"
-            className="mt-7 inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#D8BE8B] px-6 text-sm font-bold text-[#1C1C1C] transition hover:-translate-y-0.5 hover:bg-[#E7C98F] sm:w-auto"
-          >
-            Start Private Assessment
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </TrackedWhatsAppLink>
-        </div>
-        <FacebookWeChatButton {...wechatDetails} onOpen={onOpenWechat} />
-      </div>
-    </section>
-  );
+  return <FacebookAssessmentSection whatsappUrl={whatsappUrl} wechatId={wechatDetails.wechatId} onOpenWechat={onOpenWechat} />;
 }
 
 function FacebookSection({
@@ -2753,6 +2722,15 @@ function StickyFacebookContacts({
   label: string;
   onOpenWechat: () => void;
 }) {
+  const [assessmentVisible, setAssessmentVisible] = useState(false);
+  useEffect(() => {
+    const assessment = document.getElementById("private-assessment");
+    if (!assessment) return;
+    const observer = new IntersectionObserver(([entry]) => setAssessmentVisible(entry.isIntersecting));
+    observer.observe(assessment);
+    return () => observer.disconnect();
+  }, []);
+  if (assessmentVisible) return null;
   return (
     <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 sm:inset-x-auto sm:right-5 sm:w-[368px]">
       <button

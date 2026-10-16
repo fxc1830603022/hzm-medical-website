@@ -1,6 +1,15 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { makeServerSanityClient } from "./sanity";
+import type { FacebookAssessment } from "./facebook-assessment";
+
+export type FacebookAdsLead = FacebookAssessment & {
+  _id?: string;
+  source: string;
+  status: string;
+  createdAt: string;
+  googleSheetsSyncStatus?: "pending" | "synced" | "not_configured" | "failed";
+};
 
 type ConsultationSubmission = {
   name: string;
@@ -63,9 +72,14 @@ function getSanityMutationUrl() {
 }
 
 async function createWithWindowsPowerShell(
-  documentType: "consultationSubmission" | "googleAdsLead",
-  payload: ConsultationSubmission | GoogleAdsLead
+  documentType: "consultationSubmission" | "googleAdsLead" | "facebookAdsLead",
+  payload: ConsultationSubmission | GoogleAdsLead | FacebookAdsLead,
+  operation: "create" | "createIfNotExists" = "create"
 ) {
+  return mutateWithWindowsPowerShell({ [operation]: { _type: documentType, ...payload } });
+}
+
+async function mutateWithWindowsPowerShell(mutation: Record<string, unknown>) {
   if (process.platform !== "win32") return null;
 
   const token = process.env.SANITY_API_TOKEN;
@@ -73,14 +87,7 @@ async function createWithWindowsPowerShell(
   if (!token || !url) return null;
 
   const body = JSON.stringify({
-    mutations: [
-      {
-        create: {
-          _type: documentType,
-          ...payload
-        }
-      }
-    ]
+    mutations: [mutation]
   });
 
   const script = [
@@ -157,6 +164,44 @@ export async function createGoogleAdsLead(payload: GoogleAdsLead) {
   }
 
   return createWithWindowsPowerShell("googleAdsLead", payload);
+}
+
+export async function createFacebookAdsLead(payload: FacebookAdsLead) {
+  const sanity = makeServerSanityClient();
+  if (sanity) {
+    try {
+      return payload._id
+        ? await sanity.createIfNotExists({ _type: "facebookAdsLead", ...payload, _id: payload._id })
+        : await sanity.create({ _type: "facebookAdsLead", ...payload });
+    } catch (error) {
+      const fallback = await createWithWindowsPowerShell("facebookAdsLead", payload, payload._id ? "createIfNotExists" : "create");
+      if (fallback) return fallback;
+      throw error;
+    }
+  }
+  return createWithWindowsPowerShell("facebookAdsLead", payload, payload._id ? "createIfNotExists" : "create");
+}
+
+export async function updateFacebookLeadSheetSync(documentId: string, result: { configured: boolean; synced: boolean; error?: string }) {
+  const sanity = makeServerSanityClient();
+  if (!sanity) throw new Error("Facebook CMS sync status could not be updated.");
+  const values: Record<string, string> = {
+    googleSheetsSyncStatus: result.synced ? "synced" : result.configured ? "failed" : "not_configured"
+  };
+  if (result.synced) values.googleSheetsSyncedAt = new Date().toISOString();
+  if (result.error) values.googleSheetsSyncError = result.error.slice(0, 1000);
+  const unset = [
+    ...(!result.error ? ["googleSheetsSyncError"] : []),
+    ...(!result.synced ? ["googleSheetsSyncedAt"] : [])
+  ];
+  if (process.platform === "win32") {
+    const updated = await mutateWithWindowsPowerShell({ patch: { id: documentId, set: values, unset } });
+    if (!updated) throw new Error("Facebook CMS sync status could not be updated.");
+    return;
+  }
+  let patch = sanity.patch(documentId).set(values);
+  if (unset.length) patch = patch.unset(unset);
+  await patch.commit();
 }
 
 export async function updateGoogleAdsLeadSheetSync(

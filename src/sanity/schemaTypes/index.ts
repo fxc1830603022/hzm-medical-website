@@ -1,6 +1,7 @@
 import { consultationSubmission } from "./consultationSubmission";
 import { doctor } from "./doctor";
 import { faqItem } from "./faqItem";
+import { facebookAdsLead } from "./facebookAdsLead";
 import { galleryItem } from "./galleryItem";
 import { googleAdsLandingPage } from "./googleAdsLandingPage";
 import { googleAdsLead } from "./googleAdsLead";
@@ -19,6 +20,7 @@ export const schemaTypes = [
   galleryItem,
   googleAdsLandingPage,
   googleAdsLead,
+  facebookAdsLead,
   faqItem,
   testimonial,
   consultationSubmission,

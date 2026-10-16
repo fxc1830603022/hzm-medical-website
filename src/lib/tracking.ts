@@ -1,3 +1,6 @@
+import { facebookAdsPixelIds } from "./facebook-ads";
+import { facebookAssessmentSource } from "./facebook-assessment";
+
 export type TrafficSource = {
   landingPage: string;
   referrer: string;
@@ -315,6 +318,28 @@ export function trackAdsLandingEvent(eventName: AdsLandingEventName, params: Rec
     content: stored?.lastTouch?.content || stored?.firstTouch?.content || "",
     ...params
   });
+}
+
+export function trackFacebookAssessmentSubmit() {
+  if (typeof window === "undefined") return;
+  if (["localhost", "127.0.0.1", "::1"].includes(window.location.hostname)) return;
+  const params = {
+    method: "form",
+    form_name: "facebook_private_assessment",
+    form_source: facebookAssessmentSource,
+    traffic_source: "facebook_ads_landing",
+    page_path: window.location.pathname,
+    lead_source: "form"
+  };
+  sendGaEvent("facebook_assessment_submit", params);
+  sendGaEvent("form_submit_lead", params);
+  sendGaEvent("generate_lead", params);
+  for (const pixelId of facebookAdsPixelIds) {
+    window.fbq?.("trackSingle", pixelId, "Lead", {
+      content_name: "Facebook private assessment",
+      source: facebookAssessmentSource
+    });
+  }
 }
 
 export function trackLinksPageAction(payload: LinksPageActionPayload) {
