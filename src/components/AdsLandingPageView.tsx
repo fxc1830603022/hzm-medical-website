@@ -263,38 +263,44 @@ const facebookAgingPatterns = [
   {
     number: "01",
     title: "Midface Descent",
-    description: "Reduced cheek support can make the midface appear flatter or more tired.",
-    marker: { left: "34%", top: "44%" }
+    description: "Changes in cheek volume and support can flatten the midface or allow cheek tissue to descend.",
+    marker: { left: "17%", top: "44%" },
+    target: { left: "37%", top: "44%" }
   },
   {
     number: "02",
     title: "Nasolabial Folds",
-    description: "Deeper folds may create stronger shadows between the nose and mouth.",
-    marker: { left: "43%", top: "53%" }
+    description: "These folds run from the sides of the nose toward the corners of the mouth.",
+    marker: { left: "17%", top: "53%" },
+    target: { left: "46%", top: "49%" }
   },
   {
     number: "03",
     title: "Neck Laxity",
-    description: "Changes in skin and support can soften the neck contour.",
-    marker: { left: "50%", top: "74%" }
+    description: "Loose skin below the chin can soften the transition between the jaw and neck.",
+    marker: { left: "26%", top: "70%" },
+    target: { left: "53%", top: "65.5%" }
   },
   {
     number: "04",
-    title: "Lower-Face Heaviness",
-    description: "Tissue descent can make the lower face look heavier or less defined.",
-    marker: { left: "66%", top: "57%" }
+    title: "Jowls / Lower Face",
+    description: "Descending soft tissue can gather beside the chin along the lower cheek and jaw.",
+    marker: { left: "87%", top: "55%" },
+    target: { left: "67%", top: "56%" }
   },
   {
     number: "05",
     title: "Periorbital Aging",
-    description: "Fine lines, under-eye hollowing, and tiredness can make the eye area look older.",
-    marker: { left: "72%", top: "40%" }
+    description: "The area around the eyes may develop fine lines, under-eye hollows, or puffiness.",
+    marker: { left: "87%", top: "39%" },
+    target: { left: "65.5%", top: "40%" }
   },
   {
     number: "06",
     title: "Jawline Softening",
-    description: "A less defined jawline can reduce lower-face contour and balance.",
-    marker: { left: "78%", top: "60%" }
+    description: "The lower border of the jaw may become less distinct where the face meets the neck.",
+    marker: { left: "86%", top: "65%" },
+    target: { left: "71.5%", top: "58.5%" }
   }
 ];
 
@@ -1117,23 +1123,38 @@ function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
 
         <div className="mt-9 xl:hidden">
           <figure className="relative mx-auto aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-md border border-[#D8CAB4] bg-[#E9E5DE] shadow-[0_20px_55px_rgba(58,45,30,0.1)]">
-            <Image
-              src="/images/facebook-aging-patterns-real-patient.webp"
-              alt="Front-facing patient photo with numbered facial aging pattern markers"
-              fill
-              sizes="(max-width: 640px) calc(100vw - 40px), 520px"
-              className="object-cover object-center"
-            />
-            {facebookAgingPatterns.map((pattern, index) => (
-              <span
-                key={pattern.number}
-                style={pattern.marker}
-                className="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#F6F2EB] bg-[#B68A43] text-[10px] font-bold text-white shadow-md"
-                aria-hidden="true"
-              >
-                {index + 1}
-              </span>
-            ))}
+            {/* Keep annotations in the source photo's 1200 × 2140 coordinate space, including when cropped. */}
+            <div className="absolute inset-x-0 top-1/2 aspect-[60/107] -translate-y-1/2">
+              <Image
+                src="/images/facebook-aging-patterns-real-patient.webp"
+                alt="Facial regions: cheeks, nasolabial folds, neck, jowls, eye area, and jawline; numbered guide below"
+                fill
+                sizes="(max-width: 640px) calc(100vw - 40px), 520px"
+                className="object-contain"
+              />
+              <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                {facebookAgingPatterns.map((pattern) => (
+                  <line
+                    key={pattern.number}
+                    x1={pattern.marker.left}
+                    y1={pattern.marker.top}
+                    x2={pattern.target.left}
+                    y2={pattern.target.top}
+                    stroke="#B68A43"
+                    strokeWidth="1.5"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                ))}
+              </svg>
+              {facebookAgingPatterns.map((pattern, index) => (
+                <div key={pattern.number} aria-hidden="true">
+                  <span style={pattern.target} className="pointer-events-none absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-[#B68A43] shadow-sm" />
+                  <span style={pattern.marker} className="pointer-events-none absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#F6F2EB] bg-[#B68A43] text-[11px] font-bold text-white shadow-md">
+                    {index + 1}
+                  </span>
+                </div>
+              ))}
+            </div>
           </figure>
 
           <div className="mx-auto mt-6 grid max-w-[760px] grid-cols-1 border-y border-[#D8CCBA] sm:grid-cols-2">
