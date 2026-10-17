@@ -123,6 +123,7 @@ async function mutateWithWindowsPowerShell(mutation: Record<string, unknown>) {
   }
 
   return {
+    ...result?.document,
     _id: id
   };
 }

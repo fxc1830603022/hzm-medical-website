@@ -9,6 +9,7 @@ import {
   validateFacebookAssessment
 } from "@/lib/facebook-assessment";
 import { assessmentCountries } from "@/lib/assessment-countries";
+import { createAssessmentRequestId } from "@/lib/assessment-request-id";
 import { trackFacebookAssessmentSubmit } from "@/lib/tracking";
 import { WeChatBrandIcon } from "./FacebookWeChatContact";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
@@ -106,27 +107,39 @@ function FacebookAssessmentForm() {
       return;
     }
     submittingRef.current = true;
-    const fingerprint = JSON.stringify(validation.data);
-    if (submissionRef.current.fingerprint !== fingerprint) {
-      submissionRef.current = { fingerprint, requestId: crypto.randomUUID() };
-    }
     setError("");
     setStatus("submitting");
+    let requestTimeout: ReturnType<typeof setTimeout> | undefined;
     try {
+      const fingerprint = JSON.stringify(validation.data);
+      if (submissionRef.current.fingerprint !== fingerprint) {
+        submissionRef.current = { fingerprint, requestId: createAssessmentRequestId() };
+      }
+      const controller = new AbortController();
+      requestTimeout = setTimeout(() => controller.abort(), 30000);
       const response = await fetch("/api/facebook-assessment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({ ...validation.data, requestId: submissionRef.current.requestId })
       });
-      const result = await response.json();
-      if (!response.ok || result.ok !== true) throw new Error(result.error || "We could not save your assessment. Please try again.");
+      const result: unknown = await response.json().catch(() => null);
+      const data = result && typeof result === "object" ? result as Record<string, unknown> : null;
+      if (!response.ok || data?.ok !== true) {
+        throw new Error(typeof data?.error === "string" ? data.error : "We could not save your assessment. Please try again or contact us on WhatsApp.");
+      }
       setStatus("success");
       // A tracking failure must never turn a saved assessment into an apparent failed submission.
       try { trackFacebookAssessmentSubmit(); } catch { /* Storage already succeeded. */ }
     } catch (issue) {
-      setError(issue instanceof Error ? issue.message : "Please check your connection and try again.");
+      setError(issue instanceof Error && issue.name === "AbortError"
+        ? "We could not confirm your submission in time. Please try again or contact us on WhatsApp."
+        : issue instanceof TypeError
+          ? "Please check your connection and try again, or contact us on WhatsApp."
+          : issue instanceof Error ? issue.message : "Please check your connection and try again.");
       setStatus("idle");
     } finally {
+      if (requestTimeout !== undefined) clearTimeout(requestTimeout);
       submittingRef.current = false;
     }
   }

@@ -25,8 +25,10 @@ export async function POST(request: Request) {
     };
     const lead = await createFacebookAdsLead(payload);
     if (!lead?._id) throw new Error("Facebook lead storage is not configured.");
+    // A retry must sync the stored assessment, including its original submission time.
+    const savedPayload: FacebookAdsLead = { ...payload, ...lead };
     after(async () => {
-      const result = await syncFacebookLeadToSheets(payload, lead._id);
+      const result = await syncFacebookLeadToSheets(savedPayload, lead._id);
       try { await updateFacebookLeadSheetSync(lead._id, result); }
       catch { console.error("Facebook CMS sheet-sync status update failed."); }
     });
