@@ -9,6 +9,7 @@ import {
   ClipboardCheck,
   Globe2,
   Layers3,
+  MapPin,
   MessageCircle,
   Plane,
   ShieldCheck,
@@ -842,76 +843,77 @@ function FacebookHeroV2({
   onOpenWechat: () => void;
 }) {
   return (
-    <section className="relative isolate overflow-hidden border-b border-[#E5D8C4] bg-[#F8F4EE]">
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(120deg,rgba(255,255,255,0.98),rgba(248,244,238,0.82)_55%,rgba(224,210,188,0.32))]" />
-      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_0.82fr] lg:items-center lg:px-8 lg:py-12">
+    <section id="facebook-hero" aria-labelledby="facebook-hero-heading" className="relative isolate overflow-hidden border-b border-[#E5D8C4] bg-[#F8F4EE]">
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(115deg,#FFFEFC,rgba(248,244,238,0.94)_62%,#EFE7DA)]" />
+      <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-9 px-5 py-9 sm:gap-12 sm:px-8 sm:py-12 lg:grid-cols-[1.25fr_0.9fr] lg:items-center lg:gap-12 lg:py-14 xl:gap-16 xl:py-16">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.26em] text-[#B89A5A]">Facebook / Instagram assessment</p>
-          <h1 className="mt-4 font-display text-[38px] font-semibold leading-[1.02] text-[#1C1C1C] sm:text-[60px] lg:text-[70px]">
-            <span className="block">Natural</span>
-            <span className="block">Rejuvenation.</span>
-            <span className="block text-[#7C6337]">
-              <span className="block sm:inline">Without Looking </span>
-              <span className="block sm:inline">&quot;Done&quot;.</span>
-            </span>
+          <p className="text-[10px] font-bold uppercase leading-5 tracking-[0.19em] text-[#A67B36] sm:text-[11px] sm:tracking-[0.25em]">9D Facelift · Dr. Xiao · Shanghai</p>
+          <h1 id="facebook-hero-heading" className="mt-5 font-display text-[clamp(34px,9vw,48px)] font-semibold leading-[1.04] tracking-[-0.035em] text-[#1C1C1C] sm:text-[68px] lg:text-[62px] xl:text-[76px]">
+            <span className="block">A More Defined</span>
+            <span className="block">Jawline.</span>
+            <span className="mt-1 block text-[0.78em] leading-[1.13] tracking-[-0.04em] text-[#866A37]">Still Naturally You.</span>
           </h1>
-          <p className="mt-5 max-w-[560px] text-base leading-8 text-[#3F3831] sm:text-lg">
-            Doctor-led 9D facial assessment for patients who want a refreshed lower-face and neck appearance while
-            preserving natural expression.
+          <p className="mt-5 max-w-[620px] text-[15px] leading-7 text-[#615B54] sm:mt-6 sm:text-[17px] sm:leading-8">
+            Explore a personalized approach to lower-face and neck rejuvenation with Dr. Xiao in Shanghai—planned around your facial anatomy and goals.
           </p>
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {["Doctor-led", "Anatomy-based", "Natural-looking", "International support"].map((item) => (
-              <div key={item} className="rounded-md border border-[#D9C59F] bg-white/78 px-3 py-3 text-xs font-bold text-[#332A22]">
-                {item}
+          <div className="mt-6 h-px w-24 bg-[#B18B4B] sm:mt-7 sm:w-32" aria-hidden="true" />
+          <div className="mt-5 grid grid-cols-3 divide-x divide-[#D8C5A5] sm:mt-6">
+            {[
+              { label: "Personalized Planning", icon: UserRoundCheck },
+              { label: "Shanghai Consultation", icon: MapPin },
+              { label: "International Patient Support", icon: Globe2 }
+            ].map(({ label, icon: Icon }, index) => (
+              <div key={label} className={`flex min-w-0 flex-col items-start gap-2 pr-3 sm:flex-row sm:items-center sm:gap-3 ${index > 0 ? "pl-3 sm:pl-4" : ""}`}>
+                <Icon className="h-6 w-6 shrink-0 stroke-[1.4] text-[#A18147] sm:h-7 sm:w-7" aria-hidden="true" />
+                <p className="max-w-[136px] text-[11px] leading-[1.5] text-[#4D4841] sm:text-xs">{label}</p>
               </div>
             ))}
           </div>
-          <div className="mt-7 grid w-full max-w-[620px] grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="mt-7 flex flex-col items-stretch gap-4 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-4">
             <TrackedWhatsAppLink
               href={whatsappUrl}
               placement="hero"
-              label="Send Photos for Private Assessment"
-              className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md bg-[#1C1C1C] px-5 text-sm font-bold text-white shadow-[0_18px_44px_rgba(28,28,28,0.22)] transition hover:-translate-y-0.5 hover:bg-[#2A2520]"
+              label="Start My Private Assessment"
+              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-lg bg-[#174B32] px-5 py-4 text-[13px] font-bold text-white shadow-[0_12px_30px_rgba(23,75,50,0.15)] transition hover:bg-[#103D27] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#174B32] sm:w-auto sm:px-6 sm:text-sm"
             >
-              <MessageCircle className="h-5 w-5 text-[#25D366]" aria-hidden="true" />
-              <span className="sm:hidden">Start Private Assessment</span>
-              <span className="hidden sm:inline">Send Photos for Private Assessment</span>
+              <MessageCircle className="h-5 w-5 shrink-0" aria-hidden="true" />
+              <span>Start My Private Assessment</span>
+              <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
             </TrackedWhatsAppLink>
-            <button
-              type="button"
-              onClick={onOpenWechat}
-              className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-md border border-[#08A653] bg-white/82 px-5 text-sm font-bold text-[#183F2B] shadow-[0_14px_34px_rgba(7,193,96,0.1)] transition hover:-translate-y-0.5 hover:bg-[#F1FFF7]"
+            <Link
+              href="#real-results"
+              className="inline-flex min-h-11 items-center justify-center gap-2 self-center text-[13px] font-semibold text-[#5C503C] underline decoration-[#B39460] underline-offset-[7px] transition hover:text-[#9A773C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9A773C] sm:justify-start sm:text-sm"
             >
-              <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm bg-[#07C160] text-white">
-                <WeChatBrandIcon className="h-[18px] w-[18px]" />
-              </span>
-              WeChat Private Contact
-            </button>
+              View Patient Results
+              <ArrowRight className="h-4 w-4 shrink-0 text-[#A78140]" aria-hidden="true" />
+            </Link>
           </div>
-          <Link
-            href="#real-results"
-            className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#695943] transition hover:text-[#A47C3D]"
+          <p className="mt-3 max-w-[560px] text-xs leading-6 text-[#81796F] sm:mt-4">Start with your concerns. Our team will guide you through the next steps.</p>
+          <button
+            type="button"
+            onClick={onOpenWechat}
+            aria-haspopup="dialog"
+            className="mt-4 inline-flex min-h-11 max-w-full items-center gap-3 text-left text-xs leading-5 text-[#5B554C] transition hover:text-[#174B32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#174B32] sm:mt-3 sm:text-[13px]"
           >
-            View Natural Results
-            <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
-          </Link>
-          <p className="mt-4 max-w-[640px] text-xs leading-6 text-[#6A5E52]">{assessmentInstruction}</p>
+            <WeChatBrandIcon className="h-6 w-6 shrink-0 text-[#21964B]" />
+            <span className="border-l border-[#D8C5A5] pl-3 underline decoration-[#BFA77D] underline-offset-4">Prefer WeChat? Connect with our team</span>
+          </button>
         </div>
 
-        <div className="relative mx-auto aspect-[2/3] w-full max-w-[430px] overflow-hidden rounded-md border border-[#D9C59F] bg-[#4A4A4A] shadow-[0_30px_90px_rgba(48,35,19,0.16)] sm:max-w-[470px] lg:max-w-[430px]">
+        <div className="relative mx-auto aspect-[2/3] w-full max-w-[430px] overflow-hidden rounded-xl border border-[#CDBB9E] bg-[#4A4A4A] shadow-[0_24px_65px_rgba(48,35,19,0.14)] sm:max-w-[470px] lg:max-w-none">
           <Image
             src={config.heroImage}
             alt={config.heroAlt}
             fill
             priority
             quality={92}
-            sizes="(min-width: 1024px) 430px, 92vw"
+            sizes="(min-width: 1320px) 500px, (min-width: 1024px) 40vw, (min-width: 640px) 470px, 92vw"
             className="object-cover object-center"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#181818]/84 via-[#181818]/32 to-transparent px-4 pb-4 pt-24">
-            <div className="rounded-md border border-white/18 bg-[#181818]/72 p-4 text-white shadow-[0_18px_46px_rgba(0,0,0,0.22)] backdrop-blur-md [&_p:last-child]:!text-white">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#D9B878]">Dr. Xiao Zhongye</p>
-              <p className="mt-1 text-sm font-bold text-white">Founder of the 9D Lifting System™ in Shanghai</p>
+          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+            <div className="rounded-lg border border-[#D7C7AD] bg-[#FFFCF5]/95 px-3 py-4 text-center shadow-[0_8px_28px_rgba(0,0,0,0.08)] backdrop-blur-sm sm:py-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A17D40] sm:text-xs">Dr. Xiao Zhongye</p>
+              <p className="mt-2 text-xs text-[#5F5850] sm:text-sm">9D Lifting System · Shanghai</p>
             </div>
           </div>
         </div>
@@ -2743,15 +2745,24 @@ function StickyFacebookContacts({
   label: string;
   onOpenWechat: () => void;
 }) {
-  const [assessmentVisible, setAssessmentVisible] = useState(false);
+  const [contactSectionVisible, setContactSectionVisible] = useState(false);
   useEffect(() => {
-    const assessment = document.getElementById("private-assessment");
-    if (!assessment) return;
-    const observer = new IntersectionObserver(([entry]) => setAssessmentVisible(entry.isIntersecting));
-    observer.observe(assessment);
+    const sections = ["facebook-hero", "private-assessment"]
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section !== null);
+    if (sections.length === 0) return;
+    const visibleSections = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visibleSections.add(entry.target);
+        else visibleSections.delete(entry.target);
+      }
+      setContactSectionVisible(visibleSections.size > 0);
+    });
+    sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
-  if (assessmentVisible) return null;
+  if (contactSectionVisible) return null;
   return (
     <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 sm:inset-x-auto sm:right-5 sm:w-[368px]">
       <button
