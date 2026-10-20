@@ -260,48 +260,50 @@ const facebookFaqs = [
   }
 ];
 
+const facebookAgingPortrait = "/images/facebook-facial-assessment-portrait-20261020.webp";
+
 const facebookAgingPatterns = [
   {
     number: "01",
-    title: "Midface Descent",
-    description: "Changes in cheek volume and support can flatten the midface or allow cheek tissue to descend.",
-    marker: { left: "17%", top: "44%" },
-    target: { left: "37%", top: "44%" }
+    title: "Cheek Support",
+    description: "Changes in cheek volume and support can make the midface look flatter or less lifted.",
+    marker: { left: "17%", top: "39%" },
+    target: { left: "37.5%", top: "40%" }
   },
   {
     number: "02",
     title: "Nasolabial Folds",
-    description: "These folds run from the sides of the nose toward the corners of the mouth.",
-    marker: { left: "17%", top: "53%" },
-    target: { left: "46%", top: "49%" }
+    description: "The creases from the sides of the nose toward the mouth corners can become more visible with smiling.",
+    marker: { left: "15%", top: "49%" },
+    target: { left: "41.6%", top: "44.3%" }
   },
   {
     number: "03",
-    title: "Neck Laxity",
-    description: "Loose skin below the chin can soften the transition between the jaw and neck.",
-    marker: { left: "26%", top: "70%" },
-    target: { left: "53%", top: "65.5%" }
+    title: "Neck Skin & Contour",
+    description: "Skin creases and laxity below the chin are assessed separately from the jawline.",
+    marker: { left: "25%", top: "72%" },
+    target: { left: "52%", top: "67%" }
   },
   {
     number: "04",
-    title: "Jowls / Lower Face",
-    description: "Descending soft tissue can gather beside the chin along the lower cheek and jaw.",
-    marker: { left: "87%", top: "55%" },
-    target: { left: "67%", top: "56%" }
+    title: "Crow's Feet",
+    description: "Fine lines at the outer corners of the eyes often become more visible when smiling.",
+    marker: { left: "86%", top: "32%" },
+    target: { left: "68.7%", top: "35%" }
   },
   {
     number: "05",
-    title: "Periorbital Aging",
-    description: "The area around the eyes may develop fine lines, under-eye hollows, or puffiness.",
-    marker: { left: "87%", top: "39%" },
-    target: { left: "65.5%", top: "40%" }
+    title: "Marionette Lines",
+    description: "Lines below the mouth corners extend toward the chin, distinct from the folds beside the nose.",
+    marker: { left: "86%", top: "48%" },
+    target: { left: "64.5%", top: "51%" }
   },
   {
     number: "06",
-    title: "Jawline Softening",
-    description: "The lower border of the jaw may become less distinct where the face meets the neck.",
-    marker: { left: "86%", top: "65%" },
-    target: { left: "71.5%", top: "58.5%" }
+    title: "Jawline Definition",
+    description: "The lower edge of the jaw is reviewed for contour changes near the chin and lower cheek.",
+    marker: { left: "85%", top: "61%" },
+    target: { left: "64.5%", top: "57.5%" }
   }
 ];
 
@@ -1043,6 +1045,14 @@ function FacebookMethodVideo() {
 function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
   const leftPatterns = facebookAgingPatterns.slice(0, 3);
   const rightPatterns = facebookAgingPatterns.slice(3);
+  // Project the same source-photo landmarks into the desktop's centered 430px, 3:4 image.
+  const desktopTargets = facebookAgingPatterns.map((pattern, index) => ({
+    number: pattern.number,
+    x: 385 + 430 * Number.parseFloat(pattern.target.left) / 100,
+    y: (650 - 430 * 4 / 3) / 2 + (430 * 4 / 3) * Number.parseFloat(pattern.target.top) / 100,
+    labelY: [140, 325, 510][index % 3],
+    left: index < 3
+  }));
 
   return (
     <section
@@ -1056,8 +1066,8 @@ function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
             Where Facial Aging Often Becomes Visible
           </h2>
           <p className="mx-auto mt-5 max-w-[760px] text-[15px] leading-7 text-[#665F57] sm:text-base">
-            Each face ages differently. Dr. Xiao assesses structural changes across the midface, jawline, lower face,
-            and neck before recommending a treatment direction.
+            Dr. Xiao reviews cheek support, expression lines, the jawline, and neck together to understand your concerns
+            before recommending a treatment direction.
           </p>
         </div>
 
@@ -1075,13 +1085,13 @@ function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
               ))}
             </div>
 
-            <figure className="relative z-0 h-[620px] overflow-hidden rounded-md border border-[#D8CAB4] bg-[#E9E5DE] shadow-[0_24px_70px_rgba(58,45,30,0.12)]">
+            <figure className="relative z-0 aspect-[3/4] w-full overflow-hidden rounded-md bg-[#171717] shadow-[0_24px_70px_rgba(58,45,30,0.12)] ring-1 ring-[#D8CAB4]" data-assessment-photo="desktop">
               <Image
-                src="/images/facebook-aging-patterns-real-patient.webp"
-                alt="Front-facing patient photo illustrating common facial aging patterns"
+                src={facebookAgingPortrait}
+                alt="Smiling portrait with reference points for cheek support, facial lines, jawline, and neck assessment"
                 fill
                 sizes="430px"
-                className="object-cover object-center"
+                className="object-contain"
               />
             </figure>
 
@@ -1105,31 +1115,24 @@ function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
             aria-hidden="true"
           >
             <g fill="none" stroke="#B68A43" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5">
-              <path d="M 285 140 L 380 140 L 531 273" />
-              <path d="M 285 325 L 390 325 L 570 329" />
-              <path d="M 285 510 L 405 510 L 600 459" />
-              <path d="M 915 140 L 820 140 L 669 353" />
-              <path d="M 915 325 L 815 325 L 695 248" />
-              <path d="M 915 510 L 805 510 L 720 372" />
+              {desktopTargets.map((target) => (
+                <path key={target.number} d={`M ${target.left ? 285 : 915} ${target.labelY} H ${target.left ? 365 : 835} L ${target.x} ${target.y}`} />
+              ))}
             </g>
             <g fill="#B68A43" stroke="#F6F2EB" strokeWidth="3">
-              <circle cx="531" cy="273" r="6" />
-              <circle cx="570" cy="329" r="6" />
-              <circle cx="600" cy="459" r="6" />
-              <circle cx="669" cy="353" r="6" />
-              <circle cx="695" cy="248" r="6" />
-              <circle cx="720" cy="372" r="6" />
+              {desktopTargets.map((target) => (
+                <circle key={target.number} cx={target.x} cy={target.y} r="6" data-assessment-point={target.number} />
+              ))}
             </g>
           </svg>
         </div>
 
         <div className="mt-9 xl:hidden">
-          <figure className="relative mx-auto aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-md border border-[#D8CAB4] bg-[#E9E5DE] shadow-[0_20px_55px_rgba(58,45,30,0.1)]">
-            {/* Keep annotations in the source photo's 1200 × 2140 coordinate space, including when cropped. */}
-            <div className="absolute inset-x-0 top-1/2 aspect-[60/107] -translate-y-1/2">
+          <figure className="relative mx-auto aspect-[3/4] w-full max-w-[520px] overflow-hidden rounded-md bg-[#171717] shadow-[0_20px_55px_rgba(58,45,30,0.1)] ring-1 ring-[#D8CAB4]" data-assessment-photo="mobile">
+            {/* Full 3:4 photograph and annotations share the same coordinate plane at every width. */}
               <Image
-                src="/images/facebook-aging-patterns-real-patient.webp"
-                alt="Facial regions: cheeks, nasolabial folds, neck, jowls, eye area, and jawline; numbered guide below"
+                src={facebookAgingPortrait}
+                alt="Numbered assessment areas: cheeks, nasolabial folds, neck, crow's feet, marionette lines, and jawline"
                 fill
                 sizes="(max-width: 640px) calc(100vw - 40px), 520px"
                 className="object-contain"
@@ -1150,13 +1153,12 @@ function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
               </svg>
               {facebookAgingPatterns.map((pattern, index) => (
                 <div key={pattern.number} aria-hidden="true">
-                  <span style={pattern.target} className="pointer-events-none absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-[#B68A43] shadow-sm" />
+                  <span style={pattern.target} data-assessment-point={pattern.number} className="pointer-events-none absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-[#B68A43] shadow-sm" />
                   <span style={pattern.marker} className="pointer-events-none absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#F6F2EB] bg-[#B68A43] text-[11px] font-bold text-white shadow-md">
                     {index + 1}
                   </span>
                 </div>
               ))}
-            </div>
           </figure>
 
           <div className="mx-auto mt-6 grid max-w-[760px] grid-cols-1 border-y border-[#D8CCBA] sm:grid-cols-2">
@@ -1183,7 +1185,7 @@ function FacebookSelfAssessment({ whatsappUrl }: { whatsappUrl: string }) {
 
         <div className="mx-auto mt-7 max-w-[820px] border-t border-[#D8CCBA] pt-6 text-center">
           <p className="text-sm leading-6 text-[#665F57]">
-            These signs often appear together, but every face ages differently.
+            Smiling can accentuate facial lines. Assessment also considers the face at rest.
           </p>
           <p className="mt-2 text-[11px] leading-5 text-[#8A8176]">
             This visual highlights common aging patterns and is not a medical diagnosis.
