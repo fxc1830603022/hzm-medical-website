@@ -68,7 +68,12 @@ export default async function FacebookAdsShortLandingPage() {
           })
         ]}
       />
-      <AdsLandingPageView variant="facebook" settings={settings} galleryItems={galleryItems} />
+      <AdsLandingPageView
+        variant="facebook"
+        settings={settings}
+        galleryItems={galleryItems}
+        facebookReferencePreview
+      />
     </>
   );
 }

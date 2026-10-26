@@ -32,6 +32,8 @@ import {
   WeChatBrandIcon
 } from "./FacebookWeChatContact";
 import { FacebookAssessmentSection } from "./FacebookAssessmentSection";
+import { FacebookResultsGallery } from "./FacebookResultsGallery";
+import { FacebookCaseCollection } from "./FacebookCaseCollection";
 import { Footer } from "./Footer";
 import { HospitalTrustVideo } from "./HospitalTrustVideo";
 import { TrackedWhatsAppLink } from "./TrackedWhatsAppLink";
@@ -43,6 +45,7 @@ type AdsLandingPageViewProps = {
   variant: AdsLandingVariant;
   settings: SiteSettings;
   galleryItems: GalleryItem[];
+  facebookReferencePreview?: boolean;
 };
 
 type ResultCardData = {
@@ -59,6 +62,7 @@ type ResultCardData = {
   afterLabel?: string;
   postOpTime?: string;
   featured?: boolean;
+  photoContext?: string;
 };
 
 type FeatureCardData = {
@@ -709,7 +713,7 @@ const pageConfigs: Record<AdsLandingVariant, PageConfig> = {
   }
 };
 
-export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandingPageViewProps) {
+export function AdsLandingPageView({ variant, settings, galleryItems, facebookReferencePreview = false }: AdsLandingPageViewProps) {
   const config = pageConfigs[variant];
   const safeSettings = { ...defaultSettings, ...settings, whatsappMessage: config.whatsappMessage };
   const adsWhatsAppNumber = variant === "google" ? googleAdsWhatsAppNumber : facebookAdsWhatsAppNumber;
@@ -735,6 +739,7 @@ export function AdsLandingPageView({ variant, settings, galleryItems }: AdsLandi
         whatsappUrl={whatsappUrl}
         wechatDetails={wechatDetails}
         resultCards={resultCards}
+        referencePreview={facebookReferencePreview}
       />
     );
   }
@@ -768,12 +773,14 @@ function FacebookAdsV2Page({
   config,
   whatsappUrl,
   wechatDetails,
-  resultCards
+  resultCards,
+  referencePreview
 }: {
   config: PageConfig;
   whatsappUrl: string;
   wechatDetails: FacebookWeChatDetails;
   resultCards: ResultCardData[];
+  referencePreview: boolean;
 }) {
   const [wechatModal, setWechatModal] = useState({ open: false, placement: "facebook_wechat" });
 
@@ -795,11 +802,11 @@ function FacebookAdsV2Page({
         <FacebookVideoContinuation whatsappUrl={whatsappUrl} />
         <FacebookSelfAssessment whatsappUrl={whatsappUrl} />
         <FacebookNaturalDifference whatsappUrl={whatsappUrl} />
-        <FacebookResultsStories
+        {referencePreview ? <FacebookCaseCollection /> : <FacebookResultsStories
           title={config.resultsTitle}
           results={resultCards}
           whatsappUrl={whatsappUrl}
-        />
+        />}
         <FacebookDoctorAuthorityV2 whatsappUrl={whatsappUrl} />
         <FacebookHospitalTrustSection whatsappUrl={whatsappUrl} />
         <FacebookCareMoments whatsappUrl={whatsappUrl} />
@@ -1217,104 +1224,7 @@ function FacebookResultsStories({
   results: ResultCardData[];
   whatsappUrl: string;
 }) {
-  return (
-    <section id="real-results" className="overflow-hidden border-b border-[#E5D8C4] bg-[#FBF8F1] py-14 lg:py-24">
-      <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-[760px]">
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#B89A5A]">Real patient stories</p>
-            <h2 className="mt-3 font-display text-[36px] font-semibold leading-[1.08] text-[#1C1C1C] sm:text-5xl lg:text-[58px]">
-              {title}
-            </h2>
-            <p className="mt-4 max-w-[680px] text-sm leading-7 text-[#665C52] sm:text-base">
-              Selected before-and-after cases showing personalized facial rejuvenation while preserving each patient&apos;s
-              natural expression.
-            </p>
-          </div>
-          <TrackedWhatsAppLink
-            href={whatsappUrl}
-            placement="middle"
-            label="Results section WhatsApp"
-            className="inline-flex h-11 w-fit items-center justify-center gap-3 rounded-md border border-[#C8A664] bg-transparent px-5 text-sm font-bold text-[#2A251F] transition-colors hover:bg-white"
-          >
-            Ask About Results on WhatsApp
-            <ArrowRight className="h-4 w-4 text-[#B89A5A]" aria-hidden="true" />
-          </TrackedWhatsAppLink>
-        </div>
-
-        <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-5 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
-          {results.map((item, index) => (
-            <div
-              key={item.id || `${item.image}-${index}`}
-              className="group block h-auto w-[86vw] max-w-[420px] shrink-0 snap-center sm:w-[68vw] lg:w-auto lg:max-w-none"
-            >
-              <article className="flex h-full flex-col overflow-hidden rounded-md border border-[#DDCBA9] bg-[#FFFEFB] shadow-[0_12px_30px_rgba(48,35,19,0.045)]">
-                <div className="relative aspect-square overflow-hidden bg-[#EDE7DD]">
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    fill
-                    sizes="(min-width: 1280px) 430px, (min-width: 1024px) 31vw, 86vw"
-                    className="object-cover object-top"
-                  />
-                  <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-white/72 shadow-[0_0_0_1px_rgba(29,25,20,0.08)]" />
-                  <span className="absolute left-3 top-3 rounded-sm bg-[#1D1A17]/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
-                    {item.beforeLabel || "Before"}
-                  </span>
-                  <span className="absolute right-3 top-3 rounded-sm bg-[#1D1A17]/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
-                    {item.afterLabel || "After"}
-                  </span>
-                  {item.featured ? (
-                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm border border-white/55 bg-[#B08A45]/92 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
-                      Featured Result
-                    </span>
-                  ) : null}
-                </div>
-
-                <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <div className="flex items-start justify-between gap-4 border-b border-[#E9DFCE] pb-4">
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#A67B36]">
-                        Age {item.age} <span className="px-1 text-[#C8B48E]">|</span> {item.country}
-                      </p>
-                      <h3 className="mt-2 font-display text-[22px] font-semibold leading-tight text-[#211D19]">
-                        {item.title || item.procedure}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <dl className="mt-4 grid gap-3 text-sm leading-6 text-[#5D544B]">
-                    <div>
-                      <dt className="inline font-bold text-[#211D19]">Procedure: </dt>
-                      <dd className="inline">{item.procedure}</dd>
-                    </div>
-                    {item.postOpTime ? (
-                      <div>
-                        <dt className="inline font-bold text-[#211D19]">Post-op: </dt>
-                        <dd className="inline">{item.postOpTime}</dd>
-                      </div>
-                    ) : null}
-                    <div>
-                      <dt className="inline font-bold text-[#211D19]">Concern: </dt>
-                      <dd className="inline">{item.concern}</dd>
-                    </div>
-                    <div>
-                      <dt className="inline font-bold text-[#211D19]">Result focus: </dt>
-                      <dd className="inline">{item.result}</dd>
-                    </div>
-                  </dl>
-                </div>
-              </article>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-6 text-center text-xs leading-6 text-[#74695E]">
-          Individual results vary. Photos show real patient examples and do not guarantee a specific outcome.
-        </p>
-      </div>
-    </section>
-  );
+  return <FacebookResultsGallery title={title} results={results} whatsappUrl={whatsappUrl} />;
 }
 
 function FacebookDoctorAuthorityV2({ whatsappUrl }: { whatsappUrl: string }) {
@@ -2749,7 +2659,7 @@ function StickyFacebookContacts({
 }) {
   const [contactSectionVisible, setContactSectionVisible] = useState(false);
   useEffect(() => {
-    const sections = ["facebook-hero", "private-assessment"]
+    const sections = ["facebook-hero", "private-assessment", "case-collection-contact"]
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
     if (sections.length === 0) return;
@@ -2876,24 +2786,48 @@ function buildResultCards(
 }
 
 function buildFacebookResultCards(galleryItems: GalleryItem[]): ResultCardData[] {
-  const availableItems = galleryItems.filter((item) => item.image && item.displayRole !== "hero");
-  const selectedItems = (availableItems.length >= 3 ? availableItems : galleryItems.filter((item) => item.image)).slice(0, 3);
+  const stories = [
+    {
+      title: "Facial balance & expression",
+      concern: "Cheek contour · Lower face · Expression",
+      result: "A side-by-side look at facial balance, cheek contour and expression.",
+      photoContext: "The before photograph shows a neutral expression; the after photograph shows a smile."
+    },
+    {
+      title: "Lower-face definition",
+      concern: "Lower cheek · Jawline · Chin",
+      result: "A closer look at the lower face, jawline and chin.",
+      photoContext: "The after photograph is taken at an angle. Keep the difference in pose and lighting in mind."
+    },
+    {
+      title: "The 30-day follow-up",
+      concern: "Facial contour · Jawline · Early recovery",
+      result: "An early follow-up photograph, marked Day 30 in the original image.",
+      photoContext: "The follow-up is labeled Day 30. Later photographs are not part of this comparison."
+    }
+  ];
 
-  return selectedItems.map((item, index) => ({
-    id: item.id,
-    image: facebookResultImageOverrides[index] || item.image,
-    alt: item.alt || item.title || `9D facial rejuvenation result ${index + 1}`,
-    title: item.title || item.caseLabel || "Natural Facial Rejuvenation",
-    age: item.age?.trim() || "Private",
-    country: item.country?.trim() || "Not disclosed",
-    concern: item.mainConcerns?.trim() || item.description?.trim() || "Personalized facial rejuvenation",
-    procedure: item.procedure?.trim() || "9D Facial Rejuvenation",
-    result: item.visibleChange?.trim() || "Natural-looking refinement with expression preserved",
-    beforeLabel: item.beforeLabel?.trim() || "Before",
-    afterLabel: item.afterLabel?.trim() || "After",
-    postOpTime: getPostOpTime(item.afterLabel),
-    featured: item.displayRole === "featured" || index === 1
-  }));
+  return facebookResultImageOverrides.map((image, index) => {
+    // Only attach CMS details to the photograph they describe, never by list position.
+    const item = galleryItems.find((entry) => entry.image === image);
+    const story = stories[index];
+    return {
+      id: item?.id || image,
+      image,
+      alt: item?.alt || `9D facial rejuvenation case ${index + 1}, before and after photographs`,
+      title: item?.title?.trim() || story.title,
+      age: item?.age?.trim() || "Private",
+      country: item?.country?.trim() || "Not disclosed",
+      concern: item?.mainConcerns?.trim() || story.concern,
+      procedure: item?.procedure?.trim() || "9D Facial Rejuvenation",
+      result: item?.visibleChange?.trim() || story.result,
+      photoContext: story.photoContext,
+      beforeLabel: item?.beforeLabel?.trim() || "Before",
+      afterLabel: index === 2 ? "Day 30" : item?.afterLabel?.trim() || "After",
+      postOpTime: index === 2 ? "Day 30" : getPostOpTime(item?.afterLabel),
+      featured: index === 0
+    };
+  });
 }
 
 function getPostOpTime(afterLabel?: string) {
